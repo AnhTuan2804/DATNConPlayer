@@ -1,0 +1,74 @@
+{
+    "USER": {
+        "LOGIN": {
+            "ACCOUNT_BLOCKED": "アカウントブロック",
+            "PASSWORD_IS_NOT_VALID": "パスワードが無効です",
+            "USERNAME_OR_PASSWORD_IS_NOT_VALID": "ユーザー名またはパスワードが無効です",
+            "USER_DOES_NOT_EXIST": "ユーザーは存在しません",
+            "LOGIN_FAILED": "ログインに失敗しました",
+            "EMAIL_IS_NOT_EXIST": "メールは存在しません",
+            "CONNECT_TO_FACEBOOK_FAILED": "Facebookに接続できませんでした",
+            "CONNECT_TO_TWITTER_FAILED": "Twitterに接続できませんでした",
+            "CONNECT_TO_LINE_FAILED": "Lineに接続できませんでした",
+            "YOU_DO_NOT_HAVE_ACCESS_TRANSMISSION": "あなたはアクセス伝送を持っていません"
+        },
+        "REGISTER": {
+            "EMAIL_IS_EXIST": "メールは存在します",
+            "EMAIL_IS_NOT_VALID": "電子メールが有効ではありません",
+            "REGISTER_ACCOUNT_FAILED": "アカウントの登録に失敗しました"
+        },
+        "VERIFY": {
+            "VERIFY_ACCOUNT": "アカウントを確認",
+            "RESEND_EMAIL_IS_SUCCESSFULLY": "メールの再送信が成功しました",
+            "THIS_EMAIL_VERIFICATION_TIME_HAS_EXPIRED": "このメールの確認時間が切れています",
+            "HELLO": "こんにちは、",
+            "YOUR_REGISTRATION_IN_PEACE_MINING_HAS_BEEN_SUCCESSFULLY_COMPLETE": "DREAMUSの登録が正常に完了しました",
+            "PLEASE_CLICK_ON_THE_LINK_BELOW_TO_ACTIVATE_YOUR_ACCOUNT": "アカウントを有効にするには、下のリンクをクリックしてください",
+            "CONFIRM_YOUR_ACCOUNT": "アカウントを確認する",
+            "THANK_YOU": "ありがとうございました！",
+            "USER_IS_ALREADY_ACTIVE": "ユーザーは既にアクティブです",
+            "VERIFY_EMAIL_IS_SUCCESSFULLY": "電子メールが正常に送信された",
+            "IMPORTANT_NOTICE": "重要な注意：紹介トークンを取得するには、アカウントを確認する必要があります。",
+            "BEST_REGARDS": "宜しくお願いします",
+            "DREAMUS_TEAM": "DREAMUSチーム",
+            "VERIFY_ACCOUNT_LINK_DOES_NOT_EXIST": "アカウントが存在しないことを確認する"
+        },
+        "RESET_PASSWORD": {
+            "YOU_HAVE_REQUESTED_RESETING_PASSWORD": "あなたはパスワードのリセットを要求しました",
+            "RESEND_EMAIL_IS_SUCCESSFULLY": "メールの再送信が成功しました",
+            "THIS_IS_CODE_TO_CHANGE_TO_NEW_PASSWORD": "これは新しいパスワードに変更するコードです",
+            "PLEASE_CHECK_YOUR_EMAIL_LET_GET_CODE": "あなたのメールアドレスを確認してコードを取得させてください",
+            "RESET_PASSWORD": "パスワードを再設定する",
+            "RESET_PASSWORD_IS_SUCCESSFULLY": "パスワードをリセットしました。",
+            "CODE_IS_WRONG_PLEASE_CHECK_AGAIN": "コードが間違っています。 再度確認してください",
+            "CLICK_BUTTON_TO_RESET_PASSWORD": "ボタンをクリックしてパスワードをリセットする",
+            "CODE_RESET_PASSWORD_EXPIRED": "コードリセットパスワードが期限切れです",
+            "LINK_RESET_PASSWORD_HAS_BEEN_EXPIRED": "リンクリセットパスワードが期限切れです"
+        },
+        "AUTH": {
+            "INVALID_TOKEN": "無効なトークン",
+            "INVALID_OTP": "無効なOTP",
+            "AUTHENTICATION_TOKEN_NOT_FOUND": "認証トークンが見つかりません",
+            "ACCESS_TOKEN_NOT_FOUND": "アクセストークンが見つかりません",
+            "UNABLE_TWO_FACTOR_AUTHENTICATION_IS_SUCCESSFULLY": "2つの要因の認証が正常にできません",
+            "DISABLE_TWO_FACTOR_AUTHENTICATION_IS_SUCCESSFULLY": "2つの要素認証が無効になっている",
+            "PERMISSION_DENIED": "アクセス拒否",
+            "YOUR_ACCOUNT_HAS_BEEN_STOPPED": "あなたのアカウントは停止しました！",
+            "YOUR_ACCOUNT_CAN_NOT_UPDATE_OR_CREATE_DATA": "あなたのアカウントはデータを更新または作成できません",
+            "ADMIN_MASTER_CANNOT_SEND_CONTACT": "管理マスターは連絡先を送信できません"
+        },
+        "UPDATE": {
+            "UPDATE_USER_SUCCESSFULLY": "ユーザー情報を更新しました。",
+            "EMAIL_IS_ALREADY_EXIST": "電子メールは既に存在します",
+            "USERNAME_IS_ALREADY_EXIST": "ユーザー名は既に存在します",
+            "CANNOT_CHANGE_THE_SAME_EMAIL": "あなたのアイデアは彼と同じです"
+        },
+        "LOGOUT": {
+            "LOG_OUT_SUCCESSFULLY": "正常にログアウトする"
+        },
+        "DELETE": {
+            "DELETE_USER_SUCCESSFULLY": "ユーザーを正常に削除",
+            "DELETE_USER_UNSUCCESSFULLY": "ユーザーの削除に失敗しました"
+        }
+    }
+}
