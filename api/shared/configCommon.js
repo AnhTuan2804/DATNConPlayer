@@ -23,6 +23,7 @@ class ConfigCommon {
     }
 
     getDb() {
+        console.log('vo day' + config.dbLocal)
         switch (MODE_BUILD) {
             case 'local':
                 return config.dbLocal;

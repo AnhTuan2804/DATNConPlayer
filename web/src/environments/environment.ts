@@ -7,12 +7,12 @@ export const environment = {
   production: false,
   firebase: {
     appConfig: {
-      apiKey: "AIzaSyDwrAwEFF6sCDaUAhoj2OoHtIa4XmQuJ4U",
-      authDomain: "gcctoken.firebaseapp.com",
-      databaseURL: "https://gcctoken.firebaseio.com",
-      projectId: "gcctoken",
-      storageBucket: "gcctoken.appspot.com",
-      messagingSenderId: "903879673923"
+      apiKey: "AIzaSyC5UHVDYOkH5aAMyHi2W2q8qL2ZCbgm5gM",
+      authDomain: "datncsplayer.firebaseapp.com",
+      databaseURL: "https://datncsplayer.firebaseio.com",
+      projectId: "datncsplayer",
+      storageBucket: "datncsplayer.appspot.com",
+      messagingSenderId: "24905739904"
     }
   },
   encodeDecode: {

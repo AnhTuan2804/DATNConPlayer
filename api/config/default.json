@@ -2,21 +2,21 @@
     "whiteList": ["http://localhost:4200"],
     "recreateDB": false,
     "dbLocal": {
-        "dbname": "DATNCSPLAYER",
-        "username": "root",
-        "password": "abc@1234",
+        "dbname": "sql10284795",
+        "username": "sql10284795",
+        "password": "j4ALCJYcFG",
         "options": {
-            "host": "127.0.0.1",
+            "host": "sql10.freemysqlhosting.net",
             "port": 3306,
             "dialect": "mysql"
         }
     },
     "dbDev": {
-        "dbname": "DATNCSPLAYER",
-        "username": "root",
-        "password": "abc@1234",
+        "dbname": "sql10284795",
+        "username": "sql10284795",
+        "password": "j4ALCJYcFG",
         "options": {
-            "host": "",
+            "host": "sql10.freemysqlhosting.net",
             "port": 3306,
             "dialect": "mysql"
         }
