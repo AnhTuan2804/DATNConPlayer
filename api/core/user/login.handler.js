@@ -10,7 +10,7 @@ const baseService = require('../../shared/helpers/baseService');
 const appConstant = require('../../shared/helpers/appConstant');
 const localesUtils = require('../../shared/helpers/localesUtils');
 
-const userModel = require('../../shared/models/user.model');
+const userModel = require('../../shared/db/models/user.model');
 
 /**
  * Function login user by email

@@ -1,4 +1,4 @@
-const userModel = require('../../shared/models/user.model');
+const userModel = require('../../shareddb/models/user.model');
 const localeUtils = require('../../shared/helpers/localesUtils');
 
 async function logOut(token, lang) {

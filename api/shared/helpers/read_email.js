@@ -8,8 +8,8 @@ const passWord = configEmail.password;
 const hostImap = configEmail.hostImap;
 const appConstant = require('../../shared/helpers/appConstant');
 const emailHelper = require('../../shared/helpers/emailHelper');
-const contactModel = require('../../shared/models/contact.model');
-const userModel = require('../../shared/models/user.model');
+const contactModel = require('../../shareddb/models/contact.model');
+const userModel = require('../../shareddb/models/user.model');
 
 const imap = new Imap({
     user: emailAddress,

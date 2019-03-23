@@ -2,7 +2,7 @@ const moment = require('moment');
 const emailHelper = require('../../shared/helpers/emailHelper')
 const configCommon = require('../../shared/helpers/configCommon')
 const encodeDecode = require('../../shared/helpers/encodeDecode');
-const userModel = require('../../shared/models/user.model');
+const userModel = require('../../shareddb/models/user.model');
 const localsUtil = require('../../shared/helpers/localesUtils');
 const appConstant = require('../../shared/helpers/appConstant');
 

@@ -1,0 +1,34 @@
+{
+    "whiteList": ["http://localhost:4200"],
+    "recreateDB": false,
+    "dbLocal": {
+        "dbname": "DATNCSPLAYER",
+        "username": "root",
+        "password": "abc@1234",
+        "options": {
+            "host": "127.0.0.1",
+            "port": 3306,
+            "dialect": "mysql"
+        }
+    },
+    "dbDev": {
+        "dbname": "DATNCSPLAYER",
+        "username": "root",
+        "password": "abc@1234",
+        "options": {
+            "host": "",
+            "port": 3306,
+            "dialect": "mysql"
+        }
+    },
+    "googleCloud": {
+        "keyfileLocal": "./config/firebase-config.json",
+        "keyfileDev": ""
+    },
+    "databaseURLLocal": "https://datncsplayer.firebaseio.com",
+    "databaseURLDev": "",
+
+    "jwt": {
+        "key": "SGF2ZSB0byBkZWFsIHdpdGggQmFzZTY0IGZvcm1hdD8gVGhlbiB0aGlzIHNpdGUgaXMgbWFkZSBmb3IgeW91ISBVc2UgdGhlIHN1cGVyIHNpbXBsZSBvbmxpbmUgZm9ybSBiZWxvdyB0byBkZWNvZGUgb3IgZW5jb2RlIHlvdXIgZGF0YS4gSWYgeW91J3JlIGludGVyZXN0ZWQgYWJvdXQgdGhlIGlubmVyIHdvcmtpbmdzIG9mIHRoZSBCYXNlNjQgZm9ybWF0LCBqdXN0IHJlYWQgdGhlIGRldGFpbGVkIGRlc2NyaXB0aW9uIGF0IHRoZSBib3R0b20gb2YgdGhlIHBhZ2UuIFdlbGNvbWUh"
+    }
+}

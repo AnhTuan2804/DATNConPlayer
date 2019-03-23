@@ -1,11 +1,5 @@
 class ConfigCommon {
     getConfig() {
-        switch (process.env.MODE_BUILD) {
-            case 'dev':
-                return require('../../config/development')
-            case 'prod':
-                return require('../../config/production')
-        }
         return require('../../config/development')
     }
 

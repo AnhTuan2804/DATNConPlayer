@@ -3,7 +3,7 @@ const _ = require('lodash');
 const localeUtils = require('../../shared/helpers/localesUtils');
 const passwordManagement = require('../../shared/security/passwordManagement');
 const appConstant = require('../../shared/helpers/appConstant');
-const userModel = require('../../shared/models/user.model');
+const userModel = require('../../shareddb/models/user.model');
 
 
 /**

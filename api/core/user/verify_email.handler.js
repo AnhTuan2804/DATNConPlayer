@@ -2,7 +2,7 @@
 
 const moment = require('moment');
 const encodeDecode = require('../../shared/helpers/encodeDecode');
-const userModel = require('../../shared/models/user.model');
+const userModel = require('../../shareddb/models/user.model');
 const userAuthen = require('../../shared/security/userAuthentication');
 const localsUtil = require('../../shared/helpers/localesUtils');
 const validatorUtils = require('../../shared/helpers/validatorUtils');

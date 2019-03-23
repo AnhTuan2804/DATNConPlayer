@@ -6,7 +6,7 @@ const configCommon = require('../../shared/helpers/configCommon');
 const encodeDecode = require('../../shared/helpers/encodeDecode');
 const localesUtil = require('../../shared/helpers/localesUtils');
 const appConstant = require('../../shared/helpers/appConstant');
-const userModel = require('../../shared/models/user.model');
+const userModel = require('../../shareddb/models/user.model');
 
 /**
  * Function register user

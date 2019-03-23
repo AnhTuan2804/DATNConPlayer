@@ -1,8 +1,8 @@
 const _ = require('lodash');
 const moment = require('moment');
 
-const firebaseCommon = require('../../shared/helpers/firebaseCommon');
-const appConstant = require('../helpers/appConstant');
+const firebaseCommon = require('../../../shared/helpers/firebaseCommon');
+const appConstant = require('../../../shared/helpers/appConstant');
 
 const TABLE_MEMBER = appConstant.DATA_TABLE.MEMBER;
 const TABLE_TOKEN = appConstant.DATA_TABLE.TOKEN;

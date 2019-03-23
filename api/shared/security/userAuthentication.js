@@ -5,7 +5,7 @@ const _ = require('lodash');
 const passwordManagement = require('./passwordManagement');
 const appConstant = require('../../shared/helpers/appConstant');
 const localesUtil = require('../../shared/helpers/localesUtils');
-const userModel = require('../../shared/models/user.model');
+const userModel = require('../db/models/user.model');
 
 async function authenticate(email, password, lang) {
     const user = await userModel.getUserByEmail(email);

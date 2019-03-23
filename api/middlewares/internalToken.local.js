@@ -1,6 +1,6 @@
 const userAuthentication = require('../shared/security/userAuthentication');
 const appConstant = require('../shared/helpers/appConstant');
-const userModel = require('../shared/models/user.model');
+const userModel = require('../shareddb/models/user.model');
 
 async function verifyToken(req, res, next) {
     try {
