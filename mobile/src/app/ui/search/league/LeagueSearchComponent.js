@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, BackHandler, Alert, TouchableOpacity, Platform } from 'react-native';
 import { Container, Content } from 'native-base';
-import Constants from '../../../theme/variable/Constants';
+import Constants from '../../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
-import Loading from '../common/modal/Loading';
-import Utils from '../../../theme/shared/utils/Utils';
+import Loading from '../../common/modal/Loading';
+import Utils from '../../../../theme/shared/utils/Utils';
 import { SearchBar } from 'react-native-elements';
 
 const { height, width } = Dimensions.get('window');
 const rateScreen = height / 680;
-class SearchComponent extends Component {
+class LeagueSearchComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +35,7 @@ class SearchComponent extends Component {
                         value={search}
                     />
                     <View style = {{height: 50,justifyContent: "center", alignItems: "center", backgroundColor: "#ccc" }}>
-                            <Text >Tim tran bong</Text>
+                            <Text >Tim giải bong</Text>
                         </View>
                     <View style = {{height: 50, justifyContent: "center", alignItems: "center", backgroundColor: "#dedede" }}>
                             <Text>Khu vuc</Text>
@@ -54,4 +54,4 @@ class SearchComponent extends Component {
     }
 };
 
-export default SearchComponent;
+export default LeagueSearchComponent;

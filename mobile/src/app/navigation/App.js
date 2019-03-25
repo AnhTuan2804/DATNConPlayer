@@ -16,9 +16,11 @@ import LoginProvider from '../ui/login/LoginProvider';
 import RegisterProvider from '../ui/register/RegisterProvider';
 import HomeProvider from '../ui/home/HomeProvider';
 import CreateTournamentProvider from '../ui/createTournament/CreateTournamentProvider';
-import SearchProvider from '../ui/search/SearchProvider';
 import ManageProvider from '../ui/manage/ManageProvider';
 import SettingProvider from '../ui/setting/SettingProvider';
+import MatchSearchProvider from '../ui/search/match/MatchSearchProvider';
+import LeagueSearchProvider from '../ui/search/league/LeagueSearchProvider';
+import GridironSearchProvider from '../ui/search/gridiron/GridironSearchProvider';
 
 
 const instructions = Platform.select({
@@ -59,61 +61,81 @@ export default class App extends Component {
                 hideNavBar={true}
               >
 
-                  {/* Home page and search */}
-                  <Stack>
-                    <Scene
-                      key='TOP'
-                      tabBarLabel={`TOP`}
-                      icon={TabIcon}
-                      title={'TOP'}
-                      swipeEnabled={false}
-                      component={HomeProvider}
-                      hideNavBar={true}
-                      initial
-                    />
-                    <Scene
-                      key='Search'
-                      tabBarLabel={`Search`}
-                      icon={TabIcon}
-                      title={'Search'}
-                      swipeEnabled={false}
-                      component={SearchProvider}
-                      hideNavBar={true}
-                    />
-                  </Stack>
-
-                  {/* Manage Page -- team, gridiron */}
+                {/* Home page and search */}
+                <Stack>
                   <Scene
-                    key='Manage'
-                    tabBarLabel={`Manage`}
+                    key='TOP'
+                    tabBarLabel={`TOP`}
                     icon={TabIcon}
-                    title={'Manage'}
+                    title={'TOP'}
                     swipeEnabled={false}
-                    component={ManageProvider}
+                    component={HomeProvider}
+                    hideNavBar={true}
+                    initial
+                  />
+                  {/* list ppage search */}
+                  <Scene
+                    key='Match'
+                    tabBarLabel={`Match`}
+                    icon={TabIcon}
+                    title={'Match'}
+                    swipeEnabled={false}
+                    component={MatchSearchProvider}
                     hideNavBar={true}
                   />
-
-                  {/* league: create, update info */}
                   <Scene
-                    key='Tournament'
-                    tabBarLabel={`Tournament`}
+                    key='Gridiron'
+                    tabBarLabel={`Gridiron`}
                     icon={TabIcon}
-                    title={'Tournament'}
+                    title={'Gridiron'}
                     swipeEnabled={false}
-                    component={CreateTournamentProvider}
+                    component={GridironSearchProvider}
                     hideNavBar={true}
                   />
-
-                  {/* Setting for user: change pass, name */}
                   <Scene
-                    key='Setting'
-                    tabBarLabel={`Setting`}
+                    key='League'
+                    tabBarLabel={`League`}
                     icon={TabIcon}
-                    title={'Setting'}
+                    title={'League'}
                     swipeEnabled={false}
-                    component={SettingProvider}
+                    component={LeagueSearchProvider}
                     hideNavBar={true}
                   />
+                  {/* list ppage search */}
+                </Stack>
+
+                {/* Manage Page -- team, gridiron */}
+                <Scene
+                  key='Manage'
+                  tabBarLabel={`Manage`}
+                  icon={TabIcon}
+                  title={'Manage'}
+                  swipeEnabled={false}
+                  component={ManageProvider}
+                  hideNavBar={true}
+                />
+
+                {/* league: create, update info */}
+                <Scene
+                  key='Tournament'
+                  tabBarLabel={`Tournament`}
+                  icon={TabIcon}
+                  title={'Tournament'}
+                  swipeEnabled={false}
+                  component={CreateTournamentProvider}
+                  hideNavBar={true}
+                />
+
+                {/* Setting for user: change pass, name */}
+                <Scene
+                  key='Setting'
+                  tabBarLabel={`Setting`}
+                  icon={TabIcon}
+                  title={'Setting'}
+                  swipeEnabled={false}
+                  component={SettingProvider}
+                  hideNavBar={true}
+                />
               </Scene>
             </Stack>
           </Router>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import SearchComponent from './SearchComponent';
+import GridironSearchComponent from './GridironSearchComponent';
 
 export default connect(
   state => {
@@ -11,4 +11,4 @@ export default connect(
     return {
     }
   }
-)(SearchComponent);
+)(GridironSearchComponent);
