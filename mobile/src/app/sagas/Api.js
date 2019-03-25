@@ -2,193 +2,52 @@ import Constants from '../../theme/variable/Constants';
 import { Toast } from 'native-base';
 import _ from 'lodash';
 import { Actions } from 'react-native-router-flux';
-import EncodeDecodeService from '../ui/share/util/EncodeDecodeService';
-import Utils from '../ui/share/util/Utils';
+// import EncodeDecodeService from '../../theme/shared/utils/EncodeDecodeService';
+import Utils from '../../theme/shared/utils/Utils';
 
 // =================LOGIN - START==================
-function* loginAPI(userID, password, device_info) {
+function* loginAPI(bodyLogin) {
     const router = 'login';
-    const auth = `${userID}:${password}`;
-    const encode = EncodeDecodeService.encode(auth);
-    const headers = {
-        'auth': encode,
-        'device_info': device_info
-    };
-    const body = null;
+    const headersPairs = null;
+    const body = bodyLogin
+    console.log(body);
     const response = yield fetch(`${Constants.HOST}/${router}`, {
         method: 'POST',
-        headers: getHeaders(headers),
+        headers: getHeaders(headersPairs),
         body: body,
     }).then((response) => {
+        console.log("--------success-------------");
         return getResponse(response);
     }).catch((error) => {
+        console.log(error);
         showError(error);
     });
     return response;
 }
 // =================LOGIN - END====================
 
-// =================Profile - start==================
-function* getProfileAPI() {
-    const router = 'user/profile';
-    let token = Constants.TOKEN;
-    let headersPairs = {
-        'token': token
-    };
-    const response = yield fetch(`${Constants.HOST}/${router}`, {
-        method: 'GET',
-        headers: getHeaders(headersPairs),
-        body: '',
-    }).then((response) => {
-        return getResponse(response);
-    }).catch((error) => {
-        showError(error);
-    });
-    return response;
-}
-// =================Profile - end====================
 
-// ==============FORGOT PASS - START===============
-function* forgotPassAPI(email) {
-    const router = `forgot-password/code?email=${email}`;
-    const headersPairs = null;
-    const response = yield fetch(`${Constants.HOST}/${router}`, {
-        method: 'GET',
-        headers: getHeaders(headersPairs),
-        body: '',
-    }).then((response) => {
-        return getResponse(response);
-    }).catch((error) => {
-        showError(error);
-    });
-    return response;
-}
-// ==============FORGOT PASS  - END================
-
-// ==============CHANGE PASS - START===============
-function* changePassAPI(email, code, password) {
-    const router = `forgot-password/change-password`;
-    const headersPairs = null;
-    const body = JSON.stringify({
-        'email': email,
-        'code': code,
-        'password': EncodeDecodeService.encode(password)
-    });
-
-    const response = yield fetch(`${Constants.HOST}/${router}`, {
-        method: 'POST',
-        headers: getHeaders(headersPairs),
-        body: body,
-    }).then((response) => {
-        return getResponse(response);
-    }).catch((error) => {
-        showError(error);
-    });
-    return response;
-}
-// ==============CHANGE PASS - END=================
-
-// ============CHANGE USER ID - START==============
-function* forgotUserIDAPI(email) {
-    const router = 'recovery-code';
-    const headersPairs = null;
-    const body = JSON.stringify({
-        'email': email
-    });
-
-    const response = yield fetch(`${Constants.HOST}/${router}`, {
-        method: 'POST',
-        headers: getHeaders(headersPairs),
-        body: body,
-    }).then((response) => {
-        return getResponse(response);
-    }).catch((error) => {
-        showError(error);
-    });
-    return response;
-}
-// ============CHANGE USER ID - END================
-
-// =========LIST ADDRESS WITHDRAW - START==========
-function* getListAddressWithdraw() {
-    const router = `withdraw/get-list`;
-    let token = Constants.TOKEN;
-    let headersPairs = {
-        'token': token
-    };
-
-    const response = yield fetch(`${Constants.HOST}/${router}`, {
-        method: 'GET',
-        headers: getHeaders(headersPairs),
-        body: '',
-    }).then((response) => {
-        return getResponse(response);
-    }).catch((error) => {
-        showError(error);
-    });
-    return response;
-}
-// =========LIST ADDRESS WITHDRAW  - END===========
-
-
-// =================COMMON - START=================
+// -------------------common----------------------------------
 function getResponse(response, isShowError) {
     if (response.status >= 400) {
         if (isShowError) {
-            throw Error(Constants.MESSAGE_ERROR)
+            return response.json().then((result) => {
+                throw Error(result.message)
+            });
         }
         response.json().then((result) => {
-            // INVALID TOKEN
-            if (result.code === 102) {
-                Actions.splashScreen({ type: 'reset' });
-                Toast.show({
-                    text: result.message,
-                    buttonText: 'OK',
-                    type: 'danger',
-                    duration: 3000,
-                    position: 'top'
-                })
-                return {}
-            } else {
-                Toast.show({
-                    text: result.message,
-                    buttonText: 'OK',
-                    type: 'danger',
-                    duration: 3000,
-                    position: 'top'
-                })
-            }
+            if (result.message && !(result.message instanceof Object))
+                ToastUtil.showToast(result.message, 'danger');
         })
-
-        // INVALID TOKEN OLD
-        if (response.status === 402) {
+        //token1
+        if (response.status == 402) {
+            // Actions.loginScreen({ type: 'reset' });
             return {}
         } else {
-            throw Error(Constants.MESSAGE_ERROR)
+            return response.json().then((result) => {
+                throw Error(result.message)
+            });
         }
-    } else {
-        return response.json().then((result) => {
-            return result;
-        });
-    }
-}
-
-function getResponseInterval(response) {
-    if (response.status >= 400) {
-        response.json().then((result) => {
-            // INVALID TOKEN
-            if (result.code === 102) {
-                Actions.splashScreen({ type: 'reset' });
-                Toast.show({
-                    text: result.message,
-                    buttonText: 'OK',
-                    type: 'danger',
-                    duration: 3000,
-                    position: 'top'
-                })
-                return {}
-            }
-        })
     } else {
         return response.json().then((result) => {
             return result;
@@ -197,15 +56,34 @@ function getResponseInterval(response) {
 }
 
 function showError(error) {
-    if (error.message != Constants.MESSAGE_ERROR) {
-        alert('Runtime Error!');
+    if (error.message == 'Network request failed') {
+        Alert.alert('Warning', 'Poor connecting!!');
     }
     throw Error(error.message);
 }
 
-//get header
+function timeout(ms, promise) {
+    return new Promise(function (resolve, reject) {
+        const timeoutId = setTimeout(function () {
+            reject(Alert.alert('Warning', 'Bad connect to server!'));
+        }, ms)
+        promise.then(
+            (res) => {
+                clearTimeout(timeoutId);
+                resolve(res);
+            },
+            (err) => {
+                clearTimeout(timeoutId);
+                reject(err);
+            }
+        );
+    })
+}
+
+// get header
 function getHeaders(headersPairs) {
     let header = {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
     }
     if (headersPairs) {
@@ -215,13 +93,29 @@ function getHeaders(headersPairs) {
     }
     return header;
 }
-// =================COMMON - END=================
+
+
+function getHeadersByToken(headersPairs) {
+    let header = {
+        'token': Constants.TOKEN,
+        'locale': Constants.LOCALE || 'en',
+        'Accept': 'application/json',
+        "Content-Type": 'application/json'
+    }
+    if (headersPairs) {
+        _.forEach(headersPairs, (value, key) => {
+            header[key] = value;
+        })
+    }
+    return header;
+}
+// ----------------------common------------------------
 
 export const Api = {
     loginAPI,
-    forgotPassAPI,
-    changePassAPI,
-    forgotUserIDAPI,
-    getListAddressWithdraw,
-    getProfileAPI
+    // forgotPassAPI,
+    // changePassAPI,
+    // forgotUserIDAPI,
+    // getListAddressWithdraw,
+    // getProfileAPI
 };

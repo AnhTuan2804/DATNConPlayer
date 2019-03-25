@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import LoginForm from './LoginComponent';
+import { islogin } from '../../actions/LoginActions';
 
 export default connect(
   state => {
@@ -12,8 +13,8 @@ export default connect(
   },
   dispatch => {
     return {
-      onLogin: (userID, password) => {
-        dispatch(islogin(userID, password))
+      onLogin: (email, password) => {
+        dispatch(islogin(email, password))
       }
     }
   }

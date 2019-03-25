@@ -23,7 +23,7 @@ class HomeComponent extends Component {
         return (
             <View style={{
                 flex: 1,
-                width: width * 7 / 10,
+                width: width * 8 / 10,
                 borderRadius: 5,
                 backgroundColor: 'red',
                 marginHorizontal: 10,
@@ -51,7 +51,7 @@ class HomeComponent extends Component {
         return (
             <View style={{
                 flex: 1,
-                width: width * 7 / 10,
+                width: width * 7/ 10,
                 borderRadius: 5,
                 backgroundColor: 'blue',
                 marginHorizontal: 10,

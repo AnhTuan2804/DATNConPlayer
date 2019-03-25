@@ -1,6 +1,6 @@
 //Saga effects
 import { fork, all } from 'redux-saga/effects';
-// import { watchLogin } from './LoginSaga';
+import { watchLogin } from './LoginSaga';
 // import { watchGetListHistorySuccess, watchGetListHistoryUnSuccess } from './TransactionHistorySaga';
 // import { watchResultCalculation, watchGetRate, watchGetBalance, watchCreateAddress } from './DepositCalculationSaga';
 // import { watchForgotPassword, watchChangePassword } from './ForgotPassSagas';
@@ -19,7 +19,7 @@ import { fork, all } from 'redux-saga/effects';
 
 export default function* rootSaga() {
     yield all([
-        // fork(watchLogin),
+        fork(watchLogin),
         // fork(watchGetListHistorySuccess),
         // fork(watchGetListHistoryUnSuccess),
         // fork(watchResultCalculation),

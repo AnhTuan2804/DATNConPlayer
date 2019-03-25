@@ -31,8 +31,8 @@ class LoginComponent extends Component {
 
     render() {
         submit = values => {
-            alert(`${values.password}-----${values.userID}`)
-            // this.props.onLogin(values.userID, values.password);
+            alert(`${values.password}-----${values.email}`)
+            this.props.onLogin(values.email, values.password);
         }
         const { handleSubmit } = this.props;
         return (
@@ -49,9 +49,9 @@ class LoginComponent extends Component {
                                 color: '#fff',
                                 marginTop: 20
                             }}
-                            >Login</Text>
+                            >Đăng nhập</Text>
                             <View style={{ width: '90%', flexDirection: 'column', }}>
-                                <Field name="userID" keyboardType="default" textIP="Số điện thoại" component={renderField}
+                                <Field name="email" keyboardType="default" textIP="Email" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
                                 />
                                 <Field name='password' keyboardType='default' textIP="Mật khẩu" component={renderFieldForPass}

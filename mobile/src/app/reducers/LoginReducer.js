@@ -24,7 +24,6 @@ const loginReducers = (state = {}, action) => {
             return {
                 ...state,
                 reset: true,
-                stopIntervalLogout: true,
             };
         default:
             return state;

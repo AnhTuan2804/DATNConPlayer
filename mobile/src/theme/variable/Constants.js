@@ -1,7 +1,7 @@
 export default class Constants {
     // static token, locale, currency
     // static HOST = 'http://coinpay.global-ibk.com:8099'; // Server Test
-    static HOST = 'https://coins-payment.com:8080'; // Server deployed
+    static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
