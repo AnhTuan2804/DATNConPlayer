@@ -15,6 +15,7 @@
     "dependencies": {
         "axios": "^0.18.0",
         "base-64": "^0.1.0",
+        "bcrypt": "^3.0.5",
         "bcrypt-nodejs": "0.0.3",
         "bluebird": "^3.4.6",
         "body-parser": "^1.17.2",

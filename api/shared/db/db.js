@@ -1,16 +1,15 @@
 const Sequelize = require('sequelize');
-const config = require('config')
 const _ = require('lodash');
-const configCommon = require('../configCommon')
+const config = require('../../config/db.config')
 
 let sequelize = null;
 
 class Db {
     constructor() {
         if (!sequelize) {
-            let anc = configCommon.getDb().options;
+            let anc = config.dbLocal.options;
             anc['isolationLevel'] = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-            sequelize = new Sequelize(configCommon.getDb().dbname, configCommon.getDb().username, configCommon.getDb().password, configCommon.getDb().options);
+            sequelize = new Sequelize(config.dbLocal.dbname, config.dbLocal.username, config.dbLocal.password, config.dbLocal.options);
         }
     }
 
@@ -26,6 +25,16 @@ class Db {
             whereClause['transaction'] = transaction;
         }
         return whereClause;
+    }
+
+    getOrder(object) {
+        if (!object) {
+            object = {};
+        }
+        object['order'] = [
+            ['created_at', 'DESC']
+        ]
+        return object;
     }
 
     connect() {
@@ -48,8 +57,9 @@ class Db {
     //merge the properties from models into this Db object
     initModels() {
         //user
-        console.log('test thu ok')
-        
+        this.user = sequelize.import('./models/user/user');
+        this.role = sequelize.import('./models/user/role');
+        this.user.belongsTo(this.role, { unique: false, onDelete: 'cascade' });
     }
 
     rawQuery(sql, whereClause) {
