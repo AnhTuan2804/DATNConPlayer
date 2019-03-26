@@ -31,15 +31,15 @@ class UserHandler {
     }
 
     editPassWord(token, oldPasswordBase64, newPasswordBase64) {
-        let newPassword = Buffer.from(newPasswordBase64, 'base64');
-        let oldPassword = Buffer.from(oldPasswordBase64, 'base64');
+        const newPassword = Buffer.from(newPasswordBase64, 'base64');
+        const oldPassword = Buffer.from(oldPasswordBase64, 'base64');
         return db.user.changePass(token, oldPassword, newPassword).then((user) => {
             return user
         })
     }
 
     editPassWordUser(id, newPasswordBase64) {
-        let newPassword = Buffer.from(newPasswordBase64, 'base64');
+        const newPassword = Buffer.from(newPasswordBase64, 'base64');
         return db.user.changePassUser(id, newPassword).then((user) => {
             return user
         })
@@ -57,7 +57,7 @@ class UserHandler {
     }
 
     editProfile(token, body) {
-        let whereClause = {
+        const whereClause = {
             token: token
         };
         // return db.user.find({ where: whereClause })
@@ -77,7 +77,7 @@ class UserHandler {
     }
 
     editUser(body) {
-        let whereClause = {
+        const whereClause = {
             id: body.id
         }
         return db.user.find({ where: whereClause })
@@ -113,16 +113,16 @@ class UserHandler {
     }
 
     fiterListUser(listUser) {
-        let arrayUser = [];
+        const arrayUser = [];
         _.forEach(listUser, (user) => {
-            let tmp = user.getUser();
+            const tmp = user.getUser();
             arrayUser.push(tmp)
         })
         return arrayUser;
     }
 
     logOut(token) {
-        let whereClause = {
+        const whereClause = {
             token: token
         };
         return db.user.find({ where: whereClause })
@@ -145,17 +145,15 @@ class UserHandler {
     }
 
     resetPassword(email) {
-        let whereClause = { email: email }
-
-        return this.user.find({ where: { email: email } }).then((user) => {
+        return db.user.find({ where: { email: email } }).then((user) => {
             if (!user) {
                 throw new Error('Email is not exist');
             } else {
-                let newPass = passwordManagement.getNonceString(10) + 'Abc1@';
-                let hashPassword = passwordManagement.hashPassword(newPass);
+                const newPass = passwordManagement.getNonceString(10) + 'Abc1@';
+                const hashPassword = passwordManagement.hashPassword(newPass);
                 user.password = hashPassword;
                 return user.save().then((result) => {
-                    let detail = `Hi ${result.name},<br/><br/>You recenty forgoten the password for The System Connecting Football Team.Password has been reset to <b>${newPass}</b><br/>Please login.<br/><br/>Kindly Regards,<br/>Admin: Anh Tuan - Hien Dieu`
+                    const detail = `Hi ${result.name},<br/><br/>You recenty forgoten the password for The System Connecting Football Team.Password has been reset to <b>${newPass}</b><br/>Please login.<br/><br/>Kindly Regards,<br/>Admin: Anh Tuan - Hien Dieu`
                     return emailHelper.sendEmail(`Resetting password for ${result.name}`, email, null, null, detail)
                 });
 
