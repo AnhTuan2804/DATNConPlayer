@@ -7,7 +7,6 @@ class MonitorRouter {
     registerRoutes() {
         router.route('/health')
             .get((req, res, next) => {
-                // logger(req.get('host'));
                 let freeMem = os.freemem();
                 let totalMem = os.totalmem();
                 let averageLoad = os.loadavg();

@@ -1,19 +1,13 @@
 const userAuthentication = require('../shared/security/userAuthentication');
-const appConstant = require('../shared/helpers/appConstant');
-const userModel = require('../shareddb/models/user.model');
+const db = require('../shared/db/db');
 
 async function verifyToken(req, res, next) {
     try {
         const token = req.header('token');
-        let lang = req.header(appConstant.HEADER.LOCALE_HEADER);
-        if (!lang) {
-            lang = appConstant.HEADER.LOCALE_DEFAULT;
-        }
         if (token) {
             res.locals.token = token;
-            res.locals.lang = lang;
             userAuthentication.verifyToken(token);
-            const user = await userModel.getUserByToken(token);
+            const user = await db.user.getUserByToken(token);
             if (user) {
                 next();
             } else {

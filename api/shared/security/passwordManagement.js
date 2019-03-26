@@ -1,26 +1,35 @@
+'use strict';
+const bcrypt = require('bcrypt');
+const aes256 = require('nodejs-aes256');
 const md5 = require('js-md5');
+const base64 = require('base-64');
 const bytes = require('utf8-bytes')
 
-function getNonceString(length, number) {
-    let text = '';
-    let possible;
-    if (number) {
-        possible = '0123456789'
-    } else {
-        possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+class PasswordManagement {
+    hashPassword(password) {
+        return bcrypt.hashSync(password, 10)
     }
-    for (let i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    comparePassword(password, encrypted) {
+        return bcrypt.compare(password, encrypted);
     }
-    return text;
+
+    getNonceString(length) {
+        var text = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < length; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+    }
+
+    hashPasswordBySaltAes256(plainPassword, salt) {
+        return aes256.decrypt(salt, plainPassword);
+    }
+
+    hashPasswordMd5(password) {
+        return (new Buffer(md5.array(bytes(password)))).toString('base64');
+    }
 }
 
-function hashPasswordMd5(password) {
-    password += '';
-    return Buffer.from(md5.array(bytes(password))).toString('base64');
-}
-
-module.exports = {
-    getNonceString,
-    hashPasswordMd5
-}
+module.exports = PasswordManagement;

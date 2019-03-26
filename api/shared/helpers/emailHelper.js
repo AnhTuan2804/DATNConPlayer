@@ -1,49 +1,37 @@
-const nodemailer = require('nodemailer');
-const sesTransport = require('nodemailer-ses-transport');
-const configCommon = require('../helpers/configCommon')
-const localeUtils = require('./localesUtils');
-const appConstant = require('./appConstant');
-
-const configEmail = configCommon.getEmail()
-const emailAddress = configEmail.emailAddress;
-const emailName = configEmail.emailName;
-const accessKeyId = configEmail.accessKeyId;
-const secretAccessKey = configEmail.secretAccessKey;
-const region = configEmail.region;
+const config = require('../../config/db.config');
+var nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
+const host = config.email.host;
+const port = config.email.port;
+const user = config.email.emailAddress;
+const pass = config.email.password;
+const userName = config.email.emailName;
 const smtpConfig = {
-    accessKeyId,
-    secretAccessKey,
-    region
-    // host,
-    // port,
-    // secure: true, // use SSL
-    // auth: { user, pass },
-    // tls: { rejectUnauthorized: false }
+    host,
+    port,
+    secure: true, 
+    auth: { user, pass }
 };
-
-function sendEmail(subject, emailReceiver, cc, bcc, data, fromMail, lang = appConstant.LOCALE_DEFAULT) {
-    // create reusable transporter object using the default SMTP transport
-    // var transporter = nodemailer.createTransport(smtpTransport(smtpConfig));
-    const transporter = nodemailer.createTransport(sesTransport(smtpConfig));
-    // setup e-mail data with unicode symbols
-    const name = fromMail ? `From ${fromMail}` : emailName;
-    const mailOptions = {
-        from: `"${name}" <${emailAddress}>`, // sender address
-        to: emailReceiver,
-        cc,
-        bcc, // list of receivers
-        subject, // Subject line
-        html: data
-    };
-    return transporter.sendMail(mailOptions, (error) => {
-        if (error) {
-            console.log(error)
-            return error;
-            // throw new Error('Error send email from server');
-        }
-            return localeUtils.userMessage(lang).SENT_EMAIL_SUCCESSFULLY;
-    });
+class EmailHelper {
+    sendEmail(subject, emailReceiver, cc, bcc, data) {
+        // create reusable transporter object using the default SMTP transport
+        var transporter = nodemailer.createTransport(smtpTransport(smtpConfig));
+        // setup e-mail data with unicode symbols
+        var mailOptions = {
+            from: `"${userName}" <${user}>`, // sender address
+            to: emailReceiver,
+            cc,
+            bcc, // list of receivers
+            subject: subject, // Subject line
+            html: data
+        };
+        return transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                throw new Error('Error send email from server');
+            } else {
+                return 'Send email success';
+            }
+        });
+    }
 }
-module.exports = {
-    sendEmail
-}
+module.exports = EmailHelper;
