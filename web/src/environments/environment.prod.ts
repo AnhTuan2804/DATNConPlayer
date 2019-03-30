@@ -11,5 +11,5 @@ export const environment = {
     }
   },
   routerLoginAdmin: "abc",
-  host: "http://54.193.113.38:8081"
+  host: ""
 };

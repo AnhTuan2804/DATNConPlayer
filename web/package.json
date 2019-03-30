@@ -26,6 +26,7 @@
     "angular2-qrcode": "^2.0.1",
     "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.0.0-rc.10",
+    "base-64": "^0.1.0",
     "bootstrap": "^4.1.1",
     "buffer": "^5.2.1",
     "chart.js": "^2.7.3",

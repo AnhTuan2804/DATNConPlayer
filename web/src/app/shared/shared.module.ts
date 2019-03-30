@@ -43,6 +43,7 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { FooterComponent } from './components/core/footer/footer.component';
 import { HeaderComponent } from './components/core/header/header.component';
 import { SideNavComponent } from './components/core/side-nav/side-nav.component';
+import { LoginComponent } from '../common/login/login.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -81,6 +82,7 @@ export function createTranslateLoader(http: HttpClient) {
         FooterComponent,
         HeaderComponent,
         SideNavComponent,
+        LoginComponent
     ],
     exports: [
         ReactiveFormsModule,
@@ -95,6 +97,8 @@ export function createTranslateLoader(http: HttpClient) {
         LoadingComponent,
         PrimaryLayoutComponent,
         MainLayoutComponent,
+        LoginComponent
+        
     ],
     providers: [
     ]

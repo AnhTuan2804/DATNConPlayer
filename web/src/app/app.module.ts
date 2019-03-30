@@ -24,10 +24,8 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     AdminComponent,
     UserComponent,
-    LoginComponent,
     RegisterComponent,
     PageErrorComponent,
-    LoginComponent,
     RegisterComponent
   ],
   imports: [
