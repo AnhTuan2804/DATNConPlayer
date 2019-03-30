@@ -1,6 +1,7 @@
-<app-header></app-header>
+<app-header (ouputlogin)="login()"></app-header>
 <app-side-nav></app-side-nav>
 <!-- content -->
 <router-outlet></router-outlet>
-
 <app-footer></app-footer>
+<!-- <app-register [id]="'modalRegister'" [isShow]='isShowRegister'></app-register> -->
+<app-login [id]="'modalLoginForm'" [isShow]="isShowLogin"></app-login>

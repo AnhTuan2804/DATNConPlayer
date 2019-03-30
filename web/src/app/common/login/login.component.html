@@ -1,3 +1,39 @@
-<p>
-  login works!
-</p>
+<div *ngIf="isShow" class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <!-- Modal HTML Markup -->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Đăng nhập</h1>
+      </div>
+      <div class="modal-body">
+        <form role="form" [formGroup]="loginForm" (ngSubmit)="doLogin()">
+          <input type="hidden" name="_token" value="">
+          <div class="form-group">
+            <label class="control-label">E-Mail</label>
+            <div>
+              <input type="email" class="form-control input-lg" name="email" formControlName="email" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Mật Khẩu</label>
+            <div>
+              <input type="password" class="form-control input-lg" name="password" formControlName="password">
+            </div>
+          </div>
+          <div *ngIf="loginFail" class="error-message">
+            <i>{{messageError}}</i>
+          </div>
+          <div class="form-group">
+            <div>
+              <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
+
+              <a class="btn btn-link" href="">Forgot Your Password?</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<!-- <app-loading-spinner [show]=true></app-loading-spinner> -->

@@ -19,7 +19,7 @@ class RouterIndex {
         this.app.use(ROOT_ROUTE + '/_ah', monitorRouter);
 
         this.app.use(ROOT_ROUTE + '/register', registerRouter);
-        this.app.use(ROOT_ROUTE + '/login', loginRouter);
+        this.app.use(ROOT_ROUTE + '/login', auth.verifyAuth, loginRouter);
         this.app.use(ROOT_ROUTE + '/user', internalToken.verifyToken, userRouter);
         this.app.use(ROOT_ROUTE + '/role', internalToken.verifyToken, roleRouter);
         this.app.use(ROOT_ROUTE + '/reset-password', resetPasswordRouter);
