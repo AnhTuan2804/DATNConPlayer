@@ -24,6 +24,29 @@ export class LoginService extends BaseService {
       })
   }
 
+  public ResetPass(email: string): Observable<any> {
+    return this
+      .postData(`reset-password`, JSON.stringify({ 'email': email }), null).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public Register(email: string, password: string, phone: string, fullname: string): Observable<any> {
+    let auth = `${email}:${password}:${phone}:${fullname}`;
+    let encode = base64.encode(auth);
+    let headers = { 'auth': encode };
+    return this
+      .postData(`register`, null, headers).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
   private handleAuthResponse(res: Response): string {
     // let object = res.json();;
     let token: string = res['token']

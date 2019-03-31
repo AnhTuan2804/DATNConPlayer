@@ -1,4 +1,4 @@
-<div *ngIf="isShow" class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <!-- Modal HTML Markup -->
   <div class="modal-dialog" role="document">
@@ -26,9 +26,9 @@
           </div>
           <div class="form-group">
             <div>
-              <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
-
-              <a class="btn btn-link" href="">Forgot Your Password?</a>
+              <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Đăng nhập</button>
+              <a class="btn btn-link" href="#" (click)="showForgotPass()">Quên mật khẩu?</a>
+              <a class="btn btn-link" href="#" (click)="showRegister()">Đăng ký mới?</a>
             </div>
           </div>
         </form>
@@ -36,4 +36,4 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div>
-<!-- <app-loading-spinner [show]=true></app-loading-spinner> -->
+<app-loading></app-loading>

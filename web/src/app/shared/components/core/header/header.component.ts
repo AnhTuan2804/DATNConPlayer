@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 declare var $;
 @Component({
   selector: 'app-header',
@@ -7,19 +8,26 @@ declare var $;
 })
 export class HeaderComponent implements OnInit {
   @Output() ouputlogin = new EventEmitter();
-  @Output() ouputregister = new EventEmitter();
-  constructor() { }
+  isShow = false;
+  constructor(private router: Router) {
+    this.checkLocalStore();
+  }
 
   ngOnInit() {
   }
 
   login() {
     this.ouputlogin.emit()
-    return false;
   }
 
-  // register() {
-  //   this.ouputregister.emit()
-  //   return false;
-  // } 
+  logout() {
+    localStorage.setItem('token', null);
+    window.location.reload();
+  }
+
+  checkLocalStore() {
+    if (localStorage.getItem('token') === "undefined" || !localStorage.getItem('token')) {
+      this.isShow = true;
+    }
+  }
 }

@@ -18,7 +18,7 @@ class EmailHelper {
         var transporter = nodemailer.createTransport(smtpTransport(smtpConfig));
         // setup e-mail data with unicode symbols
         var mailOptions = {
-            from: `"${userName}" <${user}>`, // sender address
+            from: user, // sender address
             to: emailReceiver,
             cc,
             bcc, // list of receivers
@@ -27,7 +27,7 @@ class EmailHelper {
         };
         return transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
-                throw new Error('Error send email from server');
+                throw new Error('Error send email from server', error);
             } else {
                 return 'Send email success';
             }

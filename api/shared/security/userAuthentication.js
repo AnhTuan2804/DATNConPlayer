@@ -4,22 +4,23 @@ const config = require('../../config/db.config');
 const moment = require('moment');
 const PasswordManagement = require('./passwordManagement');
 const appConstant = require('../../shared/appConstant');
-
+const bcrypt = require('bcrypt')
 class UserAuthentication {
-    authenticate(email, password, db) {
+    async authenticate(email, password, db) {
         return db.find({ where: { email: email } })
-            .then((user) => {
+            .then(async (user) => {
                 if (!user) {
-                    throw new Error('User name or password is not valid!')
+                    throw new Error('Sai email hoặc mật khẩu!')
                 }
                 if (user.is_lock == appConstant.USER_STATUS_BLOCK) {
-                    throw new Error('Account blocked');
+                    throw new Error('Tài khoản đang bị khóa!');
                 }
-                if (new PasswordManagement().comparePassword(password, user.password)) {
+                const checkPass = await bcrypt.compare(password, user.password);
+                if (checkPass) {
                     return user
                 } else {
-                    throw new Error('Password is not valid!');
-                }
+                    throw new Error('Sai mật khẩu!');
+                }                
             });
     }
     generateToken(user) {

@@ -1,3 +1,55 @@
-<p>
-  register works!
-</p>
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Tạo tài khoản</h1>
+      </div>
+      <div class="modal-body">
+        <form role="form" [formGroup]="registerForm" (ngSubmit)="Register()">
+          <input type="hidden" name="_token" value="">
+          <div class="form-group">
+            <label class="control-label">Họ tên</label>
+            <div>
+              <input type="text" class="form-control input-lg" name="fullname" formControlName="fullname" value="">
+            </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label">Số điện thoại</label>
+              <div>
+                <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
+              </div>
+            </div>
+          <div class="form-group">
+            <label class="control-label">E-mail</label>
+            <div>
+              <input type="email" class="form-control input-lg" name="email" formControlName="email" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Mật khẩu</label>
+            <div>
+              <input type="password" class="form-control input-lg" name="password" formControlName="password">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Xác nhận mật khẩu</label>
+            <div>
+              <input type="password" class="form-control input-lg" name="confirmPassword" formControlName="confirmPassword">
+            </div>
+          </div>
+          <div *ngIf="registerFail" class="error-message">
+              <i>{{messageError}}</i>
+            </div>
+          <div class="form-group">
+            <div>
+              <button type="submit" class="btn btn-success" [disabled]="!registerForm.valid">
+                Tạo tài khoản
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

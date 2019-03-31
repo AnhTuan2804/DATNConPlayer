@@ -11,7 +11,9 @@ class PasswordManagement {
     }
 
     comparePassword(password, encrypted) {
-        return bcrypt.compare(password, encrypted);
+        return bcrypt.compare(password, encrypted, (err, res) => {
+            return res
+        });
     }
 
     getNonceString(length) {

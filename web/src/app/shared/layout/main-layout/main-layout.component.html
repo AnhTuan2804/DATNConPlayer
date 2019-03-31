@@ -3,5 +3,6 @@
 <!-- content -->
 <router-outlet></router-outlet>
 <app-footer></app-footer>
-<!-- <app-register [id]="'modalRegister'" [isShow]='isShowRegister'></app-register> -->
-<app-login [id]="'modalLoginForm'" [isShow]="isShowLogin"></app-login>
+<app-register [id]="'modalRegisterForm'"></app-register>
+<app-reset-password [id]="'modalResetPassForm'"></app-reset-password>
+<app-login [id]="'modalLoginForm'" (outputregister)="showRegisterForm()" (ouputForgotPass)="showForgotPass()"></app-login>

@@ -1,4 +1,9 @@
-<app-header></app-header>
-
+<app-header (ouputlogin)="login()"></app-header>
+<app-side-nav></app-side-nav>
+<!-- content -->
+priva nsdvsdsmdn vmsn vsdv 
 <router-outlet></router-outlet>
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+<app-footer></app-footer>
+<app-register [id]="'modalRegisterForm'"></app-register>
+<app-reset-password [id]="'modalResetPassForm'"></app-reset-password>
+<app-login [id]="'modalLoginForm'" (outputregister)="showRegisterForm()" (ouputForgotPass)="showForgotPass()"></app-login>

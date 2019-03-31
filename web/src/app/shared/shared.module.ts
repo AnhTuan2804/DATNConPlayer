@@ -44,6 +44,9 @@ import { FooterComponent } from './components/core/footer/footer.component';
 import { HeaderComponent } from './components/core/header/header.component';
 import { SideNavComponent } from './components/core/side-nav/side-nav.component';
 import { LoginComponent } from '../common/login/login.component';
+import { RegisterComponent } from '../common/register/register.component';
+import { ResetPasswordComponent } from '../common/reset-password/reset-password.component';
+import { User } from './classes/user/user';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,7 +85,9 @@ export function createTranslateLoader(http: HttpClient) {
         FooterComponent,
         HeaderComponent,
         SideNavComponent,
-        LoginComponent
+        LoginComponent,
+        RegisterComponent,
+        ResetPasswordComponent
     ],
     exports: [
         ReactiveFormsModule,
@@ -97,10 +102,14 @@ export function createTranslateLoader(http: HttpClient) {
         LoadingComponent,
         PrimaryLayoutComponent,
         MainLayoutComponent,
-        LoginComponent
-        
+        LoginComponent,
+        RegisterComponent,
+        ResetPasswordComponent
     ],
     providers: [
+        User,
+        ComponentActions,
+        AuthGuard
     ]
 })
 export class SharedModule { }
