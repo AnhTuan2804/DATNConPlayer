@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 @Component({
   selector: 'app-reset-password',
@@ -10,13 +11,10 @@ declare var $: any;
 })
 export class ResetPasswordComponent implements OnInit {
   @Input() id = '';
-  @Output() outputregister = new EventEmitter();
-  @Output() ouputForgotPass = new EventEmitter();
   resetPassForm: FormGroup;
   message: string = "";
-  success = false;
   constructor(private formBuilder: FormBuilder, private action: ComponentActions,
-    private loginService: LoginService) { }
+    private loginService: LoginService, private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.resetPassForm = this.formBuilder.group({
@@ -28,20 +26,19 @@ export class ResetPasswordComponent implements OnInit {
     let email = this.resetPassForm.controls['email'].value;
     this.action.showLoading();
     this.loginService.ResetPass(email).subscribe(result => {
+      this.resetPassForm.reset();
       this.action.hideLoading();
-      this.message = result.message;
-      this.success = true;
+      this.message = '';
+      this.navToLoginForm();
+      this.toastrService.success(result.message, '', { timeOut: 4500 });
     }, (err) => {
       this.action.hideLoading();
       this.message = err.message;
     })
   }
 
-  showRegister() {
-    this.outputregister.emit();
-  }
-
-  showForgotPass() {
-    this.ouputForgotPass.emit();
+  navToLoginForm() {
+    $('#modalResetPassForm').modal('hide');
+    $("#modalLoginForm").modal("show");
   }
 }

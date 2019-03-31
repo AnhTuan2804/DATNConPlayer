@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   registerFail: boolean = false;
   messageError: string = "";
   showLoading = false;
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService, 
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService,
     private toastrService: ToastrService, private action: ComponentActions) { }
 
   ngOnInit() {
