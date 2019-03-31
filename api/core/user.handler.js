@@ -7,20 +7,18 @@ const emailHelper = new EmailHelper();
 const passwordManagement = new PasswordManagement();
 class UserHandler {
 
-    createNewUser(email, password, body) {
-        const phone = body.phone;
+    createNewUser(data) {
         return db.getSequelize().transaction(function (transaction) {
-            return db.user.find(db.getTransaction(transaction, { where: { email: email } })).then((user) => {
+            return db.user.find(db.getTransaction(transaction, { where: { email: data.email } })).then((user) => {
                 if (user !== null) {
-                    throw new Error("Email already exists");
+                    throw new Error("Email đã tồn tại!");
                 } else {
-                    return db.user.find(db.getTransaction(transaction, { where: { phone: phone } })).then((user) => {
+                    return db.user.find(db.getTransaction(transaction, { where: { phone: data.phone } })).then(async (user) => {
                         if (user !== null) {
-                            throw new Error("Phone already exists");
+                            throw new Error("Số điện thoại đã tồn tại!");
                         } else {
-                            body['email'] = email;
-                            body['password'] = passwordManagement.hashPassword(password);
-                            return db.user.createUser(body, transaction).then((user) => {
+                            data['password'] = await passwordManagement.hashPassword(data.password);
+                            return db.user.createUser(data, transaction).then((user) => {
                                 return user
                             })
                         }
@@ -51,7 +49,7 @@ class UserHandler {
                 if (user) {
                     return user.getUser();
                 } else {
-                    throw new Error("User not exists");
+                    throw new Error("Tài khoản không tồn tại!");
                 }
             });
     }
@@ -139,7 +137,7 @@ class UserHandler {
             if (user > 0) {
                 return user;
             } else {
-                throw new Error('User is not exist');
+                throw new Error('Tài khoản không tồn tại!');
             }
         });
     }
@@ -147,14 +145,14 @@ class UserHandler {
     resetPassword(email) {
         return db.user.find({ where: { email: email } }).then((user) => {
             if (!user) {
-                throw new Error('Email is not exist');
+                throw new Error('Sai địa chỉ email!');
             } else {
                 const newPass = passwordManagement.getNonceString(10) + 'Abc1@';
                 const hashPassword = passwordManagement.hashPassword(newPass);
                 user.password = hashPassword;
                 return user.save().then((result) => {
-                    const detail = `Hi ${result.name},<br/><br/>You recenty forgoten the password for The System Connecting Football Team.Password has been reset to <b>${newPass}</b><br/>Please login.<br/><br/>Kindly Regards,<br/>Admin: Anh Tuan - Hien Dieu`
-                    return emailHelper.sendEmail(`Resetting password for ${result.name}`, email, null, null, detail)
+                    const detail = `Hi ${result.fullname},<br/><br/>You recenty forgoten the password for The System Connecting Football Team.Password has been reset to <b>${newPass}</b><br/>Please login.<br/><br/>Kindly Regards,<br/>Admin: Anh Tuan - Hien Dieu`
+                    return emailHelper.sendEmail(`Resetting password for ${result.fullname}`, email, null, null, detail)
                 });
 
             }

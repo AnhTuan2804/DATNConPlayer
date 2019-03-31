@@ -6,21 +6,23 @@ declare var $: any;
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent implements OnInit {
-  isShowLogin = false;
-  // isShowRegister = false;
   constructor() { }
 
   ngOnInit() {
   }
 
   login() {
-    this.isShowLogin = true;
     $('#modalLoginForm').modal("show");
   }
 
-  // register(){
-  //   this.isShowRegister = true;
-  //   $('#modalRegister').show();
-  // }
+  showRegisterForm() {
+    $("#modalLoginForm").modal("hide");
+    $('#modalRegisterForm').modal("show");
+  }
+
+  showForgotPass() {
+    $("#modalLoginForm").modal("hide");
+    $('#modalResetPassForm').modal("show");
+  }
 
 }

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -8,14 +9,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { PageErrorComponent } from './page-error/page-error.component';
-import { LoginComponent } from './common/login/login.component';
-import { RegisterComponent } from './common/register/register.component';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { Routing } from './app.routing';
+import { ToastrModule } from 'ngx-toastr'
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -24,12 +24,11 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     AdminComponent,
     UserComponent,
-    RegisterComponent,
-    PageErrorComponent,
-    RegisterComponent
+    PageErrorComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedServicesModule,
     SharedModule,
     RouterModule,
@@ -43,7 +42,13 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot({
+      maxOpened: 1,
+      autoDismiss: true,
+      enableHtml: true,
+      positionClass: 'toast-top-right'
+    })
   ],
   providers: [
     TranslateService
