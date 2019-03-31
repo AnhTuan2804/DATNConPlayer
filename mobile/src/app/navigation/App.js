@@ -21,17 +21,37 @@ import SettingProvider from '../ui/setting/SettingProvider';
 import MatchSearchProvider from '../ui/search/match/MatchSearchProvider';
 import LeagueSearchProvider from '../ui/search/league/LeagueSearchProvider';
 import GridironSearchProvider from '../ui/search/gridiron/GridironSearchProvider';
+import Constants from '../../theme/variable/Constants';
 
+import { AsyncStorage } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-// type Props = {};
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogin: false
+    }
+  }
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        this.setState({
+          isLogin: true
+        })
+      }
+    } catch (error) {
+      // Error retrieving data\
+      console.log('errrrrrr rồi');
+    }
+  };
+
+  componentWillMount() {
+    this._retrieveData()
+  }
+
   render() {
     return (
       <Root>
@@ -62,7 +82,7 @@ export default class App extends Component {
               >
 
                 {/* Home page and search */}
-                <Stack>
+                <Stack key='home'>
                   <Scene
                     key='TOP'
                     tabBarLabel={`TOP`}

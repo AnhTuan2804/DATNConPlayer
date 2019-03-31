@@ -34,13 +34,14 @@ class LoginComponent extends Component {
             alert(`${values.password}-----${values.email}`)
             this.props.onLogin(values.email, values.password);
         }
+        console.log(this.props.isLoading);
+        
         const { handleSubmit } = this.props;
         return (
             <Container style={{}}>
-                <ImageBackground source={require('../../../assets/image/bagroundBong.jpg')} style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}>
-
+                {Loading(this.props.isLoading)}
+                <ImageBackground source={require('../../../assets/images/bagroundBong.jpg')} style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}>
                     <Content contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        {/* <Image style={{ width: '60%', marginBottom: 60 }} resizeMode='contain' source={require('../../../assets/image/ic-logo-blue.png')} /> */}
                         <View style={{ width: '90%', backgroundColor: 'rgba(135,135,135, 0.8)', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{
                                 fontSize: 50 / Constants.RATE_SIZE,
@@ -72,7 +73,7 @@ class LoginComponent extends Component {
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 10, marginBottom: 20 }}>
                                     <Text onPress={() => Actions.registerScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>TẠO TÀI KHOẢN MỚI
                                     <Text style={{ fontSize: 36 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}> | </Text>
-                                    <Text onPress={() => Actions.TOP()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>TRANG CHỦ</Text>
+                                        <Text onPress={() => Actions.TOP()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>TRANG CHỦ</Text>
                                     </Text>
                                 </View>
                             </View>

@@ -1,11 +1,12 @@
 export default class Constants {
     // static token, locale, currency
-    // static HOST = 'http://coinpay.global-ibk.com:8099'; // Server Test
-    static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server deployed
+    static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server Test
+    // static HOST = 'http://192.168.0.110:8088/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
     static TYPE_ACCOUNT = '';
+    static PHONE = '';
     static AUTHENTICATION = null;
     static USER_IMAGE = null;
 

@@ -90,7 +90,7 @@ class HomeComponent extends Component {
                         horizontal={true}
                         data={dataForlist}
                         renderItem={({ item, index }) => renderSmallItem({ item, index })}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => `dfghjhgf${index}`}
                     >
                     </FlatList>
                 </View>

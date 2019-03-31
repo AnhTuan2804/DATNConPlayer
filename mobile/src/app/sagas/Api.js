@@ -2,29 +2,54 @@ import Constants from '../../theme/variable/Constants';
 import { Toast } from 'native-base';
 import _ from 'lodash';
 import { Actions } from 'react-native-router-flux';
-// import EncodeDecodeService from '../../theme/shared/utils/EncodeDecodeService';
 import Utils from '../../theme/shared/utils/Utils';
+import ToastUtil from '../../theme/shared/utils/ToastUtil';
+import EncryptionService from '../../theme/shared/utils/EncryptionService'
+
 
 // =================LOGIN - START==================
-function* loginAPI(bodyLogin) {
+function* loginAPI(authlogin) {
     const router = 'login';
-    const headersPairs = null;
-    const body = bodyLogin
-    console.log(body);
+    // let auth = EncryptionService.encodeBase64(authlogin)
+    const headersPairs = {
+        // 'auth': auth
+    };
+    const body = authlogin
     const response = yield fetch(`${Constants.HOST}/${router}`, {
         method: 'POST',
         headers: getHeaders(headersPairs),
         body: body,
     }).then((response) => {
-        console.log("--------success-------------");
         return getResponse(response);
     }).catch((error) => {
-        console.log(error);
         showError(error);
     });
     return response;
 }
 // =================LOGIN - END====================
+
+// =================Register - START==================
+function* registerAPI(authRegister) {
+    const router = 'register';
+    let auth = EncryptionService.encodeBase64(authRegister)
+    const headersPairs = {
+        'auth': auth
+    };
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        console.log('errr', error);
+        showError(error);
+    });
+    return response;
+}
+
+// =================Register - START==================
 
 
 // -------------------common----------------------------------
@@ -113,7 +138,7 @@ function getHeadersByToken(headersPairs) {
 
 export const Api = {
     loginAPI,
-    // forgotPassAPI,
+    registerAPI,
     // changePassAPI,
     // forgotUserIDAPI,
     // getListAddressWithdraw,
