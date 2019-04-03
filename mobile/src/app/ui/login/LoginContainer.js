@@ -5,8 +5,6 @@ import { islogin } from '../../actions/LoginActions';
 export default connect(
   state => {
     let loginReducer = state.loginReducer || {};
-    console.log(loginReducer);
-    
     return {
       userData: loginReducer.userData,
       isLoading: loginReducer.isLoading || false,

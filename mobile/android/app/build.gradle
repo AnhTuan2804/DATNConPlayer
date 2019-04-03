@@ -112,6 +112,20 @@ android {
             include "armeabi-v7a", "x86", "arm64-v8a"
         }
     }
+    signingConfigs {
+        release {
+            storeFile file("./my-release-key.keystore")
+            storePassword "21022015"
+            keyAlias "my-key-alias"
+            keyPassword "21022015"
+        }
+        // debug {
+        //     storeFile file("../keystores/debug.jks")
+        //      storePassword "nguyen1"
+        //     keyAlias "key0"
+        //     keyPassword "nguyen1"
+        // }
+    }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds

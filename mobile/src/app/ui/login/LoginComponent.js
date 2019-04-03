@@ -34,8 +34,6 @@ class LoginComponent extends Component {
             alert(`${values.password}-----${values.email}`)
             this.props.onLogin(values.email, values.password);
         }
-        console.log(this.props.isLoading);
-        
         const { handleSubmit } = this.props;
         return (
             <Container style={{}}>

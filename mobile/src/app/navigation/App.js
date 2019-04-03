@@ -32,19 +32,19 @@ export default class App extends Component {
       isLogin: false
     }
   }
+
   _retrieveData = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
       if (value !== null) {
         // We have data!!
         console.log(value);
-        this.setState({
-          isLogin: true
-        })
+        return true
       }
     } catch (error) {
       // Error retrieving data\
       console.log('errrrrrr rồi');
+      return false;
     }
   };
 
@@ -53,20 +53,12 @@ export default class App extends Component {
   }
 
   render() {
+    // let isA123 =  this._retrieveData() || false
     return (
       <Root>
         <View style={mainStyles.container}>
           <Router>
             <Stack key='root'>
-              <Scene key='loginScreen'
-                hideNavBar={true}
-                component={LoginProvider}
-                initial
-              />
-              <Scene key='registerScreen'
-                hideNavBar={true}
-                component={RegisterProvider}
-              />
               {/* Tabbar */}
               <Scene key='tabbar'
                 showLabel={false}
@@ -79,10 +71,12 @@ export default class App extends Component {
                 panHandlers={null}
                 disabledBackGesture={true}
                 hideNavBar={true}
+                initial={this.state.isLogin}
               >
 
                 {/* Home page and search */}
-                <Stack key='home'>
+                <Stack key='home'
+                >
                   <Scene
                     key='TOP'
                     tabBarLabel={`TOP`}
@@ -91,7 +85,6 @@ export default class App extends Component {
                     swipeEnabled={false}
                     component={HomeProvider}
                     hideNavBar={true}
-                    initial
                   />
                   {/* list ppage search */}
                   <Scene
@@ -157,6 +150,15 @@ export default class App extends Component {
                   hideNavBar={true}
                 />
               </Scene>
+              <Scene key='loginScreen'
+                hideNavBar={true}
+                component={LoginProvider}
+                initial={!this.state.isLogin}
+              />
+              <Scene key='registerScreen'
+                hideNavBar={true}
+                component={RegisterProvider}
+              />
             </Stack>
           </Router>
         </View>

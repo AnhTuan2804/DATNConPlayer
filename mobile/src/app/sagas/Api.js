@@ -43,7 +43,6 @@ function* registerAPI(authRegister) {
     }).then((response) => {
         return getResponse(response);
     }).catch((error) => {
-        console.log('errr', error);
         showError(error);
     });
     return response;

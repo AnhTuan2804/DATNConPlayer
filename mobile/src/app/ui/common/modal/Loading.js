@@ -2,8 +2,6 @@ import { ActivityIndicator, View } from 'react-native'
 import React, { Component } from 'react';
 
 function Loading(isVisible) {
-    console.log(isVisible);
-    
     if (isVisible) {
         return (
             <View style={{
