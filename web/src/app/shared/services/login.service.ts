@@ -18,7 +18,9 @@ export class LoginService extends BaseService {
     let encode = base64.encode(auth);
     let headers = { 'auth': encode };
     return this
-      .postData(`login`, null, headers).map(this.handleAuthResponse.bind(this))
+      .postData(`login`, null, headers).map((res) => {
+        return res;
+      })
       .catch((err) => {
         return Observable.throw(err);
       })

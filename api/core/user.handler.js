@@ -106,7 +106,13 @@ class UserHandler {
 
     getListUser() {
         return db.user.getListUser().then((result) => {
-            return result
+            return result;
+        })
+    }
+
+    getUserByToken(token) {
+        return db.user.getUserByToken(token).then((result) => {
+            return result;
         })
     }
 

@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Cập nhật thông tin tài khoản</h1>
+    </div>
+    <div class="modal-body">
+      <div class="row col-md-12">
+        <!-- form Infor -->
+        <form class="col-md-6" role="form" [formGroup]="profileForm" (ngSubmit)="changeInfor()">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">E-mail</label>
+              <div>
+                <input type="email" class="form-control input-lg" name="email" formControlName="email" value=""
+                  disabled>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Họ tên</label>
+              <div>
+                <input type="text" class="form-control input-lg" name="fullname" formControlName="fullname" value="">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Số điện thoại</label>
+              <div>
+                <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div>
+                <button type="submit" class="btn btn-success" [disabled]="!profileForm.valid">
+                  Cập nhật thông tin
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- Change pass form -->
+        <form class="col-md-6" role="form" [formGroup]="changePassForm" (ngSubmit)="changePass()">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Mật khẩu hiện tại</label>
+              <div>
+                <input type="password" class="form-control input-lg" name="currentPassword"
+                  formControlName="currentPassword">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Mật khẩu mới</label>
+              <div>
+                <input type="password" class="form-control input-lg" name="newPassword" formControlName="newPassword">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Xác nhận mật khẩu mới</label>
+              <div>
+                <input type="password" class="form-control input-lg" name="confirmNewPassword"
+                  formControlName="confirmNewPassword">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div>
+                <button type="submit" class="btn btn-success" [disabled]="!changePassForm.valid">
+                  Thay đổi mật khẩu
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
