@@ -63,6 +63,9 @@ class Db {
 
         //area
         this.area = sequelize.import('./models/area');
+
+        //level
+        this.area = sequelize.import('./models/level');
     }
 
     rawQuery(sql, whereClause) {

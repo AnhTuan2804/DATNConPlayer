@@ -1,4 +1,4 @@
-class AreaSchema {
+class LevelSchema {
     getSchema(DataTypes) {
         return {
             id: {
@@ -6,7 +6,7 @@ class AreaSchema {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV1
             },
-            area: {
+            level: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
@@ -20,4 +20,4 @@ class AreaSchema {
     }
 }
 
-module.exports = new AreaSchema();
+module.exports = new LevelSchema();
