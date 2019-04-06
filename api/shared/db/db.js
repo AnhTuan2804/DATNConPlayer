@@ -66,6 +66,10 @@ class Db {
 
         //level
         this.area = sequelize.import('./models/level');
+
+        //date Of The Week
+        this.area = sequelize.import('./models/date_of_the_week');
+
     }
 
     rawQuery(sql, whereClause) {

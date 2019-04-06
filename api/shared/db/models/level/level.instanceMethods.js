@@ -1,6 +1,6 @@
 'use strict';
 const _ = require('lodash');
-class RoleInstanceMethods {
+class AreaInstanceMethods {
     getInstanceMethods(DataTypes) {
         return {
             getLevel: function () {
@@ -10,4 +10,4 @@ class RoleInstanceMethods {
     }
 }
 
-module.exports = new RoleInstanceMethods();
+module.exports = new AreaInstanceMethods();
