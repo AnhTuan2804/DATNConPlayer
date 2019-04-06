@@ -79,6 +79,9 @@ class Db {
         //team
         this.team = sequelize.import('./models/team');
 
+        //team User
+        this.team = sequelize.import('./models/team_user');
+
     }
 
     rawQuery(sql, whereClause) {
