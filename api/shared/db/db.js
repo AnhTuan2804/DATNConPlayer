@@ -75,6 +75,10 @@ class Db {
 
         //size gridiron
         this.size_gridiron = sequelize.import('./models/size_gridiron');
+
+        //team
+        this.team = sequelize.import('./models/team');
+
     }
 
     rawQuery(sql, whereClause) {
