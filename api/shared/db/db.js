@@ -60,6 +60,9 @@ class Db {
         this.user = sequelize.import('./models/user/user');
         this.role = sequelize.import('./models/user/role');
         this.user.belongsTo(this.role, { unique: false, onDelete: 'cascade' });
+
+        //area
+        this.area = sequelize.import('./models/area');
     }
 
     rawQuery(sql, whereClause) {
