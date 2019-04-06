@@ -1,4 +1,5 @@
-class PriceOnTimeSchema {
+const s = require('sequelize');
+class SizeGridironSchema {
     getSchema(DataTypes) {
         return {
             id: {
@@ -6,19 +7,7 @@ class PriceOnTimeSchema {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV1
             },
-            time_start: {
-                type: DataTypes.TIME,
-            },
-            time_end: {
-                type: DataTypes.TIME,
-            },
-            price: {
-                type: DataTypes.FLOAT,
-            },
-            id_date_of_week: {
-                type: DataTypes.STRING,
-            },
-            id_sub_gridiron: {
+            size: {
                 type: DataTypes.STRING,
             },
             created_at: {
@@ -31,4 +20,4 @@ class PriceOnTimeSchema {
     }
 }
 
-module.exports = new PriceOnTimeSchema();
+module.exports = new SizeGridironSchema();

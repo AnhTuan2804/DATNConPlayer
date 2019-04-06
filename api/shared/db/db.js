@@ -65,13 +65,16 @@ class Db {
         this.area = sequelize.import('./models/area');
 
         //level
-        this.area = sequelize.import('./models/level');
+        this.level = sequelize.import('./models/level');
 
         //date Of The Week
-        this.area = sequelize.import('./models/date_of_the_week');
+        this.date_of_the_week = sequelize.import('./models/date_of_the_week');
 
         //price On Time
-        this.area = sequelize.import('./models/price_on_time');
+        this.price_on_time = sequelize.import('./models/price_on_time');
+
+        //size gridiron
+        this.size_gridiron = sequelize.import('./models/size_gridiron');
     }
 
     rawQuery(sql, whereClause) {
