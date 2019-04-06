@@ -70,6 +70,8 @@ class Db {
         //date Of The Week
         this.area = sequelize.import('./models/date_of_the_week');
 
+        //price On Time
+        this.area = sequelize.import('./models/price_on_time');
     }
 
     rawQuery(sql, whereClause) {
