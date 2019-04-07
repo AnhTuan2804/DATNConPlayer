@@ -5,6 +5,7 @@ const PasswordManagement = require('../shared/security/passwordManagement');
 const EmailHelper = require('../shared/helpers/emailHelper');
 const emailHelper = new EmailHelper();
 const passwordManagement = new PasswordManagement();
+const bcrypt = require('bcrypt')
 class UserHandler {
 
     createNewUser(data) {
@@ -28,11 +29,21 @@ class UserHandler {
         })
     }
 
-    editPassWord(token, oldPasswordBase64, newPasswordBase64) {
-        const newPassword = Buffer.from(newPasswordBase64, 'base64');
-        const oldPassword = Buffer.from(oldPasswordBase64, 'base64');
-        return db.user.changePass(token, oldPassword, newPassword).then((user) => {
-            return user
+    editPassWord(token, body) {
+        return db.user.find({ where: { token: token } }).then(async (user) => {
+            if (user) {
+                const checkPass = await bcrypt.compare(body.currentPassword, user.password);
+                if (!checkPass) {
+                    throw new Error('Mật khẩu hiện tại không chính xác!')
+                }
+                body['id'] = user.id;
+                body['password'] = await passwordManagement.hashPassword(body.newPassword);
+                return db.user.updateUser(body).then((result) => {
+                    return result;
+                }).catch((err) => {
+                    throw new Error(err);
+                })
+            }
         })
     }
 
@@ -58,20 +69,21 @@ class UserHandler {
         const whereClause = {
             token: token
         };
-        // return db.user.find({ where: whereClause })
-        //     .then((user) => {
-        //         if (body.userName && body.userName == user.user_name) {
-        //             return this.saveUser(user, body);
-        //         } else {
-        //             return db.user.find({ where: { user_name: body.userName } }).then((userExist) => {
-        //                 if (userExist !== null) {
-        //                     throw new Error("user_name already exists");
-        //                 } else {
-        //                     return this.saveUser(user, body);
-        //                 }
-        //             })
-        //         }
-        //     });
+        return db.user.find({ where: whereClause })
+            .then((user) => {
+                return db.user.find({ where: { phone: body.phone } }).then((userByPhone) => {
+                    if (userByPhone && userByPhone.token != token) {
+                        throw new Error('Số điện thoại đã tồn tại!')
+                    } else {
+                        body['id'] = user.id;
+                        return db.user.updateUser(body).then((result) => {
+                            return result;
+                        }).catch((err) => {
+                            throw new Error(err);
+                        })
+                    }
+                })
+            });
     }
 
     editUser(body) {

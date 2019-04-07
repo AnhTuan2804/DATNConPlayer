@@ -67,8 +67,6 @@ export class BaseService {
         if (token) {
             headers.append('token', token);
         }
-        headers.append('money', 'USD');
-        headers.append('locale', localStorage.getItem('locale') || 'en');
         headers.append('Content-Type', 'application/json');
         if (headersPairs) {
             _.forEach(headersPairs, (value, key) => {

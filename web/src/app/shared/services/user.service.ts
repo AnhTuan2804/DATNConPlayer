@@ -13,10 +13,27 @@ export class UserService extends BaseService {
     super(http);
   }
 
-  public getProfile(token: string): Observable<any> {
-    let headers = { 'token': token };
+  public getProfile(): Observable<any> {
     return this
-      .postData(`user/profile`, null, headers).map((res) => {
+      .getData(`user/profile`)
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public updateProfile(data: Object): Observable<any> {
+    return this
+      .postData(`user/update-profile`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public changePass(data: Object): Observable<any> {
+    return this
+      .postData(`user/change-password`, data).map(res => {
         return res;
       })
       .catch((err) => {

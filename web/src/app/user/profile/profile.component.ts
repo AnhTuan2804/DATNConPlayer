@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
-import { LoginService } from 'src/app/shared/services/login.service';
 import { User } from 'src/app/shared/classes/user/user';
-import { isEmpty } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { UserService } from 'src/app/shared/services/user.service';
 declare var $: any;
@@ -16,7 +14,8 @@ declare var $: any;
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   changePassForm: FormGroup;
-  editFail: boolean = false;
+  editFaild: boolean = false;
+  changePassFaild: boolean = false;
   messageError: string = "";
   showLoading = false;
   constructor(private formBuilder: FormBuilder,
@@ -41,15 +40,28 @@ export class ProfileComponent implements OnInit {
     this.changePassForm = this.formBuilder.group({
       'currentPassword': new FormControl('', Validators.required),
       'newPassword': new FormControl('', Validators.required),
-      'confirmNewPassword': new FormControl('')
-    })
+      'confirmNewPassword': new FormControl('', Validators.required)
+    },
+      {
+        validator: this.passwordMatchValidator
+      })
+  }
+
+  passwordMatchValidator(g: FormGroup) {
+    return g.get('newPassword').value == g.get('confirmNewPassword').value
+      ? null : { passwordMatchValidator: { valid: false } };
   }
 
   getProfile() {
-    this.userService.getProfile(localStorage.getItem('token')).subscribe((result) => {
+    this.action.showLoading();
+    this.userService.getProfile().subscribe((result) => {
+      this.action.hideLoading();
       this.user.setUser(result);
       this.initForm();
       this.bindData(result);
+    }, (err) => {
+      this.action.hideLoading();
+      console.log(err)
     })
   }
 
@@ -66,21 +78,36 @@ export class ProfileComponent implements OnInit {
       phone: this.getValueByNameFormInfor('phone'),
       fullname: this.getValueByNameFormInfor('fullname')
     }
-    console.log('infor ', data)
+    this.action.showLoading();
+    this.userService.updateProfile(data).subscribe((result) => {
+      this.toastrService.success('Cập nhật thông tin thành công!', '', { timeOut: 2500 });
+      this.editFaild = false;
+      this.action.hideLoading();
+    }, (err) => {
+      this.action.hideLoading();
+      this.editFaild = true;
+      this.messageError = err.message;
+    })
   }
 
   changePass() {
     const data = {
-      password: this.getValueByNameFormChangePass('newPassword')
+      currentPassword: this.getValueByNameFormChangePass('currentPassword'),
+      newPassword: this.getValueByNameFormChangePass('newPassword')
     }
-    console.log('changepass', data)
-  }
+    this.action.showLoading();
+    this.userService.changePass(data).subscribe((result) => {
+      this.toastrService.success('Thay đổi mật khẩu thành công!', '', { timeOut: 2500 });
+      this.changePassFaild = false;
+      this.changePassForm.reset();
+      this.action.hideLoading();
+    }, (err) => {
+      this.action.hideLoading();
+      this.changePassFaild = true;
+      this.messageError = err.message;
+    })
 
-  passwordMatchValidator(g: FormGroup) {
-    return g.get('newPassword').value == g.get('confirmNewPassword').value
-      ? null : { passwordMatchValidator: { valid: false } };
   }
-
 
   getValueByNameFormInfor(name) {
     return this.profileForm.controls[name].value;
