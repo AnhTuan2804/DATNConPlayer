@@ -8,7 +8,7 @@ class TeamUser {
         let classMethods = teamUserClassMethods.getClassMethods(DataTypes);
         let instanceMethods = teamuserInstanceMethods.getInstanceMethods(DataTypes);
         let options = { classMethods, instanceMethods, freezeTableName: true, underscored: true };
-        return sequelize.define('team', schema, options);
+        return sequelize.define('team_user', schema, options);
     }
 }
 
