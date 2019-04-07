@@ -52,7 +52,7 @@ class ClassMethods {
 
     getUserByToken(token) {
         return db.user.find({ where: { token: token }, include: { model: db.role } }).then((result) => {
-            return result.getUser();
+            return result;
         })
     }
 

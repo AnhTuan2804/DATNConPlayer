@@ -8,7 +8,6 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class ModelSearchComponent implements OnInit {
   @Input() holder: string;
   @Input() tab: string;
-  @Input() enableFilter: boolean;
   @Output() textSearch = new EventEmitter();
   @Output() outputSearch = new EventEmitter();
   @Output() filter = new EventEmitter();
@@ -22,20 +21,16 @@ export class ModelSearchComponent implements OnInit {
 
   searchName(text, tab) {
     if (this.textSearch) {
-      this.textSearch.emit({ text: text, tab: tab })
+      this.textSearch.emit({ text: text.trim(), tab: tab })
     }
   }
 
   handleKeyDown(text, event) {
     if (event.key == "Enter") {
       this.outputSearch.emit({
-        text: text
+        text: text.trim()
       })
     }
   }
 
-  click_filter() {
-    this.isActived = !this.isActived;
-    this.filter.emit();
-  }
 }

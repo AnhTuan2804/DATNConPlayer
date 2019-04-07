@@ -2,7 +2,8 @@ const errorMapping = {
     100: 'INVALID_KEY',
     101: 'INVALID_TIME_ACCESS',
     102: 'INVALID_TOKEN',
-    105: 'INVALID_AUTH'
+    105: 'INVALID_AUTH',
+    110: 'IS_NOT_ADMIN'
 }
 class GeneralErrorHandler {
     handleError(code, req, res, next) {

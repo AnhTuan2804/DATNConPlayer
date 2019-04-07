@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -12,7 +11,7 @@ export class User {
     is_delete: boolean;
     role: string;
 
-    constructor(private router: Router) { }
+    constructor() { }
 
     setEmail(email) {
         this.email = email;
@@ -31,9 +30,11 @@ export class User {
 
     setLocal(user) {
         localStorage.setItem('token', user.token);
+        localStorage.setItem('role', user.role.role);
     }
 
     removeLocal() {
         localStorage.setItem('token', '');
+        localStorage.setItem('role', '');
     }
 }

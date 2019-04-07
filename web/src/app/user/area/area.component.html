@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Quản lí khu vực</h1>
+    </div>
+    <div class="modal-body">
+      <form role="form" [formGroup]="formAdd" (ngSubmit)="addArea()">
+        <div class="col-md-12 row">
+          <div class="col-md-9">
+            <div class="form-group">
+              <label class="control-label">Tên khu vực</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="area" formControlName="area">
+                <span *ngIf="addFaild">{{messageError}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid">
+                  <i class="fas fa-plus-circle"></i> &nbsp;Thêm khu vực
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-body" *ngIf="showEditForm">
+      <form role="form" [formGroup]="formEdit" (ngSubmit)="editArea()">
+        <div class="col-md-12 row">
+          <div class="col-md-9">
+            <div class="form-group">
+              <label class="control-label">Tên khu vực</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="area" formControlName="area">
+                <span *ngIf="editFaild">{{messageError}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formEdit.valid">
+                <i class="fas fa-pen-square"></i> &nbsp;Cập nhật tên khu vực
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-body">
+      <app-data-table [headers]="headers" [items]="items" [listSearch]=[0,1] (outputContentStatus)="outputContentStatus($event)" (outputAction)="handleAction($event)"></app-data-table>
+    </div>
+  </div>
+</div>
+<app-loading></app-loading>

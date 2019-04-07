@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { UserRouting } from './user.routing.module';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AreaComponent } from './area/area.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { ProfileComponent } from './profile/profile.component';
     ],
     declarations: [
         HomeComponent,
-        ProfileComponent
+        ProfileComponent,
+        AreaComponent
     ]
 })
 export class UserModule { }
