@@ -40,10 +40,8 @@ export class LoginComponent implements OnInit {
         } else {
           this.loginFail = false;
           this.user.setUser(result);
-          setTimeout(() => {
-            $("#modalLoginForm").modal("hide");
-            window.location.reload();
-          });
+          $("#modalLoginForm").modal("hide");
+          window.location.reload();
         }
       }
     }, (err) => {

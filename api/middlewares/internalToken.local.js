@@ -6,7 +6,7 @@ async function verifyToken(req, res, next) {
         const token = req.header('token');
         if (token) {
             res.locals.token = token;
-            userAuthentication.verifyToken(token);
+            // userAuthentication.verifyToken(token);
             const user = await db.user.getUserByToken(token);
             if (user) {
                 next();

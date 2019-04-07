@@ -6,6 +6,7 @@ import { LoginComponent } from '../common/login/login.component';
 import { RegisterComponent } from '../common/register/register.component';
 import { PrimaryLayoutComponent } from '../shared/layout/primary-layout/primary-layout.component';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     {
@@ -13,7 +14,8 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         children: [
             { path: '', component: HomeComponent },
-            { path: 'home', component: HomeComponent, canActivate: [AuthGuard] }
+            { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+            { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
         ]
     }
 ];

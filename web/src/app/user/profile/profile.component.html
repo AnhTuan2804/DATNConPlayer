@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Cập nhật thông tin tài khoản</h1>
+    </div>
+    <div class="modal-body">
+      <div class="row col-md-12">
+        <!-- form Infor -->
+        <form class="col-md-6" role="form" [formGroup]="profileForm" (ngSubmit)="changeInfor()">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">E-mail</label>
+              <div>
+                <input type="email" class="form-control input-lg" name="email" formControlName="email" value=""
+                  disabled>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Họ tên</label>
+              <div>
+                <input type="text" class="form-control input-lg" name="fullname" formControlName="fullname" value="">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Số điện thoại</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
+                <span *ngIf="profileForm.controls['phone'].hasError('required') && (profileForm.controls['phone'].touched || errorForm ) " for="phone">Trường bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="input-include-error">
+                <button type="submit" class="btn btn-success" [disabled]="!profileForm.valid">
+                  Cập nhật thông tin
+                </button>
+                <span *ngIf="editFaild">{{messageError}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- Change pass form -->
+        <form class="col-md-6" role="form" [formGroup]="changePassForm" (ngSubmit)="changePass()">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Mật khẩu hiện tại </label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="currentPassword"
+                  formControlName="currentPassword">
+                  <span *ngIf="changePassForm.controls['currentPassword'].hasError('required') && (changePassForm.controls['currentPassword'].touched || errorForm ) " for="currentPassword">Trường bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Mật khẩu mới</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="newPassword" formControlName="newPassword">
+                <span *ngIf="changePassForm.controls['newPassword'].hasError('required') && (changePassForm.controls['newPassword'].touched || errorForm ) " for="newPassword">Trường bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Xác nhận mật khẩu mới</label>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="confirmNewPassword"
+                  formControlName="confirmNewPassword">
+                  <span *ngIf="(changePassForm.hasError('passwordMatchValidator') || changePassForm.controls['confirmNewPassword'].hasError('required')) &&(changePassForm.controls['confirmNewPassword'].touched || errorForm )" for="confirmNewPassword">Mạt khẩu không trùng khớp</span>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="input-include-error">
+                <button type="submit" class="btn btn-success" [disabled]="!changePassForm.valid">
+                  Thay đổi mật khẩu
+                </button> 
+                <span *ngIf="changePassFaild">{{messageError}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loading></app-loading>

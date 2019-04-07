@@ -16,15 +16,15 @@ class UserRouter {
             });
         router.route('/profile')
             .get((req, res, next) => {
-                return usersHandler.findUserByToken(res.locals.tctToken).then((user) => {
+                return usersHandler.findUserByToken(res.locals.token).then((user) => {
                     res.status(200).send(user)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });
             });
-        router.route('/edit-profile')
+        router.route('/update-profile')
             .post((req, res, next) => {
-                return usersHandler.editProfile(res.locals.tctToken, req.body).then((user) => {
+                return usersHandler.editProfile(res.locals.token, req.body).then((user) => {
                     res.status(200).send(user)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
@@ -33,10 +33,7 @@ class UserRouter {
 
         router.route('/change-password')
             .post((req, res, next) => {
-                if (req.body['old-password'] == req.body['new-password']) {
-                    return res.status(400).send({ code: 400, message: 'Password is not safe' });
-                }
-                return usersHandler.editPassWord(res.locals.tctToken, req.body['old-password'], req.body['new-password']).then((user) => {
+                return usersHandler.editPassWord(res.locals.token, req.body).then((user) => {
                     res.status(200).send(user)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
@@ -54,7 +51,7 @@ class UserRouter {
 
         router.route('/logout')
             .post((req, res, next) => {
-                return usersHandler.logOut(res.locals.tctToken).then((user) => {
+                return usersHandler.logOut(res.locals.token).then((user) => {
                     res.status(200).send({ message: 'logout success' })
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: 'bad request ' + error.message });

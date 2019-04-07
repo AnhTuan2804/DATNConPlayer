@@ -8,7 +8,7 @@ declare var $;
 })
 export class HeaderComponent implements OnInit {
   @Output() ouputlogin = new EventEmitter();
-  isShow = false;
+  isShow = true;
   constructor(private router: Router) {
     this.checkLocalStore();
   }
@@ -21,13 +21,13 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    localStorage.setItem('token', null);
+    localStorage.setItem('token', '');
     window.location.reload();
   }
 
   checkLocalStore() {
     if (localStorage.getItem('token') === "undefined" || !localStorage.getItem('token')) {
-      this.isShow = true;
+      this.isShow = false;
     }
   }
 }

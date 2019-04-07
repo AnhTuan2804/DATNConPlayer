@@ -9,6 +9,16 @@ body {
   padding: 6px 4px;
   font-size: 15px;
 }
+.input-include-error span {
+  color: red;
+  text-transform: capitalize;
+  padding: 6px 4px;
+  font-size: 15px;
+  font-style: italic;
+}
+.required {
+  color: red;
+}
 .overlay {
   display: none;
   .content {
