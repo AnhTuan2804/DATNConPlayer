@@ -28,7 +28,18 @@ class HomeComponent extends Component {
                 backgroundColor: 'red',
                 marginHorizontal: 10,
             }}>
-                <Text style={{ color: 'white' }}>Match{item}</Text>
+                <View style={{
+                    borderBottomColor: '#c1c1c1',
+                    borderBottomWidth: 1,
+                }}>
+                    <Text style={{ fontSize: 17, color: 'green' }}>Tên đội bóng</Text>
+                    <View  style={{
+                   
+                }}>
+                        <Image style={{ width: 15, height: 15 }} resizeMode='cover' source={require('../../../assets/images/icon-captain.png')} />
+
+                    </View>
+                </View>
             </View>
         );
     }
@@ -51,7 +62,7 @@ class HomeComponent extends Component {
         return (
             <View style={{
                 flex: 1,
-                width: width * 7/ 10,
+                width: width * 7 / 10,
                 borderRadius: 5,
                 backgroundColor: 'blue',
                 marginHorizontal: 10,

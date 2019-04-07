@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Field, initialize, reduxForm } from 'redux-form';
-import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber } from './../../../theme/variable/Validate';
+import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber } from '../../../theme/variable/Validate';
 import { View, Text, TouchableOpacity, Image, Dimensions, Linking, ImageBackground } from 'react-native';
 import { Container, Content } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import Loading from './../common/modal/Loading'
+import Loading from '../common/modal/Loading'
 import Constants from '../../../theme/variable/Constants';
 
 
 const { height, width } = Dimensions.get('window');
 
-class LoginComponent extends Component {
+class ForgotPassComponent extends Component {
     constructor(props) {
         super(props);
-        this.props.dispatch(initialize('login', {}));
+        this.props.dispatch(initialize('forgotPass', {}));
     }
 
     componentDidUpdate() {
@@ -31,8 +31,7 @@ class LoginComponent extends Component {
 
     render() {
         submit = values => {
-            alert(`${values.password}-----${values.email}`)
-            this.props.onLogin(values.email, values.password);
+            this.props.onForgotPass(values.email);
         }
         const { handleSubmit } = this.props;
         return (
@@ -48,13 +47,10 @@ class LoginComponent extends Component {
                                 color: '#fff',
                                 marginTop: 20
                             }}
-                            >Đăng nhập</Text>
+                            >Quên mật khẩu</Text>
                             <View style={{ width: '90%', flexDirection: 'column', }}>
                                 <Field name="email" keyboardType="default" textIP="Email" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
-                                />
-                                <Field name='password' keyboardType='default' textIP="Mật khẩu" component={renderFieldForPass}
-                                    validate={[required, maxLength40]}
                                 />
                             </View>
                             <TouchableOpacity onPress={handleSubmit(submit)} style={{
@@ -64,14 +60,14 @@ class LoginComponent extends Component {
                                 <Text style={{
                                     color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
                                     textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                                }}>Đăng nhập</Text>
+                                }}>GỬi</Text>
                             </TouchableOpacity>
                             <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                                 {/* <Text onPress={() => Linking.openURL(Constants.LINK_TO_REGISTER)} style={{ fontSize: 28 / Constants.RATE_SIZE, color: '#46b5fa', textAlign: 'center', margin: 10 }}>TẠO TÀI KHOẢN MỚI</Text> */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 10, marginBottom: 20 }}>
-                                    <Text onPress={() => Actions.registerScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Đăng ký
+                                    <Text onPress={() => Actions.loginScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Đăng nhập
                                     <Text style={{ fontSize: 36 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}> | </Text>
-                                        <Text onPress={() => Actions.forgotPass()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Quên mật khẩu</Text>
+                                        <Text onPress={() => Actions.registerScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Đăng ký</Text>
                                     </Text>
                                 </View>
                             </View>
@@ -85,8 +81,8 @@ class LoginComponent extends Component {
     }
 };
 
-const LoginForm = reduxForm({
-    form: 'login',
-})(LoginComponent);
+const ForgotPassForm = reduxForm({
+    form: 'forgotPass',
+})(ForgotPassComponent);
 
-export default LoginForm;
+export default ForgotPassForm;

@@ -10,11 +10,11 @@ import EncryptionService from '../../theme/shared/utils/EncryptionService'
 // =================LOGIN - START==================
 function* loginAPI(authlogin) {
     const router = 'login';
-    // let auth = EncryptionService.encodeBase64(authlogin)
+    let auth = EncryptionService.encodeBase64(authlogin)
     const headersPairs = {
-        // 'auth': auth
+        'auth': auth
     };
-    const body = authlogin
+    const body = null
     const response = yield fetch(`${Constants.HOST}/${router}`, {
         method: 'POST',
         headers: getHeaders(headersPairs),
@@ -50,6 +50,25 @@ function* registerAPI(authRegister) {
 
 // =================Register - START==================
 
+// =================ForgotPass - START==================
+function* forgotPassAPI(bodyForgotPass) {
+    console.log(bodyForgotPass);
+    const router = 'reset-password';
+    const headersPairs = null;
+    const body = bodyForgotPass
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================Register - START==================
 
 // -------------------common----------------------------------
 function getResponse(response, isShowError) {
@@ -138,6 +157,7 @@ function getHeadersByToken(headersPairs) {
 export const Api = {
     loginAPI,
     registerAPI,
+    forgotPassAPI
     // changePassAPI,
     // forgotUserIDAPI,
     // getListAddressWithdraw,

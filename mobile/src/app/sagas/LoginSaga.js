@@ -21,13 +21,8 @@ async function storeToken(token) {
 
 function* loginSaga(action) {
     try {
-        let body = JSON.stringify({
-            "password": action.password,
-            "email": action.email,
-        });
-
         let auth = `${action.email}:${action.password}`
-        const userDataAPI = yield Api.loginAPI(body);
+        const userDataAPI = yield Api.loginAPI(auth);
         console.log("aaaaaaaaaaaaaaaaaaa", userDataAPI);
         Constants.EMAIL_ADDRESS = userDataAPI.email
         Constants.TOKEN = userDataAPI.token

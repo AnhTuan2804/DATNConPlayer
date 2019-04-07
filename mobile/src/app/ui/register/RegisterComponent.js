@@ -75,9 +75,9 @@ class RegisterComponent extends Component {
                             <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                                 {/* <Text onPress={() => Linking.openURL(Constants.LINK_TO_REGISTER)} style={{ fontSize: 28 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center', margin: 10 }}>TẠO TÀI KHOẢN MỚI</Text> */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 10, marginBottom: 20 }}>
-                                    <Text onPress={() => Actions.loginScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>ĐĂNG NHẬP
+                                    <Text onPress={() => Actions.loginScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Đăng nhập
                                     <Text style={{ fontSize: 36 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}> | </Text>
-                                        <Text onPress={() => Actions.TOP()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>TRANG CHỦ</Text>
+                                        <Text onPress={() => Actions.forgotPass()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>quên mật khẩu</Text>
                                     </Text>
                                 </View>
                             </View>

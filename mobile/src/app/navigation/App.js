@@ -24,6 +24,7 @@ import GridironSearchProvider from '../ui/search/gridiron/GridironSearchProvider
 import Constants from '../../theme/variable/Constants';
 
 import { AsyncStorage } from 'react-native';
+import ForgotPassProvider from '../ui/forgotPass/ForgotPassProvider';
 
 export default class App extends Component {
   constructor(props) {
@@ -38,8 +39,9 @@ export default class App extends Component {
       const value = await AsyncStorage.getItem('token');
       if (value !== null) {
         // We have data!!
-        console.log(value);
         return true
+      } else {
+        return false
       }
     } catch (error) {
       // Error retrieving data\
@@ -48,8 +50,10 @@ export default class App extends Component {
     }
   };
 
-  componentWillMount() {
-    this._retrieveData()
+  componentDidMount() {
+    this.setState({
+      isLogin: this._retrieveData()
+    })
   }
 
   render() {
@@ -59,6 +63,19 @@ export default class App extends Component {
         <View style={mainStyles.container}>
           <Router>
             <Stack key='root'>
+              <Scene key='loginScreen'
+                hideNavBar={true}
+                component={LoginProvider}
+                initial={!this.state.isLogin}
+              />
+              <Scene key='registerScreen'
+                hideNavBar={true}
+                component={RegisterProvider}
+              />
+              <Scene key='forgotPass'
+                hideNavBar={true}
+                component={ForgotPassProvider}
+              />
               {/* Tabbar */}
               <Scene key='tabbar'
                 showLabel={false}
@@ -75,8 +92,7 @@ export default class App extends Component {
               >
 
                 {/* Home page and search */}
-                <Stack key='home'
-                >
+                <Stack key='home' >
                   <Scene
                     key='TOP'
                     tabBarLabel={`TOP`}
@@ -85,6 +101,7 @@ export default class App extends Component {
                     swipeEnabled={false}
                     component={HomeProvider}
                     hideNavBar={true}
+                    initial
                   />
                   {/* list ppage search */}
                   <Scene
@@ -150,15 +167,6 @@ export default class App extends Component {
                   hideNavBar={true}
                 />
               </Scene>
-              <Scene key='loginScreen'
-                hideNavBar={true}
-                component={LoginProvider}
-                initial={!this.state.isLogin}
-              />
-              <Scene key='registerScreen'
-                hideNavBar={true}
-                component={RegisterProvider}
-              />
             </Stack>
           </Router>
         </View>
