@@ -60,6 +60,28 @@ class Db {
         this.user = sequelize.import('./models/user/user');
         this.role = sequelize.import('./models/user/role');
         this.user.belongsTo(this.role, { unique: false, onDelete: 'cascade' });
+
+        //area
+        this.area = sequelize.import('./models/area');
+
+        //level
+        this.level = sequelize.import('./models/level');
+
+        //date Of The Week
+        this.date_of_the_week = sequelize.import('./models/date_of_the_week');
+
+        //price On Time
+        this.price_on_time = sequelize.import('./models/price_on_time');
+
+        //size gridiron
+        this.size_gridiron = sequelize.import('./models/size_gridiron');
+
+        //team
+        this.team = sequelize.import('./models/team');
+
+        //team User
+        this.team = sequelize.import('./models/team_user');
+
     }
 
     rawQuery(sql, whereClause) {
