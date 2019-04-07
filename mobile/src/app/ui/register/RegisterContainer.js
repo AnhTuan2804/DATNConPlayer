@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterComponent';
+import { isregister } from '../../actions/RegisterActions';
 
 export default connect(
   state => {
@@ -12,8 +13,8 @@ export default connect(
   },
   dispatch => {
     return {
-      onLogin: (userID, password) => {
-        dispatch(islogin(userID, password))
+      onRegister: (body) => {
+        dispatch(isregister(body))
       }
     }
   }

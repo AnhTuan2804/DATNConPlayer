@@ -31,16 +31,15 @@ class RegisterComponent extends Component {
 
     render() {
         submit = values => {
-            alert(values.password)
-            // this.props.onLogin(values.userID, values.password);
+            // alert(`${values.email},${values.fullName},${values.phone},${values.password}`)
+            this.props.onRegister(values);
         }
         const { handleSubmit } = this.props;
         return (
             <Container style={{}}>
-                <ImageBackground source={require('../../../assets/image/bagroundBong.jpg')} style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}>
+                <ImageBackground source={require('../../../assets/images/bagroundBong.jpg')} style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}>
 
                     <Content contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        {/* <Image style={{ width: '60%', marginBottom: 60 }} resizeMode='contain' source={require('../../../assets/image/ic-logo-blue.png')} /> */}
                         <View style={{ width: '90%', backgroundColor: 'rgba(135,135,135, 0.8)', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{
                                 fontSize: 50 / Constants.RATE_SIZE,
@@ -51,13 +50,13 @@ class RegisterComponent extends Component {
                             }}
                             >Register</Text>
                             <View style={{ width: '90%', flexDirection: 'column', }}>
-                                <Field name="userFirstName" keyboardType="default" textIP="Họ" component={renderField}
+                                <Field name="email" keyboardType="default" textIP="Email" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
                                 />
-                                <Field name="userLastName" keyboardType="default" textIP="Tên" component={renderField}
+                                <Field name="fullName" keyboardType="default" textIP="Tên" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
                                 />
-                                <Field name="userID" keyboardType="default" textIP="Số điện thoại" component={renderField}
+                                <Field name="phone" keyboardType="default" textIP="Số điện thoại" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
                                 />
                                 <Field name='password' keyboardType='default' textIP="Mật khẩu" component={renderFieldForPass}
@@ -76,9 +75,9 @@ class RegisterComponent extends Component {
                             <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                                 {/* <Text onPress={() => Linking.openURL(Constants.LINK_TO_REGISTER)} style={{ fontSize: 28 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center', margin: 10 }}>TẠO TÀI KHOẢN MỚI</Text> */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 10, marginBottom: 20 }}>
-                                    <Text onPress={() => Actions.loginScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>ĐĂNG NHẬP
+                                    <Text onPress={() => Actions.loginScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Đăng nhập
                                     <Text style={{ fontSize: 36 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}> | </Text>
-                                        <Text onPress={() => Actions.TOP()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>TRANG CHỦ</Text>
+                                        <Text onPress={() => Actions.forgotPass()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>quên mật khẩu</Text>
                                     </Text>
                                 </View>
                             </View>

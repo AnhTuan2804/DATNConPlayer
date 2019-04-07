@@ -1,5 +1,5 @@
 import { Toast } from 'native-base';
-import Constants from '../../../../theme/variable/Constants';
+import Constants from '../../../theme/variable/Constants';
 
 export default class ToastUtil {
     static showToast(text, type) {
@@ -12,3 +12,4 @@ export default class ToastUtil {
         });
     }
 }
+
