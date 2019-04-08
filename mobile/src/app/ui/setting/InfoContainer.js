@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import InfoComponent from './InfoComponent';
+import InfoForm from './InfoComponent';
 
 export default connect(
   state => {
@@ -9,6 +9,11 @@ export default connect(
   },
   dispatch => {
     return {
+      onUpdateInfo: (body) => {
+        console.log(body);
+        
+        // dispatch(isregister(body))
+      }
     }
   }
-)(InfoComponent);
+)(InfoForm);

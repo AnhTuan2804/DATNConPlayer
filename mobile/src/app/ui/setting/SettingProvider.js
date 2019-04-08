@@ -31,15 +31,15 @@ export default class SettingProvider extends Component {
     };
 
     _renderLabel = ({ route }) => (
-        <Text ellipsizeMode='tail' numberOfLines={1} style={{ color: '#373736', textAlign: 'center',flex: 1 }}>{route.title}</Text>
+        <Text ellipsizeMode='tail' numberOfLines={1} style={{ color: '#373736', textAlign: 'center', flex: 1 }}>{route.title}</Text>
     );
 
     render() {
         return (
             <Provider store={store}>
-            <View style = {{flex: 0.5, backgroundColor: '#cecece'}}>
+                {/* <View style={{ flex: 0.5, backgroundColor: '#cecece' }}>
 
-</View>
+                </View> */}
                 <View style={{ flex: 2, flexDirection: 'column', backgroundColor: '#ffffff' }}>
                     <TabView
                         navigationState={this.state}

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import SettingComponent from './SettingComponent';
+import ChangePassForm from './ChangePassComponent';
 
 export default connect(
   state => {
@@ -9,6 +9,10 @@ export default connect(
   },
   dispatch => {
     return {
+      onChangePass: (body) => {
+        console.log(body);
+        // dispatch(isregister(body))
+      }
     }
   }
-)(SettingComponent);
+)(ChangePassForm);
