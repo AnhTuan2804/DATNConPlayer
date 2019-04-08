@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginFail: boolean = false;
   messageError: string = "";
-  showLoading = false;
   constructor(private formBuilder: FormBuilder, private loginService: LoginService,
     private user: User, private componentAction: ComponentActions) { }
 

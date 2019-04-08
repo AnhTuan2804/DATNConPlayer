@@ -7,8 +7,7 @@ const emailHelper = new EmailHelper();
 const passwordManagement = new PasswordManagement();
 const bcrypt = require('bcrypt')
 class UserHandler {
-
-    createNewUser(data) {
+    registerAccount(data) {
         return db.getSequelize().transaction(function (transaction) {
             return db.user.find(db.getTransaction(transaction, { where: { email: data.email } })).then((user) => {
                 if (user !== null) {
@@ -55,10 +54,10 @@ class UserHandler {
     }
 
     findUserByToken(token) {
-        return db.user.find({ where: { token: token } })
+        return db.user.find({ where: { token: token }, include: [{ model: db.role }] })
             .then((user) => {
                 if (user) {
-                    return user.getUser();
+                    return user;
                 } else {
                     throw new Error("Tài khoản không tồn tại!");
                 }

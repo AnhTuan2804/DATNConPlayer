@@ -19,7 +19,7 @@ export class DataTableComponent implements OnInit {
   @Input() showBtn = true;
   @Input() checkSearchFilter = false;
   @Input() isCheckItemRadio = false;
-  @Input() pageSize = 20;
+  @Input() pageSize = 5;
   @Input() checkDefault = []
   @Output() outputAction = new EventEmitter();
   @Output() outputContentStatus = new EventEmitter();

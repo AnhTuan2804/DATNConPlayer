@@ -2,27 +2,26 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './helpers/base.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends BaseService {
+export class AreaService extends BaseService {
 
   constructor(public http: Http) {
     super(http);
   }
 
-  public getProfile(): Observable<any> {
+  public getList(): Observable<any> {
     return this
-      .getData(`user/profile`)
+      .getData(`area/get-list`)
       .catch((err) => {
         return Observable.throw(err);
       })
   }
 
-  public updateProfile(data: Object): Observable<any> {
+  public createArea(data: Object): Observable<any> {
     return this
-      .postData(`user/update-profile`, data).map(res => {
+      .postData(`area/create`, data).map(res => {
         return res;
       })
       .catch((err) => {
@@ -30,9 +29,9 @@ export class UserService extends BaseService {
       })
   }
 
-  public changePass(data: Object): Observable<any> {
+  public updateArea(data: Object): Observable<any> {
     return this
-      .postData(`user/change-password`, data).map(res => {
+      .postData(`area/update`, data).map(res => {
         return res;
       })
       .catch((err) => {
@@ -40,4 +39,13 @@ export class UserService extends BaseService {
       })
   }
 
+  public deleteArea(data: Object): Observable<any> {
+    return this
+      .postData(`area/delete`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
 }

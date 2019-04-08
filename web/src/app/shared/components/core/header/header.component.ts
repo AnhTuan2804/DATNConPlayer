@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/shared/classes/user/user';
 declare var $;
 @Component({
   selector: 'app-header',
@@ -9,7 +10,8 @@ declare var $;
 export class HeaderComponent implements OnInit {
   @Output() ouputlogin = new EventEmitter();
   isShow = true;
-  constructor(private router: Router) {
+  isAdmin = false;
+  constructor(private user: User) {
     this.checkLocalStore();
   }
 
@@ -21,13 +23,15 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    localStorage.setItem('token', '');
+    this.user.removeLocal();
     window.location.reload();
   }
 
   checkLocalStore() {
     if (localStorage.getItem('token') === "undefined" || !localStorage.getItem('token')) {
       this.isShow = false;
+    } else if (localStorage.getItem('role') && localStorage.getItem('role') == 'admin') {
+      this.isAdmin = true
     }
   }
 }
