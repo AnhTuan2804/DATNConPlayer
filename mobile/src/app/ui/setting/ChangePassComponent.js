@@ -9,7 +9,7 @@ import Utils from '../../../theme/shared/utils/Utils';
 
 const { height, width } = Dimensions.get('window');
 const rateScreen = height / 680;
-class SettingComponent extends Component {
+class ChangepassComponent extends Component {
     constructor(props) {
         super(props);
     }
@@ -24,4 +24,4 @@ class SettingComponent extends Component {
     }
 };
 
-export default SettingComponent;
+export default ChangepassComponent;

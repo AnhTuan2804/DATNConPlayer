@@ -9,5 +9,5 @@ import App from './src/app/navigation/App.js';
 import ForgotPassProvider from './src/app/ui/forgotPass/ForgotPassProvider.js';
 import SettingProvider from './src/app/ui/setting/SettingProvider.js';
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => SettingProvider);
 
