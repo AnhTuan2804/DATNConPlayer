@@ -29,13 +29,13 @@ function* loginAPI(authlogin) {
 // =================LOGIN - END====================
 
 // =================Register - START==================
-function* registerAPI(authRegister) {
+function* registerAPI(authRegister, bodyRegister) {
     const router = 'register';
     let auth = EncryptionService.encodeBase64(authRegister)
     const headersPairs = {
         'auth': auth
     };
-    const body = null
+    const body = bodyRegister
     const response = yield fetch(`${Constants.HOST}/${router}`, {
         method: 'POST',
         headers: getHeaders(headersPairs),
@@ -68,8 +68,59 @@ function* forgotPassAPI(bodyForgotPass) {
     return response;
 }
 
-// =================Register - START==================
+// =================ForgotPass - START==================
+// =================ChangePass - START==================
+function* changePassAPI(bodyChangePass) {
+    console.log(bodyChangePass);
+    const router = 'user/change-password';
+    const headersPairs = null;
+    const body = bodyChangePass
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
 
+// =================Update profile - START==================
+function* updateInfoAPI(bodyInfo) {
+    console.log(bodyInfo);
+    const router = 'user/update-profile';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================Update profile - START==================
+function* getProfileAPI() {
+    const router = 'user/profile';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
 // -------------------common----------------------------------
 function getResponse(response, isShowError) {
     if (response.status >= 400) {
@@ -157,9 +208,8 @@ function getHeadersByToken(headersPairs) {
 export const Api = {
     loginAPI,
     registerAPI,
-    forgotPassAPI
-    // changePassAPI,
-    // forgotUserIDAPI,
-    // getListAddressWithdraw,
-    // getProfileAPI
+    forgotPassAPI,
+    changePassAPI,
+    getProfileAPI,
+    updateInfoAPI,
 };

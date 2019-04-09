@@ -1,7 +1,7 @@
 export default class Constants {
     // static token, locale, currency
     // static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server Test
-    static HOST = 'http://192.168.1.53:8088/api'; // Server deployed
+    static HOST = 'http://192.168.137.202:8088/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
@@ -27,19 +27,6 @@ export default class Constants {
     static MIN_AMOUNT_WITHDRAW_BTC = null;
     static MAX_AMOUNT_WITHDRAW_JPY = null;
     static MIN_AMOUNT_WITHDRAW_JPY = null;
-
-    //Link app
-    static LINK_TO_REGISTER = 'https://coins-payment.com/register/personal';
-    static LINK_TO_CONFIRM_ACCOUNT_TYPE_1 = 'https://coins-payment.com/profile-personal';
-    static LINK_TO_CONFIRM_ACCOUNT_TYPE_2 = 'https://coins-payment.com/profile';
-    static LINK_TO_AUTHENTICATION_APP_IOS = 'https://itunes.apple.com/vn/app/google-authenticator/id388497605?mt=8';
-    static LINK_TO_AUTHENTICATION_APP_ANDROID = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en';
-    static LINK_TO_AUTHENTICATION_SETTING = 'https://coins-payment.com/setting/two-factor';
-    static LINK_TO_SETTING = 'https://coins-payment.com/setting';
-    static LINK_TO_CONTACT = 'https://coins-payment.com/contact';
-    static LINK_TO_NOTIFICATION = 'https://coins-payment.com/setting/notification';
-    static LINK_TO_CREATE_ADDRESS_BTC = 'https://coins-payment.com/setting/add-address';
-    static LINK_TO_CREATE_ADDRESS_JPY = 'https://coins-payment.com/setting/add-bank';
 
     // EXIT_APP
     static TITLE_EXIT_APP = '終了アプリ';

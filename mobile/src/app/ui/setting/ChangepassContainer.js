@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import ChangePassForm from './ChangePassComponent';
+import { ischangePass } from '../../actions/SettingActions';
 
 export default connect(
   state => {
+    let settingReducers = state.settingReducers || {} 
     return {
-      isloadding :  false
+      isLoading :   settingReducers.isLoading || false,
     }
   },
   dispatch => {
     return {
       onChangePass: (body) => {
-        console.log(body);
-        // dispatch(isregister(body))
+        dispatch(ischangePass(body))
       }
     }
   }

@@ -23,6 +23,7 @@ class ChangepassComponent extends Component {
         const { handleSubmit } = this.props;
         return (
             <Container style={{ backgroundColor: 'white' }}>
+                {Loading(this.props.isLoading)}
                 <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>

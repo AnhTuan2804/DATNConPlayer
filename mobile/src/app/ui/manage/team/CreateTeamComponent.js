@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, BackHandler, Alert, TouchableOpacity, Platform } from 'react-native';
 import { Container, Content } from 'native-base';
-import Constants from '../../../theme/variable/Constants';
+import Constants from '../../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
-import Loading from '../common/modal/Loading';
-import Utils from '../../../theme/shared/utils/Utils';
+import Loading from '../../common/modal/Loading';
+import Utils from '../../../../theme/shared/utils/Utils';
 import { Field, initialize, reduxForm } from 'redux-form';
-import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber } from './../../../theme/variable/Validate';
+import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber } from './../../../../theme/variable/Validate';
 
 
 const { height, width } = Dimensions.get('window');
 const rateScreen = height / 680;
-class InfoComponent extends Component {
+class CreateTeamComponent extends Component {
     constructor(props) {
         super(props);
-        this.props.dispatch(initialize('infoUser', {}));
+        this.props.dispatch(initialize('createTeam', {}));
     }
     render() {
         submit = values => {
-            this.props.onUpdateInfo(values);
+            // this.props.onUpdateInfo(values);
         }
         const { handleSubmit } = this.props;
         return (
@@ -27,13 +27,13 @@ class InfoComponent extends Component {
                 <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>
-                            <Field name="email" keyboardType="default" textIP="Email" label={'Email'} component={renderField}
+                            <Field name="email" keyboardType="default" textIP="Email" label={'Tên đội'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
-                            <Field name="fullName" keyboardType="default" textIP="Tên" label={'Họ tên'} component={renderField}
+                            <Field name="fullName" keyboardType="default" textIP="Tên" label={'Khu vực'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
-                            <Field name="phone" keyboardType="default" textIP="Số điện thoại" label={'Số điện thoại'} component={renderField}
+                            <Field name="phone" keyboardType="default" textIP="Số điện thoại" label={'Trình độ'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
                         </View>
@@ -53,8 +53,8 @@ class InfoComponent extends Component {
     }
 };
 
-const InfoForm = reduxForm({
-    form: 'infoUser',
-})(InfoComponent);
+const CreateTeamForm = reduxForm({
+    form: 'createTeam',
+})(CreateTeamComponent);
 
-export default InfoForm;
+export default CreateTeamForm;
