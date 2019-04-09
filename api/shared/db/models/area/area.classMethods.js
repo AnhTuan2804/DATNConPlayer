@@ -7,24 +7,24 @@ class ClassMethods {
 
     getClassMethods(DataTypes) {
         return {
-            createAreas: (body) => { return this.createAreas(body) },
-            getListAreas: () => { return this.getListAreas() },
+            createArea: (body) => { return this.createArea(body) },
+            getListArea: () => { return this.getListArea() },
             updateArea: (body) => { return this.updateArea(body) },
-            deleteAreas: (body) => { return this.deleteAreas(body) }
+            deleteArea: (body) => { return this.deleteArea(body) }
         };
     }
 
-    createAreas(body) {
+    createArea(body) {
         return db.getSequelize().transaction(function (transaction) {
-            return db.area.create(body.area, db.getTransaction(transaction)).then((createdAreas) => {
-                return createdAreas;
+            return db.area.create(body.area, db.getTransaction(transaction)).then((result) => {
+                return result;
             }).catch((err) => {
                 throw err
             });
         })
     }
 
-    getListAreas() {
+    getListArea() {
         return db.area.findAll();
     }
 
@@ -35,10 +35,10 @@ class ClassMethods {
             })
     }
 
-    deleteAreas(id) {
+    deleteArea(body) {
         return db.area.destroy({
             where: {
-                id: id
+                id: body.id
             }
         });
     }

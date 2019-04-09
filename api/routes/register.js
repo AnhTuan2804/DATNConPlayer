@@ -15,7 +15,7 @@ class RegisterRouter {
                     phone : auth.toString().split(':')[2],
                     fullname : auth.toString().split(':')[3]
                 }
-                return usersHandler.createNewUser(data).then((user) => {
+                return usersHandler.registerAccount(data).then((user) => {
                     res.status(200).send(user)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });

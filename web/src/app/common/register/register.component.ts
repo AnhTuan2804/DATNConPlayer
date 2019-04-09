@@ -15,7 +15,6 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   registerFail: boolean = false;
   messageError: string = "";
-  showLoading = false;
   constructor(private formBuilder: FormBuilder, private loginService: LoginService,
     private toastrService: ToastrService, private action: ComponentActions) { }
 
@@ -34,7 +33,7 @@ export class RegisterComponent implements OnInit {
     this.action.showLoading();
     this.loginService.Register(email, password, phone, fullname).subscribe(result => {
       this.action.hideLoading();
-      this.toastrService.success('Tạo tài khoản thành công', '', { timeOut: 2500 });
+      this.toastrService.success('Tạo tài khoản thành công', '', { timeOut: 3500 });
       this.navToHomeLoginForm();
     }, (err) => {
       this.action.hideLoading();

@@ -8,7 +8,7 @@ class AreaSchema {
             },
             area: {
                 type: DataTypes.STRING,
-                allowNull: false,
+                allowNull: false
             },
             created_at: {
                 type: DataTypes.DATE

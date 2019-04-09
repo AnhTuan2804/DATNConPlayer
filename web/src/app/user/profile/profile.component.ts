@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
     }
     this.action.showLoading();
     this.userService.updateProfile(data).subscribe((result) => {
-      this.toastrService.success('Cập nhật thông tin thành công!', '', { timeOut: 2500 });
+      this.toastrService.success('Cập nhật thông tin thành công!', '', { timeOut: 3500 });
       this.editFaild = false;
       this.action.hideLoading();
     }, (err) => {
@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit {
     }
     this.action.showLoading();
     this.userService.changePass(data).subscribe((result) => {
-      this.toastrService.success('Thay đổi mật khẩu thành công!', '', { timeOut: 2500 });
+      this.toastrService.success('Thay đổi mật khẩu thành công!', '', { timeOut: 3500 });
       this.changePassFaild = false;
       this.changePassForm.reset();
       this.action.hideLoading();

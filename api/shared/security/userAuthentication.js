@@ -2,12 +2,12 @@
 const jwt = require('jsonwebtoken');
 const config = require('../../config/db.config');
 const moment = require('moment');
-const PasswordManagement = require('./passwordManagement');
+const db = require('../db/db');
 const appConstant = require('../../shared/appConstant');
 const bcrypt = require('bcrypt')
 class UserAuthentication {
-    async authenticate(email, password, db) {
-        return db.find({ where: { email: email } })
+    async authenticate(email, password, dbUser) {
+        return dbUser.find({ where: { email: email }, include: [{ model: db.role }] })
             .then(async (user) => {
                 if (!user) {
                     throw new Error('Sai email hoặc mật khẩu!')
@@ -20,7 +20,7 @@ class UserAuthentication {
                     return user
                 } else {
                     throw new Error('Sai mật khẩu!');
-                }                
+                }
             });
     }
     generateToken(user) {
