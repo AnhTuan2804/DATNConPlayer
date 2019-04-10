@@ -18,6 +18,7 @@ export class User {
     }
 
     setUser(user) {
+        console.log(user);
         this.id = user.id;
         this.email = user.email;
         this.fullname = user.fullname;
@@ -26,6 +27,7 @@ export class User {
         this.is_delete = user.is_delete == 1 ? true : false;
         this.is_lock = user.is_lock == 1 ? true : false;
         this.setLocal(user);
+       
     }
 
     setLocal(user) {

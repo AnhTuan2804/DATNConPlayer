@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AreaComponent } from './area/area.component';
 import { AuthGuardAdmin } from '../shared/guards/auth-admin.guard';
+import { TeamComponent } from './team/team.component';
+import { LevelComponent } from './level/level.component';
 
 export const routes: Routes = [
     {
@@ -16,6 +18,8 @@ export const routes: Routes = [
             { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
             { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
             { path: 'area', component: AreaComponent, canActivate: [AuthGuardAdmin] },
+            { path: 'team', component: TeamComponent, canActivate: [AuthGuard] },
+            { path: 'level', component: LevelComponent, canActivate: [AuthGuardAdmin] },
         ]
     }
 ];

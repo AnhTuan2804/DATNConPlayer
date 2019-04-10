@@ -80,7 +80,7 @@ class Db {
         this.team = sequelize.import('./models/team');
 
         //team User
-        this.team = sequelize.import('./models/team_user');
+        this.teamUser = sequelize.import('./models/team_user');
 
     }
 

@@ -37,11 +37,15 @@ export class LoginService extends BaseService {
   }
 
   public Register(email: string, password: string, phone: string, fullname: string): Observable<any> {
-    let auth = `${email}:${password}:${phone}:${fullname}`;
+    let auth = `${email}:${password}`;
     let encode = base64.encode(auth);
+    const data = {
+      phone: phone,
+      fullname: fullname
+    }
     let headers = { 'auth': encode };
     return this
-      .postData(`register`, null, headers).map(res => {
+      .postData(`register`, data, headers).map(res => {
         return res;
       })
       .catch((err) => {

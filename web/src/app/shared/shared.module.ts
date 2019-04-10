@@ -49,6 +49,7 @@ import { ResetPasswordComponent } from '../common/reset-password/reset-password.
 import { User } from './classes/user/user';
 import { Area } from './classes/area';
 import { AuthGuardAdmin } from './guards/auth-admin.guard';
+import { Level } from './classes/level';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -113,7 +114,8 @@ export function createTranslateLoader(http: HttpClient) {
         ComponentActions,
         AuthGuard,
         AuthGuardAdmin,
-        Area
+        Area,
+        Level
     ]
 })
 export class SharedModule { }

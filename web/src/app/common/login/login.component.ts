@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { User } from 'src/app/shared/classes/user/user';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   loginFail: boolean = false;
   messageError: string = "";
   constructor(private formBuilder: FormBuilder, private loginService: LoginService,
-    private user: User, private componentAction: ComponentActions) { }
+    private user: User, private componentAction: ComponentActions, private router: Router) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -33,16 +34,12 @@ export class LoginComponent implements OnInit {
     this.loginService.doLogin(email, password).subscribe(result => {
       this.componentAction.hideLoading();
       if (result) {
-        if (result.is_lock) {
-          this.loginFail = true;
-          this.messageError = "Account Block";
-        } else {
-          this.loginFail = false;
-          this.user.setUser(result);
-          $("#modalLoginForm").modal("hide");
-          window.location.reload();
-        }
+        this.loginFail = false;
+        $("#modalLoginForm").modal("hide");
+        this.user.setUser(result);
+        this.router.navigate(['abc/team']);
       }
+      // window.location.reload();
     }, (err) => {
       this.componentAction.hideLoading();
       this.loginFail = true;
