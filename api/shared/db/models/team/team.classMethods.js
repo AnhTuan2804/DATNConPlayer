@@ -7,24 +7,24 @@ class ClassMethods {
 
     getClassMethods(DataTypes) {
         return {
-            createTeams: (body) => { return this.createTeams(body) },
-            getListTeams: () => { return this.getListTeams() },
+            createTeam: (body) => { return this.createTeam(body) },
+            getListTeam: () => { return this.getListTeam() },
             updateTeam: (body) => { return this.updateTeam(body) },
-            deleteTeams: (body) => { return this.deleteTeams(body) }
+            deleteTeam: (body) => { return this.deleteTeam(body) }
         };
     }
 
-    createTeams(body) {
+    createTeam(body) {
         return db.getSequelize().transaction(function (transaction) {
-            return db.team.create(body.team, db.getTransaction(transaction)).then((createdTeams) => {
-                return createdTeams;
+            return db.team.create(body.team, db.getTransaction(transaction)).then((createdTeam) => {
+                return createdTeam;
             }).catch((err) => {
                 throw err
             });
         })
     }
 
-    getListTeams() {
+    getListTeam() {
         return db.team.findAll();
     }
 
@@ -35,10 +35,10 @@ class ClassMethods {
             })
     }
 
-    deleteTeams(id) {
+    deleteTeam(body) {
         return db.team.destroy({
             where: {
-                id: id
+                id: body.id
             }
         });
     }

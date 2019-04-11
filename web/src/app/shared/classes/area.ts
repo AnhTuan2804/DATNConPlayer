@@ -22,6 +22,17 @@ export class Area {
         return this.allArea;
     }
 
+    getListAreaForDropdown(areas) {
+        let tmp = [];
+        _.forEach(areas, (area => {
+            let data = [];
+            data['area'] = area;
+            data['itemName'] = area.area;
+            tmp.push(data);
+        }))
+        return tmp;
+    }
+
     getAllArea() {
         return this.allArea
     }

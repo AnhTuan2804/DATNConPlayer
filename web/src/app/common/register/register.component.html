@@ -15,32 +15,43 @@
             </div>
           </div>
           <div class="form-group">
-              <label class="control-label">Số điện thoại</label>
-              <div>
-                <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
-              </div>
+            <label class="control-label">Số điện thoại</label>
+            <span class="required"> *</span>
+            <div class="input-include-error">
+              <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
+              <span *ngIf="registerForm.controls.phone.hasError('required')">Trường bắt buộc</span>
             </div>
+          </div>
           <div class="form-group">
             <label class="control-label">E-mail</label>
-            <div>
+            <span class="required"> *</span>
+            <div class="input-include-error">
               <input type="email" class="form-control input-lg" name="email" formControlName="email" value="">
+              <span *ngIf="registerForm.controls.email.hasError('required')">Trường bắt buộc</span>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label">Mật khẩu</label>
-            <div>
+            <span class="required"> *</span>
+            <div class="input-include-error">
               <input type="password" class="form-control input-lg" name="password" formControlName="password">
+              <span *ngIf="registerForm.controls.password.hasError('required')">Trường bắt buộc</span>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label">Xác nhận mật khẩu</label>
-            <div>
-              <input type="password" class="form-control input-lg" name="confirmPassword" formControlName="confirmPassword">
+            <span class="required"> *</span>
+            <div class="input-include-error">
+              <input type="password" class="form-control input-lg" name="confirmPassword"
+                formControlName="confirmPassword">
+              <span
+                *ngIf="(registerForm.hasError('passwordMatchValidator') || registerForm.controls['confirmPassword'].hasError('required')) &&(registerForm.controls['confirmPassword'].touched || errorForm )"
+                for="confirmPassword">Mật khẩu không trùng khớp</span>
             </div>
           </div>
           <div *ngIf="registerFail" class="error-message">
-              <i>{{messageError}}</i>
-            </div>
+            <i>{{messageError}}</i>
+          </div>
           <div class="form-group">
             <div>
               <button type="submit" class="btn btn-success" [disabled]="!registerForm.valid">

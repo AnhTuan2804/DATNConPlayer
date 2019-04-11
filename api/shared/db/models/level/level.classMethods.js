@@ -7,24 +7,24 @@ class ClassMethods {
 
     getClassMethods(DataTypes) {
         return {
-            createLevels: (body) => { return this.createLevels(body) },
-            getListLevels: () => { return this.getListLevels() },
+            createLevel: (body) => { return this.createLevel(body) },
+            getListLevel: () => { return this.getListLevel() },
             updateLevel: (body) => { return this.updateLevel(body) },
-            deleteLevels: (body) => { return this.deleteLevels(body) }
+            deleteLevel: (body) => { return this.deleteLevel(body) }
         };
     }
 
-    createLevels(body) {
+    createLevel(body) {
         return db.getSequelize().transaction(function (transaction) {
-            return db.level.create(body.level, db.getTransaction(transaction)).then((createdLevels) => {
-                return createdLevels;
+            return db.level.create(body.level, db.getTransaction(transaction)).then((createdLevel) => {
+                return createdLevel;
             }).catch((err) => {
                 throw err
             });
         })
     }
 
-    getListLevels() {
+    getListLevel() {
         return db.level.findAll();
     }
 
@@ -35,10 +35,10 @@ class ClassMethods {
             })
     }
 
-    deleteLevels(id) {
+    deleteLevel(body) {
         return db.level.destroy({
             where: {
-                id: id
+                id: body.id
             }
         });
     }

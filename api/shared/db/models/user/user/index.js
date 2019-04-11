@@ -8,7 +8,7 @@ class User {
         let classMethods = userClassMethods.getClassMethods(DataTypes);
         let instanceMethods = userInstanceMethods.getInstanceMethods(DataTypes);
         let options = { classMethods, instanceMethods, freezeTableName: true, underscored: true, individualHooks: true };
-        return sequelize.define('users', schema, options);
+        return sequelize.define('user', schema, options);
     }
 }
 

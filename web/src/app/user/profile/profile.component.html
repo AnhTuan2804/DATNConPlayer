@@ -30,7 +30,9 @@
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
-                <span *ngIf="profileForm.controls['phone'].hasError('required') && (profileForm.controls['phone'].touched || errorForm ) " for="phone">Trường bắt buộc</span>
+                <span
+                  *ngIf="profileForm.controls['phone'].hasError('required') && (profileForm.controls['phone'].touched || errorForm ) "
+                  for="phone">Trường bắt buộc</span>
               </div>
             </div>
           </div>
@@ -54,7 +56,9 @@
               <div class="input-include-error">
                 <input type="password" class="form-control input-lg" name="currentPassword"
                   formControlName="currentPassword">
-                  <span *ngIf="changePassForm.controls['currentPassword'].hasError('required') && (changePassForm.controls['currentPassword'].touched || errorForm ) " for="currentPassword">Trường bắt buộc</span>
+                <span
+                  *ngIf="changePassForm.controls['currentPassword'].hasError('required') && (changePassForm.controls['currentPassword'].touched || errorForm ) "
+                  for="currentPassword">Trường bắt buộc</span>
               </div>
             </div>
           </div>
@@ -64,7 +68,9 @@
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="password" class="form-control input-lg" name="newPassword" formControlName="newPassword">
-                <span *ngIf="changePassForm.controls['newPassword'].hasError('required') && (changePassForm.controls['newPassword'].touched || errorForm ) " for="newPassword">Trường bắt buộc</span>
+                <span
+                  *ngIf="changePassForm.controls['newPassword'].hasError('required') && (changePassForm.controls['newPassword'].touched || errorForm ) "
+                  for="newPassword">Trường bắt buộc</span>
               </div>
             </div>
           </div>
@@ -74,8 +80,10 @@
               <div class="input-include-error">
                 <input type="password" class="form-control input-lg" name="confirmNewPassword"
                   formControlName="confirmNewPassword">
-                  <span *ngIf="(changePassForm.hasError('passwordMatchValidator') || changePassForm.controls['confirmNewPassword'].hasError('required')) &&(changePassForm.controls['confirmNewPassword'].touched || errorForm )" for="confirmNewPassword">Mạt khẩu không trùng khớp</span>
-                </div>
+                <span
+                  *ngIf="(changePassForm.hasError('passwordMatchValidator') || changePassForm.controls['confirmNewPassword'].hasError('required')) &&(changePassForm.controls['confirmNewPassword'].touched || errorForm )"
+                  for="confirmNewPassword">Mật khẩu không trùng khớp</span>
+              </div>
             </div>
           </div>
           <div class="col-md-12">
@@ -83,7 +91,7 @@
               <div class="input-include-error">
                 <button type="submit" class="btn btn-success" [disabled]="!changePassForm.valid">
                   Thay đổi mật khẩu
-                </button> 
+                </button>
                 <span *ngIf="changePassFaild">{{messageError}}</span>
               </div>
             </div>

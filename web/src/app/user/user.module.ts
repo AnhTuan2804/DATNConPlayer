@@ -6,6 +6,8 @@ import { UserRouting } from './user.routing.module';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AreaComponent } from './area/area.component';
+import { TeamComponent } from './team/team.component';
+import { LevelComponent } from './level/level.component';
 
 @NgModule({
     imports: [
@@ -17,7 +19,9 @@ import { AreaComponent } from './area/area.component';
     declarations: [
         HomeComponent,
         ProfileComponent,
-        AreaComponent
+        AreaComponent,
+        TeamComponent,
+        LevelComponent
     ]
 })
 export class UserModule { }

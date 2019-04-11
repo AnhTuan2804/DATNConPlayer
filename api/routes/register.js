@@ -12,8 +12,8 @@ class RegisterRouter {
                 const data = {
                     email : auth.toString().split(':')[0],
                     password : auth.toString().split(':')[1],
-                    phone : auth.toString().split(':')[2],
-                    fullname : auth.toString().split(':')[3]
+                    phone : req.body.phone,
+                    fullname : req.body.fullname
                 }
                 return usersHandler.registerAccount(data).then((user) => {
                     res.status(200).send(user)
