@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux';
 import store from '../../store/store';
-import SettingContainer from './InfoContainer';
 import React, { Component } from 'react';
 import { View, Dimensions, Text } from 'react-native';
 import { TabView, TabBar, SceneMap, } from 'react-native-tab-view';
@@ -8,7 +7,7 @@ import { reset, } from 'redux-form';
 import ChangepassContainer from './ChangepassContainer';
 import InfoContainer from './InfoContainer';
 
-export default class SettingProvider extends Component {
+export default class SettingComponent extends Component {
     constructor(props) {
         super(props);
     }
