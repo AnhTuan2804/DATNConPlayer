@@ -7,9 +7,9 @@ let sequelize = null;
 class Db {
     constructor() {
         if (!sequelize) {
-            let anc = config.dbLocal.options;
+            let anc = config.dbDev.options;
             anc['isolationLevel'] = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-            sequelize = new Sequelize(config.dbLocal.dbname, config.dbLocal.username, config.dbLocal.password, config.dbLocal.options);
+            sequelize = new Sequelize(config.dbDev.dbname, config.dbDev.username, config.dbDev.password, config.dbDev.options);
         }
     }
 
@@ -80,7 +80,7 @@ class Db {
         this.team = sequelize.import('./models/team');
 
         //team User
-        this.team = sequelize.import('./models/team_user');
+        this.teamUser = sequelize.import('./models/team_user');
 
     }
 

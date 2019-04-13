@@ -22,10 +22,10 @@ class TeamSchema {
             picture: {
                 type: DataTypes.STRING,
             },
-            id_level: {
+            level_id: {
                 type: DataTypes.STRING,
             },
-            id_area: {
+            area_id: {
                 type: DataTypes.STRING,
             },
             created_at: {

@@ -3,6 +3,8 @@ const loginRouter = require('./login');
 const userRouter = require('./user');
 const roleRouter = require('./role');
 const areaRouter = require('./area');
+const teamRouter = require('./team');
+const levelRouter = require('./level');
 const resetPasswordRouter = require('./resetPassword');
 const internalToken = require('../middlewares/internalToken.local');
 const authAdmin = require('../middlewares/auth-admin.local');
@@ -27,6 +29,10 @@ class RouterIndex {
         this.app.use(ROOT_ROUTE + '/reset-password', resetPasswordRouter);
         //area
         this.app.use(ROOT_ROUTE + '/area', authAdmin.verifyAdmin, areaRouter);
+        //level
+        this.app.use(ROOT_ROUTE + '/level', authAdmin.verifyAdmin, levelRouter);
+        //team
+        this.app.use(ROOT_ROUTE + '/team', internalToken.verifyToken, teamRouter);
     }
 }
 

@@ -19,13 +19,29 @@ export class RegisterComponent implements OnInit {
     private toastrService: ToastrService, private action: ComponentActions) { }
 
   ngOnInit() {
+    
+  }
+
+  ngOnChanges(changes): void {
+    this.initForm()
+  }
+
+  initForm() {
     this.registerForm = this.formBuilder.group({
       'email': new FormControl('', Validators.required),
       'password': new FormControl('', Validators.required),
       'phone': new FormControl('', Validators.required),
-      'confirmPassword': new FormControl(''),
+      'confirmPassword': new FormControl('', Validators.required),
       'fullname': new FormControl('')
-    });
+    },
+      {
+        validator: this.passwordMatchValidator
+      });
+  }
+
+  passwordMatchValidator(g: FormGroup) {
+    return g.get('password').value == g.get('confirmPassword').value
+      ? null : { passwordMatchValidator: { valid: false } };
   }
 
   Register() {
