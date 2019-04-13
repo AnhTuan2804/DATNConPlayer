@@ -10,13 +10,11 @@ import Constants from '../../theme/variable/Constants';
 function* registerSaga(action) {
     try {
         let body = JSON.stringify({
-            "email": action.value.email,
             "phone": action.value.phone,
             "fullname": action.value.fullname,
-            "password": action.value.password
         });
-        let auth = `${action.value.email}:${action.value.password}:${action.value.phone}:${action.value.fullname}`
-        const userDataAPI = yield Api.registerAPI(auth);
+        let auth = `${action.value.email}:${action.value.password}`
+        const userDataAPI = yield Api.registerAPI(auth, body);
         yield put({ type: REGISTER_SUCCESSFULLY });
         Actions.loginScreen()
     } catch (error) {
