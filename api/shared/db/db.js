@@ -7,9 +7,9 @@ let sequelize = null;
 class Db {
     constructor() {
         if (!sequelize) {
-            let anc = config.dbDev.options;
+            let anc = config.dbLocal.options;
             anc['isolationLevel'] = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-            sequelize = new Sequelize(config.dbDev.dbname, config.dbDev.username, config.dbDev.password, config.dbDev.options);
+            sequelize = new Sequelize(config.dbLocal.dbname, config.dbLocal.username, config.dbLocal.password, config.dbLocal.options);
         }
     }
 
@@ -78,9 +78,17 @@ class Db {
 
         //team
         this.team = sequelize.import('./models/team');
+        this.team.belongsTo(this.level, { unique: false, onDelete: 'cascade' });
+        this.team.belongsTo(this.area, { unique: false, onDelete: 'cascade' });
+        this.area.hasMany(this.team, { onDelete: 'cascade' });
+        this.level.hasMany(this.team, { onDelete: 'cascade' });
 
         //team User
         this.teamUser = sequelize.import('./models/team_user');
+        this.teamUser.belongsTo(this.user, { unique: false, onDelete: 'cascade' });
+        this.teamUser.belongsTo(this.team, { unique: false, onDelete: 'cascade' });
+        this.team.hasMany(this.teamUser, { onDelete: 'cascade' });
+        this.user.hasMany(this.teamUser, { onDelete: 'cascade' });
 
     }
 

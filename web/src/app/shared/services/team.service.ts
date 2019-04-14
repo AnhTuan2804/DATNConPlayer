@@ -11,9 +11,25 @@ export class TeamService extends BaseService {
     super(http);
   }
 
-  public getList(): Observable<any> {
+  public getListForUser(): Observable<any> {
     return this
-      .getData(`team/get-list`)
+      .getData(`team/get-list-for-user`)
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public getDetail(id): Observable<any> {
+    return this
+      .getData(`team/detail?id=${id}`)
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public getListForAdmin(): Observable<any> {
+    return this
+      .getData(`team/get-list-for-admin`)
       .catch((err) => {
         return Observable.throw(err);
       })

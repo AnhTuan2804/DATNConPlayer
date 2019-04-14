@@ -1,17 +1,17 @@
 const config = {
     whiteList: ["http://localhost:4200"],
     recreateDB: false,
-    dbDev: {
-        dbname: "sql10284795",
-        username: "sql10284795",
-        password: "j4ALCJYcFG",
+    dbLocal: {
+        dbname: "yeJvB6zA4A",
+        username: "yeJvB6zA4A",
+        password: "7JKLb8XVaI",
         options: {
-            host: "sql10.freemysqlhosting.net",
+            host: "remotemysql.com",
             port: 3306,
             dialect: "mysql"
         }
     },
-    dbLocal: {
+    dbDev: {
         dbname: "DATNCSPLAYER",
         username: "root",
         password: "abc@1234",

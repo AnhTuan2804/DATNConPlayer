@@ -25,12 +25,12 @@ class RouterIndex {
         this.app.use(ROOT_ROUTE + '/register', auth.verifyAuth, registerRouter);
         this.app.use(ROOT_ROUTE + '/login', auth.verifyAuth, loginRouter);
         this.app.use(ROOT_ROUTE + '/user', internalToken.verifyToken, userRouter);
-        this.app.use(ROOT_ROUTE + '/role', internalToken.verifyToken, roleRouter);
+        this.app.use(ROOT_ROUTE + '/role', roleRouter);
         this.app.use(ROOT_ROUTE + '/reset-password', resetPasswordRouter);
         //area
-        this.app.use(ROOT_ROUTE + '/area', authAdmin.verifyAdmin, areaRouter);
+        this.app.use(ROOT_ROUTE + '/area', areaRouter);
         //level
-        this.app.use(ROOT_ROUTE + '/level', authAdmin.verifyAdmin, levelRouter);
+        this.app.use(ROOT_ROUTE + '/level', levelRouter);
         //team
         this.app.use(ROOT_ROUTE + '/team', internalToken.verifyToken, teamRouter);
     }

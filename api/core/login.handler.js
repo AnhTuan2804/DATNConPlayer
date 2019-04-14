@@ -11,7 +11,7 @@ class LoginHandler {
                 return db.user.updateToken(user.id, userAuth.generateToken(user))
                     .then((userInfo) => {
                         if (user.is_lock == appConstant.USER_STATUS_BLOCK) {
-                            throw new Error("Account blocked!");
+                            throw new Error("Tài khoản đã bị khóa");
                         }
                         userInfo['role'] = user.role
                         return userInfo

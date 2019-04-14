@@ -7,36 +7,34 @@ class ClassMethods {
 
     getClassMethods(DataTypes) {
         return {
-            createTeamUsers: (body) => { return this.createTeamUsers(body) },
-            getListTeamUsers: () => { return this.getListTeamUsers() },
+            createTeamUser: (body) => { return this.createTeamUser(body) },
+            getListTeamUser: () => { return this.getListTeamUser() },
             updateTeamUser: (body) => { return this.updateTeamUser(body) },
-            deleteTeamUsers: (body) => { return this.deleteTeamUsers(body) }
+            deleteTeamUser: (body) => { return this.deleteTeamUser(body) }
         };
     }
 
-    createTeamUsers(body) {
-        return db.getSequelize().transaction(function (transaction) {
-            return db.team_user.create(body.team_user, db.getTransaction(transaction)).then((createdTeamUsers) => {
-                return createdTeamUsers;
-            }).catch((err) => {
-                throw err
-            });
-        })
+    createTeamUser(body) {
+        return db.teamUser.create(body.teamUser).then((createdTeamUser) => {
+            return createdTeamUser;
+        }).catch((err) => {
+            throw err
+        });
     }
 
-    getListTeamUsers() {
-        return db.team_user.findAll();
+    getListTeamUser() {
+        return db.teamUser.findAll();
     }
 
     updateTeamUser(body) {
-        return db.team_user.update(body, { where: { id: body.id } })
+        return db.teamUser.update(body, { where: { id: body.id } })
             .then((teamUser) => {
                 return teamUser
             })
     }
 
-    deleteTeamUsers(id) {
-        return db.team_user.destroy({
+    deleteTeamUser(id) {
+        return db.teamUser.destroy({
             where: {
                 id: id
             }
