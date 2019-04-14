@@ -9,23 +9,24 @@ import { LevelService } from 'src/app/shared/services/level.service';
 import { Level } from 'src/app/shared/classes/level';
 import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 declare var $: any;
 
 @Component({
-  selector: 'app-team',
-  templateUrl: './team.component.html',
-  styleUrls: ['./team.component.scss']
+  selector: 'app-team-detail',
+  templateUrl: './team-detail.component.html',
+  styleUrls: ['./team-detail.component.scss']
 })
-export class TeamComponent implements OnInit {
+export class TeamDetailComponent implements OnInit {
 
-  formAdd: FormGroup;
+  formDetail: FormGroup;
+  editFaild: boolean = false;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['Stt', 'Tên đội', 'Hành động'];
+  headers = ['Stt', 'Tên thành viên', 'Hành động'];
   listArea = [];
   listLevel = [];
-  listTeam = [];
+  listUser = [];
   showEditForm = false;
   objectAreaEvent;
   objectLevelEvent;
@@ -34,21 +35,24 @@ export class TeamComponent implements OnInit {
     private levelService: LevelService, private level: Level,
     private teamService: TeamService, private team: Team,
     private toastrService: ToastrService, private action: ComponentActions,
-    private area: Area, private router: Router) {
+    private area: Area, private router: Router, private route: ActivatedRoute) {
     this.initForm()
     this.getListArea();
     this.getListLevel();
-    this.getListTeam();
   }
 
   ngOnInit() {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.route.params.subscribe((params) => {
+      const id = params.id;
+      this.getTeamDetail(id);
+    })
   }
 
   initForm() {
-    this.formAdd = this.formBuilder.group({
+    this.formDetail = this.formBuilder.group({
       'name': new FormControl('', Validators.required),
       'age_min': new FormControl('', Validators.required),
       'age_max': new FormControl('', Validators.required),
@@ -61,25 +65,15 @@ export class TeamComponent implements OnInit {
     });
   }
 
-  getListTeam() {
-    this.action.showLoading();
-    if (localStorage.getItem('role') && localStorage.getItem('role') == 'admin') {
-      this.teamService.getListForAdmin().subscribe((result) => {
-        this.listTeam = this.team.setteam(result, 'admin');
-        this.action.hideLoading();
-      }, (err) => {
-        console.log(err);
-        this.action.hideLoading();
-      })
-    } else {
-      this.teamService.getListForUser().subscribe((result) => {
-        this.listTeam = this.team.setteam(result, 'normal');
-        this.action.hideLoading();
-      }, (err) => {
-        console.log(err);
-        this.action.hideLoading();
-      })
-    }
+  getTeamDetail(id) {
+    this.teamService.getDetail(id).subscribe((result) => {
+      // this.listUser = this.team.setteam(result);
+      console.log(result)
+      this.action.hideLoading();
+    }, (err) => {
+      console.log(err);
+      this.action.hideLoading();
+    })
   }
 
   getListArea() {
@@ -99,25 +93,32 @@ export class TeamComponent implements OnInit {
   }
 
   outputContentStatus(event) {
-    this.navToDetail(event.item.teamUser.id)
+    console.log(event)
+    // this.objectAreaEvent = _.find(this.listUser, (item) => {
+    //   return item.team.name == event.item.team.name;
+    // })
+    // this.formDetail.patchValue({
+    //   area: event.item.team.name
+    // })
+    // this.showEditForm = true;
   }
 
   add() {
     const data = {
-      name: this.getValueFormAdd('name'),
-      age_max: this.getValueFormAdd('age_max'),
-      age_min: this.getValueFormAdd('age_min'),
-      level_id: this.getValueFormAdd('level_id'),
-      area_id: this.getValueFormAdd('area_id'),
-      picture: this.getValueFormAdd('picture'),
-      description: this.getValueFormAdd('description'),
+      name: this.getValueFormDetail('name'),
+      age_max: this.getValueFormDetail('age_max'),
+      age_min: this.getValueFormDetail('age_min'),
+      level_id: this.getValueFormDetail('level_id'),
+      area_id: this.getValueFormDetail('area_id'),
+      picture: this.getValueFormDetail('picture'),
+      description: this.getValueFormDetail('description'),
     }
     this.action.showLoading();
     this.teamService.createTeam({ team: data }).subscribe((result) => {
       this.toastrService.success('Thêm thành công!', '', { timeOut: 3500 });
       this.addFaild = false;
-      this.formAdd.reset();
-      this.getListTeam();
+      this.formDetail.reset();
+      // this.getListUser();
     }, (err) => {
       this.action.hideLoading();
       this.addFaild = true;
@@ -131,47 +132,41 @@ export class TeamComponent implements OnInit {
         this.action.showLoading();
         this.teamService.deleteTeam({ id: event.item.teamUser.team.id }).subscribe((result) => {
           this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
-          this.getListTeam();
+          // this.getListUser();
         }, (err) => {
           this.action.hideLoading();
           this.toastrService.success(err.message, '', { timeOut: 3500 });
         })
         break;
       case 'Edit':
-        this.navToDetail(event.item.teamUser.id);
-        break;
-      case 'View':
-        this.navToDetail(event.item.teamUser.id);
-        break;
+        // this.rou
+        console.log('some thing here')
     }
+
+
   }
 
-  getValueFormAdd(name) {
-    return this.formAdd.controls[name].value;
+  getValueFormDetail(name) {
+    return this.formDetail.controls[name].value;
   }
 
   navToHomeLoginForm() {
     $("#modalLoginForm").modal("show");
   }
 
-  navToDetail(id, ) {
-    this.router.navigate(['team/edit/' + id]);
-  }
-
   handleDownSelect(event, tab) {
     if (tab == 'area') {
       this.objectAreaEvent = event.value;
-      this.formAdd.patchValue({
+      this.formDetail.patchValue({
         area: event.value.area.area,
         area_id: event.value.area.id
       });
     } else {
       this.objectLevelEvent = event.value;
-      this.formAdd.patchValue({
+      this.formDetail.patchValue({
         level: event.value.level.level,
         level_id: event.value.level.id
       });
     }
   }
-
 }
