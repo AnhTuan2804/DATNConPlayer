@@ -20,10 +20,12 @@ declare var $: any;
 export class TeamDetailComponent implements OnInit {
 
   formDetail: FormGroup;
+  formAddMember: FormGroup;
   editFaild: boolean = false;
-  addFaild: boolean = false;
   messageError: string = "";
-  headers = ['Stt', 'Tên thành viên', 'Hành động'];
+  messageErrAddMember: string = "";
+  addMemberFaild: boolean = false;
+  headers = ['Stt', 'Tên thành viên', 'Số điện thoại', 'Hành động'];
   listArea = [];
   listLevel = [];
   listUser = [];
@@ -31,6 +33,8 @@ export class TeamDetailComponent implements OnInit {
   objectAreaEvent;
   objectLevelEvent;
   selectedIndex;
+  view: boolean = false;
+  dataDetail;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private teamService: TeamService, private team: Team,
@@ -47,6 +51,10 @@ export class TeamDetailComponent implements OnInit {
     }
     this.route.params.subscribe((params) => {
       const id = params.id;
+      const item = params.item;
+      if (item == 'view') {
+        this.view = true;
+      }
       this.getTeamDetail(id);
     })
   }
@@ -63,12 +71,16 @@ export class TeamDetailComponent implements OnInit {
       'area': new FormControl('', Validators.required),
       'picture': new FormControl('')
     });
+    this.formAddMember = this.formBuilder.group({
+      'member': new FormControl('', Validators.required)
+    })
   }
 
   getTeamDetail(id) {
+    this.action.showLoading();
     this.teamService.getDetail(id).subscribe((result) => {
-      // this.listUser = this.team.setteam(result);
-      console.log(result)
+      this.dataDetail = result;
+      this.bindData(result);
       this.action.hideLoading();
     }, (err) => {
       console.log(err);
@@ -92,18 +104,40 @@ export class TeamDetailComponent implements OnInit {
     })
   }
 
-  outputContentStatus(event) {
-    console.log(event)
-    // this.objectAreaEvent = _.find(this.listUser, (item) => {
-    //   return item.team.name == event.item.team.name;
-    // })
-    // this.formDetail.patchValue({
-    //   area: event.item.team.name
-    // })
-    // this.showEditForm = true;
+  bindData(data) {
+    this.bindUser(data.team_users);
+    this.formDetail.patchValue({
+      name: data.name,
+      age_max: data.age_max,
+      age_min: data.age_min,
+      description: data.description,
+      area: data.area.area,
+      area_id: data.area.id,
+      level: data.level.level,
+      level_id: data.level.id
+    })
   }
 
-  add() {
+  bindUser(listTeamUser) {
+    const tmp = [];
+    let stt = 1;
+    _.forEach(listTeamUser, (item) => {
+      let data = [];
+      data['teamUser'] = item;
+      const itemName = item.is_captain == 1 ? item.user.fullname + '(Đội trưởng)' : item.user.fullname;
+      data['content'] = [
+        { title: stt },
+        { title: itemName },
+        { title: item.user.phone }
+      ];
+      stt++;
+      data['actions'] = item.is_captain == 1 ? [''] : ['Delete'];
+      tmp.push(data);
+    })
+    this.listUser = tmp;
+  }
+
+  edit() {
     const data = {
       name: this.getValueFormDetail('name'),
       age_max: this.getValueFormDetail('age_max'),
@@ -112,35 +146,56 @@ export class TeamDetailComponent implements OnInit {
       area_id: this.getValueFormDetail('area_id'),
       picture: this.getValueFormDetail('picture'),
       description: this.getValueFormDetail('description'),
+      id: this.dataDetail.id
     }
     this.action.showLoading();
-    this.teamService.createTeam({ team: data }).subscribe((result) => {
-      this.toastrService.success('Thêm thành công!', '', { timeOut: 3500 });
-      this.addFaild = false;
-      this.formDetail.reset();
-      // this.getListUser();
+    this.teamService.updateTeam(data).subscribe((result) => {
+      this.toastrService.success('Cập nhật thành công!', '', { timeOut: 3500 });
+      this.editFaild = false;
+      this.action.hideLoading();
     }, (err) => {
       this.action.hideLoading();
-      this.addFaild = true;
+      this.editFaild = true;
       this.messageError = err.message;
     })
   }
+
+  addMember() {
+    const data = {
+      member: this.formAddMember.controls['member'].value,
+      team_id: this.dataDetail.id,
+      is_captain: 0
+    }
+    this.action.showLoading();
+    this.teamService.addMember({ teamUser: data }).subscribe((result) => {
+      this.action.hideLoading();
+      this.addMemberFaild = false;
+      this.formAddMember.reset();
+      this.getTeamDetail(this.dataDetail.id);
+    }, (err) => {
+      this.action.hideLoading();
+      this.addMemberFaild = true;
+      this.messageErrAddMember = err.message;
+    })
+  }
+
+
+
+
+
 
   handleAction(event) {
     switch (event.action) {
       case 'Delete':
         this.action.showLoading();
-        this.teamService.deleteTeam({ id: event.item.teamUser.team.id }).subscribe((result) => {
+        this.teamService.deleteMember({ id: event.item.teamUser.id }).subscribe((result) => {
           this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
-          // this.getListUser();
+          this.getTeamDetail(this.dataDetail.id);
         }, (err) => {
           this.action.hideLoading();
-          this.toastrService.success(err.message, '', { timeOut: 3500 });
+          this.toastrService.warning(err.message, '', { timeOut: 3500 });
         })
         break;
-      case 'Edit':
-        // this.rou
-        console.log('some thing here')
     }
 
 
