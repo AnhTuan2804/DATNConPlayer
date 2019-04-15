@@ -98,10 +98,6 @@ export class TeamComponent implements OnInit {
     })
   }
 
-  outputContentStatus(event) {
-    this.navToDetail(event.item.teamUser.id)
-  }
-
   add() {
     const data = {
       name: this.getValueFormAdd('name'),
@@ -122,6 +118,7 @@ export class TeamComponent implements OnInit {
       this.action.hideLoading();
       this.addFaild = true;
       this.messageError = err.message;
+      this.toastrService.warning(this.messageError, '', { timeOut: 3500 });
     })
   }
 
@@ -138,10 +135,10 @@ export class TeamComponent implements OnInit {
         })
         break;
       case 'Edit':
-        this.navToDetail(event.item.teamUser.id);
+        this.navToDetail(event.item.teamUser.team.id);
         break;
       case 'View':
-        this.navToDetail(event.item.teamUser.id);
+        this.navToDetail(event.item.teamUser.team.id, 'view');
         break;
     }
   }
@@ -154,8 +151,9 @@ export class TeamComponent implements OnInit {
     $("#modalLoginForm").modal("show");
   }
 
-  navToDetail(id, ) {
-    this.router.navigate(['team/edit/' + id]);
+  navToDetail(id, view?) {
+    const path = view ? 'team/view/' + id : 'team/edit/' + id;
+    this.router.navigate([path]);
   }
 
   handleDownSelect(event, tab) {

@@ -20,7 +20,7 @@ export const routes: Routes = [
             { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
             { path: 'area', component: AreaComponent, canActivate: [AuthGuardAdmin] },
             { path: 'team', component: TeamComponent, canActivate: [AuthGuard] },
-            { path: 'team/edit/:id', component: TeamDetailComponent, canActivate: [AuthGuard] },
+            { path: 'team/:item/:id', component: TeamDetailComponent, canActivate: [AuthGuard] },
             { path: 'level', component: LevelComponent, canActivate: [AuthGuardAdmin] },
         ]
     }

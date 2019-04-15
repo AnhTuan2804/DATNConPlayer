@@ -29,7 +29,7 @@ export class TeamService extends BaseService {
 
   public getListForAdmin(): Observable<any> {
     return this
-      .getData(`team/get-list-for-admin`)
+      .getData(`team/get-list-for-admin?id=alkdfnsafknasakjshfasf`)
       .catch((err) => {
         return Observable.throw(err);
       })
@@ -38,6 +38,16 @@ export class TeamService extends BaseService {
   public createTeam(data: Object): Observable<any> {
     return this
       .postData(`team/create`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public addMember(data: Object): Observable<any> {
+    return this
+      .postData(`team/add-member`, data).map(res => {
         return res;
       })
       .catch((err) => {
@@ -58,6 +68,16 @@ export class TeamService extends BaseService {
   public deleteTeam(data: Object): Observable<any> {
     return this
       .postData(`team/delete`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public deleteMember(data: Object): Observable<any> {
+    return this
+      .postData(`team/delete-member`, data).map(res => {
         return res;
       })
       .catch((err) => {

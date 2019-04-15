@@ -13,7 +13,7 @@ export class Team {
             data['teamUser'] = team;
             data['content'] = [
                 { title: stt },
-                { title: team.team.name, link: true, clickAble: true }
+                { title: team.team.name }
             ];
             stt++;
             if (tab == 'admin' || team.team.is_captain == 1) {

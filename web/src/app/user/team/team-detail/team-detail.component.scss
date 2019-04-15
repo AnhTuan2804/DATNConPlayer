@@ -1,6 +1,15 @@
 textarea {
-    height: 90px;
-    border-radius: 5px;
-    outline: none;
-  }
-  
+  height: 90px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.view {
+  pointer-events: none;
+}
+
+.btn-center {
+  justify-content: center;
+  display: flex;
+  align-items: flex-end;
+}

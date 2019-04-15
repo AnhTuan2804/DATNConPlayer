@@ -16,16 +16,16 @@ class TeamRouter {
             });
         router.route('/get-list-for-user')
             .get((req, res, next) => {
-                return teamHandler.getListForUser(res.locals.token).then((listTeam) => {
-                    res.status(200).send(listTeam)
+                return teamHandler.getListForUser(res.locals.token).then((result) => {
+                    res.status(200).send(result)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });
             });
         router.route('/get-list-for-admin')
             .get((req, res, next) => {
-                return teamHandler.getListForAdmin(res.locals.token).then((listTeam) => {
-                    res.status(200).send(listTeam)
+                return teamHandler.getListForAdmin(res.locals.token).then((result) => {
+                    res.status(200).send(result)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });
@@ -45,6 +45,33 @@ class TeamRouter {
                         message: 'Delete success'
                     }
                     res.status(200).send(data)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
+        router.route('/delete-member')
+            .post((req, res, next) => {
+                return teamHandler.deleteMember(req.body, res.locals.token).then((team) => {
+                    let data = {
+                        message: 'Delete success'
+                    }
+                    res.status(200).send(data)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
+        router.route('/detail')
+            .get((req, res, next) => {
+                return teamHandler.getDetail(req.query.id, res.locals.token).then((result) => {
+                    res.status(200).send(result)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
+        router.route('/add-member')
+            .post((req, res, next) => {
+                return teamHandler.addMember(req.body, res.locals.token).then((result) => {
+                    res.status(200).send(result)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });

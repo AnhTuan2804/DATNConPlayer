@@ -8,8 +8,20 @@ class RoleHandler {
         });
     }
 
+    addMember(body, token) {
+        return db.team.addMember(body, token).then((result) => {
+            return result;
+        });
+    }
+
     getListForUser(token) {
         return db.team.getListForUser(token).then((result) => {
+            return result;
+        })
+    }
+
+    getDetail(id, token) {
+        return db.team.getDetail(id, token).then((result) => {
             return result;
         })
     }
@@ -32,5 +44,10 @@ class RoleHandler {
         });
     }
 
+    deleteMember(body, token) {
+        return db.teamUser.deleteTeamUser(body.id).then((result) => {
+            return result;
+        });
+    }
 }
 module.exports = new RoleHandler();

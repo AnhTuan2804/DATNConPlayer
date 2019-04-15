@@ -1,7 +1,7 @@
 const config = {
     whiteList: ["http://localhost:4200"],
     recreateDB: false,
-    dbLocal: {
+    dbDev: {
         dbname: "yeJvB6zA4A",
         username: "yeJvB6zA4A",
         password: "7JKLb8XVaI",
@@ -11,7 +11,7 @@ const config = {
             dialect: "mysql"
         }
     },
-    dbDev: {
+    dbLocal: {
         dbname: "DATNCSPLAYER",
         username: "root",
         password: "abc@1234",
