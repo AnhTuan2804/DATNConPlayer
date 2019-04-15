@@ -6,19 +6,16 @@ class PriceOnTimeSchema {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV1
             },
-            time_start: {
-                type: DataTypes.TIME,
-            },
-            time_end: {
-                type: DataTypes.TIME,
+            time_id: {
+                type: DataTypes.STRING,
             },
             price: {
                 type: DataTypes.FLOAT,
             },
-            id_date_of_week: {
+            size_gridiron_id: {
                 type: DataTypes.STRING,
             },
-            id_sub_gridiron: {
+            gridiron_id: {
                 type: DataTypes.STRING,
             },
             created_at: {

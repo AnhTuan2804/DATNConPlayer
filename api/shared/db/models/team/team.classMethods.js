@@ -94,10 +94,10 @@ class ClassMethods {
                     model: db.team,
                     include: [{
                         model: db.level,
-                        attributes: ['id', 'level']
+                        attributes: ['id', 'name']
                     }, {
                         model: db.area,
-                        attributes: ['id', 'area']
+                        attributes: ['id', 'name']
                     }]
                 }]
             });
@@ -111,10 +111,10 @@ class ClassMethods {
             },
             include: [{
                 model: db.level,
-                attributes: ['id', 'level']
+                attributes: ['id', 'name']
             }, {
                 model: db.area,
-                attributes: ['id', 'area']
+                attributes: ['id', 'name']
             }, {
                 model: db.teamUser,
                 include: [{
@@ -131,20 +131,25 @@ class ClassMethods {
                 model: db.team,
                 include: [{
                     model: db.level,
-                    attributes: ['id', 'level']
+                    attributes: ['id', 'name']
                 }, {
                     model: db.area,
-                    attributes: ['id', 'area']
+                    attributes: ['id', 'name']
                 }]
             }]
         });
     }
 
     updateTeam(body, token) {
-        return db.team.update(body, { where: { id: body.id } })
-            .then((team) => {
-                return team
-            })
+        return db.team.find({ where: { name: body.name } }).then((result) => {
+            if (result.id != body.id) {
+                throw new Error('Tên đội này đã tồn tại!')
+            }
+            return db.team.update(body, { where: { id: body.id } })
+                .then((team) => {
+                    return team
+                })
+        })
     }
 
     deleteTeam(body, token) {

@@ -7,40 +7,23 @@ class ClassMethods {
 
     getClassMethods(DataTypes) {
         return {
-            createSizeGridirons: (body) => { return this.createSizeGridirons(body) },
-            getListSizeGridirons: () => { return this.getListSizeGridirons() },
-            updateSizeGridiron: (body) => { return this.updateSizeGridiron(body) },
-            deleteSizeGridirons: (body) => { return this.deleteSizeGridirons(body) }
+            createSizeGridiron: (body) => { return this.createSizeGridiron(body) },
+            getListSizeGridiron: () => { return this.getListSizeGridiron() },
         };
     }
 
-    createSizeGridirons(body) {
+    createSizeGridiron(body) {
         return db.getSequelize().transaction(function (transaction) {
-            return db.size_gridiron.create(body.size_gridiron, db.getTransaction(transaction)).then((createdSizeGridirons) => {
-                return createdSizeGridirons;
+            return db.size_gridiron.create(body.size_gridiron, db.getTransaction(transaction)).then((createdSizeGridiron) => {
+                return createdSizeGridiron;
             }).catch((err) => {
                 throw err
             });
         })
     }
 
-    getListSizeGridirons() {
+    getListSizeGridiron() {
         return db.size_gridiron.findAll();
-    }
-
-    updateSizeGridiron(body) {
-        return db.size_gridiron.update(body, { where: { id: body.id } })
-            .then((sizeGridiron) => {
-                return sizeGridiron
-            })
-    }
-
-    deleteSizeGridirons(id) {
-        return db.size_gridiron.destroy({
-            where: {
-                id: id
-            }
-        });
     }
 }
 

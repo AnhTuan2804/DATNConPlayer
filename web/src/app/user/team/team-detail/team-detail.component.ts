@@ -111,9 +111,9 @@ export class TeamDetailComponent implements OnInit {
       age_max: data.age_max,
       age_min: data.age_min,
       description: data.description,
-      area: data.area.area,
+      area: data.area.name,
       area_id: data.area.id,
-      level: data.level.level,
+      level: data.level.name,
       level_id: data.level.id
     })
   }
@@ -171,10 +171,12 @@ export class TeamDetailComponent implements OnInit {
       this.action.hideLoading();
       this.addMemberFaild = false;
       this.formAddMember.reset();
+      this.toastrService.success('Thêm thành công!', '', { timeOut: 3000 });
       this.getTeamDetail(this.dataDetail.id);
     }, (err) => {
       this.action.hideLoading();
       this.addMemberFaild = true;
+      this.toastrService.success(this.messageErrAddMember, '', { timeOut: 3000 })
       this.messageErrAddMember = err.message;
     })
   }
@@ -213,13 +215,13 @@ export class TeamDetailComponent implements OnInit {
     if (tab == 'area') {
       this.objectAreaEvent = event.value;
       this.formDetail.patchValue({
-        area: event.value.area.area,
+        area: event.value.area.name,
         area_id: event.value.area.id
       });
     } else {
       this.objectLevelEvent = event.value;
       this.formDetail.patchValue({
-        level: event.value.level.level,
+        level: event.value.level.name,
         level_id: event.value.level.id
       });
     }

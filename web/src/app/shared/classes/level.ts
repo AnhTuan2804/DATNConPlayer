@@ -13,7 +13,7 @@ export class Level {
             data['level'] = level;
             data['content'] = [
                 { title: stt },
-                { title: level.level, link: true, clickAble: true }
+                { title: level.name, link: true, clickAble: true }
             ];
             stt++;
             data['actions'] = ['Delete'];
@@ -27,7 +27,7 @@ export class Level {
         _.forEach(levels, (level => {
             let data = [];
             data['level'] = level;
-            data['itemName'] = level.level;
+            data['itemName'] = level.name;
             tmp.push(data);
         }))
         return tmp;

@@ -59,10 +59,10 @@ export class AreaComponent implements OnInit {
 
   outputContentStatus(event) {
     this.objectAreaEvent = _.find(this.items, (item) => {
-      return item.area.area == event.item.area.area;
+      return item.area.name == event.item.area.name;
     })
     this.formEdit.patchValue({
-      area: event.item.area.area
+      area: event.item.area.name
     })
     this.showEditForm = true;
   }

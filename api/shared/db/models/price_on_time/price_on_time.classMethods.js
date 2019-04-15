@@ -7,24 +7,36 @@ class ClassMethods {
 
     getClassMethods(DataTypes) {
         return {
-            createPriceOnTimes: (body) => { return this.createPriceOnTimes(body) },
-            getListPriceOnTimes: () => { return this.getListPriceOnTimes() },
+            createPriceOnTime: (body) => { return this.createPriceOnTime(body) },
+            getListPriceOnTime: () => { return this.getListPriceOnTime() },
             updatePriceOnTime: (body) => { return this.updatePriceOnTime(body) },
-            deletePriceOnTimes: (body) => { return this.deletePriceOnTimes(body) }
+            deletePriceOnTime: (body) => { return this.deletePriceOnTime(body) }
         };
     }
 
-    createPriceOnTimes(body) {
+    createPriceOnTime(body) {
         return db.getSequelize().transaction(function (transaction) {
-            return db.price_on_time.create(body.price_on_time, db.getTransaction(transaction)).then((createdPriceOnTimes) => {
-                return createdPriceOnTimes;
-            }).catch((err) => {
-                throw err
-            });
+            return db.price_on_time.find({
+                where:
+                {
+                    gridiron_id: body.price_on_time.gridiron_id,
+                    size_gridiron_id: body.price_on_time.size_gridiron_id,
+                    time_id: body.price_on_time.time_id
+                }
+            }).then((result) => {
+                if(result){
+                    throw new Error(`Giá tiền của sân cho giờ nãy đã tồn tại!`)
+                }
+                return db.price_on_time.create(body.price_on_time, db.getTransaction(transaction)).then((result) => {
+                    return result;
+                }).catch((err) => {
+                    throw err
+                });
+            })
         })
     }
 
-    getListPriceOnTimes() {
+    getListPriceOnTime() {
         return db.price_on_time.findAll();
     }
 
@@ -35,10 +47,10 @@ class ClassMethods {
             })
     }
 
-    deletePriceOnTimes(id) {
+    deletePriceOnTime(body) {
         return db.price_on_time.destroy({
             where: {
-                id: id
+                id: body.id
             }
         });
     }

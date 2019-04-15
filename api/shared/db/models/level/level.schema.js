@@ -6,7 +6,7 @@ class LevelSchema {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV1
             },
-            level: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },

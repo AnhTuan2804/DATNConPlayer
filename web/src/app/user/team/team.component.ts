@@ -160,13 +160,13 @@ export class TeamComponent implements OnInit {
     if (tab == 'area') {
       this.objectAreaEvent = event.value;
       this.formAdd.patchValue({
-        area: event.value.area.area,
+        area: event.value.area.name,
         area_id: event.value.area.id
       });
     } else {
       this.objectLevelEvent = event.value;
       this.formAdd.patchValue({
-        level: event.value.level.level,
+        level: event.value.level.name,
         level_id: event.value.level.id
       });
     }

@@ -51,6 +51,8 @@ import { Area } from './classes/area';
 import { AuthGuardAdmin } from './guards/auth-admin.guard';
 import { Level } from './classes/level';
 import { Team } from './classes/team';
+import { Gridiron } from './classes/gridiron';
+import { Career } from './classes/career';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -117,7 +119,9 @@ export function createTranslateLoader(http: HttpClient) {
         AuthGuardAdmin,
         Area,
         Level,
-        Team
+        Team,
+        Gridiron,
+        Career
     ]
 })
 export class SharedModule { }

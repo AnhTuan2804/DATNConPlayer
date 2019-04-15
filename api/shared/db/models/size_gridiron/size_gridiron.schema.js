@@ -7,7 +7,7 @@ class SizeGridironSchema {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV1
             },
-            size: {
+            name: {
                 type: DataTypes.STRING,
             },
             created_at: {

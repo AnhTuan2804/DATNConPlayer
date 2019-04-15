@@ -4,7 +4,7 @@ class SizeGridironInstanceMethods {
     getInstanceMethods(DataTypes) {
         return {
             getSizeGridiron: function () {
-                return _.pick(this, ['id', 'size', 'created_at', 'updated_at']);
+                return _.pick(this, ['id', 'name', 'created_at', 'updated_at']);
             }
         };
     }

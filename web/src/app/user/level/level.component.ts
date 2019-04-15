@@ -61,7 +61,7 @@ export class LevelComponent implements OnInit {
       return item.level.id == event.item.level.id;
     })
     this.formEdit.patchValue({
-      level: event.item.level.level
+      level: event.item.level.name
     })
     this.showEditForm = true;
   }
