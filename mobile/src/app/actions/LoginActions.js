@@ -1,10 +1,10 @@
 import { IS_LOGIN, LOGIN_SUCCESSFULLY, LOGIN_FAILED, LOGIN_LOGOUT } from './ActionTypes';
 
-export const islogin = (userID, password) => {
+export const islogin = (email, password) => {
     return {
         type: IS_LOGIN,
         isLoading: true,
-        userID,
+        email,
         password,
     };
 }

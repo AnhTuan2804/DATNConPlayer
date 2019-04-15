@@ -60,10 +60,10 @@ export default class HeaderView extends Component {
                     }
                 </Left>
                 <Body style={{ flex: 6, justifyContent: 'center', alignItems: 'center' }}>
-                    {this.props.logoEnable ?
+                    {/* {this.props.logoEnable ?
                         <Image style={styles.logo} resizeMode='contain' source={require('../../../../assets/image/logo_coinspay.png')} />
                         : null
-                    }
+                    } */}
                 </Body>
                 <Right style={{ flex: 1 }} />
             </Header>
