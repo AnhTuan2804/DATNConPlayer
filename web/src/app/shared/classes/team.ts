@@ -16,7 +16,7 @@ export class Team {
                 { title: team.team.name }
             ];
             stt++;
-            if (tab == 'admin' || team.team.is_captain == 1) {
+            if (tab == 'admin' || team.is_captain == 1) {
                 data['actions'] = ['Edit', 'Delete'];
             } else {
                 data['actions'] = ['View'];

@@ -29,7 +29,7 @@ export class TeamService extends BaseService {
 
   public getListForAdmin(): Observable<any> {
     return this
-      .getData(`team/get-list-for-admin?id=alkdfnsafknasakjshfasf`)
+      .getData(`team/get-list-for-admin`)
       .catch((err) => {
         return Observable.throw(err);
       })

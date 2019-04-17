@@ -38,6 +38,10 @@ class ClassMethods {
             where: {
                 id: id
             }
+        }).then((result)=>{
+            if(result== 0){
+                throw new Error('Người dùng không tồn tại trong đội')
+            }
         });
     }
 }

@@ -13,7 +13,7 @@ export class Area {
             data['area'] = area;
             data['content'] = [
                 { title: stt },
-                { title: area.area, link: true, clickAble: true }
+                { title: area.name, link: true, clickAble: true }
             ];
             stt++;
             data['actions'] = ['Delete'];
@@ -27,7 +27,7 @@ export class Area {
         _.forEach(areas, (area => {
             let data = [];
             data['area'] = area;
-            data['itemName'] = area.area;
+            data['itemName'] = area.name;
             tmp.push(data);
         }))
         return tmp;

@@ -90,6 +90,25 @@ class Db {
         this.team.hasMany(this.teamUser, { onDelete: 'cascade' });
         this.user.hasMany(this.teamUser, { onDelete: 'cascade' });
 
+        //gridiron
+        this.gridiron = sequelize.import('./models/gridiron');
+        this.gridiron.belongsTo(this.area, { unique: false, onDelete: 'cascade' });
+
+        //gridiron
+        this.sub_gridiron = sequelize.import('./models/sub_gridiron');
+        this.sub_gridiron.belongsTo(this.gridiron, { unique: false, onDelete: 'cascade' });
+        this.sub_gridiron.belongsTo(this.size_gridiron, { unique: false, onDelete: 'cascade' });
+        this.gridiron.hasMany(this.sub_gridiron, { onDelete: 'cascade' });
+        this.gridiron.hasMany(this.price_on_time, { onDelete: 'cascade' });
+
+        //time
+        this.time = sequelize.import('./models/time');
+        this.price_on_time.belongsTo(this.gridiron, { unique: false, onDelete: 'cascade' });
+        this.price_on_time.belongsTo(this.time, { unique: false, onDelete: 'cascade' });
+        this.price_on_time.belongsTo(this.size_gridiron, { unique: false, onDelete: 'cascade' });
+
+        //career
+        this.career = sequelize.import('./models/career');
     }
 
     rawQuery(sql, whereClause) {

@@ -3,8 +3,13 @@ const loginRouter = require('./login');
 const userRouter = require('./user');
 const roleRouter = require('./role');
 const areaRouter = require('./area');
+const timeRouter = require('./time');
 const teamRouter = require('./team');
+const priceOnTimeRouter = require('./price_on_time');
+const gridironRouter = require('./gridiron');
+const sizeGridironRouter = require('./size_gridiron');
 const levelRouter = require('./level');
+const careerRouter = require('./career');
 const resetPasswordRouter = require('./resetPassword');
 const internalToken = require('../middlewares/internalToken.local');
 const authAdmin = require('../middlewares/auth-admin.local');
@@ -29,10 +34,21 @@ class RouterIndex {
         this.app.use(ROOT_ROUTE + '/reset-password', resetPasswordRouter);
         //area
         this.app.use(ROOT_ROUTE + '/area', areaRouter);
+        //time
+        this.app.use(ROOT_ROUTE + '/time', timeRouter);
         //level
         this.app.use(ROOT_ROUTE + '/level', levelRouter);
+        //career
+        this.app.use(ROOT_ROUTE + '/career', careerRouter);
+        //price on time
+        this.app.use(ROOT_ROUTE + '/price-on-time', priceOnTimeRouter);
+        //size gridiron
+        this.app.use(ROOT_ROUTE + '/size-gridiron', sizeGridironRouter);
         //team
         this.app.use(ROOT_ROUTE + '/team', internalToken.verifyToken, teamRouter);
+        //gridiron
+        this.app.use(ROOT_ROUTE + '/gridiron', internalToken.verifyToken, gridironRouter);
+
     }
 }
 
