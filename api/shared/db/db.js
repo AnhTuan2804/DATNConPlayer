@@ -7,9 +7,9 @@ let sequelize = null;
 class Db {
     constructor() {
         if (!sequelize) {
-            let anc = config.dbLocal.options;
+            let anc = config.dbLocalMobile.options;
             anc['isolationLevel'] = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-            sequelize = new Sequelize(config.dbLocal.dbname, config.dbLocal.username, config.dbLocal.password, config.dbLocal.options);
+            sequelize = new Sequelize(config.dbLocalMobile.dbname, config.dbLocalMobile.username, config.dbLocalMobile.password, config.dbLocalMobile.options);
         }
     }
 

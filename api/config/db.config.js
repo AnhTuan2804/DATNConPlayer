@@ -11,10 +11,20 @@ const config = {
             dialect: "mysql"
         }
     },
-    dbLocal: {
+    dbLocalWeb: {
         dbname: "DATNCSPLAYER",
         username: "root",
         password: "abc@1234",
+        options: {
+            host: "127.0.0.1",
+            port: 3306,
+            dialect: "mysql"
+        }
+    },
+    dbLocalMobile: {
+        dbname: "DATNCSPLAYER",
+        username: "root",
+        password: "Abc@1234",
         options: {
             host: "127.0.0.1",
             port: 3306,
