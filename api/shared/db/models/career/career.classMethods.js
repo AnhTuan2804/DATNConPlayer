@@ -18,7 +18,7 @@ class ClassMethods {
         return db.getSequelize().transaction(function (transaction) {
             return db.career.find({ where: { name: body.career.name } }).then((result) => {
                 if (result) {
-                    throw new Error('Ngành này đang tồn tại!')
+                    throw new Error('This career is exist already!')
                 }
                 return db.career.create(body.career, db.getTransaction(transaction)).then((result) => {
                     return result;

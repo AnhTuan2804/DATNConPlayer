@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/classes/user/user';
 import * as _ from 'lodash';
 import { LevelService } from 'src/app/shared/services/level.service';
 import { Level } from 'src/app/shared/classes/level';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 @Component({
   selector: 'app-level',
@@ -19,7 +20,7 @@ export class LevelComponent implements OnInit {
   editFaild: boolean = false;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['No.', 'Trình độ', 'Actions'];
+  headers = ['No.', 'Name of level', 'Actions'];
   items = [];
   showEditForm = false;
   objectLevelEvent;
@@ -72,7 +73,7 @@ export class LevelComponent implements OnInit {
     }
     this.action.showLoading();
     this.levelService.createLevel({ level: data }).subscribe((result) => {
-      this.toastrService.success('Thêm thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
       this.getList();
@@ -80,6 +81,7 @@ export class LevelComponent implements OnInit {
       this.action.hideLoading();
       this.addFaild = true;
       this.messageError = err.message;
+      this.toastrService.error(err.message, '', { timeOut: 3500 });
     })
   }
 
@@ -90,7 +92,7 @@ export class LevelComponent implements OnInit {
     }
     this.action.showLoading();
     this.levelService.updateLevel(data).subscribe((result) => {
-      this.toastrService.success('Cập nhật thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.editFaild = false;
       this.formEdit.reset();
       this.showEditForm = false;
@@ -99,20 +101,21 @@ export class LevelComponent implements OnInit {
       this.action.hideLoading();
       this.editFaild = true;
       this.messageError = err.message;
+      this.toastrService.error(err.message, '', { timeOut: 3500 });
     })
   }
 
   handleAction(event) {
     this.action.showLoading();
     this.levelService.deleteLevel({ id: event.item.level.id }).subscribe((result) => {
-      this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
       this.formEdit.reset();
       this.objectLevelEvent = null;
       this.showEditForm = false;
       this.getList();
     }, (err) => {
       this.action.hideLoading();
-      this.toastrService.success(err.message, '', { timeOut: 3500 });
+      this.toastrService.error(err.message, '', { timeOut: 3500 });
     })
 
   }

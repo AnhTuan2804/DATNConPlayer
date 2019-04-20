@@ -21,7 +21,11 @@ export class User {
     setData(listUser) {
         let tmp = [];
         let stt = 1;
+        const token = localStorage.getItem('token');
         _.forEach(listUser, (item) => {
+            if (token == item.token) {
+                return;
+            }
             let data = [];
             data['user'] = item;
             data['content'] = [

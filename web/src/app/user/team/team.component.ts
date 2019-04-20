@@ -10,6 +10,9 @@ import { Level } from 'src/app/shared/classes/level';
 import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
 import { Router } from '@angular/router';
+import { Utils } from 'src/app/shared/enums/utils';
+import { CareerService } from 'src/app/shared/services/career.service';
+import { Career } from 'src/app/shared/classes/career';
 declare var $: any;
 
 @Component({
@@ -22,9 +25,10 @@ export class TeamComponent implements OnInit {
   formAdd: FormGroup;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['No.', 'Tên đội', 'Actions'];
+  headers = ['No.', 'Name of team', 'Actions'];
   listArea = [];
   listLevel = [];
+  listCareer = [];
   listTeam = [];
   showEditForm = false;
   objectAreaEvent;
@@ -32,11 +36,13 @@ export class TeamComponent implements OnInit {
   selectedIndex;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
+    private careerService: CareerService, private career: Career,
     private teamService: TeamService, private team: Team,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router) {
     this.initForm()
     this.getListArea();
+    this.getListCareer();
     this.getListLevel();
     this.getListTeam();
   }
@@ -55,6 +61,8 @@ export class TeamComponent implements OnInit {
       'description': new FormControl(''),
       'level': new FormControl('', Validators.required),
       'level_id': new FormControl(''),
+      'career': new FormControl('', Validators.required),
+      'career_id': new FormControl(''),
       'area_id': new FormControl(''),
       'area': new FormControl('', Validators.required),
       'picture': new FormControl('')
@@ -63,9 +71,9 @@ export class TeamComponent implements OnInit {
 
   getListTeam() {
     this.action.showLoading();
-    if (localStorage.getItem('role') && localStorage.getItem('role') == 'admin') {
+    if (localStorage.getItem('role') && localStorage.getItem('role') == 'Admin') {
       this.teamService.getListForAdmin().subscribe((result) => {
-        this.listTeam = this.team.setteam(result, 'admin');
+        this.listTeam = this.team.setteam(result, 'Admin');
         this.action.hideLoading();
       }, (err) => {
         console.log(err);
@@ -73,7 +81,7 @@ export class TeamComponent implements OnInit {
       })
     } else {
       this.teamService.getListForUser().subscribe((result) => {
-        this.listTeam = this.team.setteam(result, 'normal');
+        this.listTeam = this.team.setteam(result, 'Normal');
         this.action.hideLoading();
       }, (err) => {
         console.log(err);
@@ -98,6 +106,14 @@ export class TeamComponent implements OnInit {
     })
   }
 
+  getListCareer() {
+    this.careerService.getList().subscribe((result) => {
+      this.listCareer = this.career.getListForDropdown(result);
+    }, (err) => {
+      console.log(err)
+    })
+  }
+
   add() {
     const data = {
       name: this.getValueFormAdd('name'),
@@ -105,12 +121,13 @@ export class TeamComponent implements OnInit {
       age_min: this.getValueFormAdd('age_min'),
       level_id: this.getValueFormAdd('level_id'),
       area_id: this.getValueFormAdd('area_id'),
+      career_id: this.getValueFormAdd('career_id'),
       picture: this.getValueFormAdd('picture'),
       description: this.getValueFormAdd('description'),
     }
     this.action.showLoading();
     this.teamService.createTeam({ team: data }).subscribe((result) => {
-      this.toastrService.success('Thêm thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
       this.getListTeam();
@@ -118,7 +135,7 @@ export class TeamComponent implements OnInit {
       this.action.hideLoading();
       this.addFaild = true;
       this.messageError = err.message;
-      this.toastrService.warning(this.messageError, '', { timeOut: 3500 });
+      this.toastrService.error(this.messageError, '', { timeOut: 3500 });
     })
   }
 
@@ -127,7 +144,7 @@ export class TeamComponent implements OnInit {
       case 'Delete':
         this.action.showLoading();
         this.teamService.deleteTeam({ id: event.item.teamUser.team.id }).subscribe((result) => {
-          this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
+          this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
           this.getListTeam();
         }, (err) => {
           this.action.hideLoading();
@@ -158,16 +175,21 @@ export class TeamComponent implements OnInit {
 
   handleDownSelect(event, tab) {
     if (tab == 'area') {
-      this.objectAreaEvent = event.value;
       this.formAdd.patchValue({
         area: event.value.area.name,
         area_id: event.value.area.id
       });
-    } else {
-      this.objectLevelEvent = event.value;
+    }
+    if (tab == 'level') {
       this.formAdd.patchValue({
         level: event.value.level.name,
         level_id: event.value.level.id
+      });
+    }
+    if (tab == 'career') {
+      this.formAdd.patchValue({
+        career: event.value.career.name,
+        career_id: event.value.career.id
       });
     }
   }

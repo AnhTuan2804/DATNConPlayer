@@ -22,7 +22,7 @@ class ClassMethods {
         return db.user.find({ where: { token: token } }).then((user) => {
             return db.team.find({ where: { name: body.team.name } }).then((result) => {
                 if (result) {
-                    throw new Error('Tên đội này đã tồn tại!')
+                    throw new Error('This name of team is exist already!')
                 } else {
                     return db.team.create(body.team).then((team) => {
                         const teamUser = {
@@ -45,15 +45,15 @@ class ClassMethods {
         body.teamUser['is_captain'] = 0;
         return db.user.find({ where: { email: body.teamUser.member } }).then((userMail) => {
             if (!userMail) {
-                return db.user.find({ where: { email: body.teamUser.member } }).then((userPhone) => {
+                return db.user.find({ where: { phone: body.teamUser.member } }).then((userPhone) => {
                     if (!userPhone) {
-                        throw new Error('Người dùng không tồn tại!')
+                        throw new Error('This user not exist!')
                     } else {
                         return db.teamUser.find({
                             where: { user_id: userPhone.id, team_id: body.teamUser.team_id }
                         }).then((result) => {
                             if (result) {
-                                throw new Error('Người dùng đang có trong đội!')
+                                throw new Error('This user is exist in team already!')
                             } else {
                                 body.teamUser['user_id'] = userPhone.id;
                                 return db.teamUser.createTeamUser({ teamUser: body.teamUser }).then((result) => {
@@ -68,7 +68,7 @@ class ClassMethods {
                     where: { user_id: userMail.id, team_id: body.teamUser.team_id }
                 }).then((result) => {
                     if (result) {
-                        throw new Error('Người dùng đang có trong đội!')
+                        throw new Error('This user is exist in team already!')
                     } else {
                         body.teamUser['user_id'] = userMail.id;
                         return db.teamUser.createTeamUser({ teamUser: body.teamUser }).then((result) => {
@@ -98,6 +98,9 @@ class ClassMethods {
                     }, {
                         model: db.area,
                         attributes: ['id', 'name']
+                    }, {
+                        model: db.career,
+                        attributes: ['id', 'name']
                     }]
                 }]
             });
@@ -114,6 +117,9 @@ class ClassMethods {
                 attributes: ['id', 'name']
             }, {
                 model: db.area,
+                attributes: ['id', 'name']
+            }, {
+                model: db.career,
                 attributes: ['id', 'name']
             }, {
                 model: db.teamUser,
@@ -135,6 +141,9 @@ class ClassMethods {
                 }, {
                     model: db.area,
                     attributes: ['id', 'name']
+                }, {
+                    model: db.career,
+                    attributes: ['id', 'name']
                 }]
             }]
         });
@@ -143,7 +152,7 @@ class ClassMethods {
     updateTeam(body, token) {
         return db.team.find({ where: { name: body.name } }).then((result) => {
             if (result.id != body.id) {
-                throw new Error('Tên đội này đã tồn tại!')
+                throw new Error('This name of team is exist already!')
             }
             return db.team.update(body, { where: { id: body.id } })
                 .then((team) => {

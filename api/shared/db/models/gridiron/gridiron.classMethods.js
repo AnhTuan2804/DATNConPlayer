@@ -20,7 +20,7 @@ class ClassMethods {
         return db.user.find({ where: { token: token } }).then((user) => {
             return db.gridiron.find({ where: { name: body.gridiron.name } }).then((result) => {
                 if (result) {
-                    throw new Error('Tên sân này đã tồn tại!')
+                    throw new Error('This name of gridiron is exist already!')
                 } else {
                     body.gridiron['user_id'] = user.id
                     return db.gridiron.create(body.gridiron).then((gridiron) => {
@@ -85,7 +85,7 @@ class ClassMethods {
     updateGridiron(body, token) {
         return db.gridiron.find({ where: { name: body.name } }).then((result) => {
             if (result.id != body.id) {
-                throw new Error('Tên sân này đã tồn tại!')
+                throw new Error('This name of gridiron is exist already!')
             }
             return db.gridiron.update(body, { where: { id: body.id } })
                 .then((gridiron) => {

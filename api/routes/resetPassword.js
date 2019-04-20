@@ -6,7 +6,7 @@ class ResetPassword {
     registerRoutes() {
         router.route('/').post((req, res) => {
             return userHandler.resetPassword(req.body.email).then((result) => {
-                res.status(200).send({ message: 'Đổi mật khẩu thành công! Vui lòng kiểm tra email' })
+                res.status(200).send({ message: 'Reset password successfully, Please check your email!' })
             }).catch((error) => {
                 res.status(400).send({ code: 400, message: error.message });
             });

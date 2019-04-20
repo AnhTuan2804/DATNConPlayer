@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { LoginService } from 'src/app/shared/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 @Component({
   selector: 'app-register',
@@ -49,7 +50,7 @@ export class RegisterComponent implements OnInit {
     this.action.showLoading();
     this.loginService.Register(email, password, phone, fullname).subscribe(result => {
       this.action.hideLoading();
-      this.toastrService.success('Tạo tài khoản thành công', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.navToHomeLoginForm();
     }, (err) => {
       this.action.hideLoading();

@@ -7,9 +7,9 @@ let sequelize = null;
 class Db {
     constructor() {
         if (!sequelize) {
-            let anc = config.dbLocalMobile.options;
+            let anc = config.dbLocalWeb.options;
             anc['isolationLevel'] = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-            sequelize = new Sequelize(config.dbLocalMobile.dbname, config.dbLocalMobile.username, config.dbLocalMobile.password, config.dbLocalMobile.options);
+            sequelize = new Sequelize(config.dbLocalWeb.dbname, config.dbLocalWeb.username, config.dbLocalWeb.password, config.dbLocalWeb.options);
         }
     }
 
@@ -109,6 +109,7 @@ class Db {
 
         //career
         this.career = sequelize.import('./models/career');
+        this.team.belongsTo(this.career, { unique: false, onDelete: 'cascade' })
     }
 
     rawQuery(sql, whereClause) {
