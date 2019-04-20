@@ -25,7 +25,7 @@ export class TeamDetailComponent implements OnInit {
   messageError: string = "";
   messageErrAddMember: string = "";
   addMemberFaild: boolean = false;
-  headers = ['Stt', 'Tên thành viên', 'Số điện thoại', 'Hành động'];
+  headers = ['No.', 'Tên thành viên', 'Số điện thoại', 'Actions'];
   listArea = [];
   listLevel = [];
   listUser = [];

@@ -19,7 +19,7 @@ export class LevelComponent implements OnInit {
   editFaild: boolean = false;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['Stt', 'Trình độ', 'Hành động'];
+  headers = ['No.', 'Trình độ', 'Actions'];
   items = [];
   showEditForm = false;
   objectLevelEvent;

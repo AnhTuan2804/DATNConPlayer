@@ -10,7 +10,8 @@ class ClassMethods {
             updateToken: (id, token) => { return this.updateToken(id, token); },
             updateUser: (body) => { return this.updateUser(body) },
             getUserByToken: (body) => { return this.getUserByToken(body) },
-            getListUser: () => { return this.getListUser() }
+            getListUser: () => { return this.getListUser() },
+            getListUserForAdmin: () => { return this.getListUserForAdmin() }
         };
     }
 
@@ -57,6 +58,16 @@ class ClassMethods {
     }
 
     getListUser() {
+        return db.user.findAll({
+            include: {
+                model: db.role
+            }
+        }).then((result) => {
+            return result
+        })
+    }
+
+    getListUserForAdmin() {
         return db.user.findAll({
             include: {
                 model: db.role

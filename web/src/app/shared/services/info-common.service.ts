@@ -26,4 +26,12 @@ export class InfoCommonService extends BaseService {
         return Observable.throw(err);
       })
   }
+
+  public getListRole(): Observable<any> {
+    return this
+      .getData(`role/get-list`)
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
 }

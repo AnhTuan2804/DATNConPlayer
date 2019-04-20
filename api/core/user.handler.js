@@ -121,6 +121,12 @@ class UserHandler {
         })
     }
 
+    getListUserForAdmin() {
+        return db.user.getListUserForAdmin().then((result) => {
+            return result;
+        })
+    }
+
     getUserByToken(token) {
         return db.user.getUserByToken(token).then((result) => {
             return result;

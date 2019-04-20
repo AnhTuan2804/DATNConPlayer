@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/classes/user/user';
 import * as _ from 'lodash';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { Area } from 'src/app/shared/classes/area';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 
 @Component({
@@ -20,7 +21,7 @@ export class AreaComponent implements OnInit {
   editFaild: boolean = false;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['Stt', 'Khu vực', 'Hành động'];
+  headers = ['No.', 'Area', 'Actions'];
   items = [];
   showEditForm = false;
   objectAreaEvent;
@@ -73,7 +74,7 @@ export class AreaComponent implements OnInit {
     }
     this.action.showLoading();
     this.areaService.createArea({ area: data }).subscribe((result) => {
-      this.toastrService.success('Thêm thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
       this.getListArea();
@@ -91,7 +92,7 @@ export class AreaComponent implements OnInit {
     }
     this.action.showLoading();
     this.areaService.updateArea(data).subscribe((result) => {
-      this.toastrService.success('Cập nhật thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.editFaild = false;
       this.formEdit.reset();
       this.showEditForm = false;
@@ -106,7 +107,7 @@ export class AreaComponent implements OnInit {
   handleAction(event) {
     this.action.showLoading();
     this.areaService.deleteArea({ id: event.item.area.id }).subscribe((result) => {
-      this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
       this.formEdit.reset();
       this.objectAreaEvent = null;
       this.showEditForm = false;

@@ -11,10 +11,29 @@ export class User {
     is_delete: boolean;
     role: string;
 
+
     constructor() { }
 
     setEmail(email) {
         this.email = email;
+    }
+
+    setData(listUser) {
+        let tmp = [];
+        let stt = 1;
+        _.forEach(listUser, (item) => {
+            let data = [];
+            data['user'] = item;
+            data['content'] = [
+                { title: stt },
+                { title: item.email },
+                { title: item.fullname },
+                { title: item.phone }
+            ]
+            data['actions'] = ['Delete']
+            tmp.push(data);
+        })
+        return tmp;
     }
 
     setUser(user) {

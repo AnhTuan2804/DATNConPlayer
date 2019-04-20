@@ -100,5 +100,97 @@
       </div>
     </div>
   </div>
+
+
+
+  <!-- <div *ngIf="isAdmin" class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Quản lí người dùng</h1>
+    </div>
+    <div class="modal-body">
+      <form role="form" [formGroup]="formAdd" (ngSubmit)="add()">
+        <div class="col-md-12 row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Email</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="email" class="form-control input-lg" name="email" formControlName="email">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Họ Tên</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="fullname" formControlName="fullname">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Số điện thoại</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="number" class="form-control input-lg" name="phone" formControlName="phone">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Quyền</label>
+                <span class="required"> *</span>
+                <div class="input-include-error">
+                    <app-select-dropdown [nameSelect]="formAdd.controls['role'].value" [title]="'Chọn phân quyền'"
+                      [selectedIndex]="selectedIndex" [options]="listRole"
+                      (selectedOption)="handleDownSelect($event, 'role')"></app-select-dropdown>
+                    <span
+                      *ngIf="formAdd.controls.area.hasError('required')&&(formAdd.controls['area'].touched || errorForm)">Trường
+                      bắt buộc</span>
+                  </div>
+              </div>
+            </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid">
+                <i class="fas fa-plus-circle"></i> &nbsp;Thêm mới
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-body" *ngIf="showEditForm">
+      <form role="form" [formGroup]="formEdit" (ngSubmit)="edit()">
+        <div class="col-md-12 row">
+          <div class="col-md-9">
+            <div class="form-group">
+              <label class="control-label">Trình độ</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="level" formControlName="level">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formEdit.valid">
+                <i class="fas fa-pen-square"></i> &nbsp;Cập nhật
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <app-data-table [headers]="headers" [items]="listUser" [listSearch]=[0,1,2,3]
+          (outputContentStatus)="outputContentStatus($event)" (outputAction)="handleAction($event)"></app-data-table>
+      </div>
+    </div>
+  </div> -->
+
+
 </div>
 <app-loading></app-loading>

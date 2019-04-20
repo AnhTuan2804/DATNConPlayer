@@ -28,6 +28,14 @@ export class UserService extends BaseService {
       })
   }
 
+  public getListUserForAdmin(): Observable<any> {
+    return this
+      .getData(`user/get-list-for-admin`)
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
   public updateProfile(data: Object): Observable<any> {
     return this
       .postData(`user/update-profile`, data).map(res => {

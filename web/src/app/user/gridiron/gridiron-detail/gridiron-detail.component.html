@@ -2,34 +2,33 @@
   <!-- Thong tin san  -->
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">Thông tin sân</h1>
+      <h1 class="modal-title">General Information</h1>
     </div>
     <div class="modal-body">
       <form role="form" [formGroup]="formDetail" (ngSubmit)="edit()">
         <div class="col-md-12 row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Tên sân</label>
+              <label class="control-label">Name of gridiron</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="name" formControlName="name">
                 <span
-                  *ngIf="formDetail.controls.name.hasError('required')&&(formDetail.controls['name'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formDetail.controls.name.hasError('required')&&(formDetail.controls['name'].touched || errorForm)">Field required</span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Khu vực</label>
+              <label class="control-label">Area</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <app-select-dropdown [nameSelect]="formDetail.controls['area'].value" [title]="'Khu vực'"
+                <app-select-dropdown [nameSelect]="formDetail.controls['area'].value" [title]="'Area'"
                   [selectedIndex]="selectedIndex" [options]="listArea"
                   (selectedOption)="handleDownSelect($event, 'area')"></app-select-dropdown>
                 <span
-                  *ngIf="formDetail.controls.area.hasError('required')&&(formDetail.controls['area'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formDetail.controls.area.hasError('required')&&(formDetail.controls['area'].touched || errorForm)">Field
+                  required</span>
               </div>
             </div>
           </div>
@@ -40,14 +39,14 @@
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="link_face" formControlName="link_face">
                 <span
-                  *ngIf="formDetail.controls.link_face.hasError('required')&&(formDetail.controls['link_face'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formDetail.controls.link_face.hasError('required')&&(formDetail.controls['link_face'].touched || errorForm)">Field
+                  required</span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Chọn ảnh sân</label>
+              <label class="control-label">Choose picture</label>
               <div class="input-include-error">
                 <input type="file" class="form-control input-lg" name="picture" formControlName="picture"
                   placeholder="">
@@ -56,31 +55,31 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Điện thoại liên hệ</label>
+              <label class="control-label">Phone</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="number" class="form-control input-lg" name="phone" formControlName="phone">
                 <span
-                  *ngIf="formDetail.controls.phone.hasError('required')&&(formDetail.controls['phone'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formDetail.controls.phone.hasError('required')&&(formDetail.controls['phone'].touched || errorForm)">Field
+                  required</span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Địa chỉ</label>
+              <label class="control-label">Address</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="address" formControlName="address">
                 <span
-                  *ngIf="formDetail.controls.address.hasError('required')&&(formDetail.controls['address'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formDetail.controls.address.hasError('required')&&(formDetail.controls['address'].touched || errorForm)">Field
+                  required</span>
               </div>
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              <label class="control-label">Giới thiệu</label>
+              <label class="control-label">Introduce summary</label>
               <div class="input-include-error">
                 <textarea type="textarea" class="form-control input-lg" formControlName="description"></textarea>
               </div>
@@ -89,7 +88,7 @@
           <div class="col-md-3">
             <div class="form-group">
               <button type="submit" class="btn btn-success" [disabled]="!formDetail.valid">
-                <i class="fas fa-plus-circle"></i> &nbsp;Cập nhật thông tin sân
+                <i class="fas fa-plus-circle"></i> &nbsp;Update
               </button>
             </div>
           </div>
@@ -105,54 +104,54 @@
   <!-- Quan li san con -->
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">Quản lí sân con</h1>
+      <h1 class="modal-title">Manage sub gridiron</h1>
     </div>
     <div [ngClass]="{'view': view}" class="modal-body">
       <form role="form" [formGroup]="formAddSubGri" (ngSubmit)="addSubGri()">
         <div [ngClass]="{'view': view}" class="col-md-12 row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Loại sân</label>
+              <label class="control-label">Type of gridiron</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <app-select-dropdown [nameSelect]="formAddSubGri.controls['size_gridiron'].value" [title]="'Loại sân'"
+                <app-select-dropdown [nameSelect]="formAddSubGri.controls['size_gridiron'].value" [title]="'Type of gridiron'"
                   [selectedIndex]="selectedIndex" [options]="listSize"
                   (selectedOption)="handleDownSelect($event, 'size_gridiron')"></app-select-dropdown>
                 <span
-                  *ngIf="formAddSubGri.controls.size_gridiron.hasError('required')&&(formAddSubGri.controls['size_gridiron'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formAddSubGri.controls.size_gridiron.hasError('required')&&(formAddSubGri.controls['size_gridiron'].touched || errorForm)">Field
+                  required</span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Sô lượng sân</label>
+              <label class="control-label">Number of gridiron</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="number" class="form-control input-lg" name="quantity" formControlName="quantity">
                 <span
-                  *ngIf="formAddSubGri.controls.quantity.hasError('required')&&(formAddSubGri.controls['quantity'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formAddSubGri.controls.quantity.hasError('required')&&(formAddSubGri.controls['quantity'].touched || errorForm)">Field
+                  required</span>
               </div>
             </div>
           </div>
           <div *ngIf="formAddSubGri.controls.quantity.value" class="col-md-12">
             <div class="form-group">
-              <label class="control-label">Sô lượng sân</label>
+              <label class="control-label">Number of sub gridiron</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="name_gridiron" formControlName="name_gridiron">
                 <span
-                  *ngIf="formAddSubGri.controls['name_gridiron'].hasError('required')&&(formAddSubGri.controls['name_gridiron'].touched || errorForm)">Trường
-                  bắt buộc</span><br />
-                <span *ngIf="!countName">Tên sân cách nhau dấu phẩy và bằng số lượng sân muốn tạo</span>
+                  *ngIf="formAddSubGri.controls['name_gridiron'].hasError('required')&&(formAddSubGri.controls['name_gridiron'].touched || errorForm)">Field
+                  required</span><br />
+                <span *ngIf="!countName"></span>Name of giridiron div by ',' and it must equlas with number of sub griditon
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <button type="submit" class="btn btn-success" [disabled]="!formAddSubGri.valid">
-                <i class="fas fa-pen-square"></i> &nbsp;Tạo sân con
+                <i class="fas fa-pen-square"></i> &nbsp;Create
               </button>
             </div>
           </div>
@@ -172,7 +171,7 @@
   <!-- quan li gia thue san -->
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">Quản lí giá thuê sân</h1>
+      <h1 class="modal-title">Manage price</h1>
     </div>
     <div [ngClass]="{'view': view}" class="modal-body">
       <form role="form" [formGroup]="formPriceOnime" (ngSubmit)="addPriceOnTime()">
@@ -180,15 +179,15 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label class="control-label">Loại sân</label>
+                <label class="control-label">Type of gridiron</label>
                 <span class="required"> *</span>
                 <div class="input-include-error">
                   <app-select-dropdown [nameSelect]="formPriceOnime.controls['size_gridiron'].value"
-                    [title]="'Loại sân'" [selectedIndex]="selectedIndex" [options]="listSize"
+                    [title]="'Type of gridiron'" [selectedIndex]="selectedIndex" [options]="listSize"
                     (selectedOption)="handleDownSelectForPriceOntime($event, 'size_gridiron')"></app-select-dropdown>
                   <span
-                    *ngIf="formPriceOnime.controls.size_gridiron.hasError('required')&&(formPriceOnime.controls['size_gridiron'].touched || errorForm)">Trường
-                    bắt buộc</span>
+                    *ngIf="formPriceOnime.controls.size_gridiron.hasError('required')&&(formPriceOnime.controls['size_gridiron'].touched || errorForm)">Field
+                    required</span>
                 </div>
               </div>
             </div>
@@ -201,20 +200,20 @@
                     [selectedIndex]="selectedIndex" [options]="listTime"
                     (selectedOption)="handleDownSelectForPriceOntime($event, 'time')"></app-select-dropdown>
                   <span
-                    *ngIf="formPriceOnime.controls.time.hasError('required')&&(formPriceOnime.controls['time'].touched || errorForm)">Trường
-                    bắt buộc</span>
+                    *ngIf="formPriceOnime.controls.time.hasError('required')&&(formPriceOnime.controls['time'].touched || errorForm)">Field
+                    required</span>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label class="control-label">Giá cho thuê (VNĐ)</label>
+                <label class="control-label">Price (VNĐ)</label>
                 <span class="required"> *</span>
                 <div class="input-include-error">
                   <input type="number" class="form-control input-lg" name="price" formControlName="price">
                   <span
-                    *ngIf="formPriceOnime.controls.price.hasError('required')&&(formPriceOnime.controls['price'].touched || errorForm)">Trường
-                    bắt buộc</span>
+                    *ngIf="formPriceOnime.controls.price.hasError('required')&&(formPriceOnime.controls['price'].touched || errorForm)">Field
+                    required</span>
                 </div>
               </div>
             </div>
@@ -224,7 +223,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <button type="submit" class="btn btn-success" [disabled]="!formPriceOnime.valid">
-                  <i class="fas fa-pen-square"></i> &nbsp;Tạo bảng giá
+                  <i class="fas fa-pen-square"></i> &nbsp;Create
                 </button>
               </div>
             </div>
