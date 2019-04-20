@@ -1,4 +1,33 @@
-import { IS_REGISTER, REGISTER_SUCCESSFULLY, REGISTER_FAILED } from './ActionTypes';
+import {
+    IS_GET_LIST_TEAM,
+    GET_LIST_TEAM_SUCCESSFULLY,
+    GET_LIST_TEAM_FAILED,
+
+    IS_CREATE_TEAM,
+    CREATE_TEAM_SUCCESSFULLY,
+    CREATE_TEAM_FAILED,
+
+    IS_UPDATE_TEAM,
+    UPDATE_TEAM_SUCCESSFULLY,
+    UPDATE_TEAM_FAILED,
+
+    IS_ADD_MEMBER_TEAM,
+    ADD_MEMBER_TEAM_SUCCESSFULLY,
+    ADD_MEMBER_TEAM_FAILED,
+
+    IS_DEL_MEMBER_TEAM,
+    DEL_MEMBER_TEAM_SUCCESSFULLY,
+    DEL_MEMBER_TEAM_FAILED,
+
+
+    IS_DEL_TEAM,
+    DEL_TEAM_SUCCESSFULLY,
+    DEL_TEAM_FAILED,
+
+    IS_GET_DETAIL_TEAM,
+    GET_DETAIL_TEAM_SUCCESSFULLY,
+    GET_DETAIL_TEAM_FAILED,
+} from './ActionTypes';
 
 export const isregister = (value) => {
     return {
@@ -8,18 +37,3 @@ export const isregister = (value) => {
     };
 }
 
-export const registerSuccess = () => {
-    return {
-        type: REGISTER_SUCCESSFULLY,
-        userData,
-        isLoading: false,
-    };
-}
-
-export const registerFailed = (error) => {
-    return {
-        type: REGISTER_FAILED,
-        error,
-        isLoading: false,
-    };
-}
