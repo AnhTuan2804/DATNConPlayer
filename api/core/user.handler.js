@@ -11,11 +11,11 @@ class UserHandler {
         return db.getSequelize().transaction(function (transaction) {
             return db.user.find(db.getTransaction(transaction, { where: { email: data.email } })).then((user) => {
                 if (user !== null) {
-                    throw new Error("Email đã tồn tại!");
+                    throw new Error("Email is exist already!");
                 } else {
                     return db.user.find(db.getTransaction(transaction, { where: { phone: data.phone } })).then(async (user) => {
                         if (user !== null) {
-                            throw new Error("Số điện thoại đã tồn tại!");
+                            throw new Error("Phone is exist already!");
                         } else {
                             data['password'] = await passwordManagement.hashPassword(data.password);
                             return db.user.createUser(data, transaction).then((user) => {
@@ -33,7 +33,7 @@ class UserHandler {
             if (user) {
                 const checkPass = await bcrypt.compare(body.currentPassword, user.password);
                 if (!checkPass) {
-                    throw new Error('Mật khẩu hiện tại không chính xác!')
+                    throw new Error('Wrong current password!')
                 }
                 body['id'] = user.id;
                 body['password'] = await passwordManagement.hashPassword(body.newPassword);
@@ -59,7 +59,7 @@ class UserHandler {
                 if (user) {
                     return user;
                 } else {
-                    throw new Error("Tài khoản không tồn tại!");
+                    throw new Error("Account is not exist!");
                 }
             });
     }
@@ -72,7 +72,7 @@ class UserHandler {
             .then((user) => {
                 return db.user.find({ where: { phone: body.phone } }).then((userByPhone) => {
                     if (userByPhone && userByPhone.token != token) {
-                        throw new Error('Số điện thoại đã tồn tại!')
+                        throw new Error('Phone is exist already!')
                     } else {
                         body['id'] = user.id;
                         return db.user.updateUser(body).then((result) => {
@@ -85,25 +85,25 @@ class UserHandler {
             });
     }
 
-    editUser(body) {
-        const whereClause = {
-            id: body.id
-        }
-        return db.user.find({ where: whereClause })
-            .then((user) => {
-
-                // if (body.userName && body.userName == user.user_name) {
-                //     return this.saveUser(user, body);
-                // } else {
-                //     return db.user.find({ where: { user_name: body.userName } }).then((userExist) => {
-                //         if (userExist !== null) {
-                //             throw new Error("user_name already exists");
-                //         } else {
-                //             return this.saveUser(user, body);
-                //         }
-                //     })
-                // }
-            });
+    createNewAccount(body) {
+        return db.getSequelize().transaction(function (transaction) {
+            return db.user.find(db.getTransaction(transaction, { where: { email: body.user.email } })).then((user) => {
+                if (user !== null) {
+                    throw new Error("Email is exist already!");
+                } else {
+                    return db.user.find(db.getTransaction(transaction, { where: { phone: body.user.phone } })).then(async (user) => {
+                        if (user !== null) {
+                            throw new Error("Phone is exist already!");
+                        } else {
+                            body.user.password = await passwordManagement.hashPassword(body.user.password);
+                            return db.user.createUser(body.user, transaction).then((user) => {
+                                return user
+                            })
+                        }
+                    })
+                }
+            })
+        })
     }
 
     saveUser(user, body) {
@@ -155,12 +155,12 @@ class UserHandler {
             });
     }
 
-    doDeleteUser(id) {
-        return db.user.deleteUser(id).then((user) => {
+    doDeleteUser(body) {
+        return db.user.deleteUser(body).then((user) => {
             if (user > 0) {
                 return user;
             } else {
-                throw new Error('Tài khoản không tồn tại!');
+                throw new Error('Account is not exist!');
             }
         });
     }
@@ -168,7 +168,7 @@ class UserHandler {
     resetPassword(email) {
         return db.user.find({ where: { email: email } }).then((user) => {
             if (!user) {
-                throw new Error('Sai địa chỉ email!');
+                throw new Error('Email is not exist!');
             } else {
                 const newPass = passwordManagement.getNonceString(10) + 'Abc1@';
                 const hashPassword = passwordManagement.hashPassword(newPass);

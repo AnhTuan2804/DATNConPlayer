@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/classes/user/user';
 import * as _ from 'lodash';
 import { UserService } from 'src/app/shared/services/user.service';
 import { InfoCommonService } from 'src/app/shared/services/info-common.service';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 @Component({
   selector: 'app-profile',
@@ -15,13 +16,14 @@ declare var $: any;
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   changePassForm: FormGroup;
+  formAdd: FormGroup;
   editFaild: boolean = false;
   changePassFaild: boolean = false;
   messageError: string = "";
   isAdmin = false;
   listUser = [];
   listRole = [];
-  headers = ['No.', 'Email', 'Tên', 'Số điện thoại', 'Actions'];
+  headers = ['No.', 'Email', 'Fullname', 'Phone', 'Actions'];
 
   constructor(private formBuilder: FormBuilder, private infoCommonService: InfoCommonService,
     private userService: UserService, private toastrService: ToastrService,
@@ -35,8 +37,7 @@ export class ProfileComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
-    if (localStorage.getItem('role') && localStorage.getItem('role') == 'admin') {
-      this.isAdmin = true;
+    if (localStorage.getItem('role') && localStorage.getItem('role') == 'Admin') {
       this.getUserForAdmin();
     }
   }
@@ -54,7 +55,24 @@ export class ProfileComponent implements OnInit {
     },
       {
         validator: this.passwordMatchValidator
-      })
+      });
+    this.formAdd = this.formBuilder.group({
+      'email': new FormControl('', Validators.required),
+      'phone': new FormControl('', Validators.required),
+      'fullname': new FormControl(''),
+      'password': new FormControl('', Validators.required),
+      'confirmPassword': new FormControl('', Validators.required),
+      'role': new FormControl('', Validators.required),
+      'role_id': new FormControl('')
+    },
+      {
+        validator: this.passwordMatchValidatorCreate
+      });
+  }
+
+  passwordMatchValidatorCreate(g: FormGroup) {
+    return g.get('password').value == g.get('confirmPassword').value
+      ? null : { passwordMatchValidatorCreate: { valid: false } };
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -95,6 +113,7 @@ export class ProfileComponent implements OnInit {
   getUserForAdmin() {
     this.userService.getListUserForAdmin().subscribe((listUser) => {
       this.listUser = this.user.setData(listUser);
+      this.isAdmin = true;
     })
   }
 
@@ -113,7 +132,7 @@ export class ProfileComponent implements OnInit {
     }
     this.action.showLoading();
     this.userService.updateProfile(data).subscribe((result) => {
-      this.toastrService.success('Cập nhật thông tin thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.editFaild = false;
       this.action.hideLoading();
     }, (err) => {
@@ -130,7 +149,7 @@ export class ProfileComponent implements OnInit {
     }
     this.action.showLoading();
     this.userService.changePass(data).subscribe((result) => {
-      this.toastrService.success('Thay đổi mật khẩu thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.changePassFaild = false;
       this.changePassForm.reset();
       this.action.hideLoading();
@@ -139,7 +158,51 @@ export class ProfileComponent implements OnInit {
       this.changePassFaild = true;
       this.messageError = err.message;
     })
+  }
 
+  handleDownSelect(event, tab) {
+    if (tab == 'role') {
+      this.formAdd.patchValue({
+        role_id: event.value.role.id,
+        role: event.value.role.role
+      })
+    }
+  }
+
+  addAccount() {
+    const data = {
+      email: this.getValueByNameFormAddAccount('email'),
+      fullname: this.getValueByNameFormAddAccount('fullname'),
+      phone: this.getValueByNameFormAddAccount('phone'),
+      role_id: this.getValueByNameFormAddAccount('role_id'),
+      password: this.getValueByNameFormAddAccount('password'),
+    }
+    this.action.showLoading();
+    this.userService.createNewAccount({ user: data }).subscribe((result) => {
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3000 });
+      this.formAdd.reset();
+      this.action.hideLoading();
+      this.getUserForAdmin();
+    }, (err) => {
+      this.action.hideLoading();
+      this.toastrService.error(err.message, '', { timeOut: 3000 });
+    })
+  }
+
+  handleAction(event) {
+    this.action.showLoading();
+    this.userService.deleteAccount({ id: event.item.user.id }).subscribe(() => {
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3000 });
+      this.getUserForAdmin();
+      this.action.hideLoading();
+    }, err => {
+      this.action.hideLoading();
+      this.toastrService.error(err.message, '', { timeOut: 3000 });
+    })
+  }
+
+  getValueByNameFormAddAccount(name) {
+    return this.formAdd.controls[name].value;
   }
 
   getValueByNameFormInfor(name) {

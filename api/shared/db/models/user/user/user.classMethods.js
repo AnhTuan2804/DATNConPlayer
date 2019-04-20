@@ -23,10 +23,10 @@ class ClassMethods {
         });
     }
 
-    deleteUser(id) {
+    deleteUser(body) {
         return db.user.destroy({
             where: {
-                id: id
+                id: body.id
             }
         });
     }

@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   @Output() ouputlogin = new EventEmitter();
   isShow = true;
   isAdmin = false;
-  constructor(private user: User) {
+  constructor(private user: User, private router: Router) {
     this.checkLocalStore();
   }
 
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   checkLocalStore() {
     if (localStorage.getItem('token') === "undefined" || !localStorage.getItem('token')) {
       this.isShow = false;
-    } else if (localStorage.getItem('role') && localStorage.getItem('role') == 'admin') {
+    } else if (localStorage.getItem('role') && localStorage.getItem('role') == 'Admin') {
       this.isAdmin = true
     }
   }

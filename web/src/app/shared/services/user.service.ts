@@ -46,6 +46,26 @@ export class UserService extends BaseService {
       })
   }
 
+  public createNewAccount(data: Object): Observable<any> {
+    return this
+      .postData(`user/create-account`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public deleteAccount(data: Object): Observable<any> {
+    return this
+      .postData(`user/delete-user`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
   public changePass(data: Object): Observable<any> {
     return this
       .postData(`user/change-password`, data).map(res => {

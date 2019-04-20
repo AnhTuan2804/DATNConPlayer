@@ -14,7 +14,7 @@ export class AuthGuardAdmin implements CanActivate {
             this.router.navigate(['']);
             subject.next(false);
         }
-        if (localStorage.getItem('role') != "admin") {
+        if (localStorage.getItem('role') != "Admin") {
             this.router.navigate(['error-page']);
             subject.next(false);
         }

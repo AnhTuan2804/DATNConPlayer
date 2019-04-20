@@ -1,14 +1,14 @@
 <div class="container">
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">Quản lí trình độ</h1>
+      <h1 class="modal-title">Manage level</h1>
     </div>
     <div class="modal-body">
       <form role="form" [formGroup]="formAdd" (ngSubmit)="add()">
         <div class="col-md-12 row">
           <div class="col-md-9">
             <div class="form-group">
-              <label class="control-label">Trình độ</label>
+              <label class="control-label">Name of level</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="level" formControlName="level">
@@ -18,7 +18,7 @@
           <div class="col-md-3 btn-center">
             <div class="form-group">
               <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid">
-                  <i class="fas fa-plus-circle"></i> &nbsp;Thêm mới
+                  <i class="fas fa-plus-circle"></i> &nbsp;Create
               </button>
             </div>
           </div>
@@ -30,7 +30,7 @@
         <div class="col-md-12 row">
           <div class="col-md-9">
             <div class="form-group">
-              <label class="control-label">Trình độ</label>
+              <label class="control-label">Name of level</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="level" formControlName="level">
@@ -40,7 +40,7 @@
           <div class="col-md-3 btn-center">
             <div class="form-group">
               <button type="submit" class="btn btn-success" [disabled]="!formEdit.valid">
-                <i class="fas fa-pen-square"></i> &nbsp;Cập nhật
+                <i class="fas fa-pen-square"></i> &nbsp;Update
               </button>
             </div>
           </div>

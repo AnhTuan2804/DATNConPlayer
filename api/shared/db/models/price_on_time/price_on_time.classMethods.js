@@ -25,7 +25,7 @@ class ClassMethods {
                 }
             }).then((result) => {
                 if(result){
-                    throw new Error(`Giá tiền của sân cho giờ nãy đã tồn tại!`)
+                    throw new Error(`Price for this time and this type of gridiron is exist already!`)
                 }
                 return db.price_on_time.create(body.price_on_time, db.getTransaction(transaction)).then((result) => {
                     return result;

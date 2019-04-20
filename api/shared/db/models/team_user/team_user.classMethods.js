@@ -40,7 +40,7 @@ class ClassMethods {
             }
         }).then((result)=>{
             if(result== 0){
-                throw new Error('Người dùng không tồn tại trong đội')
+                throw new Error('User not exist in team!')
             }
         });
     }

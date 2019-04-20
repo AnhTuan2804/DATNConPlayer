@@ -38,7 +38,14 @@ class UserRouter {
                     res.status(400).send({ code: 400, message: error.message });
                 });
             });
-
+        router.route('/create-account')
+            .post((req, res, next) => {
+                return usersHandler.createNewAccount(req.body).then((user) => {
+                    res.status(200).send(user)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
         router.route('/change-password')
             .post((req, res, next) => {
                 return usersHandler.editPassWord(res.locals.token, req.body).then((user) => {
@@ -48,28 +55,19 @@ class UserRouter {
                 });
             });
 
-        router.route('/change-password-user')
-            .post((req, res, next) => {
-                return usersHandler.editPassWordUser(req.body['id'], req.body['new-password']).then((user) => {
-                    res.status(200).send(user)
-                }).catch((error) => {
-                    res.status(400).send({ code: 400, message: error.message });
-                });
-            });
-
         router.route('/logout')
             .post((req, res, next) => {
                 return usersHandler.logOut(res.locals.token).then((user) => {
-                    res.status(200).send({ message: 'logout success' })
+                    res.status(200).send({ message: 'Logout success' })
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: 'bad request ' + error.message });
                 });
             });
         router.route('/delete-user')
             .post((req, res, next) => {
-                return usersHandler.doDeleteUser(req.body.id).then((user) => {
+                return usersHandler.doDeleteUser(req.body).then((user) => {
                     let data = {
-                        message: 'delete user success'
+                        message: 'Delete user success'
                     }
                     res.status(200).send(data)
                 }).catch((error) => {

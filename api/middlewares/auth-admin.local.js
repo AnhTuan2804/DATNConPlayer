@@ -8,7 +8,7 @@ async function verifyAdmin(req, res, next) {
             res.locals.token = token;
             const user = await db.user.getUserByToken(token);
             if (user) {
-                if(user.role.role == 'admin'){
+                if(user.role.role == 'Admin'){
                     next();
                 } else {
                     next(110);

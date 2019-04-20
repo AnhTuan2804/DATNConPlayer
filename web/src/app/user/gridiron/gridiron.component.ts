@@ -61,7 +61,7 @@ export class GridironComponent implements OnInit {
 
   getListGridiron() {
     this.action.showLoading();
-    if (localStorage.getItem('role') && localStorage.getItem('role') == 'admin') {
+    if (localStorage.getItem('role') && localStorage.getItem('role') == 'Admin') {
       this.gridironService.getListForAdmin().subscribe((result) => {
         this.listGridiron = this.gridiron.setData(result);
         this.action.hideLoading();
