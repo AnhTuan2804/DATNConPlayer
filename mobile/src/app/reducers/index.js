@@ -5,6 +5,8 @@ import registerReducers from './ForgotPassReducer';
 import forgotPassReducers from './ForgotPassReducer';
 import settingReducers from './SettingReducer';
 import homeReducers from './HomeReducer';
+import gridironReducers from './GridironReducer';
+import teamReducers from './TeamReducer';
 
 const combineReducer = combineReducers({
     form: formReducer,
@@ -13,6 +15,8 @@ const combineReducer = combineReducers({
     forgotPassReducers : forgotPassReducers,
     settingReducers: settingReducers,
     homeReducers: homeReducers,
+    gridironReducers: gridironReducers,
+    teamReducers: teamReducers
 });
 
 export default combineReducer;
