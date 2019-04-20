@@ -5,6 +5,7 @@ import { watchRegister } from './RegisterSaga';
 import { watchForgotPass } from './ForgotPassSaga';
 import { watchUpdateInfo, watchchangePass } from './SettingSaga';
 import { watchGetListLevelSaga, watchGetListArea, watchGetListTimeSaga, watchGetListSizeSaga, watchGetListCareerSaga } from './HomeSaga';
+import { watchGetListTeamSaga, watchCreateTeamSaga, watchUpdateTeamSaga, watchDeleteTeamSaga, watchGetTeamDetailSaga, watchAddMemberSaga, watchDeleteMemberSaga } from './TeamSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -17,6 +18,13 @@ export default function* rootSaga() {
         fork(watchGetListArea),
         fork(watchGetListTimeSaga),
         fork(watchGetListSizeSaga),
-        fork(watchGetListCareerSaga)
+        fork(watchGetListCareerSaga),
+        fork(watchGetListTeamSaga),
+        fork(watchCreateTeamSaga),
+        fork(watchUpdateTeamSaga),
+        fork(watchDeleteTeamSaga),
+        fork(watchGetTeamDetailSaga),
+        fork(watchAddMemberSaga),
+        fork(watchDeleteMemberSaga)
     ]);
 }

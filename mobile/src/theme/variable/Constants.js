@@ -9,6 +9,9 @@ export default class Constants {
     static PHONE = '';
     static AUTHENTICATION = null;
     static USER_IMAGE = null;
+    static MESSAGE_CREATE_SUCCESS = 'Create data successfully';
+    static MESSAGE_UPDATE_SUCCESS = 'Update data successfully';
+    static MESSAGE_DELETE_SUCCESS = 'Delete data successfully';
 
     // VALIDATE
     static REQUIRE = '必須';

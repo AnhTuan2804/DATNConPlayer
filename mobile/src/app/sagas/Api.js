@@ -226,7 +226,7 @@ function* getListTeamAPI() {
     return response;
 }
 
-function* createTeam(bodyInfo) {
+function* createTeamAPI(bodyInfo) {
     const router = 'team/create';
     const headersPairs = null;
     const body = bodyInfo
@@ -242,7 +242,7 @@ function* createTeam(bodyInfo) {
     return response;
 }
 
-function* updateTeam(bodyInfo) {
+function* updateTeamAPI(bodyInfo) {
     const router = 'team/update';
     const headersPairs = null;
     const body = bodyInfo
@@ -258,7 +258,7 @@ function* updateTeam(bodyInfo) {
     return response;
 }
 
-function* delTeam(bodyInfo) {
+function* delTeamAPI(bodyInfo) {
     const router = 'team/update';
     const headersPairs = null;
     const body = bodyInfo
@@ -291,7 +291,7 @@ function* getTeamDetailAPI(id) {
 }
 
 
-function* addMember(bodyInfo) {
+function* addMemberAPI(bodyInfo) {
     const router = 'team/add-member';
     const headersPairs = null;
     const body = bodyInfo
@@ -307,7 +307,7 @@ function* addMember(bodyInfo) {
     return response;
 }
 
-function* delMember(bodyInfo) {
+function* delMemberAPI(bodyInfo) {
     const router = 'team/delete-member';
     const headersPairs = null;
     const body = bodyInfo
@@ -340,7 +340,7 @@ function* getListGridironAPI() {
     return response;
 }
 
-function* createGridiron(bodyInfo) {
+function* createGridironAPI(bodyInfo) {
     const router = 'gridiron/create';
     const headersPairs = null;
     const body = bodyInfo
@@ -356,7 +356,7 @@ function* createGridiron(bodyInfo) {
     return response;
 }
 
-function* updateGridiron(bodyInfo) {
+function* updateGridironAPI(bodyInfo) {
     const router = 'gridiron/update';
     const headersPairs = null;
     const body = bodyInfo
@@ -372,7 +372,7 @@ function* updateGridiron(bodyInfo) {
     return response;
 }
 
-function* delGridiron(bodyInfo) {
+function* delGridironAPI(bodyInfo) {
     const router = 'gridiron/update';
     const headersPairs = null;
     const body = bodyInfo
@@ -404,7 +404,7 @@ function* getGridironDetailAPI(id) {
     return response;
 }
 
-function* addSubGridiron(bodyInfo) {
+function* addSubGridironAPI(bodyInfo) {
     const router = 'gridiron/create-sub-gridiron';
     const headersPairs = null;
     const body = bodyInfo
@@ -420,7 +420,7 @@ function* addSubGridiron(bodyInfo) {
     return response;
 }
 
-function* delSubGridiron(bodyInfo) {
+function* delSubGridironAPI(bodyInfo) {
     const router = 'gridiron/delete-sub';
     const headersPairs = null;
     const body = bodyInfo
@@ -436,7 +436,7 @@ function* delSubGridiron(bodyInfo) {
     return response;
 }
 
-function* addPriceOnTime(bodyInfo) {
+function* addPriceOnTimeAPI(bodyInfo) {
     const router = 'price-on-time/create';
     const headersPairs = null;
     const body = bodyInfo
@@ -452,7 +452,7 @@ function* addPriceOnTime(bodyInfo) {
     return response;
 }
 
-function* delPriceOnTime(bodyInfo) {
+function* delPriceOnTimeAPI(bodyInfo) {
     const router = 'price-on-time/delete';
     const headersPairs = null;
     const body = bodyInfo
@@ -567,19 +567,19 @@ export const Api = {
     getTimeAPI,
     getCareerAPI,
     getListTeamAPI,
-    createTeam,
-    updateTeam,
-    delMember,
-    delTeam,
-    addMember,
+    createTeamAPI,
+    updateTeamAPI,
+    delMemberAPI,
+    delTeamAPI,
+    addMemberAPI,
     getTeamDetailAPI,
     getListGridironAPI,
-    createGridiron,
-    updateGridiron,
-    delGridiron,
-    addSubGridiron,
-    delSubGridiron,
-    addPriceOnTime,
-    delPriceOnTime,
+    createGridironAPI,
+    updateGridironAPI,
+    delGridironAPI,
+    addSubGridironAPI,
+    delSubGridironAPI,
+    addPriceOnTimeAPI,
+    delPriceOnTimeAPI,
     getGridironDetailAPI
 };
