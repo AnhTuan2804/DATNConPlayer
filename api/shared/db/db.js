@@ -7,9 +7,9 @@ let sequelize = null;
 class Db {
     constructor() {
         if (!sequelize) {
-            let anc = config.dbDev.options;
+            let anc = config.dbLocalMobile.options;
             anc['isolationLevel'] = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-            sequelize = new Sequelize(config.dbDev.dbname, config.dbDev.username, config.dbDev.password, config.dbDev.options);
+            sequelize = new Sequelize(config.dbLocalMobile.dbname, config.dbLocalMobile.username, config.dbLocalMobile.password, config.dbLocalMobile.options);
         }
     }
 
@@ -78,10 +78,37 @@ class Db {
 
         //team
         this.team = sequelize.import('./models/team');
+        this.team.belongsTo(this.level, { unique: false, onDelete: 'cascade' });
+        this.team.belongsTo(this.area, { unique: false, onDelete: 'cascade' });
+        this.area.hasMany(this.team, { onDelete: 'cascade' });
+        this.level.hasMany(this.team, { onDelete: 'cascade' });
 
         //team User
         this.teamUser = sequelize.import('./models/team_user');
+        this.teamUser.belongsTo(this.user, { unique: false, onDelete: 'cascade' });
+        this.teamUser.belongsTo(this.team, { unique: false, onDelete: 'cascade' });
+        this.team.hasMany(this.teamUser, { onDelete: 'cascade' });
+        this.user.hasMany(this.teamUser, { onDelete: 'cascade' });
 
+        //gridiron
+        this.gridiron = sequelize.import('./models/gridiron');
+        this.gridiron.belongsTo(this.area, { unique: false, onDelete: 'cascade' });
+
+        //gridiron
+        this.sub_gridiron = sequelize.import('./models/sub_gridiron');
+        this.sub_gridiron.belongsTo(this.gridiron, { unique: false, onDelete: 'cascade' });
+        this.sub_gridiron.belongsTo(this.size_gridiron, { unique: false, onDelete: 'cascade' });
+        this.gridiron.hasMany(this.sub_gridiron, { onDelete: 'cascade' });
+        this.gridiron.hasMany(this.price_on_time, { onDelete: 'cascade' });
+
+        //time
+        this.time = sequelize.import('./models/time');
+        this.price_on_time.belongsTo(this.gridiron, { unique: false, onDelete: 'cascade' });
+        this.price_on_time.belongsTo(this.time, { unique: false, onDelete: 'cascade' });
+        this.price_on_time.belongsTo(this.size_gridiron, { unique: false, onDelete: 'cascade' });
+
+        //career
+        this.career = sequelize.import('./models/career');
     }
 
     rawQuery(sql, whereClause) {

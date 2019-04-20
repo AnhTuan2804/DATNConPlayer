@@ -4,7 +4,7 @@ class AreaInstanceMethods {
     getInstanceMethods(DataTypes) {
         return {
             getLevel: function () {
-                return _.pick(this, ['id', 'level', 'created_at', 'updated_at']);
+                return _.pick(this, ['id', 'name', 'created_at', 'updated_at']);
             }
         };
     }

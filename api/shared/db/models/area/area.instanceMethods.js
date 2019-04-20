@@ -4,7 +4,7 @@ class AreaInstanceMethods {
     getInstanceMethods(DataTypes) {
         return {
             getArea: function () {
-                return _.pick(this, ['id', 'area', 'created_at', 'updated_at']);
+                return _.pick(this, ['id', 'name', 'created_at', 'updated_at']);
             }
         };
     }

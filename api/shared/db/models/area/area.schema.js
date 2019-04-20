@@ -6,7 +6,7 @@ class AreaSchema {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV1
             },
-            area: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false
             },

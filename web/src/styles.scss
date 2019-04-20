@@ -3,12 +3,21 @@
 body {
   background-image: url("./assets/images/backGround.jpg");
 }
+.view {
+  pointer-events: none;
+}
 .error-message {
   color: red;
   text-transform: capitalize;
   padding: 6px 4px;
   font-size: 15px;
 }
+.btn-center {
+  justify-content: center;
+  display: flex;
+  align-items: flex-end;
+}
+
 .input-include-error span {
   color: red;
   text-transform: capitalize;

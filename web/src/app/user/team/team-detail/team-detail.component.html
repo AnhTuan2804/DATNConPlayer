@@ -1,0 +1,140 @@
+<div class="container">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Thông tin đội</h1>
+    </div>
+    <div class="modal-body">
+      <form role="form" [formGroup]="formDetail" (ngSubmit)="edit()">
+        <div [ngClass]="{'view': view}" class="col-md-12 row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Tên đội</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="name" formControlName="name">
+                <span
+                  *ngIf="formDetail.controls.name.hasError('required')&&(formDetail.controls['name'].touched || errorForm)">Trường
+                  bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Khu vực</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="formDetail.controls['area'].value" [title]="'Khu vực'"
+                  [selectedIndex]="selectedIndex" [options]="listArea"
+                  (selectedOption)="handleDownSelect($event, 'area')"></app-select-dropdown>
+                <span
+                  *ngIf="formDetail.controls.area.hasError('required')&&(formDetail.controls['area'].touched || errorForm)">Trường
+                  bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Trình độ</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="formDetail.controls['level'].value" [title]="'Trình độ'"
+                  [selectedIndex]="selectedIndex" [options]="listLevel"
+                  (selectedOption)="handleDownSelect($event, 'level')"></app-select-dropdown>
+                <span
+                  *ngIf="formDetail.controls.level.hasError('required')&&(formDetail.controls['level'].touched || errorForm)">Trường
+                  bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Chọn ảnh đội</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="file" class="form-control input-lg" name="picture" formControlName="picture"
+                  placeholder="">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Tuổi nhỏ nhất</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="number" class="form-control input-lg" name="age_min" formControlName="age_min">
+                <span
+                  *ngIf="formDetail.controls.age_min.hasError('required')&&(formDetail.controls['age_min'].touched || errorForm)">Trường
+                  bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Tuổi lớn nhất</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="number" class="form-control input-lg" name="age_max" formControlName="age_max">
+                <span
+                  *ngIf="formDetail.controls.age_max.hasError('required')&&(formDetail.controls['age_max'].touched || errorForm)">Trường
+                  bắt buộc</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Giới thiệu</label>
+              <div class="input-include-error">
+                <textarea type="textarea" class="form-control input-lg" formControlName="description"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formDetail.valid">
+                <i class="fas fa-plus-circle"></i> &nbsp;Cập nhật thông tin
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Thành viên</h1>
+    </div>
+    <div [ngClass]="{'view': view}" class="modal-body">
+      <form role="form" [formGroup]="formAddMember" (ngSubmit)="addMember()">
+        <div [ngClass]="{'view': view}" class="col-md-12 row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label class="control-label">Email hoặc Số điện thoại</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="member" formControlName="member">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formAddMember.valid">
+                <i class="fas fa-pen-square"></i> &nbsp;Thêm thành viên
+              </button>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="input-include-error">
+              <span *ngIf="addMemberFaild">{{messageErrAddMember}}</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div [ngClass]="{'view': view}" class="modal-body container">
+      <app-data-table [showSearch]=true [headers]="headers" [items]="listUser" [listSearch]=[0,1,2]
+        (outputAction)="handleAction($event)"></app-data-table>
+    </div>
+  </div>
+</div>
+<app-loading></app-loading>

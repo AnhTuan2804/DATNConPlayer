@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         this.loginFail = false;
         $("#modalLoginForm").modal("hide");
         this.user.setUser(result);
-        this.router.navigate(['abc/team']);
+        this.router.navigate(['abc/profile']);
       }
       // window.location.reload();
     }, (err) => {
