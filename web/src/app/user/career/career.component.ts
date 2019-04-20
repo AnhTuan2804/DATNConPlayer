@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/classes/user/user';
 import * as _ from 'lodash';
 import { CareerService } from 'src/app/shared/services/career.service';
 import { Career } from 'src/app/shared/classes/career';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 @Component({
   selector: 'app-career',
@@ -19,7 +20,7 @@ export class CareerComponent implements OnInit {
   editFaild: boolean = false;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['Stt', 'Ngành nghề', 'Hành động'];
+  headers = ['No.', 'Career', 'Actions'];
   items = [];
   showEditForm = false;
   objectLevelEvent;
@@ -72,7 +73,7 @@ export class CareerComponent implements OnInit {
     }
     this.action.showLoading();
     this.careerService.createCareer({ career: data }).subscribe((result) => {
-      this.toastrService.success('Thêm thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
       this.getList();
@@ -91,7 +92,7 @@ export class CareerComponent implements OnInit {
     }
     this.action.showLoading();
     this.careerService.updateCareer(data).subscribe((result) => {
-      this.toastrService.success('Cập nhật thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.editFaild = false;
       this.formEdit.reset();
       this.showEditForm = false;
@@ -106,7 +107,7 @@ export class CareerComponent implements OnInit {
   handleAction(event) {
     this.action.showLoading();
     this.careerService.deleteCareer({ id: event.item.career.id }).subscribe((result) => {
-      this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
       this.formEdit.reset();
       this.objectLevelEvent = null;
       this.showEditForm = false;

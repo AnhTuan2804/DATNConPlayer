@@ -5,11 +5,12 @@ import { ComponentActions } from 'src/app/shared/classes/utils/component-actions
 import { User } from 'src/app/shared/classes/user/user';
 import * as _ from 'lodash';
 import { UserService } from 'src/app/shared/services/user.service';
+import { InfoCommonService } from 'src/app/shared/services/info-common.service';
 declare var $: any;
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
@@ -17,17 +18,26 @@ export class ProfileComponent implements OnInit {
   editFaild: boolean = false;
   changePassFaild: boolean = false;
   messageError: string = "";
-  showLoading = false;
-  constructor(private formBuilder: FormBuilder,
+  isAdmin = false;
+  listUser = [];
+  listRole = [];
+  headers = ['No.', 'Email', 'Tên', 'Số điện thoại', 'Actions'];
+
+  constructor(private formBuilder: FormBuilder, private infoCommonService: InfoCommonService,
     private userService: UserService, private toastrService: ToastrService,
     private action: ComponentActions, public user: User) {
-    this.getProfile()
-    this.initForm()
+    this.getProfile();
+    this.getListRole();
+    this.initForm();
   }
 
   ngOnInit() {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
+    }
+    if (localStorage.getItem('role') && localStorage.getItem('role') == 'admin') {
+      this.isAdmin = true;
+      this.getUserForAdmin();
     }
   }
 
@@ -62,6 +72,29 @@ export class ProfileComponent implements OnInit {
     }, (err) => {
       this.action.hideLoading();
       console.log(err)
+    })
+  }
+
+  getListRole() {
+    this.infoCommonService.getListRole().subscribe((result) => {
+      this.listRole = this.getForDropDown(result);
+    })
+  }
+
+  getForDropDown(result) {
+    let tmp = [];
+    _.forEach(result, (item) => {
+      let data = [];
+      data['role'] = item;
+      data['itemName'] = item.role
+      tmp.push(data);
+    })
+    return tmp
+  }
+
+  getUserForAdmin() {
+    this.userService.getListUserForAdmin().subscribe((listUser) => {
+      this.listUser = this.user.setData(listUser);
     })
   }
 

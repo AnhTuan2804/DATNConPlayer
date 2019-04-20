@@ -3,23 +3,23 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title">Tạo tài khoản</h1>
+        <h1 class="modal-title">Register Account</h1>
       </div>
       <div class="modal-body">
         <form role="form" [formGroup]="registerForm" (ngSubmit)="Register()">
           <input type="hidden" name="_token" value="">
           <div class="form-group">
-            <label class="control-label">Họ tên</label>
+            <label class="control-label">Fullname</label>
             <div>
               <input type="text" class="form-control input-lg" name="fullname" formControlName="fullname" value="">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label">Số điện thoại</label>
+            <label class="control-label">Phone</label>
             <span class="required"> *</span>
             <div class="input-include-error">
               <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
-              <span *ngIf="registerForm.controls.phone.hasError('required')">Trường bắt buộc</span>
+              <span *ngIf="registerForm.controls.phone.hasError('required')">Field required</span>
             </div>
           </div>
           <div class="form-group">
@@ -27,26 +27,26 @@
             <span class="required"> *</span>
             <div class="input-include-error">
               <input type="email" class="form-control input-lg" name="email" formControlName="email" value="">
-              <span *ngIf="registerForm.controls.email.hasError('required')">Trường bắt buộc</span>
+              <span *ngIf="registerForm.controls.email.hasError('required')">Field required</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label">Mật khẩu</label>
+            <label class="control-label">Password</label>
             <span class="required"> *</span>
             <div class="input-include-error">
               <input type="password" class="form-control input-lg" name="password" formControlName="password">
-              <span *ngIf="registerForm.controls.password.hasError('required')">Trường bắt buộc</span>
+              <span *ngIf="registerForm.controls.password.hasError('required')">Field required</span>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label">Xác nhận mật khẩu</label>
+            <label class="control-label">Confirm Password</label>
             <span class="required"> *</span>
             <div class="input-include-error">
               <input type="password" class="form-control input-lg" name="confirmPassword"
                 formControlName="confirmPassword">
               <span
                 *ngIf="(registerForm.hasError('passwordMatchValidator') || registerForm.controls['confirmPassword'].hasError('required')) &&(registerForm.controls['confirmPassword'].touched || errorForm )"
-                for="confirmPassword">Mật khẩu không trùng khớp</span>
+                for="confirmPassword">Confirm password not match with password</span>
             </div>
           </div>
           <div *ngIf="registerFail" class="error-message">
@@ -55,7 +55,7 @@
           <div class="form-group">
             <div>
               <button type="submit" class="btn btn-success" [disabled]="!registerForm.valid">
-                Tạo tài khoản
+                Register
               </button>
             </div>
           </div>
