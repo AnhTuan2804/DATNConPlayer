@@ -11,6 +11,7 @@ import { Team } from 'src/app/shared/classes/team';
 import { Router } from '@angular/router';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
 import { Gridiron } from 'src/app/shared/classes/gridiron';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 
 @Component({
@@ -22,7 +23,7 @@ export class GridironComponent implements OnInit {
   formAdd: FormGroup;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['Stt', 'Tên sân', 'Khu vực', 'Hành động'];
+  headers = ['No.', 'Name of gridiron', 'Area', 'Actions'];
   listArea = [];
   listGridiron = [];
   showEditForm = false;
@@ -99,7 +100,7 @@ export class GridironComponent implements OnInit {
     }
     this.action.showLoading();
     this.gridironService.createGridiron({ gridiron: data }).subscribe((result) => {
-      this.toastrService.success('Thêm thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
       this.getListGridiron();
@@ -116,7 +117,7 @@ export class GridironComponent implements OnInit {
       case 'Delete':
         this.action.showLoading();
         this.gridironService.deleteGridiron({ id: event.item.gridiron.id }).subscribe((result) => {
-          this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
+          this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
           this.getListGridiron();
         }, (err) => {
           this.action.hideLoading();

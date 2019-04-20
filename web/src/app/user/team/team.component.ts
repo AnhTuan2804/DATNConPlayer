@@ -22,7 +22,7 @@ export class TeamComponent implements OnInit {
   formAdd: FormGroup;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['Stt', 'Tên đội', 'Hành động'];
+  headers = ['No.', 'Tên đội', 'Actions'];
   listArea = [];
   listLevel = [];
   listTeam = [];

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><img src="../../../../../assets/images/logo2.PNG" alt=""> </a>
+  <a class="navbar-brand" href="#"><img src="../../../../../assets/images/logoo.png" alt=""> </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -10,58 +10,56 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-futbol"></i>&nbsp;TÌM KIẾM
+          <i class="fas fa-futbol"></i>&nbsp;SEARCH..
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;Tìm trận đấu</a>
+          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;SEARCH MATCH..</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;Tìm sân bóng</a>
+          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;SEARCH GRIDIRON..</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;Tìm giải đấu đấu</a>
+          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;SEARCH LEAGUES..</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-futbol"></i>&nbsp;TẠO GIẢI ĐẤU<span
+        <a class="nav-link" href="#"><i class="fas fa-futbol"></i>&nbsp;MY LEAGUES<span
             class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown" *ngIf="isShow">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-futbol"></i>&nbsp;QUẢN LÍ
+          <i class="fas fa-futbol"></i>&nbsp;MANAGE
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="team"><i class="fas fa-futbol"></i> &nbsp;Quản lí đội</a>
+          <a class="dropdown-item" href="team"><i class="fas fa-futbol"></i> &nbsp;MANAGE TEAMS</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="gridiron"><i class="fas fa-futbol"></i> &nbsp;Quản lí sân</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;Quản lí giải đấu</a>
+          <a class="dropdown-item" href="gridiron"><i class="fas fa-futbol"></i> &nbsp;MANAGE GRIDIRONS</a>
         </div>
       </li>
       <li class="nav-item dropdown" *ngIf="isAdmin">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-futbol"></i>&nbsp;ADMIN QUẢN LÍ
+          <i class="fas fa-futbol"></i>&nbsp;ADMIN MANAGE
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="area"><i class="fas fa-futbol"></i> &nbsp;Khu vực</a>
+          <a class="dropdown-item" href="area"><i class="fas fa-futbol"></i> &nbsp;AREAS</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="level"><i class="fas fa-futbol"></i> &nbsp;Trình độ</a>
+          <a class="dropdown-item" href="level"><i class="fas fa-futbol"></i> &nbsp;LEVELS</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="career"><i class="fas fa-futbol"></i> &nbsp;Ngành nghề</a>
+          <a class="dropdown-item" href="career"><i class="fas fa-futbol"></i> &nbsp;CAREER</a>
         </div>
       </li>
       <li *ngIf="!isShow" class="nav-item cursor-li">
-        <a class="nav-link" (click)="login()"><i class="fas fa-user"></i>&nbsp;ĐĂNG NHẬP</a>
+        <a class="nav-link" (click)="login()"><i class="fas fa-user"></i>&nbsp;SIGN IN</a>
       </li>
       <li *ngIf="isShow" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user"></i>&nbsp;TÀI KHOẢN
+          <i class="fas fa-user"></i>&nbsp;ACCOUNT
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="profile"><i class="fas fa-user"></i> &nbsp;Thông tin</a>
+          <a class="dropdown-item" href="profile"><i class="fas fa-user"></i> &nbsp;ACCOUNT</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item cursor-li" (click)="logout()"><i class="fas fa-user"></i> &nbsp;Đăng xuất</a>
+          <a class="dropdown-item cursor-li" (click)="logout()"><i class="fas fa-user"></i> &nbsp;SIGN OUT</a>
         </div>
       </li>
     </ul>

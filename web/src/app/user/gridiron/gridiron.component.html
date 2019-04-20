@@ -1,34 +1,32 @@
 <div class="container">
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">Quản lí sân bóng</h1>
+      <h1 class="modal-title">Manage gridiron</h1>
     </div>
     <div class="modal-body">
       <form role="form" [formGroup]="formAdd" (ngSubmit)="add()">
         <div class="col-md-12 row">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Tên sân</label>
+              <label class="control-label">Name of gridiron</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="name" formControlName="name">
                 <span
-                  *ngIf="formAdd.controls.name.hasError('required')&&(formAdd.controls['name'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formAdd.controls.name.hasError('required')&&(formAdd.controls['name'].touched || errorForm)">Field required</span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Khu vực</label>
+              <label class="control-label">Area</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <app-select-dropdown [nameSelect]="formAdd.controls['area'].value" [title]="'Khu vực'"
+                <app-select-dropdown [nameSelect]="formAdd.controls['area'].value" [title]="'Area'"
                   [selectedIndex]="selectedIndex" [options]="listArea"
                   (selectedOption)="handleDownSelect($event, 'area')"></app-select-dropdown>
                 <span
-                  *ngIf="formAdd.controls.area.hasError('required')&&(formAdd.controls['area'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formAdd.controls.area.hasError('required')&&(formAdd.controls['area'].touched || errorForm)">Field required</span>
               </div>
             </div>
           </div>
@@ -39,14 +37,13 @@
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="link_face" formControlName="link_face">
                 <span
-                  *ngIf="formAdd.controls.link_face.hasError('required')&&(formAdd.controls['link_face'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formAdd.controls.link_face.hasError('required')&&(formAdd.controls['link_face'].touched || errorForm)">Field required</span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Chọn ảnh sân</label>
+              <label class="control-label">Choose picture</label>
               <div class="input-include-error">
                 <input type="file" class="form-control input-lg" name="picture" formControlName="picture"
                   placeholder="">
@@ -55,31 +52,29 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Điện thoại liên hệ</label>
+              <label class="control-label">Phone</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="number" class="form-control input-lg" name="phone" formControlName="phone">
                 <span
-                  *ngIf="formAdd.controls.phone.hasError('required')&&(formAdd.controls['phone'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formAdd.controls.phone.hasError('required')&&(formAdd.controls['phone'].touched || errorForm)">Field required</span>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Địa chỉ</label>
+              <label class="control-label">Address</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="address" formControlName="address">
                 <span
-                  *ngIf="formAdd.controls.address.hasError('required')&&(formAdd.controls['address'].touched || errorForm)">Trường
-                  bắt buộc</span>
+                  *ngIf="formAdd.controls.address.hasError('required')&&(formAdd.controls['address'].touched || errorForm)">Field required</span>
               </div>
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              <label class="control-label">Giới thiệu</label>
+              <label class="control-label">Introduce summary</label>
               <div class="input-include-error">
                 <textarea type="textarea" class="form-control input-lg" formControlName="description"></textarea>
               </div>
@@ -88,7 +83,7 @@
           <div class="col-md-2 btn-center">
             <div class="form-group">
               <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid">
-                <i class="fas fa-plus-circle"></i> &nbsp;Tạo sân mới
+                <i class="fas fa-plus-circle"></i> &nbsp;Create
               </button>
             </div>
           </div>

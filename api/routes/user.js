@@ -14,6 +14,14 @@ class UserRouter {
                     res.status(400).send({ code: 400, message: error.message });
                 });
             });
+        router.route('/get-list-for-admin')
+            .get((req, res, next) => {
+                return usersHandler.getListUserForAdmin().then((listUser) => {
+                    res.status(200).send(listUser)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
         router.route('/profile')
             .get((req, res, next) => {
                 return usersHandler.findUserByToken(res.locals.token).then((user) => {

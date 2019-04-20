@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
 import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { InfoCommonService } from 'src/app/shared/services/info-common.service';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 @Component({
   selector: 'app-gridiron-detail',
@@ -30,8 +31,8 @@ export class GridironDetailComponent implements OnInit {
   messageError: string = "";
   messageErrAddSubGri: string = "";
   messageErrPriceOntime: "";
-  headers = ['Stt', 'Tên sân con', 'Loại sân', 'Hành động'];
-  headersPriceOnTime = ['Stt', 'Thời gian', 'Loại sân', 'Giá tiền', 'Hành động'];
+  headers = ['No.', 'Name', 'Type of Gridiron', 'Actions'];
+  headersPriceOnTime = ['No.', 'Time', 'Type of gridiron', 'Price', 'Actions'];
   listArea = [];
   listUser = [];
   listSize = [];
@@ -220,7 +221,7 @@ export class GridironDetailComponent implements OnInit {
     }
     this.action.showLoading();
     this.gridironService.updateGridiron(data).subscribe((result) => {
-      this.toastrService.success('Cập nhật thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.editFaild = false;
       this.action.hideLoading();
     }, (err) => {
@@ -257,7 +258,7 @@ export class GridironDetailComponent implements OnInit {
       this.action.hideLoading();
       this.addSubGriFaild = false;
       this.formAddSubGri.reset();
-      this.toastrService.success('Tạo sân thành công!', '', { timeOut: 3000 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3000 });
       this.getDetail(this.dataDetail.id);
     }, (err) => {
       this.action.hideLoading();
@@ -278,7 +279,7 @@ export class GridironDetailComponent implements OnInit {
     this.gridironService.createPriceOnTime({ price_on_time: data }).subscribe((result) => {
       // this.action.hideLoading();
       this.addPriceOnTimeFaild = false;
-      this.toastrService.success('Tạo mới thành công!', '', { timeOut: 3000 });
+      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3000 });
       this.getDetail(this.dataDetail.id)
     }, (err) => {
       this.action.hideLoading();
@@ -291,7 +292,7 @@ export class GridironDetailComponent implements OnInit {
   handleAction(event) {
     this.action.showLoading();
     this.gridironService.deleteSubGridiron({ id: event.item.sub_gridiron.id }).subscribe((result) => {
-      this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
       this.getDetail(this.dataDetail.id);
     }, (err) => {
       this.action.hideLoading();
@@ -302,7 +303,7 @@ export class GridironDetailComponent implements OnInit {
   handleActionPricOnTime(event) {
     this.action.showLoading();
     this.gridironService.deletePriceOnTime({ id: event.item.price_on_time.id }).subscribe((result) => {
-      this.toastrService.success('Xóa thành công!', '', { timeOut: 3500 });
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
       this.getDetail(this.dataDetail.id);
     }, (err) => {
       this.action.hideLoading();
@@ -337,7 +338,7 @@ export class GridironDetailComponent implements OnInit {
     if (tab == 'size_gridiron') {
       this.objectSizeEvent = event.value;
       this.formAddSubGri.patchValue({
-        size_gridiron: event.value.size.size,
+        size_gridiron: event.value.size.name,
         size_gridiron_id: event.value.size.id
       });
     }
