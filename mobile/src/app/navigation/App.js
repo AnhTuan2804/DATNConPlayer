@@ -96,7 +96,7 @@ export default class App extends Component {
                       swipeEnabled={false}
                       component={HomeContainer}
                       hideNavBar={true}
-                    // initial
+                      initial
                     />
                     {/* list ppage search */}
                     <Scene
@@ -130,7 +130,9 @@ export default class App extends Component {
                   </Stack>
 
                   {/* Manage Page -- team, gridiron */}
-                  <Stack key='management' initial>
+                  <Stack key='management'
+                  // initial
+                  >
                     <Scene
                       key='Manage'
                       tabBarLabel={`Manage`}
@@ -139,6 +141,7 @@ export default class App extends Component {
                       swipeEnabled={false}
                       component={ManageContainer}
                       hideNavBar={true}
+                    // initial
                     />
 
                     <Scene
@@ -149,7 +152,6 @@ export default class App extends Component {
                       swipeEnabled={false}
                       component={CreateTeamContainer}
                       hideNavBar={true}
-                      initial
                     />
                     {/* <Scene
                       key='createGridiron'

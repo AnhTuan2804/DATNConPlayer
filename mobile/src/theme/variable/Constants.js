@@ -1,7 +1,7 @@
 export default class Constants {
     // static token, locale, currency
     // static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server Test
-    static HOST = 'http://192.168.0.111:8088/api'; // Server deployed
+    static HOST = 'http://192.168.0.171:8088/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
@@ -9,6 +9,9 @@ export default class Constants {
     static PHONE = '';
     static AUTHENTICATION = null;
     static USER_IMAGE = null;
+    static MESSAGE_CREATE_SUCCESS = 'Create data successfully';
+    static MESSAGE_UPDATE_SUCCESS = 'Update data successfully';
+    static MESSAGE_DELETE_SUCCESS = 'Delete data successfully';
 
     // VALIDATE
     static REQUIRE = '必須';

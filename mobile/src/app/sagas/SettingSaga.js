@@ -17,8 +17,10 @@ import Constants from '../../theme/variable/Constants';
 function* updateInfoSaga(action) {
     try {
         let body = JSON.stringify({
-            "phone": action.value.phone,
-            "fullname": action.value.fullName,
+            "team": {
+                "phone": action.value.phone,
+                "fullname": action.value.fullName,
+            }
         });
         const updateInfoAPI = yield Api.updateInfoAPI(body);
         // const infoUserAPI = yield Api.getProfileAPI();

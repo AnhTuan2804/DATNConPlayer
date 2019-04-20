@@ -121,6 +121,355 @@ function* getProfileAPI() {
     });
     return response;
 }
+
+
+//------------------------------------------------------------------------
+// =================AREA - START==================
+function* getAreaAPI() {
+    const router = 'area/get-list';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================LEVEL - START==================
+function* getLevelAPI() {
+    const router = 'level/get-list';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================SIZE - START==================
+function* getSizeAPI() {
+    const router = 'size/get-list';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================CAREER - START==================
+function* getCareerAPI() {
+    const router = 'career/get-list';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================TIME - START==================
+function* getTimeAPI() {
+    const router = 'time/get-list';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================TEAM - START==================
+function* getListTeamAPI() {
+    const router = 'team/get-list-for-user';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* createTeamAPI(bodyInfo) {
+    const router = 'team/create';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* updateTeamAPI(bodyInfo) {
+    const router = 'team/update';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* delTeamAPI(bodyInfo) {
+    const router = 'team/update';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* getTeamDetailAPI(id) {
+    const router = `team/detail?id=${id}`;
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+
+function* addMemberAPI(bodyInfo) {
+    const router = 'team/add-member';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* delMemberAPI(bodyInfo) {
+    const router = 'team/delete-member';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+// =================GRIDIRON - START==================
+function* getListGridironAPI() {
+    const router = 'gridiron/get-list-for-user';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* createGridironAPI(bodyInfo) {
+    const router = 'gridiron/create';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* updateGridironAPI(bodyInfo) {
+    const router = 'gridiron/update';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* delGridironAPI(bodyInfo) {
+    const router = 'gridiron/update';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* getGridironDetailAPI(id) {
+    const router = `gridiron/detail?id=${id}`;
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* addSubGridironAPI(bodyInfo) {
+    const router = 'gridiron/create-sub-gridiron';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* delSubGridironAPI(bodyInfo) {
+    const router = 'gridiron/delete-sub';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* addPriceOnTimeAPI(bodyInfo) {
+    const router = 'price-on-time/create';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* delPriceOnTimeAPI(bodyInfo) {
+    const router = 'price-on-time/delete';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+//----------------------------------------------------------------------------------
+
 // -------------------common----------------------------------
 function getResponse(response, isShowError) {
     if (response.status >= 400) {
@@ -212,4 +561,25 @@ export const Api = {
     changePassAPI,
     getProfileAPI,
     updateInfoAPI,
+    getAreaAPI,
+    getLevelAPI,
+    getSizeAPI,
+    getTimeAPI,
+    getCareerAPI,
+    getListTeamAPI,
+    createTeamAPI,
+    updateTeamAPI,
+    delMemberAPI,
+    delTeamAPI,
+    addMemberAPI,
+    getTeamDetailAPI,
+    getListGridironAPI,
+    createGridironAPI,
+    updateGridironAPI,
+    delGridironAPI,
+    addSubGridironAPI,
+    delSubGridironAPI,
+    addPriceOnTimeAPI,
+    delPriceOnTimeAPI,
+    getGridironDetailAPI
 };
