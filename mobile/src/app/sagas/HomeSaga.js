@@ -102,7 +102,7 @@ export function* watchGetListCareerSaga() {
 function* getListSizeSaga(action) {
     try {
         const list = yield Api.getSizeAPI();
-        console.log(list);
+        console.log("list sizeeeeeeeeeee", list);
         yield put({ type: GET_LIST_SIZE_SUCCESSFULLY, listSize: list });
         // ToastUtil.showToast(forgotPassAPI.message, 'success')
         // Actions.loginScreen()

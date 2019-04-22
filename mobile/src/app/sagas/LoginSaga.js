@@ -7,30 +7,19 @@ import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
 import { AsyncStorage } from 'react-native';
-
-async function storeToken(token) {
-    try {
-        await AsyncStorage.setItem('token', token);
-        console.log('store token success');
-
-    } catch (error) {
-        // Error saving data
-        console.log('Error saving data');
-    }
-};
+import LoginService from '../../theme/shared/utils/LoginService';
 
 function* loginSaga(action) {
     try {
         let auth = `${action.email}:${action.password}`
         const userDataAPI = yield Api.loginAPI(auth);
-        console.log("aaaaaaaaaaaaaaaaaaa", userDataAPI);
         Constants.EMAIL_ADDRESS = userDataAPI.email
         Constants.TOKEN = userDataAPI.token
         Constants.USER_ID = userDataAPI.id
         Constants.PHONE = userDataAPI.phone
         yield put({ type: LOGIN_SUCCESSFULLY });
         if (userDataAPI) {
-            storeToken(userDataAPI.token)
+            LoginService.storeToken(userDataAPI.token)
             Actions.TOP()
         }
     } catch (error) {

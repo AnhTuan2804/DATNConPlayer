@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Dimensions, BackHandler, Alert, TouchableOpacity, Platform, FlatList, TextInput } from 'react-native';
+import { View, Text, Image, Dimensions, BackHandler, Alert, TouchableOpacity, Platform, FlatList, TextInput, Modal } from 'react-native';
 import { Container, Content, Header, Item, Icon, Input, Button } from 'native-base';
 import Constants from '../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
 import Loading from '../../ui/common/modal/Loading';
 import Utils from '../../../theme/shared/utils/Utils';
-import { SearchBar } from 'react-native-elements';
 
 
 const { height, width } = Dimensions.get('window');
@@ -14,9 +13,17 @@ class HomeComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            visibleModal : false
         };
+    }
 
+    componentDidMount() {
+        this.props.onGetListArea()
+        this.props.onGetListLevel()
+        this.props.onGetListSize()
+        this.props.onGetListTime()
+        this.props.onGetListCareer()
+        this.props.onGetProfile()
     }
 
     _renderItemMatch = ({ item, index }) => {
@@ -33,9 +40,9 @@ class HomeComponent extends Component {
                     borderBottomWidth: 1,
                 }}>
                     <Text style={{ fontSize: 17, color: 'green' }}>Tên đội bóng</Text>
-                    <View  style={{
-                   
-                }}>
+                    <View style={{
+
+                    }}>
                         <Image style={{ width: 15, height: 15 }} resizeMode='cover' source={require('../../../assets/images/icon-captain.png')} />
 
                     </View>
@@ -135,15 +142,17 @@ class HomeComponent extends Component {
         );
     }
 
+
+
     render() {
         const { listMatch, listGridiron, listLeague } = this.props
         let logoMatch = require('../../../assets/images/icon-match.png');
         let logoGridiron = require('../../../assets/images/icon-pitch.png');
         let logoLeague = require('../../../assets/images/icon-olympic.png');
-
         const { search } = this.state;
         return (
             <Container style={{ backgroundColor: '#ccc' }}>
+                {Loading(this.props.isLoading)}
                 {/* header Search */}
                 {this._renderHeaderSearch()}
                 {/* header Search */}
