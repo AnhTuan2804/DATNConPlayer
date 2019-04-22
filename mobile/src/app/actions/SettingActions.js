@@ -1,4 +1,7 @@
 import {
+    IS_GET_PROFILE,
+    GET_PROFILE_SUCCESSFULLY,
+    GET_PROFILE_FAILED,
     IS_UPDATE_INFO,
     UPDATE_INFO_SUCCESSFULLY,
     UPDATE_INFO_FAILED,
@@ -6,6 +9,13 @@ import {
     CHANGE_PASS_SUCCESSFULLY,
     CHANGE_PASS_FAILED
 } from './ActionTypes';
+
+export const isGetProfile = () => {
+    return {
+        type: IS_GET_PROFILE,
+        isLoading: true,
+    };
+}
 
 export const isupdateInfo = (value) => {
     return {

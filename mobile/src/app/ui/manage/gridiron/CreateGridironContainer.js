@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import CreateTeamForm from './CreateTeamComponent';
 import { createTeam } from '../../../actions/TeamActions';
+import { createGridiron } from '../../../actions/GridironActions';
+import CreateGridironForm from './CreateGridironComponent';
 // import { isupdateInfo } from '../../actiosns/SettingActions';
 
 export default connect(
@@ -17,9 +18,9 @@ export default connect(
   },
   dispatch => {
     return {
-      onCreateTeam: (body) => {
-        dispatch(createTeam(body))
+      onCreateGridiron: (body) => {
+        dispatch(createGridiron(body))
       }
     }
   }
-)(CreateTeamForm);
+)(CreateGridironForm);

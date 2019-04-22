@@ -14,8 +14,9 @@ const rateScreen = height / 680;
 class InfoComponent extends Component {
     constructor(props) {
         super(props);
-        this.props.dispatch(initialize('infoUser', {}));
+        this.props.dispatch(initialize('infoUser', this.props.initialValues));
     }
+
     render() {
         submit = values => {
             this.props.onUpdateInfo(values);
@@ -27,10 +28,8 @@ class InfoComponent extends Component {
                 <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>
-                            <Field name="email" keyboardType="default" textIP="Email" label={'Email'} component={renderField}
-                                validate={[required, required_trim, have_point_end]}
-                            />
-                            <Field name="fullName" keyboardType="default" textIP="Tên" label={'Họ tên'} component={renderField}
+                            <Field name="email" input={{ value: this.props.email, editable: false, }} textIP="Email" label={'Email'} component={renderField} />
+                            <Field name="fullname" keyboardType="default" textIP="Tên" label={'Họ tên'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
                             <Field name="phone" keyboardType="default" textIP="Số điện thoại" label={'Số điện thoại'} component={renderField}

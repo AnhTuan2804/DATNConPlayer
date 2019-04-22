@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import Utils from '../../theme/shared/utils/Utils';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import EncryptionService from '../../theme/shared/utils/EncryptionService'
-
+import { Alert } from 'react-native'
 
 // =================LOGIN - START==================
 function* loginAPI(authlogin) {
@@ -160,7 +160,7 @@ function* getLevelAPI() {
 
 // =================SIZE - START==================
 function* getSizeAPI() {
-    const router = 'size/get-list';
+    const router = 'size-gridiron/get-list';
     const headersPairs = null;
     const body = null
     const response = yield fetch(`${Constants.HOST}/${router}`, {

@@ -6,16 +6,16 @@ import { Actions } from 'react-native-router-flux';
 import Loading from '../../common/modal/Loading';
 import Utils from '../../../../theme/shared/utils/Utils';
 import { Field, initialize, reduxForm } from 'redux-form';
-import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber, renderSelect, renderFieldTextarea, confirm_min_age, confirm_max_age, number } from './../../../../theme/variable/Validate';
+import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber, renderSelect, renderFieldTextarea, confirm_min_age, confirm_max_age, number } from '../../../../theme/variable/Validate';
 
 
 const { height, width } = Dimensions.get('window');
 const rateScreen = height / 680;
-class CreateTeamComponent extends Component {
+class CreateGridironComponent extends Component {
     constructor(props) {
         super(props);
         this.props.dispatch(initialize(
-            'createTeam',
+            'createGridiron',
             {
                 area_id: this.props.listArea.length != 0 ? this.props.listArea[0].id : '',
                 level_id: this.props.listLevel.length != 0 ? this.props.listLevel[0].id : '',
@@ -47,7 +47,7 @@ class CreateTeamComponent extends Component {
     render() {
         submit = values => {
             console.log(values);
-            this.props.onCreateTeam(values);
+            // this.props.onCreateGridirons(values);
         }
         const { handleSubmit } = this.props;
         
@@ -99,8 +99,8 @@ class CreateTeamComponent extends Component {
     }
 };
 
-const CreateTeamForm = reduxForm({
-    form: 'createTeam',
-})(CreateTeamComponent);
+const CreateGridironForm = reduxForm({
+    form: 'createGridiron',
+})(CreateGridironComponent);
 
-export default CreateTeamForm;
+export default CreateGridironForm;

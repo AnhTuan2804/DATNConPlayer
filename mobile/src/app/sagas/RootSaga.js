@@ -3,7 +3,7 @@ import { fork, all } from 'redux-saga/effects';
 import { watchLogin } from './LoginSaga';
 import { watchRegister } from './RegisterSaga';
 import { watchForgotPass } from './ForgotPassSaga';
-import { watchUpdateInfo, watchchangePass } from './SettingSaga';
+import { watchUpdateInfo, watchchangePass, watchGetProfile } from './SettingSaga';
 import { watchGetListLevelSaga, watchGetListArea, watchGetListTimeSaga, watchGetListSizeSaga, watchGetListCareerSaga } from './HomeSaga';
 import { watchGetListTeamSaga, watchCreateTeamSaga, watchUpdateTeamSaga, watchDeleteTeamSaga, watchGetTeamDetailSaga, watchAddMemberSaga, watchDeleteMemberSaga } from './TeamSaga';
 import { watchGetListGridironSaga, watchGetGridironDetailSaga, watchCreateGridironSaga, watchUpdateGridironSaga, watchAddSubGridironSaga, watchDeleteSubGridironSaga, watchAddPriceOnTimeSaga, watchDeletePriceOnTimeSaga } from './GridironSaga';
@@ -15,6 +15,7 @@ export default function* rootSaga() {
         fork(watchForgotPass),
         fork(watchUpdateInfo),
         fork(watchchangePass),
+        fork(watchGetProfile),
         fork(watchGetListLevelSaga),
         fork(watchGetListArea),
         fork(watchGetListTimeSaga),

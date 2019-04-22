@@ -13,6 +13,7 @@ function* registerSaga(action) {
             "phone": action.value.phone,
             "fullname": action.value.fullname,
         });
+        console.log(body);
         let auth = `${action.value.email}:${action.value.password}`
         const userDataAPI = yield Api.registerAPI(auth, body);
         yield put({ type: REGISTER_SUCCESSFULLY });
