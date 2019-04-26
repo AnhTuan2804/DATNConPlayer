@@ -30,7 +30,9 @@ class ClassMethods {
     }
 
     getListCareer() {
-        return db.career.findAll();
+        return db.career.findAll({
+            attributes: ['id', 'name']
+        });
     }
 
     updateCareer(body) {

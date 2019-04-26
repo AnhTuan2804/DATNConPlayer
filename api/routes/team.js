@@ -16,7 +16,7 @@ class TeamRouter {
             });
         router.route('/get-list-for-user')
             .get((req, res, next) => {
-                return teamHandler.getListForUser(res.locals.token).then((result) => {
+                return teamHandler.getListForUser(res.locals.token, null).then((result) => {
                     res.status(200).send(result)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
@@ -25,6 +25,14 @@ class TeamRouter {
         router.route('/get-list-for-admin')
             .get((req, res, next) => {
                 return teamHandler.getListForAdmin(res.locals.token).then((result) => {
+                    res.status(200).send(result)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
+        router.route('/get-list-by-captain')
+            .get((req, res, next) => {
+                return teamHandler.getListForUser(res.locals.token, true).then((result) => {
                     res.status(200).send(result)
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });

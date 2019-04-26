@@ -14,6 +14,7 @@ import { GridironService } from 'src/app/shared/services/gridiron.service';
 import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { InfoCommonService } from 'src/app/shared/services/info-common.service';
 import { Utils } from 'src/app/shared/enums/utils';
+import { InfoCommon } from 'src/app/shared/classes/info-common';
 declare var $: any;
 @Component({
   selector: 'app-gridiron-detail',
@@ -47,7 +48,7 @@ export class GridironDetailComponent implements OnInit {
   dataDetail;
   countName = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
-    private infoCommonService: InfoCommonService,
+    private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
     private levelService: LevelService, private level: Level,
     private gridironService: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
@@ -118,7 +119,7 @@ export class GridironDetailComponent implements OnInit {
 
   getListSize() {
     this.infoCommonService.getListSize().subscribe((result) => {
-      this.listSize = this.getListSizeForDropDown(result);
+      this.listSize = this.infoCommon.getListSizeForDropDown(result);
     }, (err) => {
       console.log(err)
     })
@@ -126,32 +127,10 @@ export class GridironDetailComponent implements OnInit {
 
   getListTime() {
     this.infoCommonService.getListTime().subscribe((result) => {
-      this.listTime = this.getListTimeForDropDown(result);
+      this.listTime = this.infoCommon.getListTimeForDropDown(result);
     }, (err) => {
       console.log(err)
     })
-  }
-
-  getListTimeForDropDown(times) {
-    const tmp = [];
-    _.forEach(times, (item) => {
-      let data = [];
-      data['time'] = item;
-      data['itemName'] = item.time_start + ' : ' + item.time_end;
-      tmp.push(data);
-    })
-    return tmp;
-  }
-
-  getListSizeForDropDown(sizes) {
-    const tmp = [];
-    _.forEach(sizes, (item) => {
-      let data = [];
-      data['size'] = item;
-      data['itemName'] = item.name;
-      tmp.push(data);
-    })
-    return tmp;
   }
 
   bindData(data) {

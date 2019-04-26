@@ -12,6 +12,8 @@ import { TeamDetailComponent } from './team/team-detail/team-detail.component';
 import { GridironComponent } from './gridiron/gridiron.component';
 import { GridironDetailComponent } from './gridiron/gridiron-detail/gridiron-detail.component';
 import { CareerComponent } from './career/career.component';
+import { MatchComponent } from './match/match.component';
+import { MatchDetailComponent } from './match/match-detail/match-detail.component';
 
 @NgModule({
     imports: [
@@ -29,7 +31,9 @@ import { CareerComponent } from './career/career.component';
         TeamDetailComponent,
         GridironComponent,
         GridironDetailComponent,
-        CareerComponent
+        CareerComponent,
+        MatchComponent,
+        MatchDetailComponent
     ]
 })
 export class UserModule { }

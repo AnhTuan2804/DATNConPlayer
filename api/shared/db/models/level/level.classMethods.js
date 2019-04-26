@@ -25,7 +25,9 @@ class ClassMethods {
     }
 
     getListLevel() {
-        return db.level.findAll();
+        return db.level.findAll({
+            attributes: ['id', 'name']
+        });
     }
 
     updateLevel(body) {

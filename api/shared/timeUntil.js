@@ -26,7 +26,7 @@ class TimeUntil {
         if (val === null || val === '' || _.isUndefined(val)) {
             return null
         } else {
-            return moment(val, 'DD/MM/YYYY HH:mm:ss').unix();
+            return moment(val, 'YYYY/MM/DD').unix();
         }
     }
 }

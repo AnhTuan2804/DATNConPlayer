@@ -11,8 +11,9 @@ class ClassMethods {
             addMember: (body, token) => { return this.addMember(body, token) },
             getListTeam: (token) => { return this.getListTeam(token) },
             getDetail: (id, token) => { return this.getDetail(id, token) },
-            getListForUser: (token) => { return this.getListForUser(token) },
+            getListForUser: (token, isCaptain) => { return this.getListForUser(token, isCaptain) },
             getListForAdmin: (token) => { return this.getListForAdmin(token) },
+            getListByCaptain: (token) => { return this.getListByCaptain(token) },
             updateTeam: (body, token) => { return this.updateTeam(body, token) },
             deleteTeam: (body, token) => { return this.deleteTeam(body, token) }
         };
@@ -84,12 +85,11 @@ class ClassMethods {
         return db.team.findAll();
     }
 
-    getListForUser(token) {
+    getListForUser(token, isCaptain) {
         return db.user.find({ where: { token: token } }).then((user) => {
+            let where = isCaptain ? { user_id: user.id, is_captain: 1 } : { user_id: user.id }
             return db.teamUser.findAll({
-                where: {
-                    user_id: user.id
-                },
+                where: where,
                 include: [{
                     model: db.team,
                     include: [{

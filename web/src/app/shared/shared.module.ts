@@ -53,6 +53,8 @@ import { Level } from './classes/level';
 import { Team } from './classes/team';
 import { Gridiron } from './classes/gridiron';
 import { Career } from './classes/career';
+import { InfoCommon } from './classes/info-common';
+import { Match } from './classes/match';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -121,7 +123,9 @@ export function createTranslateLoader(http: HttpClient) {
         Level,
         Team,
         Gridiron,
-        Career
+        Career,
+        InfoCommon,
+        Match
     ]
 })
 export class SharedModule { }
