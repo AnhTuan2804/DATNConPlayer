@@ -17,5 +17,9 @@ export enum Utils {
     OK = "UTILS.OK",
     CLOSE = "UTILS.CLOSE",
     DOWNLOAD = "UTILS.DOWNLOAD",
-    SAVE = "UTILS.SAVE"
+    SAVE = "UTILS.SAVE",
+    STATUS_NEW = "New",
+    STATUS_CLOSE = "Close",
+    STATUS_CANCEL = "Cancel",
+    STATUS_EXPIRED = "Expired"
 }

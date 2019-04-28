@@ -74,7 +74,14 @@ class UserRouter {
                     res.status(400).send({ code: 400, message: error.message });
                 });
             });
-
+        router.route('/check-valid-token')
+            .post((req, res, next) => {
+                return usersHandler.checkValidToken(res.locals.token).then((user) => {
+                    res.status(200).send(user)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
         router.route('/edit-user')
             .post((req, res, next) => {
                 return usersHandler.editUser(req.body).then((user) => {

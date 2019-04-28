@@ -165,6 +165,16 @@ class UserHandler {
         });
     }
 
+    checkValidToken(token) {
+        return db.user.find({ where: { token: token } }).then((user) => {
+            if (user) {
+                return user;
+            } else {
+                throw new Error('Invalid Token');
+            }
+        });
+    }
+
     resetPassword(email) {
         return db.user.find({ where: { email: email } }).then((user) => {
             if (!user) {

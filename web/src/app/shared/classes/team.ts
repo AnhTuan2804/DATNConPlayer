@@ -30,8 +30,8 @@ export class Team {
         let tmp = [];
         _.forEach(teams, (team => {
             let data = [];
-            data['team'] = team;
-            data['itemName'] = team.name;
+            data['team'] = team.team;
+            data['itemName'] = team.team.name;
             tmp.push(data);
         }))
         return tmp;

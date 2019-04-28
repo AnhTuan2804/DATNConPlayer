@@ -14,8 +14,8 @@ class RoleHandler {
         });
     }
 
-    getListForUser(token) {
-        return db.team.getListForUser(token).then((result) => {
+    getListForUser(token, isCaptain) {
+        return db.team.getListForUser(token, isCaptain).then((result) => {
             return result;
         })
     }
@@ -28,6 +28,11 @@ class RoleHandler {
 
     getListForAdmin(token) {
         return db.team.getListForAdmin(token).then((result) => {
+            return result;
+        })
+    }
+    getListByCaptain(token) {
+        return db.team.getListByCaptain(token).then((result) => {
             return result;
         })
     }

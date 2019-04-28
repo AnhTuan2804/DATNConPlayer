@@ -41,6 +41,8 @@ class GridironHandler {
     delete(body) {
         return db.gridiron.deleteGridiron(body).then((result) => {
             return result;
+        }, err => {
+            throw new Error('Delete not success: ' + err.message)
         });
     }
 

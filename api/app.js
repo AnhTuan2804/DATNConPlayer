@@ -12,11 +12,11 @@ const middlewares = require('./middlewares')(app);
 middlewares.configureMiddlewares();
 
 //firebase
-// const admin = require('firebase-admin');
-// admin.initializeApp({
-//     credential: admin.credential.cert(config.googleCloud.keyfile),
-//     databaseURL: config.googleCloud.databaseURL
-// });
+const admin = require('firebase-admin');
+admin.initializeApp({
+    credential: admin.credential.cert(config.googleCloud.keyfile),
+    databaseURL: config.googleCloud.databaseURL
+});
 
 // configure routers
 const routerIndex = require('./routes')(app);

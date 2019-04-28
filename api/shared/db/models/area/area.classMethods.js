@@ -25,7 +25,9 @@ class ClassMethods {
     }
 
     getListArea() {
-        return db.area.findAll();
+        return db.area.findAll({
+            attributes: ['id', 'name']
+        });
     }
 
     updateArea(body) {

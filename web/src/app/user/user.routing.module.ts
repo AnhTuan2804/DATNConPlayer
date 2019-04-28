@@ -12,6 +12,8 @@ import { TeamDetailComponent } from './team/team-detail/team-detail.component';
 import { GridironComponent } from './gridiron/gridiron.component';
 import { GridironDetailComponent } from './gridiron/gridiron-detail/gridiron-detail.component';
 import { CareerComponent } from './career/career.component';
+import { MatchComponent } from './match/match.component';
+import { MatchDetailComponent } from './match/match-detail/match-detail.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +27,8 @@ export const routes: Routes = [
             { path: 'career', component: CareerComponent, canActivate: [AuthGuardAdmin] },
             { path: 'team', component: TeamComponent, canActivate: [AuthGuard] },
             { path: 'team/:item/:id', component: TeamDetailComponent, canActivate: [AuthGuard] },
+            { path: 'match', component: MatchComponent, canActivate: [AuthGuard] },
+            { path: 'match/:item/:id', component: MatchDetailComponent, canActivate: [AuthGuard] },
             { path: 'level', component: LevelComponent, canActivate: [AuthGuardAdmin] },
             { path: 'gridiron', component: GridironComponent, canActivate: [AuthGuard] },
             { path: 'gridiron/:item/:id', component: GridironDetailComponent, canActivate: [AuthGuard] },
