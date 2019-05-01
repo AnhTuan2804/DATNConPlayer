@@ -50,7 +50,7 @@ import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
-import { getListGridiron } from '../actions/GridironActions';
+import { getListGridiron, getDetailGridiron } from '../actions/GridironActions';
 
 // create
 function* createGridironSaga(action) {
@@ -145,7 +145,7 @@ export function* watchGetListGridironSaga() {
 // get detail
 function* getGridironDetailSaga(action) {
     try {
-        const id = action.value.id;
+        const id = action.id;
         const result = yield Api.getGridironDetailAPI(id);
         yield put({ type: GET_DETAIL_GRIDIRON_SUCCESSFULLY, infoGridiron: result });
     } catch (error) {
@@ -180,6 +180,7 @@ function* addSubGridironSaga(action) {
         const result = yield Api.addSubGridironAPI(body);
         yield put({ type: CREATE_SUB_GRIDIRON_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
+        yield put(getDetailGridiron(action.value.listSub[0].gridiron_id))
         // Actions.loginScreen()
     } catch (error) {
         yield put({ type: CREATE_SUB_GRIDIRON_FAILED, error });
@@ -200,6 +201,7 @@ function* deleteSubGridironSaga(action) {
         const result = yield Api.delSubGridironAPI(body);
         yield put({ type: DEL_SUB_GRIDIRON_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_DELETE_SUCCESS, 'success')
+        yield put(getDetailGridiron(action.value.gridiron_id))
         // Actions.loginScreen()
     } catch (error) {
         yield put({ type: DEL_SUB_GRIDIRON_FAILED, error });
@@ -215,14 +217,18 @@ export function* watchDeleteSubGridironSaga() {
 function* addPriceOnTimeSaga(action) {
     try {
         let body = JSON.stringify({
-            "price": actione.value.price,
-            "time_id": actione.value.time_id,
-            "size_gridiron_id": actione.value.size_gridiron_id,
-            "gridiron_id": action.value.gridiron_id
+            "price_on_time":
+            {
+                "price": action.value.price,
+                "time_id": action.value.time_id,
+                "size_gridiron_id": action.value.size_gridiron_id,
+                "gridiron_id": action.value.gridiron_id
+            }
         });
         const result = yield Api.addPriceOnTimeAPI(body);
         yield put({ type: CREATE_PRICE_ON_TIME_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
+        yield put(getDetailGridiron(action.value.gridiron_id))
         // Actions.loginScreen()
     } catch (error) {
         yield put({ type: CREATE_PRICE_ON_TIME_FAILED, error });
@@ -243,6 +249,7 @@ function* deletePriceOnTimeSaga(action) {
         const result = yield Api.delSubGridironAPI(body);
         yield put({ type: DEL_PRICE_ON_TIME_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_DELETE_SUCCESS, 'success')
+        yield put(getDetailGridiron(action.value.gridiron_id))
         // Actions.loginScreen()
     } catch (error) {
         yield put({ type: DEL_PRICE_ON_TIME_FAILED, error });

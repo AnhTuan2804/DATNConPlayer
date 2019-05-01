@@ -60,7 +60,7 @@ class ManageComponent extends Component {
     _renderItemTeam = ({ item, index }) => {
         return (
             <View style={{ flex: 1, width: width * 7 / 10, margin: 10, borderRadius: 5, borderWidth: 1 }}>
-                {HeaderItem(item.team.name)}
+                {HeaderItem(item.name)}
                 <View style={{ flex: 1 }}>
                     <ImageBackground source={require('../../../assets/images/team-fooball.png')}
                         style={{
@@ -80,12 +80,12 @@ class ManageComponent extends Component {
                                 backgroundColor: "#17a2b8",
                                 borderRadius: 5
                             }}
-                            onPress={() => Actions.updateTeam({ isedit: item.is_captain ? true : false, itemTeam: item.team })}
+                            onPress={() => Actions.updateTeam({ isedit: item.team_users[0].is_captain ? true : false, itemTeam: item })}
                         >
                             <Text style={{ color: 'white', fontWeight: 'bold' }}>View</Text>
                         </TouchableOpacity>
                         {
-                            item.is_captain ?
+                            item.team_users[0].is_captain ?
                                 <TouchableOpacity
                                     style={{
                                         paddingVertical: 10,
@@ -103,7 +103,7 @@ class ManageComponent extends Component {
                                                     onPress: () => console.log('Cancel Pressed'),
                                                     style: 'cancel',
                                                 },
-                                                { text: 'OK', onPress: () => this.props.onDelTeam(item.team.id) },
+                                                { text: 'OK', onPress: () => this.props.onDelTeam(item.id) },
                                             ],
                                         );
                                     }}
@@ -181,11 +181,11 @@ class ManageComponent extends Component {
                 <Container style={{ backgroundColor: 'white' }}>
                     <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                         <View style={{
-                            flex: 1,
+                            height: height / 2.25,
                             borderBottomWidth: 2,
                             borderBottomColor: "#28a745"
                         }}>
-                            {this._renderHeaderManage('Quản lý đội bóng', 'Thêm đội bóng', () => Actions.createTeam())}
+                            {this._renderHeaderManage('Manage Team', 'Create Team', () => Actions.createTeam())}
                             <View style={{ flex: 1 }}>
                                 <FlatList
                                     data={this.props.listTeam}
@@ -198,11 +198,28 @@ class ManageComponent extends Component {
                             </View>
                         </View>
                         <View style={{
-                            flex: 1,
+                            height: height / 2.5,
                             borderTopWidth: 2,
                             borderTopColor: "#28a745",
                         }}>
-                            {this._renderHeaderManage('Quản lý sân bóng', 'Thêm sân bóng', () => Actions.createGridiron())}
+                            {this._renderHeaderManage('Manage Gridiron', 'Create Gridiron', () => Actions.createGridiron())}
+                            <View style={{ flex: 1 }}>
+                                <FlatList
+                                    data={this.props.listGridiron}
+                                    extraData={this.props}
+                                    showsHorizontalScrollIndicator={false}
+                                    horizontal={true}
+                                    keyExtractor={(item, index) => { return `${item.id}` }}
+                                    renderItem={this._renderItemGridiron}
+                                />
+                            </View>
+                        </View>
+                        <View style={{
+                            height: height / 2.5,
+                            borderTopWidth: 2,
+                            borderTopColor: "#28a745",
+                        }}>
+                            {this._renderHeaderManage('Manage Match', 'Create Match', () => Actions.createGridiron())}
                             <View style={{ flex: 1 }}>
                                 <FlatList
                                     data={this.props.listGridiron}
