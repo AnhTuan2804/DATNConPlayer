@@ -4,9 +4,10 @@ import UpdateGridironForm from './UpdateGridironComponent';
 
 export default connect(
   state => {
-    let homeReducers = state.homeReducers || {}
+    let homeReducers = state.homeReducers || {};
+    let gridironReducers = state.gridironReducers || {};
     return {
-      isLoading: false,
+      isLoading: gridironReducers.isLoading,
       listArea: homeReducers.listArea || [],
     }
   },

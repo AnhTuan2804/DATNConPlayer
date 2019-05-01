@@ -5,9 +5,9 @@ import {
     GET_LIST_GRIDIRON_FAILED,
 
     // getdetail
-    IS_GET_DETALI_GRIDIRON,
-    GET_DETALI_GRIDIRON_SUCCESSFULLY,
-    GET_DETALI_GRIDIRON_FAILED,
+    IS_GET_DETAIL_GRIDIRON,
+    GET_DETAIL_GRIDIRON_SUCCESSFULLY,
+    GET_DETAIL_GRIDIRON_FAILED,
 
     // create
     IS_CREATE_GRIDIRON,
@@ -66,18 +66,18 @@ const gridironReducers = (state = {}, action) => {
                 isLoading: false,
             };
         // getDetailGridiron
-        case IS_GET_DETALI_GRIDIRON:
+        case IS_GET_DETAIL_GRIDIRON:
             return {
                 ...state,
                 isLoading: true,
             };
-        case GET_DETALI_GRIDIRON_SUCCESSFULLY:
+        case GET_DETAIL_GRIDIRON_SUCCESSFULLY:
             return {
                 ...state,
                 infoGridiron: action.infoGridiron,
                 isLoading: false,
             };
-        case GET_DETALI_GRIDIRON_FAILED:
+        case GET_DETAIL_GRIDIRON_FAILED:
             return {
                 ...state,
                 error: action.error,
