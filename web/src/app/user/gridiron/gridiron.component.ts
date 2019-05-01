@@ -30,6 +30,7 @@ export class GridironComponent implements OnInit {
   objectAreaEvent;
   objectLevelEvent;
   selectedIndex;
+  objectDeleteEvent;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private gridironService: GridironService, private gridiron: Gridiron,
@@ -112,24 +113,6 @@ export class GridironComponent implements OnInit {
     })
   }
 
-  handleAction(event) {
-    switch (event.action) {
-      case 'Delete':
-        this.action.showLoading();
-        this.gridironService.deleteGridiron({ id: event.item.gridiron.id }).subscribe((result) => {
-          this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
-          this.getListGridiron();
-        }, (err) => {
-          this.action.hideLoading();
-          this.toastrService.success(err.message, '', { timeOut: 3500 });
-        })
-        break;
-      case 'Edit':
-        this.navToDetail(event.item.gridiron.id);
-        break;
-    }
-  }
-
   getValueFormAdd(name) {
     return this.formAdd.controls[name].value;
   }
@@ -151,6 +134,40 @@ export class GridironComponent implements OnInit {
         area_id: event.value.area.id
       });
     }
+  }
+
+
+  handleAction(event) {
+    switch (event.action) {
+      case 'Delete':
+        $('#confirm').modal('show');
+        this.objectDeleteEvent = event;
+        break;
+      case 'Edit':
+        this.navToDetail(event.item.gridiron.id);
+        break;
+    }
+  }
+
+  saveConfirm() {
+    $('#confirm').modal('hide');
+    this.deleteGridiron();
+  }
+
+  cancelConfirm() {
+    $('#confirm').modal('hide');
+    this.objectDeleteEvent = null;
+  }
+
+  deleteGridiron() {
+    this.action.showLoading();
+    this.gridironService.deleteGridiron({ id: this.objectDeleteEvent.item.gridiron.id }).subscribe((result) => {
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
+      this.getListGridiron();
+    }, (err) => {
+      this.action.hideLoading();
+      this.toastrService.success(err.message, '', { timeOut: 3500 });
+    })
   }
 
 }

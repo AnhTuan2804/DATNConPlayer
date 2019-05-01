@@ -88,20 +88,19 @@ class ClassMethods {
     getListForUser(token, isCaptain) {
         return db.user.find({ where: { token: token } }).then((user) => {
             let where = isCaptain ? { user_id: user.id, is_captain: 1 } : { user_id: user.id }
-            return db.teamUser.findAll({
-                where: where,
+            return db.team.findAll({
                 include: [{
-                    model: db.team,
-                    include: [{
-                        model: db.level,
-                        attributes: ['id', 'name']
-                    }, {
-                        model: db.area,
-                        attributes: ['id', 'name']
-                    }, {
-                        model: db.career,
-                        attributes: ['id', 'name']
-                    }]
+                    model: db.level,
+                    attributes: ['id', 'name']
+                }, {
+                    model: db.area,
+                    attributes: ['id', 'name']
+                }, {
+                    model: db.career,
+                    attributes: ['id', 'name']
+                }, {
+                    model: db.teamUser,
+                    where: where
                 }]
             });
         })
@@ -132,19 +131,18 @@ class ClassMethods {
 
 
     getListForAdmin(token) {
-        return db.teamUser.findAll({
+        return db.team.findAll({
             include: [{
-                model: db.team,
-                include: [{
-                    model: db.level,
-                    attributes: ['id', 'name']
-                }, {
-                    model: db.area,
-                    attributes: ['id', 'name']
-                }, {
-                    model: db.career,
-                    attributes: ['id', 'name']
-                }]
+                model: db.level,
+                attributes: ['id', 'name']
+            }, {
+                model: db.area,
+                attributes: ['id', 'name']
+            }, {
+                model: db.career,
+                attributes: ['id', 'name']
+            }, {
+                model: db.teamUser
             }]
         });
     }

@@ -14,7 +14,7 @@ export class AlertConfirmComponent implements OnInit {
   @Input() messageError: string;
   @Input() mode: CrudType;
   @Output() saveConfirm = new EventEmitter();
-  @Output() cancel = new EventEmitter();
+  @Output() cancelConfirm = new EventEmitter();
   confirmForm: FormGroup;
   constructor(private formBuilder: FormBuilder) { }
 
@@ -29,6 +29,6 @@ export class AlertConfirmComponent implements OnInit {
   }
 
   cancelForm(){
-    this.cancel.emit();
+    this.cancelConfirm.emit();
   }
 }

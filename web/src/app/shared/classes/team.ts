@@ -10,13 +10,13 @@ export class Team {
         let stt = 1;
         _.forEach(teams, (team => {
             let data = [];
-            data['teamUser'] = team;
+            data['team'] = team;
             data['content'] = [
                 { title: stt },
-                { title: team.team.name }
+                { title: team.name }
             ];
             stt++;
-            if (tab == 'Admin' || team.is_captain == 1) {
+            if (tab == 'Admin' || team.team_users[0].is_captain == 1) {
                 data['actions'] = ['Edit', 'Delete'];
             } else {
                 data['actions'] = ['View'];
@@ -30,8 +30,8 @@ export class Team {
         let tmp = [];
         _.forEach(teams, (team => {
             let data = [];
-            data['team'] = team.team;
-            data['itemName'] = team.team.name;
+            data['team'] = team;
+            data['itemName'] = team.name;
             tmp.push(data);
         }))
         return tmp;

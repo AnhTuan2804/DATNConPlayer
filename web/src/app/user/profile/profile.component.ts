@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   listUser = [];
   listRole = [];
   headers = ['No.', 'Email', 'Fullname', 'Phone', 'Actions'];
-
+  objectDeleteEvent;
   constructor(private formBuilder: FormBuilder, private infoCommonService: InfoCommonService,
     private userService: UserService, private toastrService: ToastrService,
     private action: ComponentActions, public user: User) {
@@ -189,18 +189,6 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  handleAction(event) {
-    this.action.showLoading();
-    this.userService.deleteAccount({ id: event.item.user.id }).subscribe(() => {
-      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3000 });
-      this.getUserForAdmin();
-      this.action.hideLoading();
-    }, err => {
-      this.action.hideLoading();
-      this.toastrService.error(err.message, '', { timeOut: 3000 });
-    })
-  }
-
   getValueByNameFormAddAccount(name) {
     return this.formAdd.controls[name].value;
   }
@@ -215,5 +203,31 @@ export class ProfileComponent implements OnInit {
 
   navToHomeLoginForm() {
     $("#modalLoginForm").modal("show");
+  }
+
+  handleAction(event) {
+    $('#delete-account').modal('show');
+    this.objectDeleteEvent = event;
+  }
+  saveConfirm() {
+    $('#delete-account').modal('hide');
+    this.deleteAccount();
+  }
+
+  cancelConfirm() {
+    $('#delete-account').modal('hide');
+    this.objectDeleteEvent = null;
+  }
+
+  deleteAccount() {
+    this.action.showLoading();
+    this.userService.deleteAccount({ id: this.objectDeleteEvent.item.user.id }).subscribe(() => {
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3000 });
+      this.getUserForAdmin();
+      this.action.hideLoading();
+    }, err => {
+      this.action.hideLoading();
+      this.toastrService.error(err.message, '', { timeOut: 3000 });
+    })
   }
 }

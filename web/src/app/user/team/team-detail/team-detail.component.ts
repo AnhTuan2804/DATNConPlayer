@@ -39,6 +39,7 @@ export class TeamDetailComponent implements OnInit {
   selectedIndex;
   view: boolean = false;
   dataDetail;
+  objectDeleteEvent;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private teamService: TeamService, private team: Team,
@@ -195,26 +196,39 @@ export class TeamDetailComponent implements OnInit {
     }, (err) => {
       this.action.hideLoading();
       this.addMemberFaild = true;
-      this.toastrService.success(this.messageErrAddMember, '', { timeOut: 3000 })
       this.messageErrAddMember = err.message;
+      this.toastrService.success(this.messageErrAddMember, '', { timeOut: 3000 })
     })
   }
 
   handleAction(event) {
     switch (event.action) {
       case 'Delete':
-        this.action.showLoading();
-        this.teamService.deleteMember({ id: event.item.teamUser.id }).subscribe((result) => {
-          this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
-          this.getTeamDetail(this.dataDetail.id);
-        }, (err) => {
-          this.action.hideLoading();
-          this.toastrService.warning(err.message, '', { timeOut: 3500 });
-        })
+      $('#delete-member').modal('show');
+      this.objectDeleteEvent = event;
         break;
     }
+  }
 
+  saveConfirm() {
+    $('#delete-member').modal('hide');
+    this.deleteMember();
+  }
 
+  cancelConfirm() {
+    $('#delete-member').modal('hide');
+    this.objectDeleteEvent = null;
+  }
+
+  deleteMember() {
+    this.action.showLoading();
+    this.teamService.deleteMember({ id: this.objectDeleteEvent.item.teamUser.id }).subscribe((result) => {
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
+      this.getTeamDetail(this.dataDetail.id);
+    }, (err) => {
+      this.action.hideLoading();
+      this.toastrService.warning(err.message, '', { timeOut: 3500 });
+    })
   }
 
   getValueFormDetail(name) {

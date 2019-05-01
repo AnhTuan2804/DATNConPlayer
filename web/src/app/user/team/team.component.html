@@ -124,4 +124,5 @@
     </div>
   </div>
 </div>
+<app-alert-confirm [id]="'confirm'" [message]="'Are you sure delete this team?'" (saveConfirm)="saveConfirm()" (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
 <app-loading></app-loading>

@@ -7,10 +7,11 @@ import { Utils } from "../enums/utils";
 export class Match {
     allMatch = [];
     constructor(private timeService: TimeService) { }
-    setData(matches) {
+    setData(matches, email?) {
         this.allMatch = [];
         let stt = 1;
-        _.forEach(matches, ((item) => {
+        _.forEach(matches, ((item, key) => {
+            if (email && item.user.email != email) return;
             let data = [];
             data['match'] = item;
             data['content'] = [

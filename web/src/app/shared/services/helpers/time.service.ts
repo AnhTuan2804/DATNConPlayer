@@ -68,6 +68,15 @@ export class TimeService {
     return moment(new Date());
   }
 
+  getDateWithoutTime(date) {
+    date = date || new Date();
+    const year = date.getFullYear();
+    //january is 0!
+    const mm = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+    const dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    return year + '-' + mm + '-' + dd;
+  }
+
   getDayBetweenTwoDate(date1, date2) {
     if (!date1 || !date2) {
       return 0;
@@ -176,8 +185,8 @@ export class TimeService {
   }
 
   getDateAndTimeByTimeUnix(time) { // cover TimeUnix to year, month, day, hour, minutes 
-    let date = moment(time*1000).toDate();
-    let abc= { year: date.getFullYear(), month: date.getMonth()+1, day: date.getDate(), hour: date.getHours(),minutes: date.getMinutes() }
+    let date = moment(time * 1000).toDate();
+    let abc = { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate(), hour: date.getHours(), minutes: date.getMinutes() }
     return abc;
   }
 
