@@ -53,7 +53,7 @@ class RegisterComponent extends Component {
                                 <Field name="email" keyboardType="default" textIP="Email" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
                                 />
-                                <Field name="fullName" keyboardType="default" textIP="Tên" component={renderField}
+                                <Field name="fullname" keyboardType="default" textIP="Tên" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
                                 />
                                 <Field name="phone" keyboardType="default" textIP="Số điện thoại" component={renderField}

@@ -14,7 +14,6 @@ export default connect(
   dispatch => {
     return {
       onForgotPass: (email) => {
-        console.log(email);
         dispatch(isforgotPass(email))
       }
     }

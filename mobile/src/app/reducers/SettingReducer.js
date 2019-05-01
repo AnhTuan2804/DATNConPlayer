@@ -1,4 +1,7 @@
 import {
+    IS_GET_PROFILE,
+    GET_PROFILE_SUCCESSFULLY,
+    GET_PROFILE_FAILED,
     IS_UPDATE_INFO,
     UPDATE_INFO_SUCCESSFULLY,
     UPDATE_INFO_FAILED,
@@ -9,6 +12,26 @@ import {
 
 const settingReducers = (state = {}, action) => {
     switch (action.type) {
+        case IS_GET_PROFILE:
+            return {
+                ...state,
+                isLoading: true,
+                isLogin: false,
+            };
+        case GET_PROFILE_SUCCESSFULLY:
+            return {
+                ...state,
+                userData: action.userData,
+                isLoading: false,
+                isLogin: true,
+            };
+        case GET_PROFILE_FAILED:
+            return {
+                ...state,
+                error: action.error,
+                isLoading: false,
+                isLogin: false,
+            };
         case IS_UPDATE_INFO:
             return {
                 ...state,
@@ -17,7 +40,7 @@ const settingReducers = (state = {}, action) => {
         case UPDATE_INFO_SUCCESSFULLY:
             return {
                 ...state,
-                // userData: action.userData,
+                userData: action.userData,
                 isLoading: false,
             };
         case UPDATE_INFO_FAILED:
@@ -25,7 +48,6 @@ const settingReducers = (state = {}, action) => {
                 ...state,
                 error: action.error,
                 isLoading: false,
-
             };
         case IS_CHANGE_PASS:
             return {
@@ -35,7 +57,6 @@ const settingReducers = (state = {}, action) => {
         case CHANGE_PASS_SUCCESSFULLY:
             return {
                 ...state,
-                // userData: action.userData,
                 isLoading: false,
             };
         case CHANGE_PASS_FAILED:

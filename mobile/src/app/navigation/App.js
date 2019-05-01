@@ -18,36 +18,15 @@ import ManageContainer from '../ui/manage/ManageContainer';
 import CreateTournamentContainer from '../ui/createTournament/CreateTournamentContainer';
 import CreateTeamContainer from '../ui/manage/team/CreateTeamContainer';
 import SettingComponent from '../ui/setting/SettingComponent';
+import LoginService from '../../theme/shared/utils/LoginService';
+import CreateGridironContainer from '../ui/manage/gridiron/CreateGridironContainer';
+import DetailTeamContainer from '../ui/manage/team/DetailTeamContainer';
+import DetailGridironComponent from '../ui/manage/gridiron/detailGridiron/DetailGridironComponent';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLogin: false
-    }
-  }
-
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-        return true
-      } else {
-        console.log("bbbbbbbbbbbbbbbbbb");
-        return false
-      }
-    } catch (error) {
-      console.log('errrrrrr rồi');
-      return false;
-    }
-  };
-
-  componentWillMount() {
-    // this.setState({
-    //   isLogin: this._retrieveData()
-    // })
+    Constants.TOKEN = LoginService.getToken()
   }
 
   render() {
@@ -57,19 +36,6 @@ export default class App extends Component {
           <View style={mainStyles.container}>
             <Router>
               <Stack key='root'>
-                <Scene key='loginScreen'
-                  hideNavBar={true}
-                  component={LoginContainer}
-                // initial={!this.state.isLogin}
-                />
-                <Scene key='registerScreen'
-                  hideNavBar={true}
-                  component={RegisterContainer}
-                />
-                <Scene key='forgotPass'
-                  hideNavBar={true}
-                  component={ForgotPassContainer}
-                />
                 {/* Tabbar */}
                 <Scene key='tabbar'
                   showLabel={false}
@@ -83,9 +49,7 @@ export default class App extends Component {
                   disabledBackGesture={true}
                   hideNavBar={true}
                   initial
-                // initial={this.state.isLogin}
                 >
-
                   {/* Home page and search */}
                   <Stack key='home' >
                     <Scene
@@ -96,7 +60,7 @@ export default class App extends Component {
                       swipeEnabled={false}
                       component={HomeContainer}
                       hideNavBar={true}
-                    // initial
+                      initial
                     />
                     {/* list ppage search */}
                     <Scene
@@ -130,7 +94,7 @@ export default class App extends Component {
                   </Stack>
 
                   {/* Manage Page -- team, gridiron */}
-                  <Stack key='management' initial>
+                  <Stack key='management'>
                     <Scene
                       key='Manage'
                       tabBarLabel={`Manage`}
@@ -139,8 +103,8 @@ export default class App extends Component {
                       swipeEnabled={false}
                       component={ManageContainer}
                       hideNavBar={true}
+                      initial
                     />
-
                     <Scene
                       key='createTeam'
                       tabBarLabel={`createTeam`}
@@ -149,17 +113,34 @@ export default class App extends Component {
                       swipeEnabled={false}
                       component={CreateTeamContainer}
                       hideNavBar={true}
-                      initial
                     />
-                    {/* <Scene
+                    <Scene
+                      key='updateTeam'
+                      tabBarLabel={`createTeam`}
+                      icon={TabIcon}
+                      title={'updateTeam'}
+                      swipeEnabled={false}
+                      component={DetailTeamContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
                       key='createGridiron'
                       tabBarLabel={`createGridiron`}
                       icon={TabIcon}
-                      title={'Create Gridiron'}
+                      title={'createGridiron'}
                       swipeEnabled={false}
                       component={CreateGridironContainer}
                       hideNavBar={true}
-                    /> */}
+                    />
+                    <Scene
+                      key='detailGridiron'
+                      tabBarLabel={`detailGridiron`}
+                      icon={TabIcon}
+                      title={'detailGridiron'}
+                      swipeEnabled={false}
+                      component={DetailGridironComponent}
+                      hideNavBar={true}
+                    />
                   </Stack>
                   {/* Manage Page -- team, gridiron */}
                   {/* league: create, update info */}
@@ -184,6 +165,20 @@ export default class App extends Component {
                     hideNavBar={true}
                   />
                 </Scene>
+                {/* tabBar */}
+                <Scene key='loginScreen'
+                  hideNavBar={true}
+                  component={LoginContainer}
+                  // initial
+                />
+                <Scene key='registerScreen'
+                  hideNavBar={true}
+                  component={RegisterContainer}
+                />
+                <Scene key='forgotPass'
+                  hideNavBar={true}
+                  component={ForgotPassContainer}
+                />
               </Stack>
             </Router>
           </View>
