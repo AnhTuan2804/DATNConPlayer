@@ -20,6 +20,8 @@ import CreateTeamContainer from '../ui/manage/team/CreateTeamContainer';
 import SettingComponent from '../ui/setting/SettingComponent';
 import LoginService from '../../theme/shared/utils/LoginService';
 import CreateGridironContainer from '../ui/manage/gridiron/CreateGridironContainer';
+import DetailTeamContainer from '../ui/manage/team/DetailTeamContainer';
+import DetailGridironComponent from '../ui/manage/gridiron/detailGridiron/DetailGridironComponent';
 
 export default class App extends Component {
   constructor(props) {
@@ -113,12 +115,30 @@ export default class App extends Component {
                       hideNavBar={true}
                     />
                     <Scene
+                      key='updateTeam'
+                      tabBarLabel={`createTeam`}
+                      icon={TabIcon}
+                      title={'updateTeam'}
+                      swipeEnabled={false}
+                      component={DetailTeamContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
                       key='createGridiron'
                       tabBarLabel={`createGridiron`}
                       icon={TabIcon}
-                      title={'Create Gridiron'}
+                      title={'createGridiron'}
                       swipeEnabled={false}
                       component={CreateGridironContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='detailGridiron'
+                      tabBarLabel={`detailGridiron`}
+                      icon={TabIcon}
+                      title={'detailGridiron'}
+                      swipeEnabled={false}
+                      component={DetailGridironComponent}
                       hideNavBar={true}
                     />
                   </Stack>
@@ -149,7 +169,7 @@ export default class App extends Component {
                 <Scene key='loginScreen'
                   hideNavBar={true}
                   component={LoginContainer}
-                  initial
+                  // initial
                 />
                 <Scene key='registerScreen'
                   hideNavBar={true}

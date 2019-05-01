@@ -41,11 +41,11 @@ export const updateGridiron = (value) => {
     };
 }
 // delGridiron
-export const delGridiron = (value) => {
+export const delGridiron = (id) => {
     return {
         type: IS_DEL_GRIDIRON,
         isLoading: true,
-        value
+        id
     };
 }
 // createSubGridiron
