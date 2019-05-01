@@ -6,8 +6,6 @@ import { createTeam } from '../../../actions/TeamActions';
 export default connect(
   state => {
     let homeReducers = state.homeReducers || {}
-    console.log(homeReducers);
-
     return {
       isLoading: false,
       listLevel: homeReducers.listLevel || [],

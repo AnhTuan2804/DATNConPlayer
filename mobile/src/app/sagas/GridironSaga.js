@@ -49,6 +49,8 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
+import { Actions } from 'react-native-router-flux';
+import { getListGridiron } from '../actions/GridironActions';
 
 // create
 function* createGridironSaga(action) {
@@ -66,7 +68,11 @@ function* createGridironSaga(action) {
         });
         const result = yield Api.createGridironAPI(body);
         yield put({ type: CREATE_GRIDIRON_SUCCESSFULLY });
-        ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
+        if (result) {
+            ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
+            Actions.Manage()
+            yield put(getListGridiron());
+        }
     } catch (error) {
         yield put({ type: CREATE_GRIDIRON_FAILED, error });
     }
@@ -106,11 +112,12 @@ export function* watchUpdateGridironSaga() {
 function* deleteGridironSaga(action) {
     try {
         let body = JSON.stringify({
-            "id": action.value.id
+            "id": action.id
         });
         const result = yield Api.delGridironAPI(body);
         yield put({ type: DEL_GRIDIRON_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_DELETE_SUCCESS, 'success')
+        yield put(getListGridiron());
         // Actions.loginScreen()
     } catch (error) {
         yield put({ type: DEL_GRIDIRON_FAILED, error });

@@ -36,7 +36,6 @@ import { Toast } from 'native-base';
 function* getListAreaSaga(action) {
     try {
         const list = yield Api.getAreaAPI();
-        console.log(list)
         yield put({ type: GET_LIST_AREA_SUCCESSFULLY, listArea: list });
         // ToastUtil.showToast(forgotPassAPI.message, 'success')
         // Actions.loginScreen()
@@ -53,7 +52,6 @@ export function* watchGetListArea() {
 function* getListLevelSaga(action) {
     try {
         const list = yield Api.getLevelAPI();
-        console.log(list);
         yield put({ type: GET_LIST_LEVEL_SUCCESSFULLY, listLevel: list });
         // ToastUtil.showToast(forgotPassAPI.message, 'success')
         // Actions.loginScreen()
@@ -70,7 +68,6 @@ export function* watchGetListLevelSaga() {
 function* getListTimeSaga(action) {
     try {
         const list = yield Api.getTimeAPI();
-        console.log(list);
         yield put({ type: GET_LIST_TIME_SUCCESSFULLY, listTime: list });
         // ToastUtil.showToast(forgotPassAPI.message, 'success')
         // Actions.loginScreen()
@@ -86,7 +83,6 @@ export function* watchGetListTimeSaga() {
 function* getListCareerSaga(action) {
     try {
         const list = yield Api.getCareerAPI();
-        console.log(list);
         yield put({ type: GET_LIST_CAREER_SUCCESSFULLY, listCareer: list });
         // ToastUtil.showToast(forgotPassAPI.message, 'success')
         // Actions.loginScreen()
@@ -102,7 +98,6 @@ export function* watchGetListCareerSaga() {
 function* getListSizeSaga(action) {
     try {
         const list = yield Api.getSizeAPI();
-        console.log("list sizeeeeeeeeeee", list);
         yield put({ type: GET_LIST_SIZE_SUCCESSFULLY, listSize: list });
         // ToastUtil.showToast(forgotPassAPI.message, 'success')
         // Actions.loginScreen()

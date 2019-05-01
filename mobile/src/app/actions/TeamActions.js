@@ -49,18 +49,18 @@ export const delMember = (value) => {
     };
 }
 // delTeam(team lead)
-export const delTeam = (value) => {
+export const delTeam = (id) => {
     return {
         type: IS_DEL_TEAM,
         isLoading: true,
-        value
+        id
     };
 }
 // getdetail
-export const getdetail = (value) => {
+export const getdetail = (id) => {
     return {
         type: IS_GET_DETAIL_TEAM,
         isLoading: true,
-        value
+        id
     };
 }

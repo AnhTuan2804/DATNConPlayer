@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, BackHandler, Alert, TouchableOpacity, Platform, Picker } from 'react-native';
 import { Container, Content } from 'native-base';
-import Constants from '../../../../theme/variable/Constants';
+import Constants from '../../../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
-import Loading from '../../common/modal/Loading';
-import Utils from '../../../../theme/shared/utils/Utils';
+import Loading from '../../../common/modal/Loading';
+import Utils from '../../../../../theme/shared/utils/Utils';
 import { Field, initialize, reduxForm } from 'redux-form';
 import {
-    required,
-    renderField, maxLength40, renderFieldForPass,
-    required_trim, have_point_end, isValidEmailOrNumber,
-    renderSelect, renderFieldTextarea, confirm_min_age, confirm_max_age, number
-} from '../../../../theme/variable/Validate';
+    required, 
+    renderField, 
+    maxLength40, 
+    renderFieldForPass, 
+    required_trim, have_point_end, 
+    isValidEmailOrNumber, renderSelect,
+     renderFieldTextarea, confirm_min_age, confirm_max_age, number
+} from '../../../../../theme/variable/Validate';
 
 
 const { height, width } = Dimensions.get('window');
 const rateScreen = height / 680;
-class CreateGridironComponent extends Component {
+class UpdateGridironComponent extends Component {
     constructor(props) {
         super(props);
         this.props.dispatch(initialize(
-            'createGridiron',
+            'updateGridiron',
             {
                 area_id: this.props.listArea.length != 0 ? this.props.listArea[0].id : '',
             }
@@ -49,6 +52,7 @@ class CreateGridironComponent extends Component {
 
     render() {
         submit = values => {
+            console.log(values);
             this.props.onCreateGridiron(values);
         }
         const { handleSubmit } = this.props;
@@ -100,8 +104,8 @@ class CreateGridironComponent extends Component {
     }
 };
 
-const CreateGridironForm = reduxForm({
-    form: 'createGridiron',
-})(CreateGridironComponent);
+const UpdateGridironForm = reduxForm({
+    form: 'updateGridiron',
+})(UpdateGridironComponent);
 
-export default CreateGridironForm;
+export default UpdateGridironForm;

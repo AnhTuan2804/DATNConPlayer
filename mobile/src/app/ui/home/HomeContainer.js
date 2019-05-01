@@ -6,6 +6,7 @@ import { getListArea, getListLever, getListSize, getListTime, getListCareer } fr
 export default connect(
   state => {
     let homeReducers = state.homeReducers ? state.homeReducers : {}
+    let settingReducers = state.settingReducers ? state.settingReducers : {}
     return {
       isLoading: homeReducers.isLoading,
       listMatch: [1, 2, 3, 4, 5],

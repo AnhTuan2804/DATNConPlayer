@@ -52,7 +52,6 @@ function* registerAPI(authRegister, bodyRegister) {
 
 // =================ForgotPass - START==================
 function* forgotPassAPI(bodyForgotPass) {
-    console.log(bodyForgotPass);
     const router = 'reset-password';
     const headersPairs = null;
     const body = bodyForgotPass
@@ -71,7 +70,6 @@ function* forgotPassAPI(bodyForgotPass) {
 // =================ForgotPass - START==================
 // =================ChangePass - START==================
 function* changePassAPI(bodyChangePass) {
-    console.log(bodyChangePass);
     const router = 'user/change-password';
     const headersPairs = null;
     const body = bodyChangePass
@@ -89,7 +87,6 @@ function* changePassAPI(bodyChangePass) {
 
 // =================Update profile - START==================
 function* updateInfoAPI(bodyInfo) {
-    console.log(bodyInfo);
     const router = 'user/update-profile';
     const headersPairs = null;
     const body = bodyInfo
@@ -259,7 +256,7 @@ function* updateTeamAPI(bodyInfo) {
 }
 
 function* delTeamAPI(bodyInfo) {
-    const router = 'team/update';
+    const router = 'team/delete';
     const headersPairs = null;
     const body = bodyInfo
     const response = yield fetch(`${Constants.HOST}/${router}`, {
@@ -373,7 +370,7 @@ function* updateGridironAPI(bodyInfo) {
 }
 
 function* delGridironAPI(bodyInfo) {
-    const router = 'gridiron/update';
+    const router = 'gridiron/delete';
     const headersPairs = null;
     const body = bodyInfo
     const response = yield fetch(`${Constants.HOST}/${router}`, {

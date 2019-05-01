@@ -16,18 +16,21 @@ const settingReducers = (state = {}, action) => {
             return {
                 ...state,
                 isLoading: true,
+                isLogin: false,
             };
         case GET_PROFILE_SUCCESSFULLY:
             return {
                 ...state,
                 userData: action.userData,
                 isLoading: false,
+                isLogin: true,
             };
         case GET_PROFILE_FAILED:
             return {
                 ...state,
                 error: action.error,
                 isLoading: false,
+                isLogin: false,
             };
         case IS_UPDATE_INFO:
             return {

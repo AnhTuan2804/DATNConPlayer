@@ -7,13 +7,9 @@ import CreateGridironForm from './CreateGridironComponent';
 export default connect(
   state => {
     let homeReducers = state.homeReducers || {}
-    console.log(homeReducers);
-
     return {
       isLoading: false,
-      listLevel: homeReducers.listLevel || [],
       listArea: homeReducers.listArea || [],
-      listCareer: homeReducers.listCareer || [],
     }
   },
   dispatch => {

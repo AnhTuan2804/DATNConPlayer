@@ -34,7 +34,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
-import { getlistTeam } from '../actions/TeamActions';
+import { getlistTeam, getdetail } from '../actions/TeamActions';
 
 // create team
 function* createTeamSaga(action) {
@@ -52,8 +52,11 @@ function* createTeamSaga(action) {
         });
         const result = yield Api.createTeamAPI(body);
         yield put({ type: CREATE_TEAM_SUCCESSFULLY });
-        ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
-        yield put(getlistTeam())
+        if (result) {
+            ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
+            Actions.Manage()
+            yield put(getlistTeam())
+        }
     } catch (error) {
         yield put({ type: CREATE_TEAM_FAILED, error });
     }
@@ -93,12 +96,12 @@ export function* watchUpdateTeamSaga() {
 function* deleteTeamSaga(action) {
     try {
         let body = JSON.stringify({
-            "id": action.value.id
+            "id": action.id
         });
         const result = yield Api.delTeamAPI(body);
         yield put({ type: DEL_TEAM_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_DELETE_SUCCESS, 'success')
-        // Actions.loginScreen()
+        yield put(getlistTeam())
     } catch (error) {
         yield put({ type: DEL_TEAM_FAILED, error });
     }
@@ -125,7 +128,7 @@ export function* watchGetListTeamSaga() {
 // get team detail
 function* getTeamDetailSaga(action) {
     try {
-        const id = action.value.id;
+        const id = action.id;
         const result = yield Api.getTeamDetailAPI(id);
         yield put({ type: GET_DETAIL_TEAM_SUCCESSFULLY, infoTeam: result });
     } catch (error) {
@@ -141,12 +144,15 @@ export function* watchGetTeamDetailSaga() {
 function* addMemberSaga(action) {
     try {
         let body = JSON.stringify({
-            "member": action.value.member,
-            "team_id": action.value.team_id
+            "teamUser": {
+                "member": action.value.member,
+                "team_id": action.value.team_id
+            }
         });
         const result = yield Api.addMemberAPI(body);
         yield put({ type: ADD_MEMBER_TEAM_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
+        yield put(getdetail(action.value.team_id))
         // Actions.loginScreen()
     } catch (error) {
         yield put({ type: ADD_MEMBER_TEAM_FAILED, error });
@@ -166,6 +172,7 @@ function* deleteMemberSaga(action) {
         const result = yield Api.delMemberAPI(body);
         yield put({ type: DEL_MEMBER_TEAM_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_DELETE_SUCCESS, 'success')
+        yield put(getdetail(action.value.team_id))
         // Actions.loginScreen()
     } catch (error) {
         yield put({ type: DEL_MEMBER_TEAM_FAILED, error });
