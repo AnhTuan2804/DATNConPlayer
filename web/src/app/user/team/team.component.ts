@@ -34,6 +34,7 @@ export class TeamComponent implements OnInit {
   objectAreaEvent;
   objectLevelEvent;
   selectedIndex;
+  objectDeleteEvent;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
@@ -73,6 +74,7 @@ export class TeamComponent implements OnInit {
     this.action.showLoading();
     if (localStorage.getItem('role') && localStorage.getItem('role') == 'Admin') {
       this.teamService.getListForAdmin().subscribe((result) => {
+        console.log(result)
         this.listTeam = this.team.setteam(result, 'Admin');
         this.action.hideLoading();
       }, (err) => {
@@ -142,22 +144,37 @@ export class TeamComponent implements OnInit {
   handleAction(event) {
     switch (event.action) {
       case 'Delete':
-        this.action.showLoading();
-        this.teamService.deleteTeam({ id: event.item.teamUser.team.id }).subscribe((result) => {
-          this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
-          this.getListTeam();
-        }, (err) => {
-          this.action.hideLoading();
-          this.toastrService.success(err.message, '', { timeOut: 3500 });
-        })
+        $('#confirm').modal('show');
+        this.objectDeleteEvent = event;
         break;
       case 'Edit':
-        this.navToDetail(event.item.teamUser.team.id);
+        this.navToDetail(event.item.team.id);
         break;
       case 'View':
-        this.navToDetail(event.item.teamUser.team.id, 'view');
+        this.navToDetail(event.item.team.id, 'view');
         break;
     }
+  }
+
+  saveConfirm() {
+    $('#confirm').modal('hide');
+    this.deleteTeam();
+  }
+
+  cancelConfirm() {
+    $('#confirm').modal('hide');
+    this.objectDeleteEvent = null;
+  }
+
+  deleteTeam() {
+    this.action.showLoading();
+    this.teamService.deleteTeam({ id: this.objectDeleteEvent.item.team.id }).subscribe((result) => {
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
+      this.getListTeam();
+    }, (err) => {
+      this.action.hideLoading();
+      this.toastrService.success(err.message, '', { timeOut: 3500 });
+    })
   }
 
   getValueFormAdd(name) {

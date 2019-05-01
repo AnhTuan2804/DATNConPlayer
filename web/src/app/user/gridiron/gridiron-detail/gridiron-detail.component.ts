@@ -43,6 +43,8 @@ export class GridironDetailComponent implements OnInit {
   showEditForm = false;
   objectAreaEvent;
   objectSizeEvent;
+  objectDelSubEvent;
+  objectDelPriceEvent;
   selectedIndex;
   view: boolean = false;
   dataDetail;
@@ -268,28 +270,6 @@ export class GridironDetailComponent implements OnInit {
     })
   }
 
-  handleAction(event) {
-    this.action.showLoading();
-    this.gridironService.deleteSubGridiron({ id: event.item.sub_gridiron.id }).subscribe((result) => {
-      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
-      this.getDetail(this.dataDetail.id);
-    }, (err) => {
-      this.action.hideLoading();
-      this.toastrService.error(err.message, '', { timeOut: 3500 });
-    })
-  }
-
-  handleActionPricOnTime(event) {
-    this.action.showLoading();
-    this.gridironService.deletePriceOnTime({ id: event.item.price_on_time.id }).subscribe((result) => {
-      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
-      this.getDetail(this.dataDetail.id);
-    }, (err) => {
-      this.action.hideLoading();
-      this.toastrService.error(err.message, '', { timeOut: 3500 });
-    })
-  }
-
   getValueFormDetail(name) {
     return this.formDetail.controls[name].value;
   }
@@ -336,5 +316,53 @@ export class GridironDetailComponent implements OnInit {
         size_gridiron_id: event.value.size.id
       });
     }
+  }
+
+  handleAction(event) {
+    this.objectDelSubEvent = event;
+    $('#sub').modal('show');
+  }
+
+  delSub(){
+    this.action.showLoading();
+    this.gridironService.deleteSubGridiron({ id: this.objectDelSubEvent.item.sub_gridiron.id }).subscribe((result) => {
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
+      this.getDetail(this.dataDetail.id);
+    }, (err) => {
+      this.action.hideLoading();
+      this.toastrService.error(err.message, '', { timeOut: 3500 });
+    })
+  }
+
+  handleActionPricOnTime(event) {
+    this.objectDelPriceEvent = event;
+    $('#price').modal('show');
+  }
+
+  delPrice(){
+    this.action.showLoading();
+    this.gridironService.deletePriceOnTime({ id: this.objectDelPriceEvent.item.price_on_time.id }).subscribe((result) => {
+      this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
+      this.getDetail(this.dataDetail.id);
+    }, (err) => {
+      this.action.hideLoading();
+      this.toastrService.error(err.message, '', { timeOut: 3500 });
+    })
+  }
+
+  saveConfirm(tab) {
+    $(`#${tab}`).modal('hide');
+    if(tab == 'sub'){
+      this.delSub();
+    }
+    if(tab == 'price'){
+      this.delPrice();
+    }
+  }
+
+  cancelConfirm(tab) {
+    $(`#${tab}`).modal('hide');
+    this.objectDelPriceEvent = null;
+    this.objectDelSubEvent = null;
   }
 }

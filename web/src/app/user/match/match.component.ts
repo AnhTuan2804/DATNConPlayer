@@ -19,6 +19,10 @@ import { GridironService } from 'src/app/shared/services/gridiron.service';
 import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { Match } from 'src/app/shared/classes/match';
 import { MatchService } from 'src/app/shared/services/match.service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/shared/services/user.service';
+import { TimeService } from 'src/app/shared/services/helpers/time.service';
 declare var $: any;
 @Component({
   selector: 'app-match',
@@ -47,6 +51,8 @@ export class MatchComponent implements OnInit {
   objectGridironEvent;
   objectTimeEvent;
   selectedIndex;
+  userDetail;
+  startDate;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
@@ -55,7 +61,8 @@ export class MatchComponent implements OnInit {
     private match: Match, private matchService: MatchService,
     private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
-    private area: Area, private router: Router) {
+    private area: Area, private router: Router, private userService: UserService,
+    public db: AngularFireDatabase, private timeService: TimeService) {
     this.initForm()
     this.getListArea();
     this.getListCareer();
@@ -63,11 +70,28 @@ export class MatchComponent implements OnInit {
     this.getListTeam();
     this.getListTime();
     this.getListGridiron();
-    this.getListHistory();
   }
 
   ngOnInit() {
+    this.action.showLoading();
+    this.userService.getProfile().subscribe((user) => {
+      this.userDetail = user;
+      this.getListHistory(user.email);
+    }, err => {
+      this.action.hideLoading();
+    })
+    this.startDate = this.timeService.getDateWithoutTime(new Date());
+  }
 
+  getListHistory(email) {
+    this.matchService.getAll().subscribe((result) => {
+      result = _.reverse(result)
+      this.listMatch = this.match.setData(result, email);
+      this.action.hideLoading();
+    }, err => {
+      this.action.hideLoading();
+      console.log(err.message)
+    })
   }
 
   initForm() {
@@ -87,17 +111,6 @@ export class MatchComponent implements OnInit {
       'area': new FormControl('', Validators.required),
       'invitation': new FormControl('')
     });
-  }
-
-  getListHistory() {
-    this.action.showLoading();
-    this.matchService.getListForUser().subscribe((result) => {
-      this.listMatch = this.match.setData(result);
-      this.action.hideLoading();
-    }, err => {
-      this.action.hideLoading();
-      console.log(err.message)
-    })
   }
 
   getListTime() {
@@ -166,9 +179,8 @@ export class MatchComponent implements OnInit {
       this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
-      this.getListHistory();
-    }, (err) => {
       this.action.hideLoading();
+    }, (err) => {
       this.addFaild = true;
       this.messageError = err.message;
       this.toastrService.error(this.messageError, '', { timeOut: 3500 });

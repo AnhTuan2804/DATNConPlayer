@@ -49,13 +49,13 @@ export class MatchDetailComponent implements OnInit {
   selectedIndex;
   dataObjectDetail;
   status;
+  id;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
     private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
     private teamService: TeamService, private team: Team,
-    private match: Match, private matchService: MatchService,
-    private timeService: TimeService,
+    private matchService: MatchService, private timeService: TimeService,
     private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router, private route: ActivatedRoute) {
@@ -70,9 +70,8 @@ export class MatchDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      const id = params.id;
-      const item = params.item;
-      this.getDetail(id);
+      this.id = params.id;
+      this.getDetail(this.id);
     })
   }
 
@@ -91,13 +90,14 @@ export class MatchDetailComponent implements OnInit {
       'career_id': new FormControl(''),
       'area_id': new FormControl(''),
       'area': new FormControl('', Validators.required),
-      'invitation': new FormControl('')
+      'invitation': new FormControl(''),
+      'status': new FormControl('')
     });
   }
 
   getDetail(id) {
     this.action.showLoading();
-    this.matchService.getDetail(id).subscribe((result) => {
+    this.matchService.getDetailLocal(id).subscribe((result) => {
       this.action.hideLoading()
       this.dataObjectDetail = result;
       this.bindData(result);
@@ -123,17 +123,7 @@ export class MatchDetailComponent implements OnInit {
       'area_id': match.area.id,
       'area': match.area.name,
       'invitation': match.invitation,
-    })
-  }
-
-  getListHistory() {
-    this.action.showLoading();
-    this.matchService.getListForUser().subscribe((result) => {
-      this.listMatch = this.match.setData(result);
-      this.action.hideLoading();
-    }, err => {
-      this.action.hideLoading();
-      console.log(err.message)
+      'status': match.status
     })
   }
 
@@ -192,23 +182,27 @@ export class MatchDetailComponent implements OnInit {
 
   edit() {
     const data = {
-      id: this.dataObjectDetail.id,
+      id: this.id,
       date_of_match: this.getValueFormAdd('date_of_match'),
       invitation: this.getValueFormAdd('invitation')
     }
+    data['status'] = this.status ? this.status : undefined;
     data['team'] = this.objectTeamEvent ? this.objectTeamEvent : undefined;
     data['level'] = this.objectLevelEvent ? this.objectLevelEvent : undefined;
     data['time'] = this.objectTimeEvent ? this.objectTimeEvent : undefined;
     data['area'] = this.objectAreaEvent ? this.objectAreaEvent : undefined;
     data['gridiron'] = this.objectGridironEvent ? this.objectGridironEvent : undefined;
     data['career'] = this.objectCareerEvent ? this.objectCareerEvent : undefined;
-    data['status'] = this.status ? this.status : this.getValueFormAdd('status');
 
     this.action.showLoading();
     this.matchService.updateMatch(data).subscribe((result) => {
       this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
-      this.action.hideLoading();
+      if (this.status) {
+        this.router.navigate(['match']);
+      } else {
+        this.action.hideLoading();
+      }
     }, (err) => {
       this.action.hideLoading();
       this.addFaild = true;

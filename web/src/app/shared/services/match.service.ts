@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './helpers/base.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { } from 'firebase'
+import { AngularFireDatabase } from 'angularfire2/database';
+// import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService extends BaseService {
 
-  constructor(public http: Http) {
+  constructor(public db: AngularFireDatabase, public http: Http) {
     super(http);
   }
 
@@ -20,6 +23,20 @@ export class MatchService extends BaseService {
       .catch((err) => {
         return Observable.throw(err);
       })
+  }
+
+  public getAll() {
+    // return this.db.list('/match', ref => ref.orderByChild('date_of_match')).valueChanges();
+    return this.db.list('/match').snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => ({ id: a.key, ...a.payload.val() }))
+      )
+    )
+  }
+
+  public getDetailLocal(id) {
+    // return this.db.list('/match', ref => ref.orderByChild('date_of_match')).valueChanges();
+    return this.db.object(`/match/${id}`).valueChanges();
   }
 
   public createMatch(data: Object): Observable<any> {

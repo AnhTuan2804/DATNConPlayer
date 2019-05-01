@@ -144,7 +144,7 @@
                 <span
                   *ngIf="formAddSubGri.controls['name_gridiron'].hasError('required')&&(formAddSubGri.controls['name_gridiron'].touched || errorForm)">Field
                   required</span><br />
-                <span *ngIf="!countName"></span>Name of giridiron is divided by ',' and it must equlas with number of sub griditon
+                <span *ngIf="!countName">Name of gridiron is divided by ',' and it must equals with number of sub gridiron</span>
               </div>
             </div>
           </div>
@@ -242,4 +242,6 @@
     </div>
   </div>
 </div>
+<app-alert-confirm [id]="'sub'" [message]="'Are you sure delete this Sub Gridiron?'" (saveConfirm)="saveConfirm('sub')" (cancelConfirm)="cancelConfirm('sub')"></app-alert-confirm>
+<app-alert-confirm [id]="'price'" [message]="'Are you sure delete this Price on Time?'" (saveConfirm)="saveConfirm('price')" (cancelConfirm)="cancelConfirm('price')"></app-alert-confirm>
 <app-loading></app-loading>

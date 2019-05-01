@@ -29,5 +29,14 @@ class TimeUntil {
             return moment(val, 'YYYY/MM/DD').unix();
         }
     }
+
+    getDateWithoutTime(date) {
+        date = date || new Date();
+        const year = date.getFullYear();
+        //january is 0!
+        const mm = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+        const dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        return year + '-' + mm + '-' + dd;
+    }
 }
 module.exports = new TimeUntil();

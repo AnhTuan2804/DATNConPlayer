@@ -16,6 +16,9 @@ import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { Routing } from './app.routing';
 import { ToastrModule } from 'ngx-toastr'
+import { AngularFireModule } from 'angularfire2';
+import { environment } from 'src/environments/environment';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -35,6 +38,8 @@ export function createTranslateLoader(http: HttpClient) {
     AdminModule,
     UserModule,
     Routing,
+    AngularFireModule.initializeApp(environment.firebase.appConfig),
+    AngularFireDatabaseModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -47,7 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
       maxOpened: 1,
       autoDismiss: true,
       enableHtml: true,
-      positionClass: 'toast-top-right'
+      positionClass: 'toast-top-center'
     })
   ],
   providers: [

@@ -32,21 +32,10 @@ export class ModelContainerViewComponent implements OnInit {
   }
 
   saveData() {
-    if (this.formGroup.valid) {
-      this.save.emit();
-      this.formGroup
-    } else {
-      this.error.emit();
-    }
+    this.save.emit();
   }
 
   cancelForm() {
-    this.cancel.emit();
-  }
-
-  resetForm() {
-    this.formGroup.reset()
-    this.reset.emit();
     this.cancel.emit();
   }
 

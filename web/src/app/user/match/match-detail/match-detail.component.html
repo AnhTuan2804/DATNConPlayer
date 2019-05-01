@@ -51,7 +51,7 @@
 
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Level</label>
+              <label class="control-label">Level Expected</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <app-select-dropdown  [nameSelect]="formEdit.controls['level'].value" [title]="'Level'"
@@ -66,7 +66,7 @@
 
           <div class="col-md-6">
             <div class="form-group">
-              <label class="control-label">Career</label>
+              <label class="control-label">Career Expected</label>
               <span class="required"> *</span>
               <div class="input-include-error">
                 <app-select-dropdown [nameSelect]="formEdit.controls['career'].value" [title]="'Career'"
@@ -101,6 +101,16 @@
                 <span
                   *ngIf="formEdit.controls.area.hasError('required')&&(formEdit.controls['area'].touched || errorForm)">Field
                   required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Status</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" disabled name="" formControlName="status">
               </div>
             </div>
           </div>

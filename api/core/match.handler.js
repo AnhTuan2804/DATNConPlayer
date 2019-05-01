@@ -54,7 +54,7 @@ class MatchHandler {
 
     getDetail(id, token) {
         return new Promise((resolve) => {
-            firebaseDB.ref(`/match/${id}`).on('child_changed', (snapshot) => {
+            firebaseDB.ref(`/match/${id}`).on('value', (snapshot) => {
                 const data = snapshot.val();
                 data['id'] = id;
                 resolve(data);
@@ -64,12 +64,13 @@ class MatchHandler {
         })
     }
 
-    async update(body) {
+    async update(body, date_of_match) {
         const id = body.id;
         if (!id) {
             return;
         }
         body = _.omit(body, ['id']);
+        body.date_of_match = date_of_match ? date_of_match : timeUtil.getTimesUnixFromTimeFormat(body.date_of_match);
         try {
             return firebaseDB.ref('/match/' + id).update(body);
         }
