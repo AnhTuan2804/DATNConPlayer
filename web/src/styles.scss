@@ -3,6 +3,12 @@
 body {
   background-image: url("./assets/images/backGround.jpg");
 }
+
+.mg-header, .container, .container-fluid {
+  margin-top: 3rem
+}
+
+
 .view {
   pointer-events: none;
 }
