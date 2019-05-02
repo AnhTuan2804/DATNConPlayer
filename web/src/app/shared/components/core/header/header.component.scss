@@ -5,9 +5,17 @@
   cursor: pointer;
 }
 .bg-light {
-  background-color: #73754f59 !important;
+  background-color: #555 !important;
 }
 .header-title {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header-position {
+  position: sticky;
+  top: 0;
+  padding: 10px 16px;
+  z-index: 100;
+  background: #555;
 }
