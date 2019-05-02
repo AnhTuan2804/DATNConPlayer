@@ -1,6 +1,6 @@
 import {
     IS_GET_LIST_GRIDIRON,
-    IS_GET_DETALI_GRIDIRON,
+    IS_GET_DETAIL_GRIDIRON,
     IS_CREATE_GRIDIRON,
     IS_UPDATE_GRIDIRON,
     IS_DEL_GRIDIRON,
@@ -18,10 +18,11 @@ export const getListGridiron = () => {
     };
 }
 // getDetailGridiron
-export const getDetailGridiron = () => {
+export const getDetailGridiron = (id) => {
     return {
-        type: IS_GET_DETALI_GRIDIRON,
+        type: IS_GET_DETAIL_GRIDIRON,
         isLoading: true,
+        id
     };
 }
 // createGridiron

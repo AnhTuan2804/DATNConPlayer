@@ -5,21 +5,18 @@ import Constants from './Constants';
 import _ from 'lodash';
 
 //Validation
-export const required = value => value ? undefined : 'Trường bắt buộc';
+export const required = value => value ? undefined : 'Require';
 export const required_trim = value => value && _.startsWith(value, ' ') || _.endsWith(value, ' ') ? Constants.DONT_SPACE : undefined;
 export const have_point_end = value => value && _.endsWith(value, '.') ? Constants.DONT_DOT : undefined;
 export const maxLength40 = value => value && value.length > 40 ? Constants.PASS_MAXLENGTH : undefined;
 export const minLength6 = value => value && value.length < 6 ? Constants.PASS_MINLENGTH : undefined;
-export const number = value => value && isNaN(Number(value)) ? '数字である必要があります' : undefined;
-export const minValue = min => value => value && value < min ? `最低でも ${min}` : undefined;
-export const minValue18 = minValue(18);
-export const confirm_max_age = (value, values) => (value, values) && value >= values.age_min ? undefined : Constants.PASS_CONF_NOTMATCH;
+export const number = value => value && isNaN(Number(value)) ? 'It isn\'t a number' : undefined;
+export const checklistName = (value, values) => (value, values) && value.split(',').length == values.numSub ? undefined : "Name sub gridiron is split by ' , ' and quantity equal Number of Sub gridiron";
+export const confirm_max_age = (value, values) => value && values && value >= values.age_min ? undefined : Constants.PASS_CONF_NOTMATCH;
 export const confirm_min_age = (value, values) => (value, values) && value <= values.age_max ? undefined : Constants.PASS_CONF_NOTMATCH;
 export const confirmPassword = (value, values) => (value, values) && value === values.password ? undefined : Constants.PASS_CONF_NOTMATCH;
 export const isValidEmail = value => value && !/^(?!.*?\.\.)\w[a-zA-Z0-9+\.]+@[a-zA-Z0-9]{2,15}\.?[a-zA-Z]{2,10}\.{0,1}[a-zA-Z]{2,3}$/i.test(value) ? Constants.EMAIL_VALID : undefined;
 export const isValidEmailOrNumber = value => value && !/^((?!.*?\.\.)\w[a-zA-Z0-9+\.]+@[a-zA-Z0-9]{2,15}\.?[a-zA-Z]{2,10}\.{0,1}[a-zA-Z]{2,3}|[0-9]{1,12})$/i.test(value) ? Constants.EMAIL_NUMBER_VALID : undefined;
-export const isAuthenticationNumber = value => value && !/^[0-9]{6,6}$/i.test(value) ? "6桁の数字のシーケンスでなければなりません" : undefined;
-export const inputAmount = value => value && !/^\d*((\.|\,)\d{1,8})?$/i.test(value) ? "それは数字のシーケンスでなければならない" : undefined;
 
 
 //Field for Redux-form 

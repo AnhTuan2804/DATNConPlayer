@@ -7,13 +7,13 @@ import Loading from '../../../common/modal/Loading';
 import Utils from '../../../../../theme/shared/utils/Utils';
 import { Field, initialize, reduxForm } from 'redux-form';
 import {
-    required, 
-    renderField, 
-    maxLength40, 
-    renderFieldForPass, 
-    required_trim, have_point_end, 
+    required,
+    renderField,
+    maxLength40,
+    renderFieldForPass,
+    required_trim, have_point_end,
     isValidEmailOrNumber, renderSelect,
-     renderFieldTextarea, confirm_min_age, confirm_max_age, number
+    renderFieldTextarea, confirm_min_age, confirm_max_age, number
 } from '../../../../../theme/variable/Validate';
 
 
@@ -25,46 +25,37 @@ class UpdateGridironComponent extends Component {
         this.props.dispatch(initialize(
             'updateGridiron',
             {
-                area_id: this.props.listArea.length != 0 ? this.props.listArea[0].id : '',
+                "name": this.props.itemGridiron.name,
+                "area_id": this.props.itemGridiron.area_id,
+                "link_face": this.props.itemGridiron.link_face,
+                "picture": this.props.itemGridiron.picture,
+                "phone": this.props.itemGridiron.phone,
+                "address": this.props.itemGridiron.address,
+                "description": this.props.itemGridiron.description,
+                "id": this.props.itemGridiron.id
             }
         ));
     }
 
-    _renderHeader = (title) => {
-        return (
-            <View style={{
-                margin: 10,
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-                borderBottomWidth: 1,
-                borderBottomColor: "#28a745"
-            }}>
-                <View style={{
-                    flex: 1,
-                    justifyContent: 'flex-start', alignItems: 'flex-start',
-
-                }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{title}</Text>
-                </View>
-            </View>
-        )
+    componentDidMount() {
+        this.props.onGetDetailGridiron(this.props.itemGridiron.id)
     }
+
 
     render() {
         submit = values => {
-            console.log(values);
-            this.props.onCreateGridiron(values);
+            this.props.onUpdateGridiron(values);
         }
         const { handleSubmit } = this.props;
 
         return (
             <Container style={{ backgroundColor: 'white' }}>
                 {Loading(this.props.isLoading)}
-                {this._renderHeader("Create Gridiron")}
                 <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>
                             <Field name="name" keyboardType="default" textIP="Gridiron name" label={'Name'} component={renderField}
+                                input={{ editable: false, value: this.props.itemGridiron.name }}
                                 validate={[required, required_trim, have_point_end]}
                             />
                             <Field name="area_id" mode="dropdown" textIP="Select Area"
@@ -95,7 +86,7 @@ class UpdateGridironComponent extends Component {
                             <Text style={{
                                 color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
                                 textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                            }}>Create</Text>
+                            }}>Update</Text>
                         </TouchableOpacity>
                     </View>
                 </Content >

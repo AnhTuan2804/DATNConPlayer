@@ -22,7 +22,6 @@ function* getProfileSaga(action) {
     try {
         yield LoginService.getToken();
         const result = yield Api.getProfileAPI();
-        console.log(result);
         yield put({ type: GET_PROFILE_SUCCESSFULLY, userData: result });
     } catch (error) {
         yield put({ type: GET_PROFILE_FAILED, error });

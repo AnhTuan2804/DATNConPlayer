@@ -16,12 +16,13 @@ import {
 
 const { height, width } = Dimensions.get('window');
 const rateScreen = height / 680;
-class SubGridironComponent extends Component {
+class PriceGridironComponent extends Component {
     constructor(props) {
         super(props);
         this.props.dispatch(initialize(
-            'createSub', {
+            'createPrice', {
                 size_gridiron_id: this.props.listSize[0].id,
+                time_id: this.props.listTime[0].id,
             }
         ));
     }
@@ -49,16 +50,17 @@ class SubGridironComponent extends Component {
     _renderItem({ item, index }) {
         return (
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, padding: 10, alignItems: "center", }}>
-                <Text style={{ color: "black" }}>{index}.</Text>
+                <Text style={{ color: "black", paddingRight: 10 }}>{index}.</Text>
+                <Text style={{ color: "black", paddingRight: 10 }}>{`${item.time.time_start}h - ${item.time.time_end}h`}</Text>
+                <Text style={{ color: "black", }}>{item.size_gridiron.name}</Text>
                 <View style={{ flex: 1, paddingHorizontal: 10 }}>
-                    <Text style={{ color: "black" }}>{item.name}</Text>
+                    <Text style={{ color: "black" }}>{item.price}</Text>
                 </View>
-                <Text style={{ color: "black", paddingRight: 10 }}>{item.size_gridiron.name}</Text>
                 <TouchableOpacity
                     onPress={() => {
                         Alert.alert(
                             'Confirm delete member',
-                            `Are you sure delete  ${item.name} member?`,
+                            `Are you sure delete  ${item.size_gridiron.name} price?`,
                             [
                                 {
                                     text: 'Cancel',
@@ -71,7 +73,7 @@ class SubGridironComponent extends Component {
                                             id: item.id,
                                             gridiron_id: this.props.gridiron_id
                                         }
-                                        this.props.onDelSub(body)
+                                        this.props.onDelPriceOnTime(body)
                                     }
                                 },
                             ],
@@ -86,16 +88,11 @@ class SubGridironComponent extends Component {
 
     render() {
         submit = values => {
-            let body = []
-            values.listname.split(",").forEach(item => {
-                let tmp = {
-                    size_gridiron_id: values.size_gridiron_id,
-                    gridiron_id: this.props.gridiron_id
-                }
-                tmp["name"] = item;
-                body.push(tmp);
-            });
-            this.props.onCreateSub({ listSub: body });
+            let body = values;
+            body['gridiron_id'] = this.props.gridiron_id
+            console.log(body);
+
+            this.props.onCreatePriceOnTime(body);
         }
         const { handleSubmit } = this.props;
         return (
@@ -111,29 +108,31 @@ class SubGridironComponent extends Component {
                                     />
                                 </View>
                                 <View style={{ width: '50%', flexDirection: 'column', }}>
-                                    <Field name="numSub" keyboardType="numeric" textIP="3" label={'Number of gridiron'} component={renderField}
-                                        validate={[required, required_trim, have_point_end, number]}
+                                    <Field name="time_id" mode="dropdown" textIP="Select Time"
+                                        data={this.props.listTime} label={'Time'} component={renderSelect}
                                     />
                                 </View>
                             </View>
-                            <Field name="listname" keyboardType="default" textIP="Sub gridiron name" label={'Sub gridiron name'} component={renderField}
-                                validate={[required, required_trim, have_point_end, checklistName]}
+                            <Field name="price" keyboardType="numeric" textIP="300000" label={'Price'} component={renderField}
+                                validate={[required, required_trim, have_point_end, number]}
                             />
                         </View>
-                        <TouchableOpacity onPress={handleSubmit(submit)} style={{
+                        <TouchableOpacity onPress={handleSubmit(submit)} 
+                        style={{
                             backgroundColor: '#00a0e9',
                             borderRadius: 3, alignItems: 'center',
+                            marginTop: 10
                         }}>
                             <Text style={{
                                 color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
                                 textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
                             }}>Create</Text>
                         </TouchableOpacity>
-                        {this._renderHeader("List sub gridiron")}
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between',  marginBottom: 20 }}>
-                            {this.props.sub_gridirons.length != 0 ?
+                        {this._renderHeader("List price on time sub gridiron")}
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+                            {this.props.price_on_times.length != 0 ?
                                 <FlatList
-                                    data={this.props.sub_gridirons}
+                                    data={this.props.price_on_times}
                                     extraData={this.props}
                                     showsHorizontalScrollIndicator={false}
                                     keyExtractor={(item, index) => { return `${item.id}` }}
@@ -149,8 +148,8 @@ class SubGridironComponent extends Component {
     }
 };
 
-const CreateSubForm = reduxForm({
-    form: 'createSub',
-})(SubGridironComponent);
+const CreatePriceForm = reduxForm({
+    form: 'createPrice',
+})(PriceGridironComponent);
 
-export default CreateSubForm;
+export default CreatePriceForm;
