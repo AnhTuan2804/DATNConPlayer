@@ -2,144 +2,105 @@
   <div class="row content">
     <div class="col-sm-3 sidenav ">
       <div class="header-sidenav">
-        <h4><i class="fas fa-filter"></i>&nbsp; Filter data</h4>
+        <div class="row">
+          <div class="col-sm-7">
+              <h4><i class="fas fa-filter"></i>&nbsp; Filter data</h4>
+          </div>
+          <div class="col-sm-5">
+            <button class="btn btn-success" (click)="resetFilter()"><i class="fas fa-window-close"></i>&nbsp; Reset</button>
+          </div>
+        </div>
         <hr>
       </div>
 
       <div class="header-sidenav">
         <h4><i class="fas fa-map-marked"></i>&nbsp; Area</h4>
         <hr>
-        <!-- <form> -->
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Hai Chau</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Lien Chieu</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Cam Le</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Thanh Khe</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Ngu Hanh Son</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Thanh Khe</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Ngu Hanh Son</label>
-        </div>
-        <!-- </form> -->
+        <form role="form" [formGroup]="areaForm">
+          <div class="radio" *ngFor="let item of listArea">
+            <label><input type="radio" name="area" (change)="changeSelectRadio(item, 'area')"> {{item.itemName}}</label>
+          </div>
+        </form>
       </div>
-
 
       <div class="header-sidenav">
         <h4><i class="far fa-futbol"></i>&nbsp; Career</h4>
         <hr>
-        <!-- <form> -->
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Hai Chau</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Lien Chieu</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Cam Le</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Thanh Khe</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Ngu Hanh Son</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Thanh Khe</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio"> Ngu Hanh Son</label>
-        </div>
-        <!-- </form> -->
+        <form role="form" [formGroup]="careerForm">
+          <div class="radio" *ngFor="let item of listCareer">
+            <label><input type="radio" name="career" (change)="changeSelectRadio(item, 'career')">
+              {{item.itemName}}</label>
+          </div>
+        </form>
       </div>
+
+      <div class="header-sidenav">
+          <h4><i class="far fa-futbol"></i>&nbsp; Level</h4>
+          <hr>
+          <form role="form" [formGroup]="levelForm">
+            <div class="radio" *ngFor="let item of listLevel">
+              <label><input type="radio" name="level" (change)="changeSelectRadio(item, 'level')">
+                {{item.itemName}}</label>
+            </div>
+          </form>
+        </div>
     </div>
 
     <div class="col-sm-9">
       <div class="col-sm-12 main-content">
         <div class="header-sidenav">
           <div class="container">
-            <div class="row input-group">
-              <div class="col-sm-3">
-                <input type="date" class="form-control" min="">
+            <form role="form" [formGroup]="searchForm">
+              <div class="row input-group">
+                <div class="col-sm-3">
+                  <input type="date" class="form-control" formControlName="dateOfMatch" min="{{minDate}}">
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" formControlName="textSearch"
+                    placeholder="Search team, team leader, gridiron">
+                </div>
+                <div class="col-sm-2">
+                  <button style="width: 100%" (click)="search()" class="btn btn-success"><i
+                      class="fas fa-search"></i>&nbsp;
+                    Search..</button>
+                </div>
               </div>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" placeholder="Search team, team leader, gridiron">
+            </form>
+          </div>
+        </div>
+
+        <div class="content-match" *ngFor="let item of listMatchSearch">
+          <div class="row">
+            <div class="col-sm-4 text-center">
+              <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="80%" width="90%"
+                alt="Avatar">
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-8">
+                  <h4><i class="fas fa-users"></i>.&nbsp; {{item.team.name}}</h4>
+                  <p><i class="fas fa-clock"></i>.&nbsp; {{item.date_of_match}} - <span class="title">Status: </span> <span style="color: red">{{item.status}}</span></p>
+                  <p><i class="fas fa-user"></i>.&nbsp; <span class="title">Team leader:</span> {{item.user.fullname}}</p>
+                </div>
+                <div *ngIf="item.status == 'New'" class="col-sm-4">
+                  <button class="btn btn-success" (click)="pairMatch(item)"><i class="fas fa-hands-helping"></i> Pair</button>
+                </div>
               </div>
-              <div class="col-sm-2">
-                <button style="width: 100%" class="btn btn-success"><i class="fas fa-search"></i>&nbsp;
-                  Search..</button>
-              </div>
+              <hr>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title"> Gridiron:</span> {{item.gridiron.name }} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Address:</span> {{item.gridiron.address }} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Level Expected:</span> {{item.level.name }}</p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Area:</span> {{item.area.name }} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Career:</span> {{item.career.name }} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Introduce:</span> {{item.invitation }} </p>
+              <br>
             </div>
           </div>
+          <hr>
         </div>
-
-        <div class="row">
-          <div class="col-sm-4 text-center">
-            <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="70%" width="90%"
-              alt="Avatar">
-          </div>
-          <div class="col-sm-6">
-            <h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
-            <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <br>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4 text-center">
-            <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="70%" width="90%"
-              alt="Avatar">
-          </div>
-          <div class="col-sm-6">
-            <h4>John Row <small>Sep 25, 2015, 8:25 PM</small></h4>
-            <p>I am so happy for you man! Finally. I am looking forward to read about your trendy life. Lorem ipsum
-              dolor
-              sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua.
-            </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4 text-center">
-            <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="70%" width="90%"
-              alt="Avatar">
-          </div>
-          <div class="col-sm-6">
-            <h4>John Row <small>Sep 25, 2015, 8:25 PM</small></h4>
-            <p>I am so happy for you man! Finally. I am looking forward to read about your trendy life. Lorem ipsum
-              dolor
-              sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua.
-            </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4 text-center">
-            <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="70%" width="90%"
-              alt="Avatar">
-          </div>
-          <div class="col-sm-6">
-            <h4>John Row <small>Sep 25, 2015, 8:25 PM</small></h4>
-            <p>I am so happy for you man! Finally. I am looking forward to read about your trendy life. Lorem ipsum
-              dolor
-              sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua.
-            </p>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 </div>
+<app-alert-confirm [id]="'confirm'" [message]="messageConfirm" (saveConfirm)="saveConfirm()" (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
+<app-modal-pair-match [listTeam]="listTeam" [id]="'modalPairForm'" (outputE)="outputEmit($event)"></app-modal-pair-match>

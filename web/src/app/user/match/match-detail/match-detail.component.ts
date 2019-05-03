@@ -50,6 +50,7 @@ export class MatchDetailComponent implements OnInit {
   dataObjectDetail;
   status;
   id;
+  startDate;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
@@ -59,7 +60,8 @@ export class MatchDetailComponent implements OnInit {
     private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router, private route: ActivatedRoute) {
-    this.initForm()
+    this.startDate = this.timeService.getDateWithoutTime(new Date());
+    this.initForm();
     this.getListArea();
     this.getListCareer();
     this.getListLevel();
@@ -180,6 +182,16 @@ export class MatchDetailComponent implements OnInit {
     this.edit();
   }
 
+  confirm() {
+    this.status = Utils.STATUS_CLOSE;
+    this.edit();
+  }
+
+  reject() {
+    this.status = Utils.STATUS_NEW;
+    this.edit();
+  }
+
   edit() {
     const data = {
       id: this.id,
@@ -193,6 +205,15 @@ export class MatchDetailComponent implements OnInit {
     data['area'] = this.objectAreaEvent ? this.objectAreaEvent : undefined;
     data['gridiron'] = this.objectGridironEvent ? this.objectGridironEvent : undefined;
     data['career'] = this.objectCareerEvent ? this.objectCareerEvent : undefined;
+    if (this.status && this.status == Utils.STATUS_NEW) {
+      data['team_guest'] = '';
+      data['date_of_match'] = this.dataObjectDetail.date_of_match;
+      data['invitation'] = this.dataObjectDetail.invitation;
+    }
+    if (this.status && this.status == Utils.STATUS_CANCEL) {
+      data['date_of_match'] = this.dataObjectDetail.date_of_match;
+      data['invitation'] = this.dataObjectDetail.invitation;
+    }
 
     this.action.showLoading();
     this.matchService.updateMatch(data).subscribe((result) => {

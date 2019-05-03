@@ -261,6 +261,7 @@ export class GridironDetailComponent implements OnInit {
       // this.action.hideLoading();
       this.addPriceOnTimeFaild = false;
       this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3000 });
+      this.formPriceOnime.reset();
       this.getDetail(this.dataDetail.id)
     }, (err) => {
       this.action.hideLoading();

@@ -86,6 +86,7 @@ export class MatchComponent implements OnInit {
   getListHistory(email) {
     this.matchService.getAll().subscribe((result) => {
       result = _.reverse(result)
+      console.log(result);
       this.listMatch = this.match.setData(result, email);
       this.action.hideLoading();
     }, err => {

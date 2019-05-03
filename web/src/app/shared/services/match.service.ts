@@ -26,8 +26,15 @@ export class MatchService extends BaseService {
   }
 
   public getAll() {
-    // return this.db.list('/match', ref => ref.orderByChild('date_of_match')).valueChanges();
     return this.db.list('/match').snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => ({ id: a.key, ...a.payload.val() }))
+      )
+    )
+  }
+
+  public getListByStatusNew() {
+    return this.db.list('/match', ref => ref.orderByChild('status').equalTo('New') ).snapshotChanges().pipe(
       map(actions =>
         actions.map(a => ({ id: a.key, ...a.payload.val() }))
       )

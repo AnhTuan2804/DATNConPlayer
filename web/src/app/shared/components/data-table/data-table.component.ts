@@ -19,7 +19,7 @@ export class DataTableComponent implements OnInit {
   @Input() showBtn = true;
   @Input() checkSearchFilter = false;
   @Input() isCheckItemRadio = false;
-  @Input() pageSize = 5;
+  @Input() pageSize = 10;
   @Input() checkDefault = []
   @Output() outputAction = new EventEmitter();
   @Output() outputContentStatus = new EventEmitter();
@@ -54,44 +54,6 @@ export class DataTableComponent implements OnInit {
         active: false
       })
     })
-
-    // //Actions
-    // let currentPath = window.location.pathname;
-    // if (this.items && this.items[0] && this.items[0]["actions"] && this.user && this.user.permissionList && this.user.permissionList[currentPath]) {
-
-    //   let item = this.user.permissionList[currentPath].actions;
-    //   let action = {}
-
-    //   if (item.read) {
-    //     action['View'] = true;
-    //   }
-
-    //   if (item.update) {
-    //     action['Edit'] = true;
-    //     action['Change Pass'] = true;
-    //   }
-
-    //   if (item.create) {
-    //     action['Copy'] = true;
-    //   }
-    //   this.checkDelete = false;
-    //   if (item.delete) {
-    //     this.checkDelete = true;
-    //     action['Delete'] = true;
-    //   }
-
-    //   let validActions = _.intersection(_.keys(action), this.items[0]["actions"]);
-    //   _.map(this.items, (value, key) => {
-    //     let validActions = _.intersection(_.keys(action), value["actions"]);
-    //     value['actions'] = validActions;
-    //   })
-
-    //   if (validActions.lenght == 0) {
-    //     if (this.headers[this.headers.length - 1] == 'Action') {
-    //       this.headers = this.headers.slice(0, this.headers.length - 1);
-    //     }
-    //   }
-
 
     //PAGING
     this.allItems = this.items;

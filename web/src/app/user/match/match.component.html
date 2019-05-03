@@ -11,7 +11,7 @@
               <label class="control-label">Date</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <input type="date" min="2019-05-01" class="form-control input-lg" name="" formControlName="date_of_match">
+                <input type="date" min="{{startDate}}" class="form-control input-lg" name="" formControlName="date_of_match">
                 <span
                   *ngIf="formAdd.controls.date_of_match.hasError('required')&&(formAdd.controls['date_of_match'].touched || errorForm)">Field
                   required</span>

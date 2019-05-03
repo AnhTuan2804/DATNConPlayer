@@ -14,6 +14,7 @@ import { GridironDetailComponent } from './gridiron/gridiron-detail/gridiron-det
 import { CareerComponent } from './career/career.component';
 import { MatchComponent } from './match/match.component';
 import { MatchDetailComponent } from './match/match-detail/match-detail.component';
+import { ModalPairMatchComponent } from './home/modal-pair-match/modal-pair-match.component';
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import { MatchDetailComponent } from './match/match-detail/match-detail.componen
         GridironDetailComponent,
         CareerComponent,
         MatchComponent,
-        MatchDetailComponent
+        MatchDetailComponent,
+        ModalPairMatchComponent
     ]
 })
 export class UserModule { }

@@ -1,0 +1,29 @@
+<div class="modal fade" id="modalPairForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <!-- Modal HTML Markup -->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Form pair match</h1>
+      </div>
+      <div class="modal-body">
+        <form role="form" [formGroup]="modalPairForm" (ngSubmit)="pair()">
+          <div class="form-group">
+            <label class="control-label">Select Team to pair match</label>
+            <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="modalPairForm.controls['team'].value" [title]="'Select team'"
+                [selectedIndex]="selectedIndex" [options]="listTeam"
+                (selectedOption)="handleDownSelect($event)"></app-select-dropdown>
+            </div>
+          </div>
+          <div class="form-group">
+            <div>
+              <button type="submit" class="btn btn-success" [disabled]="!modalPairForm.valid">Pair Match</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<app-loading></app-loading>
