@@ -87,7 +87,7 @@ export class CareerComponent implements OnInit {
 
   edit() {
     const data = {
-      career: this.getValueFormEdit('career'),
+      name: this.getValueFormEdit('career'),
       id: this.objectLevelEvent.career.id
     }
     this.action.showLoading();

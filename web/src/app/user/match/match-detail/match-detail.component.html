@@ -11,7 +11,8 @@
               <label class="control-label">Date</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <input type="date" class="form-control input-lg" name="" formControlName="date_of_match">
+                <input type="date" min="{{startDate}}" class="form-control input-lg" name=""
+                  formControlName="date_of_match">
                 <span
                   *ngIf="formEdit.controls.date_of_match.hasError('required')&&(formEdit.controls['date_of_match'].touched || errorForm)">Field
                   required</span>
@@ -54,7 +55,7 @@
               <label class="control-label">Level Expected</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <app-select-dropdown  [nameSelect]="formEdit.controls['level'].value" [title]="'Level'"
+                <app-select-dropdown [nameSelect]="formEdit.controls['level'].value" [title]="'Level'"
                   [selectedIndex]="selectedIndex" [options]="listLevel"
                   (selectedOption)="handleDownSelect($event, 'level')"></app-select-dropdown>
                 <span
@@ -124,17 +125,31 @@
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div *ngIf="formEdit.controls['status'].value == 'New'" class="col-md-3">
             <div class="form-group">
               <button type="submit" (click)=edit() class="btn btn-success" [disabled]="!formEdit.valid">
                 <i class="fas fa-plus-circle"></i> &nbsp;Update
               </button>
             </div>
           </div>
-          <div class="col-md-3">
+          <div *ngIf="formEdit.controls['status'].value == 'New'" class="col-md-3">
             <div class="form-group">
               <button type="submit" (click)=cancel() class="btn btn-success">
                 <i class="far fa-times-circle"></i> &nbsp;Cancel
+              </button>
+            </div>
+          </div>
+          <div *ngIf="formEdit.controls['status'].value == 'Waitting'" class="col-md-3">
+            <div class="form-group">
+              <button type="submit" (click)=confirm() class="btn btn-success">
+                <i class="far fa-times-circle"></i> &nbsp;Confirm
+              </button>
+            </div>
+          </div>
+          <div *ngIf="formEdit.controls['status'].value == 'Waitting'" class="col-md-3">
+            <div class="form-group">
+              <button type="submit" (click)=reject() class="btn btn-success">
+                <i class="far fa-times-circle"></i> &nbsp;Reject
               </button>
             </div>
           </div>

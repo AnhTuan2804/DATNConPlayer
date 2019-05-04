@@ -69,7 +69,7 @@ export class LevelComponent implements OnInit {
 
   add() {
     const data = {
-      level: this.getValueFormAdd('level')
+      name: this.getValueFormAdd('level')
     }
     this.action.showLoading();
     this.levelService.createLevel({ level: data }).subscribe((result) => {
@@ -87,7 +87,7 @@ export class LevelComponent implements OnInit {
 
   edit() {
     const data = {
-      level: this.getValueFormEdit('level'),
+      name: this.getValueFormEdit('level'),
       id: this.objectLevelEvent.level.id
     }
     this.action.showLoading();

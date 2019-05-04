@@ -19,10 +19,10 @@ export class Match {
                 { title: this.timeService.formatDateFromTimeUnix(item.date_of_match, 'DD/MM/YYYY') },
                 { title: item.time.time_start + ' : ' + item.time.time_end },
                 { title: item.status },
-                { title: item.guest_team ? item.guest_team : '' },
+                { title: item.team_guest ? item.team_guest.name : '' },
             ];
             stt++;
-            data['actions'] = item.status == Utils.STATUS_NEW ? ['Edit'] : [''];
+            data['actions'] = item.status == Utils.STATUS_NEW || item.status == Utils.STATUS_WAITTING ? ['Edit'] : [''];
             this.allMatch.push(data);
         }))
         return this.allMatch;

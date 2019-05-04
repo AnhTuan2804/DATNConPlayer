@@ -70,7 +70,7 @@ export class AreaComponent implements OnInit {
 
   addArea() {
     const data = {
-      area: this.getValueFormAdd('area')
+      name: this.getValueFormAdd('area')
     }
     this.action.showLoading();
     this.areaService.createArea({ area: data }).subscribe((result) => {
@@ -87,7 +87,7 @@ export class AreaComponent implements OnInit {
 
   editArea() {
     const data = {
-      area: this.getValueFormEdit('area'),
+      name: this.getValueFormEdit('area'),
       id: this.objectAreaEvent.area.id
     }
     this.action.showLoading();

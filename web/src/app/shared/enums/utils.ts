@@ -21,5 +21,6 @@ export enum Utils {
     STATUS_NEW = "New",
     STATUS_CLOSE = "Close",
     STATUS_CANCEL = "Cancel",
-    STATUS_EXPIRED = "Expiried"
+    STATUS_EXPIRED = "Expiried",
+    STATUS_WAITTING = "Waitting"
 }
