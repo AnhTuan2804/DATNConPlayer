@@ -239,6 +239,22 @@ function* createTeamAPI(bodyInfo) {
     return response;
 }
 
+function* createMatchAPI(bodyInfo) {
+    const router = 'match/create';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
 function* updateTeamAPI(bodyInfo) {
     const router = 'team/update';
     const headersPairs = null;
@@ -578,5 +594,6 @@ export const Api = {
     delSubGridironAPI,
     addPriceOnTimeAPI,
     delPriceOnTimeAPI,
-    getGridironDetailAPI
+    getGridironDetailAPI,
+    createMatchAPI
 };

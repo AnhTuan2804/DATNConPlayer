@@ -22,6 +22,10 @@ function* getProfileSaga(action) {
     try {
         yield LoginService.getToken();
         const result = yield Api.getProfileAPI();
+        Constants.EMAIL_ADDRESS = result.email
+        Constants.TOKEN = result.token
+        Constants.USER_ID = result.id
+        Constants.PHONE = result.phone
         yield put({ type: GET_PROFILE_SUCCESSFULLY, userData: result });
     } catch (error) {
         yield put({ type: GET_PROFILE_FAILED, error });

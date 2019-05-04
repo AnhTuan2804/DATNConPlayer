@@ -1,7 +1,7 @@
 export default class Constants {
     // static token, locale, currency
     // static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server Test
-    static HOST = 'http://192.168.1.40:8088/api'; // Server deployed
+    static HOST = 'http://192.168.43.198:8088/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
@@ -15,13 +15,13 @@ export default class Constants {
 
     // VALIDATE
     static REQUIRE = 'Required';
-     static DONT_SPACE = 'Don\'t leave spaces at the beginning or end of the string';
-     static DONT_DOT = 'No point at the end of the sentence';
-     static PASS_MAXLENGTH = 'Password length can not exceed 40 characters. ';
-     static PASS_MINLENGTH = 'Password must be at least 6 characters. ';
-     static PASS_CONF_NOTMATCH = 'Password does not match. ';
-     static EMAIL_VALID = 'Email must be valid email';
-     static EMAIL_NUMBER_VALID = 'Your email address or user ID is invalid. ';
+    static DONT_SPACE = 'Don\'t leave spaces at the beginning or end of the string';
+    static DONT_DOT = 'No point at the end of the sentence';
+    static PASS_MAXLENGTH = 'Password length can not exceed 40 characters. ';
+    static PASS_MINLENGTH = 'Password must be at least 6 characters. ';
+    static PASS_CONF_NOTMATCH = 'Password does not match. ';
+    static EMAIL_VALID = 'Email must be valid email';
+    static EMAIL_NUMBER_VALID = 'Your email address or user ID is invalid. ';
 
     // EXIT_APP
     static TITLE_EXIT_APP = '終了アプリ';

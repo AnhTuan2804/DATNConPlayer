@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, Picker } from 'react-native';
-import { Input, Textarea } from 'native-base';
+import { Input, Textarea, DatePicker } from 'native-base';
 import Constants from './Constants';
 import _ from 'lodash';
+
 
 //Validation
 export const required = value => value ? undefined : 'Require';
@@ -20,6 +21,43 @@ export const isValidEmailOrNumber = value => value && !/^((?!.*?\.\.)\w[a-zA-Z0-
 
 
 //Field for Redux-form 
+export const renderDatePicker = ({ label, textIP, meta: { touched, error, warning }, input: { onChange, ...restInput } }) => (
+    <View style={{ flexDirection: 'column', height: 80 }}>
+        <View style={{ flexDirection: 'column', height: 60 }}>
+            <Text style={{ fontSize: 35 / Constants.RATE_SIZE, color: '#288e86', marginLeft: 25, }}>{label}</Text>
+            <View style={{
+                fontSize: 26.04 / Constants.RATE_SIZE,
+                borderWidth: 0.6,
+                backgroundColor: '#a4e5ff',
+                marginLeft: 25,
+                marginRight: 25,
+                borderRadius: 6,
+                borderColor: '#a4e5ff'
+            }}>
+                <DatePicker
+                    defaultDate={new Date(2019, 4, 3)}
+                    minimumDate={new Date(2019, 4, 3)}
+                    maximumDate={new Date(2019, 4, 30)}
+                    locale={"en"}
+                    timeZoneOffsetInMinutes={undefined}
+                    modalTransparent={false}
+                    animationType={"fade"}
+                    androidMode={"default"}
+                    placeHolderText={textIP}
+                    textStyle={{ color: "green" }}
+                    placeHolderTextStyle={{ color: "#d3d3d3" }}
+                    onDateChange={onChange}
+                    disabled={false}
+                    {...restInput}
+                />
+            </View>
+            {touched && ((error && <Text style={{ color: 'red', marginLeft: 25, marginTop: 2, fontSize: 21.58 / Constants.RATE_SIZE }}>{error}</Text>) ||
+                (warning && <Text style={{ color: 'orange', marginLeft: 25 }}>{warning}</Text>))}
+
+        </View>
+    </View>
+);
+
 
 export const renderSelect = ({ input, label, data, children, textIP, ...custom }) => (
     <View style={{ flexDirection: 'column', height: 80 }}>

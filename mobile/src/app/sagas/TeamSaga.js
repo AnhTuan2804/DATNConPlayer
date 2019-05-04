@@ -35,6 +35,7 @@ import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
 import { getlistTeam, getdetail } from '../actions/TeamActions';
+import { Actions } from 'react-native-router-flux';
 
 // create team
 function* createTeamSaga(action) {
@@ -52,11 +53,11 @@ function* createTeamSaga(action) {
         });
         const result = yield Api.createTeamAPI(body);
         yield put({ type: CREATE_TEAM_SUCCESSFULLY });
-        if (result) {
-            ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
-            Actions.Manage()
-            yield put(getlistTeam())
-        }
+        console.log("ssssssssssssss");
+        
+        ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
+        yield put(getlistTeam())
+        Actions.Manage()
     } catch (error) {
         yield put({ type: CREATE_TEAM_FAILED, error });
     }
