@@ -107,6 +107,23 @@ export class HomeComponent implements OnInit {
         tmp.push(item)
       }
     })
+
+    const checkNewItem = _.findIndex(matchs, (o) => { return o.status == Utils.STATUS_NEW || o.status == Utils.STATUS_WAITTING })
+    if (checkNewItem < 0) {
+      _.forEach(matchs, (item, key) => {
+        if (tmp.length > 2) { return; }
+        if (item.status == Utils.STATUS_EXPIRED) {
+          if (!item.gridiron) {
+            item['gridiron'] = {};
+            item.gridiron['name'] = '';
+            item.gridiron['address'] = '';
+
+          }
+          item.date_of_match = this.timeService.formatDateFromTimeUnix(item.date_of_match, 'YYYY-MM-DD');
+          tmp.push(item)
+        }
+      })
+    }
     return tmp;
   }
 
