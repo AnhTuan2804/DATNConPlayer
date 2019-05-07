@@ -17,9 +17,9 @@ class CreateTeamComponent extends Component {
         this.props.dispatch(initialize(
             'createTeam',
             {
-                area_id: this.props.listArea.length != 0 ? this.props.listArea[0].id : '',
-                level_id: this.props.listLevel.length != 0 ? this.props.listLevel[0].id : '',
-                career_id: this.props.listLevel.length != 0 ? this.props.listCareer[0].id : '',
+                area_id: this.props.listArea[0].id,
+                level_id: this.props.listLevel[0].id,
+                career_id: this.props.listCareer[0].id,
             }
         ));
     }
@@ -46,10 +46,12 @@ class CreateTeamComponent extends Component {
 
     render() {
         submit = values => {
+            console.log(values);
+
             this.props.onCreateTeam(values);
         }
         const { handleSubmit } = this.props;
-        
+
         return (
             <Container style={{ backgroundColor: 'white' }}>
                 {Loading(this.props.isLoading)}

@@ -22,11 +22,15 @@ import LoginService from '../../theme/shared/utils/LoginService';
 import CreateGridironContainer from '../ui/manage/gridiron/CreateGridironContainer';
 import DetailTeamContainer from '../ui/manage/team/DetailTeamContainer';
 import DetailGridironComponent from '../ui/manage/gridiron/detailGridiron/DetailGridironComponent';
+import { firebaseApp } from '../firebaseApi/config';
+import CreateMatchContainer from '../ui/manage/match/CreateMatchContainer';
+import UpdateMatchContainer from '../ui/manage/match/UpdateMatchContainer';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    Constants.TOKEN = LoginService.getToken()
+    firebaseApp
+   
   }
 
   render() {
@@ -141,6 +145,24 @@ export default class App extends Component {
                       component={DetailGridironComponent}
                       hideNavBar={true}
                     />
+                    <Scene
+                      key='createMatch'
+                      tabBarLabel={`createMatch`}
+                      icon={TabIcon}
+                      title={'createMatch'}
+                      swipeEnabled={false}
+                      component={CreateMatchContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='updateMatch'
+                      tabBarLabel={`updateMatch`}
+                      icon={TabIcon}
+                      title={'updateMatch'}
+                      swipeEnabled={false}
+                      component={UpdateMatchContainer}
+                      hideNavBar={true}
+                    />
                   </Stack>
                   {/* Manage Page -- team, gridiron */}
                   {/* league: create, update info */}
@@ -169,7 +191,7 @@ export default class App extends Component {
                 <Scene key='loginScreen'
                   hideNavBar={true}
                   component={LoginContainer}
-                  // initial
+                // initial
                 />
                 <Scene key='registerScreen'
                   hideNavBar={true}

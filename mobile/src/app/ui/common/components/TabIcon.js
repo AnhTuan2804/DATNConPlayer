@@ -45,6 +45,18 @@ export const TabIcon = ({ title, focused }) => {
             labelColor = focused ? `#4aa047` : `#000000`;
             imageColor = focused ? `#4aa047` : `#000000`;
             break;
+        case 'createMatch':
+            image = require('../../../../assets/images/manage.png');
+            label = 'Manage';
+            labelColor = focused ? `#4aa047` : `#000000`;
+            imageColor = focused ? `#4aa047` : `#000000`;
+            break;
+        case 'updateMatch':
+            image = require('../../../../assets/images/manage.png');
+            label = 'Manage';
+            labelColor = focused ? `#4aa047` : `#000000`;
+            imageColor = focused ? `#4aa047` : `#000000`;
+            break;
         case 'updateTeam':
             image = require('../../../../assets/images/manage.png');
             label = 'Manage';

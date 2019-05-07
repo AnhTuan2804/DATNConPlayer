@@ -7,6 +7,7 @@ import settingReducers from './SettingReducer';
 import homeReducers from './HomeReducer';
 import gridironReducers from './GridironReducer';
 import teamReducers from './TeamReducer';
+import matchReducers from './MatchReducer';
 
 const combineReducer = combineReducers({
     form: formReducer,
@@ -16,7 +17,8 @@ const combineReducer = combineReducers({
     settingReducers: settingReducers,
     homeReducers: homeReducers,
     gridironReducers: gridironReducers,
-    teamReducers: teamReducers
+    teamReducers: teamReducers,
+    matchReducers: matchReducers,
 });
 
 export default combineReducer;
