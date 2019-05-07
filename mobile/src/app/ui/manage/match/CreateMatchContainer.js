@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import CreateMatchForm from './CreateMatchComponent';
+import _ from 'lodash';
 import { createMatch } from '../../../actions/MatchActions';
 
 export default connect(
@@ -17,13 +18,14 @@ export default connect(
     } else {
       isLoading = false
     }
+    let listTeam =  _.filter(team.listTeam, function(o) { return o.team_users[0].is_captain; });
     return {
       isLoading: isLoading,
       listLevel: homeReducers.listLevel || [],
       listArea: homeReducers.listArea || [],
       listCareer: homeReducers.listCareer || [],
       listTime: listTime || [],
-      listTeam: team.listTeam || [],
+      listTeam: listTeam || [],
       listGridiron: gridiron.listGridiron || []
     }
   },

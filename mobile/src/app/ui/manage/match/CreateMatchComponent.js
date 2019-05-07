@@ -15,26 +15,33 @@ const rateScreen = height / 680;
 class CreateMatchComponent extends Component {
     constructor(props) {
         super(props);
-        console.log({
-            time_id: this.props.listTime[0].id,
-            team: this.props.listTeam[0].id,
-            gridiron: this.props.listGridiron[0].id,
-            area_id: this.props.listArea[0].id,
-            level_id: this.props.listLevel[0].id,
-            career_id: this.props.listCareer[0].id,
-        });
+
+        this.state = {
+            isSelectGridiron: false
+        }
 
         this.props.dispatch(initialize(
             'createMatch',
             {
+                date_of_match: new Date(),
                 time_id: this.props.listTime[0].id,
                 team: this.props.listTeam[0].id,
-                gridiron: this.props.listGridiron[0].id,
+                gridiron: undefined,
                 area_id: this.props.listArea[0].id,
                 level_id: this.props.listLevel[0].id,
                 career_id: this.props.listCareer[0].id,
             }
         ));
+    }
+
+    checkArea(value) {
+        console.log(value);
+        if (value != undefined) {
+            let gridiron = _.find(this.props.listGridiron, function (o) { return o.id == value })
+            console.log(gridiron.area_id);
+            this.props.change("area_id", gridiron.area_id),
+                this.setState({ isSelectGridirons: true })
+        }
     }
 
     _renderHeader = (title) => {
@@ -82,7 +89,7 @@ class CreateMatchComponent extends Component {
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>
                             <Field name="date_of_match" textIP="Select date" label={'Date'} component={renderDatePicker}
-                            // validate={[required, required_trim, have_point_end]}
+                                validate={[required]}
                             />
                             <Field name="team" mode="dropdown" textIP="Select Team"
                                 data={this.props.listTeam} label={'Team'} component={renderSelect}
@@ -91,15 +98,19 @@ class CreateMatchComponent extends Component {
                                 data={this.props.listTime} label={'Time'} component={renderSelect}
                             />
                             <Field name="area_id" mode="dropdown" textIP="Select Area"
-                                data={this.props.listArea} label={'Area'} component={renderSelect} />
+                                data={this.props.listArea} label={'Area'} component={renderSelect}
+                                enabled={!this.state.isSelectGridirons}
+                            />
                             <Field name="level_id" mode="dropdown" textIP="Select Level"
                                 data={this.props.listLevel} label={'Level'} component={renderSelect} />
                             <Field name="career_id" mode="dropdown" textIP="Select Career"
                                 data={this.props.listCareer} label={'Career'} component={renderSelect} />
                             <Field name="gridiron" mode="dropdown" textIP="Select gridiron"
-                                data={this.props.listGridiron} label={'Gridiron'} component={renderSelect} />
+                                data={this.props.listGridiron} label={'Gridiron'} component={renderSelect}
+                                onChange={(value) => this.checkArea(value)}
+                            />
                             <Field name="invitation" keyboardType="default" textIP="Invitation Summary" label={'Invitation Summary'} component={renderFieldTextarea}
-                                validate={[required, required_trim, have_point_end]}
+                                validate={[required_trim, have_point_end]}
                             />
                         </View>
                         <TouchableOpacity onPress={handleSubmit(submit)} style={{
@@ -109,7 +120,7 @@ class CreateMatchComponent extends Component {
                             <Text style={{
                                 color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
                                 textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                            }}>Cập nhật</Text>
+                            }}>Create</Text>
                         </TouchableOpacity>
                     </View>
                 </Content >

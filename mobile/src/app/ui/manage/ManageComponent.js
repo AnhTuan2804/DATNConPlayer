@@ -204,21 +204,31 @@ class ManageComponent extends Component {
 
     _renderItemMatch = ({ item, index }) => {
         let bgColor = ""
+        let isdisabled;
         switch (item.status) {
             case "New":
-                bgColor = 'green'
+                bgColor = 'green';
+                isdisabled = false;
                 break;
             case "Waitting":
                 bgColor = '#fdb833'
+                isdisabled = false;
+                break;
+            case "Pair success":
+                bgColor = 'blue'
+                isdisabled = false;
                 break;
             default:
                 bgColor = 'red'
+                isdisabled = true;
                 break;
         }
+
         return (
             <TouchableOpacity
+                disabled={isdisabled}
                 style={{ flex: 1, width: width * 7 / 10, margin: 10, borderRadius: 5, borderWidth: 1 }}
-                onPress={() => Actions.updateGridiron({ infoMatch: item })}
+                onPress={() => Actions.updateMatch({ infoMatch: item })}
             >
                 <View style={{
                     margin: 10,
@@ -269,21 +279,24 @@ class ManageComponent extends Component {
                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Career: </Text>
                         <Text style={{ color: 'black' }}> {item.career.name}</Text>
                     </View>
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: "center"
-                    }}>
-                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Gridiron: </Text>
-                        <Text style={{ color: 'black', flex: 1 }}> {item.gridiron.name}</Text>
-                    </View>
+                    {item.gridiron ?
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: "center"
+                        }}>
+                            <Text style={{ fontWeight: 'bold', color: 'black' }}>Gridiron: </Text>
+                            <Text style={{ color: 'black', flex: 1 }}> {item.gridiron.name}</Text>
+                        </View>
+                        : null
+                    }
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'flex-start',
                         alignItems: "flex-start"
                     }}>
                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Address: </Text>
-                        <Text style={{ color: 'black', flex: 1 }}> {item.gridiron.address}</Text>
+                        <Text style={{ color: 'black', flex: 1 }}> {item.gridiron ? item.gridiron.address : item.area.name}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

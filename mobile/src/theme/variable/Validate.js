@@ -3,6 +3,7 @@ import { View, Text, Picker } from 'react-native';
 import { Input, Textarea, DatePicker } from 'native-base';
 import Constants from './Constants';
 import _ from 'lodash';
+import TimeService from '../shared/utils/TimeService';
 
 
 //Validation
@@ -18,7 +19,7 @@ export const confirm_min_age = (value, values) => (value, values) && value <= va
 export const confirmPassword = (value, values) => (value, values) && value === values.password ? undefined : Constants.PASS_CONF_NOTMATCH;
 export const isValidEmail = value => value && !/^(?!.*?\.\.)\w[a-zA-Z0-9+\.]+@[a-zA-Z0-9]{2,15}\.?[a-zA-Z]{2,10}\.{0,1}[a-zA-Z]{2,3}$/i.test(value) ? Constants.EMAIL_VALID : undefined;
 export const isValidEmailOrNumber = value => value && !/^((?!.*?\.\.)\w[a-zA-Z0-9+\.]+@[a-zA-Z0-9]{2,15}\.?[a-zA-Z]{2,10}\.{0,1}[a-zA-Z]{2,3}|[0-9]{1,12})$/i.test(value) ? Constants.EMAIL_NUMBER_VALID : undefined;
-
+const CurentDate = new Date()
 
 //Field for Redux-form 
 export const renderDatePicker = ({ label, textIP, meta: { touched, error, warning }, input: { onChange, ...restInput } }) => (
@@ -35,9 +36,9 @@ export const renderDatePicker = ({ label, textIP, meta: { touched, error, warnin
                 borderColor: '#a4e5ff'
             }}>
                 <DatePicker
-                    defaultDate={new Date(2019, 4, 3)}
-                    minimumDate={new Date(2019, 4, 3)}
-                    maximumDate={new Date(2019, 4, 30)}
+                    defaultDate={CurentDate}
+                    minimumDate={CurentDate}
+                    maximumDate={new Date(CurentDate.getFullYear(), CurentDate.getMonth() + 1, CurentDate.getDate())}
                     locale={"en"}
                     timeZoneOffsetInMinutes={undefined}
                     modalTransparent={false}
@@ -79,6 +80,7 @@ export const renderSelect = ({ input, label, data, children, textIP, ...custom }
                     onValueChange={(value, index) => input.onChange(value)} children={children}
                     {...custom}
                 >
+                    {data.length != 0 ? <Picker.Item value={undefined} label={textIP} key={'00000'}  enabled={false}  /> : null}
                     {data.length != 0 ?
                         data.map((item, index) => { return <Picker.Item value={item.id} label={item.name} key={index} /> })
                         : <Picker.Item value={'0'} label={textIP} key={'00000'} />

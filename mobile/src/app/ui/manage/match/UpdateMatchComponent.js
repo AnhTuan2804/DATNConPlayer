@@ -15,15 +15,17 @@ const rateScreen = height / 680;
 class UpdateMatchComponent extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props.infoMatch);
+
         this.props.dispatch(initialize(
             'updateMatch',
             {
-                // time_id: this.props.infoMatch.time.id,
-                // team: this.props.listTeam[0].id,
-                // gridiron: this.props.listGridiron[0].id,
-                // area_id: this.props.listArea[0].id,
-                // level_id: this.props.listLevel[0].id,
-                // career_id: this.props.listCareer[0].id,
+                time_id: this.props.infoMatch.time.id,
+                team: this.props.infoMatch.team.id,
+                gridiron: this.props.infoMatch.gridiron != undefined ? this.props.infoMatch.gridiron.id : undefined,
+                area_id: this.props.infoMatch.area.id,
+                level_id: this.props.infoMatch.level.id,
+                career_id: this.props.infoMatch.career.id,
             }
         ));
     }
@@ -61,7 +63,7 @@ class UpdateMatchComponent extends Component {
                 invitation: values.invitation,
                 status: "New"
             }
-            this.props.onUpdateMatch(body)
+            // this.props.onUpdateMatch(body)
         }
         const { handleSubmit } = this.props;
 
