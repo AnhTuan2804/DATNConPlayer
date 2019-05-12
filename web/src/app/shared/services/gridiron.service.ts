@@ -65,6 +65,14 @@ export class GridironService extends BaseService {
       })
   }
 
+  public getListPublic(): Observable<any> {
+    return this
+      .getData(`public/get-list-gridiron`)
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
   public updateGridiron(data: Object): Observable<any> {
     return this
       .postData(`gridiron/update`, data).map(res => {

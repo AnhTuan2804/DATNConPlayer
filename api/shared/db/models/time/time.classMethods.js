@@ -25,7 +25,9 @@ class ClassMethods {
     }
 
     getListTime() {
-        return db.time.findAll();
+        return db.time.findAll({
+            attributes: ['id', 'time_end', 'time_start']
+        });
     }
 
     updateTime(body) {

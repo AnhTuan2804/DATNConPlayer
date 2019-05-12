@@ -9,23 +9,22 @@ async function trackingTimeExpiry() {
         const listMatch = await matchHandle.getList();
         _.forEach(listMatch, (value, key) => {
             const toDay = timeUtil.getDateWithoutTime();
-            if (value.status != appConstant.STATUS_NEW || value.date_of_match > timeUtil.getTimesUnixFromTimeFormat(toDay)) {
-                return;
-            }
-            let expiryDate = false;
-            if (value.date_of_match < timeUtil.getTimesUnixFromTimeFormat(toDay)) {
-                //match expiried
-                expiryDate = true;
-            } else {
-                if (Number(value.time.time_end) <= (new Date()).getHours())
+            if ((value.status == appConstant.STATUS_NEW || value.status == appConstant.STATUS_WAITTING) && value.date_of_match <= timeUtil.getTimesUnixFromTimeFormat(toDay)) {
+                let expiryDate = false;
+                if (value.date_of_match < timeUtil.getTimesUnixFromTimeFormat(toDay)) {
+                    //match expiried
                     expiryDate = true;
-            }
-            if (expiryDate) {
-                const dataUpdate = {
-                    id: key,
-                    status: appConstant.STATUS_EXPIRIED
+                } else {
+                    if (Number(value.time.time_end) <= (new Date()).getHours())
+                        expiryDate = true;
                 }
-                matchHandle.update(dataUpdate, value.date_of_match);
+                if (expiryDate) {
+                    const dataUpdate = {
+                        id: key,
+                        status: appConstant.STATUS_EXPIRIED
+                    }
+                    matchHandle.update(dataUpdate, value.date_of_match);
+                }
             }
         })
     }, 30000)

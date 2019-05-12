@@ -1,7 +1,7 @@
 <div class="container">
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">General information</h1>
+      <h1 class="modal-title">Match Information</h1>
     </div>
     <div class="modal-body">
       <form role="form" [formGroup]="formEdit">
@@ -125,31 +125,45 @@
             </div>
           </div>
 
-          <div *ngIf="formEdit.controls['status'].value == 'New'" class="col-md-3">
+          <div *ngIf="status == 'Waitting'" class="col-md-12">
+            <div class="form-group"> 
+              <label class="control-label">Guest Team Info &nbsp;</label> <b><a href="team/view/{{dataObjectDetail && dataObjectDetail.team ? dataObjectDetail.team.id : ''}}">Link
+                Guest Team Info</a></b>
+            </div>
+          </div>
+
+          <div *ngIf="formEdit.controls['status'].value == 'New'" class="col-md-2">
             <div class="form-group">
               <button type="submit" (click)=edit() class="btn btn-success" [disabled]="!formEdit.valid">
                 <i class="fas fa-plus-circle"></i> &nbsp;Update
               </button>
             </div>
           </div>
-          <div *ngIf="formEdit.controls['status'].value == 'New'" class="col-md-3">
+          <div *ngIf="formEdit.controls['status'].value == 'New'" class="col-md-2">
             <div class="form-group">
               <button type="submit" (click)=cancel() class="btn btn-success">
                 <i class="far fa-times-circle"></i> &nbsp;Cancel
               </button>
             </div>
           </div>
-          <div *ngIf="formEdit.controls['status'].value == 'Waitting'" class="col-md-3">
+          <div *ngIf="formEdit.controls['status'].value == 'Waitting'" class="col-md-2">
             <div class="form-group">
               <button type="submit" (click)=confirm() class="btn btn-success">
                 <i class="far fa-times-circle"></i> &nbsp;Confirm
               </button>
             </div>
           </div>
-          <div *ngIf="formEdit.controls['status'].value == 'Waitting'" class="col-md-3">
+          <div *ngIf="formEdit.controls['status'].value == 'Waitting'" class="col-md-2">
             <div class="form-group">
               <button type="submit" (click)=reject() class="btn btn-success">
                 <i class="far fa-times-circle"></i> &nbsp;Reject
+              </button>
+            </div>
+          </div>
+          <div lass="col-md-2">
+            <div class="form-group">
+              <button type="submit" (click)=back() class="btn btn-success">
+                <i class="fas fa-undo-alt"></i> &nbsp;Back
               </button>
             </div>
           </div>

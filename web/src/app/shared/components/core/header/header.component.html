@@ -15,14 +15,10 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="home"><i class="fas fa-futbol"></i> &nbsp;SEARCH MATCH..</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;SEARCH GRIDIRON..</a>
+          <a class="dropdown-item" href="home-gridiron"><i class="fas fa-futbol"></i> &nbsp;SEARCH GRIDIRON..</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="fas fa-futbol"></i> &nbsp;SEARCH LEAGUES..</a>
+          <a class="dropdown-item" href="home-league"><i class="fas fa-futbol"></i> &nbsp;SEARCH LEAGUES..</a>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-futbol"></i>&nbsp;MY LEAGUES<span
-            class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown" *ngIf="isShow">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -35,6 +31,8 @@
           <a class="dropdown-item" href="gridiron"><i class="fas fa-futbol"></i> &nbsp;MANAGE GRIDIRONS</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="match"><i class="fas fa-futbol"></i> &nbsp;MANAGE MATCHES</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="manage-league"><i class="fas fa-futbol"></i> &nbsp;MANAGE LEAGUE</a>
         </div>
       </li>
       <li class="nav-item dropdown" *ngIf="isAdmin">
