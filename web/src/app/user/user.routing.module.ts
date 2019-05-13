@@ -14,6 +14,10 @@ import { GridironDetailComponent } from './gridiron/gridiron-detail/gridiron-det
 import { CareerComponent } from './career/career.component';
 import { MatchComponent } from './match/match.component';
 import { MatchDetailComponent } from './match/match-detail/match-detail.component';
+import { LeagueComponent } from './league/league.component';
+import { ManageLeagueComponent } from './league/manage-league/manage-league.component';
+import { LeagueDetailComponent } from './league/manage-league/league-detail/league-detail.component';
+import { HomeGridironComponent } from './home/home-gridiron/home-gridiron.component';
 
 export const routes: Routes = [
     {
@@ -32,6 +36,10 @@ export const routes: Routes = [
             { path: 'level', component: LevelComponent, canActivate: [AuthGuardAdmin] },
             { path: 'gridiron', component: GridironComponent, canActivate: [AuthGuard] },
             { path: 'gridiron/:item/:id', component: GridironDetailComponent, canActivate: [AuthGuard] },
+            { path: 'home-league', component: LeagueComponent, canActivate: [AuthGuard] },
+            { path: 'home-gridiron', component: HomeGridironComponent, canActivate: [AuthGuard] },
+            { path: 'manage-league', component: ManageLeagueComponent, canActivate: [AuthGuard] },
+            { path: 'league/:item/:id', component: LeagueDetailComponent, canActivate: [AuthGuard] }
         ]
     }
 ];

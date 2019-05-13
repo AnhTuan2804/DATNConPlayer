@@ -1,7 +1,7 @@
 <div class="container">
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">General Information</h1>
+      <h1 class="modal-title">Team Information</h1>
     </div>
     <div class="modal-body">
       <form role="form" [formGroup]="formDetail" (ngSubmit)="edit()">
@@ -60,7 +60,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label class="control-label">Choose picture</label>
               <span class="required"> *</span>
@@ -69,7 +69,7 @@
                   placeholder="">
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-md-6">
             <div class="form-group">
               <label class="control-label">Age minimum</label>
@@ -118,7 +118,7 @@
     <div class="modal-header">
       <h1 class="modal-title">Members</h1>
     </div>
-    <div [ngClass]="{'view': view}" class="modal-body">
+    <div *ngIf="!view" class="modal-body">
       <form role="form" [formGroup]="formAddMember" (ngSubmit)="addMember()">
         <div [ngClass]="{'view': view}" class="col-md-12 row">
           <div class="col-md-8">

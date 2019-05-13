@@ -19,8 +19,10 @@ export enum Utils {
     DOWNLOAD = "UTILS.DOWNLOAD",
     SAVE = "UTILS.SAVE",
     STATUS_NEW = "New",
-    STATUS_CLOSE = "Close",
+    STATUS_CLOSE = "Pair success",
     STATUS_CANCEL = "Cancel",
     STATUS_EXPIRED = "Expiried",
-    STATUS_WAITTING = "Waitting"
+    STATUS_WAITTING = "Waitting",
+    TYPE_LEAGUE_ROUND_CIRCLE = "Round Circle",
+    TYPE_LEAGUE_TWO_STAGES = "Two Stages"
 }

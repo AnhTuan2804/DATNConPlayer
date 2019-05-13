@@ -100,7 +100,12 @@ class ClassMethods {
                     attributes: ['id', 'name']
                 }, {
                     model: db.teamUser,
-                    where: where
+                    attributes: ['id', 'is_captain', 'user_id', 'team_id'],
+                    where: where,
+                    include: [{
+                        model: db.user,
+                        attributes: ['id', 'fullname', 'email', 'phone']
+                    }]
                 }]
             });
         })

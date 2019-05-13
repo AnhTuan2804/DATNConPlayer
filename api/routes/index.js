@@ -16,6 +16,8 @@ const internalToken = require('../middlewares/internalToken.local');
 const authAdmin = require('../middlewares/auth-admin.local');
 const auth = require('../middlewares/auth.local');
 const registerRouter = require('./register');
+
+const publicRouter = require('./public');
 const monitorRouter = require('./monitor');
 
 const ROOT_ROUTE = '/api';
@@ -52,6 +54,8 @@ class RouterIndex {
         //match
         this.app.use(ROOT_ROUTE + '/match', internalToken.verifyToken, matchRouter);
 
+        //public
+        this.app.use(ROOT_ROUTE + '/public', publicRouter);
     }
 }
 

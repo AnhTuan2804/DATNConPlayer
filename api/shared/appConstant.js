@@ -12,5 +12,6 @@ module.exports = Object.freeze({
     TIME_LOCKED: 15,
     LIMIT: 20,
     STATUS_NEW: "New",
-    STATUS_EXPIRIED: 'Expiried'
+    STATUS_EXPIRIED: 'Expiried',
+    STATUS_WAITTING: 'Waitting'
 });

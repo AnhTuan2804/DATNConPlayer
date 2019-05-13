@@ -1,7 +1,16 @@
 <div class="container">
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title">Manage team</h1>
+      <h1 class="modal-title">List Team</h1>
+    </div>
+    <div class="modal-body">
+      <app-data-table [showSearch]=false [headers]="headers" [items]="listTeam" [listSearch]=[0,1]
+        (outputAction)="handleAction($event)"></app-data-table>
+    </div>
+  </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Create New Team</h1>
     </div>
     <div class="modal-body">
       <form role="form" [formGroup]="formAdd" (ngSubmit)="add()">
@@ -60,7 +69,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <div class="form-group">
               <label class="control-label">Choose picture</label>
               <span class="required"> *</span>
@@ -69,7 +78,7 @@
                   placeholder="">
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-md-6">
             <div class="form-group">
               <label class="control-label">Age minimum</label>
@@ -117,12 +126,8 @@
         </div>
       </form>
     </div>
-
-    <div class="modal-body">
-      <app-data-table [showSearch]=false [headers]="headers" [items]="listTeam" [listSearch]=[0,1]
-        (outputAction)="handleAction($event)"></app-data-table>
-    </div>
   </div>
 </div>
-<app-alert-confirm [id]="'confirm'" [message]="'Are you sure delete this team?'" (saveConfirm)="saveConfirm()" (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
+<app-alert-confirm [id]="'confirm'" [message]="'Are you sure delete this team?'" (saveConfirm)="saveConfirm()"
+  (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
 <app-loading></app-loading>

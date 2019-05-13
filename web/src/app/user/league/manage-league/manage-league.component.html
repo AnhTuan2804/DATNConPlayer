@@ -1,0 +1,150 @@
+<div class="container">
+  <div *ngIf="!isShow" class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Create New League</h1>
+    </div>
+    <div class="modal-body">
+      <form role="form" [formGroup]="formAdd">
+        <div class="col-md-12 row">
+          <div class="col-md-5 text-center">
+            <img src="../../../../assets/images/backGround.jpg" class="img-thumbnail" height="75%" width="90%"
+              alt="Avatar">
+          </div>
+          <div class="col-md-7">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Name of league</label>
+                  <span class="required"> *</span>
+                  <div class="input-include-error">
+                      <input type="text" class="form-control input-lg" formControlName="name_of_league">
+                    <span
+                      *ngIf="formAdd.controls.name_of_league.hasError('required')&&(formAdd.controls['name_of_league'].touched || errorForm)">Field
+                      required</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Number of teams</label>
+                  <span class="required"> *</span>
+                  <div class="input-include-error">
+                      <input type="number" class="form-control input-lg" formControlName="number_of_teams">
+                    <span
+                      *ngIf="formAdd.controls.number_of_teams.hasError('required')&&(formAdd.controls['number_of_teams'].touched || errorForm)">Field
+                      required</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Registry Expiry Date</label>
+                  <span class="required"> *</span>
+                  <div class="input-include-error">
+                    <input type="date" min="{{startDate}}" class="form-control input-lg" name=""
+                      formControlName="date_expiry_register">
+                    <span
+                      *ngIf="formAdd.controls.date_expiry_register.hasError('required')&&(formAdd.controls['date_expiry_register'].touched || errorForm)">Field
+                      required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="control-label">Type of competition</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="formAdd.controls['type_league'].value" [title]="'Select Type'"
+                  [selectedIndex]="selectedIndex" [options]="listTypeOfLeague"
+                  (selectedOption)="handleDownSelect($event, 'type_league')"></app-select-dropdown>
+                <span
+                  *ngIf="formAdd.controls.type_league.hasError('required')&&(formAdd.controls['type_league'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Area of league</label>
+                <span class="required"> *</span>
+                <div class="input-include-error">
+                  <app-select-dropdown [nameSelect]="formAdd.controls['area'].value" [title]="'Select Area'"
+                    [selectedIndex]="selectedIndex" [options]="listArea"
+                    (selectedOption)="handleDownSelect($event, 'area')"></app-select-dropdown>
+                  <span
+                    *ngIf="formAdd.controls.area.hasError('required')&&(formAdd.controls['area'].touched || errorForm)">Field
+                    required</span>
+                </div>
+              </div>
+            </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="control-label">Career (if any)</label>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="formAdd.controls['career'].value" [title]="'Select Career'"
+                  [selectedIndex]="selectedIndex" [options]="listCareer"
+                  (selectedOption)="handleDownSelect($event, 'career')"></app-select-dropdown>
+                <span
+                  *ngIf="formAdd.controls.career.hasError('required')&&(formAdd.controls['career'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Invitation Summary</label>
+              <div class="input-include-error">
+                <textarea type="textarea" class="form-control input-lg" formControlName="invitation"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid" (click)="add()">
+                <i class="fas fa-plus-circle"></i> &nbsp;Create
+              </button>
+            </div>
+          </div>
+          <div class="col-md-2 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-secondary" (click)="actionForm('hide')">
+                <i class="far fa-times-circle"></i> &nbsp;Cancel
+              </button>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="input-include-error btn-center">
+              <span *ngIf="addFaild">{{messageError}}</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-content">
+    <div class="modal-header row dis-flex">
+      <div class="col-sm-8">
+        <h1 class="modal-title">List of your league</h1>
+      </div>
+      <div *ngIf="isShow" class="col-sm-4 div-center"><button (click)="actionForm('show')"
+          class="btn-center btn btn-success dis-flex"><i
+            class="fas fa-plus-circle"></i>&nbsp; Create New League</button></div>
+    </div>
+    <div class="modal-body">
+      <app-data-table [showSearch]=false [headers]="headers" [items]="listMatch" [listSearch]=[0,1,2,3,4]
+        (outputAction)="handleAction($event)"></app-data-table>
+    </div>
+  </div>
+</div>
+<app-loading></app-loading>
