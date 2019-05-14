@@ -4,10 +4,10 @@ import { watchLogin } from './LoginSaga';
 import { watchRegister } from './RegisterSaga';
 import { watchForgotPass } from './ForgotPassSaga';
 import { watchUpdateInfo, watchchangePass, watchGetProfile } from './SettingSaga';
-import { watchGetListLevelSaga, watchGetListArea, watchGetListTimeSaga, watchGetListSizeSaga, watchGetListCareerSaga } from './HomeSaga';
+import { watchGetListLevelSaga, watchGetListArea, watchGetListTimeSaga, watchGetListSizeSaga, watchGetListCareerSaga, watchGetAllGridironSaga } from './HomeSaga';
 import { watchGetListTeamSaga, watchCreateTeamSaga, watchUpdateTeamSaga, watchDeleteTeamSaga, watchGetTeamDetailSaga, watchAddMemberSaga, watchDeleteMemberSaga } from './TeamSaga';
 import { watchGetListGridironSaga, watchGetGridironDetailSaga, watchCreateGridironSaga, watchUpdateGridironSaga, watchAddSubGridironSaga, watchDeleteSubGridironSaga, watchAddPriceOnTimeSaga, watchDeletePriceOnTimeSaga, watchDeleteGridironSaga } from './GridironSaga';
-import { watchCreateMatchSaga, watchCancleMatchSaga, watchUpdateMatchSaga } from './MatchSaga';
+import { watchCreateMatchSaga,  watchUpdateMatchSaga } from './MatchSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -41,6 +41,6 @@ export default function* rootSaga() {
         fork(watchDeleteGridironSaga),
         fork(watchCreateMatchSaga),
         fork(watchUpdateMatchSaga),
-        fork(watchCancleMatchSaga),
+        fork(watchGetAllGridironSaga)
     ]);
 }

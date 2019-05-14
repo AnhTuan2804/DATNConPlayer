@@ -53,8 +53,6 @@ function* createTeamSaga(action) {
         });
         const result = yield Api.createTeamAPI(body);
         yield put({ type: CREATE_TEAM_SUCCESSFULLY });
-        console.log("ssssssssssssss");
-        
         ToastUtil.showToast(Constants.MESSAGE_CREATE_SUCCESS, 'success')
         yield put(getlistTeam())
         Actions.Manage()

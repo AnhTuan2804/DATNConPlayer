@@ -1,39 +1,34 @@
 import { connect } from 'react-redux';
 import HomeComponent from './HomeComponent';
 import { isGetProfile } from '../../actions/SettingActions';
-import { getListArea, getListLever, getListSize, getListTime, getListCareer } from '../../actions/HomeActions';
+import { getListArea, getListLever, getListSize, getListTime, getListCareer, getAllListGridiron } from '../../actions/HomeActions';
+import { getlistTeam } from '../../actions/TeamActions';
+import { updateMatch } from '../../actions/MatchActions';
 
 export default connect(
   state => {
     let homeReducers = state.homeReducers ? state.homeReducers : {}
     let settingReducers = state.settingReducers ? state.settingReducers : {}
+    let team = state.teamReducers || {};
     return {
+      isLogin: settingReducers.isLogin,
       isLoading: homeReducers.isLoading,
-      listMatch: [1, 2, 3, 4, 5],
-      listGridiron: [1, 2, 3],
-      listLeague: [1, 2, 3, 4, 5, 6, 7],
+      listTeam: team.listTeam || [],
+      listGridiron: homeReducers.listAllGridiron || [],
+      // listLeague: [1, 2, 3, 4, 5, 6, 7],
     }
   },
   dispatch => {
     return {
+      onGetAllGridiron: () => {
+        dispatch(getAllListGridiron())
+      },
       onGetProfile: () => {
-        dispatch(isGetProfile())
+        dispatch(isGetProfile(true))
       },
-      onGetListArea: () => {
-        dispatch(getListArea())
-      },
-      onGetListLevel: () => {
-        dispatch(getListLever())
-      },
-      onGetListSize: () => {
-        dispatch(getListSize())
-      },
-      onGetListTime: () => {
-        dispatch(getListTime())
-      },
-      onGetListCareer: () => {
-        dispatch(getListCareer())
-      },
+      onUpdateMatch: (body) => {
+        dispatch(updateMatch(body, false))
+      }
     }
   }
 )(HomeComponent);

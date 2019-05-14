@@ -21,7 +21,7 @@ export default connect(
         dispatch(isupdateInfo(body))
       },
       onGetProfile: () => {
-        dispatch(isGetProfile())
+        dispatch(isGetProfile(false))
       }
     }
   }

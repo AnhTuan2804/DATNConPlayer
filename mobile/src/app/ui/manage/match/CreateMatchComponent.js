@@ -35,10 +35,8 @@ class CreateMatchComponent extends Component {
     }
 
     checkArea(value) {
-        console.log(value);
         if (value != undefined) {
             let gridiron = _.find(this.props.listGridiron, function (o) { return o.id == value })
-            console.log(gridiron.area_id);
             this.props.change("area_id", gridiron.area_id),
                 this.setState({ isSelectGridirons: true })
         }
@@ -73,7 +71,7 @@ class CreateMatchComponent extends Component {
                 team: _.find(this.props.listTeam, function (o) { return o.id == values.team }),
                 gridiron: _.find(this.props.listGridiron, function (o) { return o.id == values.gridiron }),
                 career: _.find(this.props.listCareer, function (o) { return o.id == values.career_id }),
-                date_of_match: TimeService.getTimeFormatFromTime(values.date_of_match, TimeService.YEAR_MONTH_DATE_FORMAT),
+                date_of_match: TimeService.getTimeFormatFromTime(values.date_of_match, TimeService.DATE_FORMAT),
                 invitation: values.invitation,
                 status: "New"
             }

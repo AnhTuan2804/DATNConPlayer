@@ -17,15 +17,8 @@ export const updateMatch = (value) => {
     return {
         type: IS_UPDATE_MATCH,
         isLoading: true,
-        value
+        value,
+        isManage
     };
 }
 
-// delMatch(Match lead)
-export const cancleMatch = (id) => {
-    return {
-        type: IS_CANCLE_MATCH,
-        isLoading: true,
-        id
-    };
-}

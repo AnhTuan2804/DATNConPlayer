@@ -3,8 +3,16 @@ import {
     IS_GET_LIST_LEVEL,
     IS_GET_LIST_SIZE,
     IS_GET_LIST_CAREER,
-    IS_GET_LIST_TIME
+    IS_GET_LIST_TIME,
+    IS_GET_LIST_ALL_GRIDIRON,
 } from './ActionTypes';
+
+export const getAllListGridiron = () => {
+    return {
+        type: IS_GET_LIST_ALL_GRIDIRON,
+        isLoading: true,
+    };
+}
 
 // getListArea
 export const getListArea = () => {
