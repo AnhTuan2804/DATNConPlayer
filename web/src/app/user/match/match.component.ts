@@ -175,6 +175,8 @@ export class MatchComponent implements OnInit {
       status: Utils.STATUS_NEW
     }
 
+    data.time['name'] = this.objectTimeEvent.time_start + 'h - ' + this.objectTimeEvent.time_end + 'h'
+
     this.action.showLoading();
     this.matchService.createMatch(data).subscribe((result) => {
       this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });

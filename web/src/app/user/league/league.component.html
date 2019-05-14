@@ -34,17 +34,6 @@
           </div>
         </form>
       </div>
-
-      <div class="header-sidenav">
-        <h4><i class="far fa-futbol"></i>&nbsp; Level</h4>
-        <hr>
-        <form role="form" [formGroup]="levelForm">
-          <div class="radio" *ngFor="let item of listLevel">
-            <label><input type="radio" name="level" (change)="changeSelectRadio(item, 'level')">
-              {{item.itemName}}</label>
-          </div>
-        </form>
-      </div>
     </div>
 
     <div class="col-sm-9">
@@ -53,10 +42,7 @@
           <div class="container">
             <form role="form" [formGroup]="searchForm">
               <div class="row input-group">
-                <div class="col-sm-3">
-                  <input type="date" class="form-control" formControlName="dateOfMatch" min="{{minDate}}">
-                </div>
-                <div class="col-sm-7">
+                <div class="col-sm-8">
                   <input type="text" class="form-control" formControlName="textSearch"
                     placeholder="Search team, team leader, gridiron">
                 </div>
@@ -73,18 +59,15 @@
         <div class="content-match" *ngFor="let item of listMatchSearch">
           <div class="row">
             <div class="col-sm-4 text-center">
-              <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="80%" width="90%"
+              <img src="../../../assets/images/league.png" class="img-thumbnail" height="80%" width="90%"
                 alt="Avatar">
             </div>
             <div class="col-sm-6">
               <div class="row">
                 <div class="col-sm-8">
-                  <h4><i class="fas fa-users"></i>.&nbsp; {{item.team.name}} <small>-- <span class="title">Status:
-                      </span> <span style="color: red">{{item.status}}</span></small> </h4>
-                  <p><i *ngIf="item.team_guest" class="fas fa-users"></i>.
-                    {{item.team_guest ? 'Guest team: ' + item.team_guest.name : ''}}</p>
-                  <p><i class="fas fa-clock"></i>.&nbsp; {{item.date_of_match}}
-                    {{item.time.name ? '(' +item.time.name+ ')' : ''}}</p>
+                  <h4><i class="fas fa-users"></i>.&nbsp; {{item.team.name}}</h4>
+                  <p><i class="fas fa-clock"></i>.&nbsp; {{item.date_of_match}} - <span class="title">Status: </span>
+                    <span style="color: red">{{item.status}}</span></p>
                   <p><i class="fas fa-user"></i>.&nbsp; <span class="title">Team leader:</span> {{item.user.fullname}}
                   </p>
                 </div>

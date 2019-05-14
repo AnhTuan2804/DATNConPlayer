@@ -17,13 +17,12 @@ import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 declare var $: any;
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-league',
+  templateUrl: './league.component.html',
+  styleUrls: ['./league.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class LeagueComponent implements OnInit {
   listArea;
   listCareer;
   listMatch;
@@ -103,10 +102,6 @@ export class HomeComponent implements OnInit {
           item.gridiron['address'] = '';
 
         }
-        if (!item.career) {
-          item['career'] = {};
-          item.gridiron['name'] = '';
-        }
         item.date_of_match = this.timeService.formatDateFromTimeUnix(item.date_of_match, 'YYYY-MM-DD');
         tmp.push(item)
       }
@@ -121,10 +116,7 @@ export class HomeComponent implements OnInit {
             item['gridiron'] = {};
             item.gridiron['name'] = '';
             item.gridiron['address'] = '';
-          }
-          if (!item.career) {
-            item['career'] = {};
-            item.gridiron['name'] = '';
+
           }
           item.date_of_match = this.timeService.formatDateFromTimeUnix(item.date_of_match, 'YYYY-MM-DD');
           tmp.push(item)
@@ -186,12 +178,7 @@ export class HomeComponent implements OnInit {
       _.forEach(this.listMatchSearch, (item) => {
         if (_.toLower(item.team.name).indexOf(_.toLower(textSearch)) > -1 ||
           _.toLower(item.user.fullname).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.gridiron.name).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.gridiron.address).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.area.name).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.level.name).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.career.name).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.invitation).indexOf(_.toLower(textSearch)) > -1) {
+          _.toLower(item.gridiron.name).indexOf(_.toLower(textSearch)) > -1) {
           tmp.push(item);
         }
       });
@@ -273,5 +260,6 @@ export class HomeComponent implements OnInit {
   cancelConfirm() {
     $('#confirm').modal('hide');
   }
+
 
 }
