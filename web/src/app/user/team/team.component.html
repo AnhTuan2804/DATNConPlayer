@@ -1,14 +1,5 @@
 <div class="container">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title">List Team</h1>
-    </div>
-    <div class="modal-body">
-      <app-data-table [showSearch]=false [headers]="headers" [items]="listTeam" [listSearch]=[0,1]
-        (outputAction)="handleAction($event)"></app-data-table>
-    </div>
-  </div>
-  <div class="modal-content">
+  <div *ngIf="!isShow" class="modal-content">
     <div class="modal-header">
       <h1 class="modal-title">Create New Team</h1>
     </div>
@@ -118,6 +109,13 @@
               </button>
             </div>
           </div>
+          <div class="col-md-2 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-secondary" (click)="actionForm('hide')">
+                <i class="far fa-times-circle"></i> &nbsp;Cancel
+              </button>
+            </div>
+          </div>
           <div class="col-md-8">
             <div class="input-include-error btn-center">
               <span *ngIf="addFaild">{{messageError}}</span>
@@ -127,6 +125,22 @@
       </form>
     </div>
   </div>
+
+  <div class="modal-content">
+    <div class="modal-header row dis-flex">
+      <div class="col-sm-8">
+        <h1 class="modal-title">List Team</h1>
+      </div>
+      <div *ngIf="isShow" class="col-sm-4 div-center"><button (click)="actionForm('show')"
+          class="btn-center btn btn-success dis-flex"><i class="fas fa-plus-circle"></i>&nbsp; Create New Team</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <app-data-table [showSearch]=false [headers]="headers" [items]="listTeam" [listSearch]=[0,1]
+        (outputAction)="handleAction($event)"></app-data-table>
+    </div>
+  </div>
+
 </div>
 <app-alert-confirm [id]="'confirm'" [message]="'Are you sure delete this team?'" (saveConfirm)="saveConfirm()"
   (cancelConfirm)="cancelConfirm()"></app-alert-confirm>

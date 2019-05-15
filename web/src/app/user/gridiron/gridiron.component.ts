@@ -31,6 +31,7 @@ export class GridironComponent implements OnInit {
   objectLevelEvent;
   selectedIndex;
   objectDeleteEvent;
+  isShow = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private gridironService: GridironService, private gridiron: Gridiron,
@@ -168,6 +169,10 @@ export class GridironComponent implements OnInit {
       this.action.hideLoading();
       this.toastrService.success(err.message, '', { timeOut: 3500 });
     })
+  }
+
+  actionForm(tab) {
+    this.isShow = tab == 'show' ? false : true;
   }
 
 }

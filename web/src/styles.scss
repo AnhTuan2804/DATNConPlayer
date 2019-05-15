@@ -8,6 +8,15 @@ body {
   margin-top: 3rem
 }
 
+.dis-flex {
+  display: flex;
+  align-items: center;
+}
+.div-center {
+  display: flex;
+  justify-content: flex-end;
+}
+
 
 .view {
   pointer-events: none;
