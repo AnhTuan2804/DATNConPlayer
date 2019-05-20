@@ -37,6 +37,7 @@ class DetailLeaugeComponent extends Component {
             itemLeague: this.props.itemLeague,
             id: this.props.itemLeague.id,
             showStandings: false,
+            activeRound: 0
         }
         this.props.dispatch(initialize(
             'updateLeauge',
@@ -58,7 +59,6 @@ class DetailLeaugeComponent extends Component {
         const seft = this
         firebase.database().ref(`/league/${this.state.id}`).on('value', function (snapshot) {
             if (snapshot.val()) {
-                console.log(snapshot.val());
                 seft.setState({
                     itemLeague: snapshot.val()
                 })
@@ -300,7 +300,8 @@ class DetailLeaugeComponent extends Component {
                         alignItems: 'center',
                     }}
                     >
-                        {/* <Image style={{ width: 40, height: 32, marginRight: 10, }} resizeMode={"contain"} source={require("../../../assets/images/icon-standings.png")} /> */}
+                        <Image style={{ width: 40, height: 32, marginRight: 10, }} resizeMode={"contain"}
+                            source={require("../../../assets/images/icon-round-league.png")} />
                         <Text style={{ fontSize: 18, fontWeight: 'bold', borderBottomWidth: 1 }}>League Round</Text>
                     </View>
                     <Text style={{ paddingRight: 10 }}>{this.state.showStandings ? "Hiden" : "Show"}</Text>
@@ -311,41 +312,58 @@ class DetailLeaugeComponent extends Component {
                         extraData={this.state}
                         horizontal={true}
                         showsVerticalScrollIndicator={false}
-                        keyExtractor={(item, index) => { return `${item.id}` }}
+                        keyExtractor={(item, index) => { return `${index}dsfhcxnmrfhudik` }}
                         renderItem={({ item, index }) => {
                             return (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        // active
+                                        this.setState({
+                                            activeRound: index
+                                        })
                                     }}
                                     activeOpacity={0.9}
                                     style={{
-                                        padding: 10, backgroundColor: "grey",
+                                        padding: 10, backgroundColor: this.state.activeRound == index ? "#666" : "#f1f1f1",
                                         marginHorizontal: 5, marginVertical: 10,
                                         borderRadius: 5
                                     }}>
-                                    <Text style={{ color: "#fff" }}>Round {index}</Text>
+                                    <Text style={{ fontSize: 16, color: this.state.activeRound == index ? "#fff" : "#000", fontWeight: "bold" }}>Round {index}</Text>
                                 </TouchableOpacity>
                             )
                         }}
                     />
                 </View>
-                {item.active ?
-                    <View style={{ marginHorizontal: 10, marginBottom: 20 }}>
-                        <FlatList
-                            data={this.state.itemLeague.rounds[index]}
-                            extraData={this.state}
-                            showsVerticalScrollIndicator={false}
-                            keyExtractor={(item, index) => { return `${item.id}` }}
-                            renderItem={({ item, index }) => {
-                                return (
-                                    <TouchableOpacity activeOpacity={0.9} style={{ padding: 10, backgroundColor: "grey", marginHorizontal: 10, marginVertical: 5 }}>
-                                        <Text style={{ color: "#fff" }}>Match {index}</Text>
-                                    </TouchableOpacity>
+                <View style={{ marginHorizontal: 10, marginBottom: 20 }}>
+                    <FlatList
+                        data={this.state.itemLeague.rounds[this.state.activeRound]}
+                        extraData={this.state}
+                        ListHeaderComponent={() => {
+                            return (
+                                <Text>Round {this.state.activeRound}</Text>
                                 )
-                            }}
-                        />
-                    </View> : null}
+                        }}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item, index) => { return `${index}hfdcxzasoiuzxkgr` }}
+                        renderItem={({ item, index }) => {
+                            console.log(item);
+                            return (
+                                <TouchableOpacity activeOpacity={0.9}
+                                    style={{
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        padding: 10,
+                                        backgroundColor: "grey",
+                                        marginHorizontal: 10,
+                                        marginVertical: 5
+                                    }}>
+                                    <Text style={{ color: "#fff" }}>Match {index}</Text>
+                                    <Text style={{ color: "#fff" }}>Match {index}</Text>
+                                </TouchableOpacity>
+                            )
+                        }}
+                    />
+                </View>
             </View>
         )
     }
