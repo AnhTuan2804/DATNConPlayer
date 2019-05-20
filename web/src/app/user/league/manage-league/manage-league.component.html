@@ -62,7 +62,7 @@
               <div class="input-include-error">
                 <app-select-dropdown [nameSelect]="formAdd.controls['type_league'].value" [title]="'Select Type'"
                   [selectedIndex]="selectedIndex" [options]="listTypeOfLeague"
-                  (selectedOption)="handleDownSelect($event, 'type_league')"></app-select-dropdown>
+                  (selectedOption)="handleDownSelect($event, 'type')"></app-select-dropdown>
                 <span
                   *ngIf="formAdd.controls.type_league.hasError('required')&&(formAdd.controls['type_league'].touched || errorForm)">Field
                   required</span>
@@ -92,18 +92,16 @@
                 <app-select-dropdown [nameSelect]="formAdd.controls['career'].value" [title]="'Select Career'"
                   [selectedIndex]="selectedIndex" [options]="listCareer"
                   (selectedOption)="handleDownSelect($event, 'career')"></app-select-dropdown>
-                <span
-                  *ngIf="formAdd.controls.career.hasError('required')&&(formAdd.controls['career'].touched || errorForm)">Field
-                  required</span>
+                
               </div>
             </div>
           </div>
 
           <div class="col-md-12">
             <div class="form-group">
-              <label class="control-label">Invitation Summary</label>
+              <label class="control-label">Summary about league</label>
               <div class="input-include-error">
-                <textarea type="textarea" class="form-control input-lg" formControlName="invitation"></textarea>
+                <textarea type="textarea" class="form-control input-lg" formControlName="description"></textarea>
               </div>
             </div>
           </div>
@@ -142,7 +140,7 @@
             class="fas fa-plus-circle"></i>&nbsp; Create New League</button></div>
     </div>
     <div class="modal-body">
-      <app-data-table [showSearch]=false [headers]="headers" [items]="listMatch" [listSearch]=[0,1,2,3,4]
+      <app-data-table [showSearch]=false [headers]="headers" [items]="listLeague" [listSearch]=[0,1,2,3,4]
         (outputAction)="handleAction($event)"></app-data-table>
     </div>
   </div>

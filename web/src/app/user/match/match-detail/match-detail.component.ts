@@ -20,6 +20,7 @@ import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { Match } from 'src/app/shared/classes/match';
 import { MatchService } from 'src/app/shared/services/match.service';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
+import { NotifyService } from 'src/app/shared/services/notify.service';
 declare var $: any;
 @Component({
   selector: 'app-match-detail',
@@ -55,7 +56,7 @@ export class MatchDetailComponent implements OnInit {
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
     private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
-    private teamService: TeamService, private team: Team,
+    private teamService: TeamService, private team: Team, private notifyService: NotifyService,
     private matchService: MatchService, private timeService: TimeService,
     private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
@@ -220,6 +221,16 @@ export class MatchDetailComponent implements OnInit {
     this.matchService.updateMatch(data).subscribe((result) => {
       this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
+      if (this.status && (this.status == Utils.STATUS_CLOSE || this.status == Utils.STATUS_CLOSE)) {
+        const messageStatus = this.status == Utils.STATUS_CLOSE ? 'Accepted' : 'Rejected';
+        const dataNotify = {
+          user_id: this.dataObjectDetail.team_guest.team_users[0].id,
+          status: 'New',
+          create_at: this.timeService.getDateWithoutTime(null),
+          message: `Team "${this.dataObjectDetail.team_guest.name}" was ${messageStatus} match at ${this.timeService.formatDateFromTimeUnix(this.dataObjectDetail.date_of_match, this.timeService.DATE_FORMAT)} (${this.dataObjectDetail.time.time_start}h:${this.dataObjectDetail.time.time_end}h)`
+        }
+        this.notifyService.createNotify(dataNotify).subscribe((result) => { });
+      }
       if (this.status) {
         this.router.navigate(['match']);
       } else {
@@ -287,7 +298,7 @@ export class MatchDetailComponent implements OnInit {
     }
   }
 
-  back(){
+  back() {
     this.router.navigate(['match'])
   }
 }

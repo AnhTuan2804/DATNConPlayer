@@ -18,6 +18,7 @@ import { LeagueComponent } from './league/league.component';
 import { ManageLeagueComponent } from './league/manage-league/manage-league.component';
 import { LeagueDetailComponent } from './league/manage-league/league-detail/league-detail.component';
 import { HomeGridironComponent } from './home/home-gridiron/home-gridiron.component';
+import { NotifyComponent } from './notify/notify.component';
 
 export const routes: Routes = [
     {
@@ -25,7 +26,7 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         children: [
             { path: '', component: HomeComponent },
-            { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+            { path: 'home', component: HomeComponent },
             { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
             { path: 'area', component: AreaComponent, canActivate: [AuthGuardAdmin] },
             { path: 'career', component: CareerComponent, canActivate: [AuthGuardAdmin] },
@@ -36,10 +37,11 @@ export const routes: Routes = [
             { path: 'level', component: LevelComponent, canActivate: [AuthGuardAdmin] },
             { path: 'gridiron', component: GridironComponent, canActivate: [AuthGuard] },
             { path: 'gridiron/:item/:id', component: GridironDetailComponent, canActivate: [AuthGuard] },
-            { path: 'home-league', component: LeagueComponent, canActivate: [AuthGuard] },
-            { path: 'home-gridiron', component: HomeGridironComponent, canActivate: [AuthGuard] },
+            { path: 'home-league', component: LeagueComponent },
+            { path: 'home-gridiron', component: HomeGridironComponent },
             { path: 'manage-league', component: ManageLeagueComponent, canActivate: [AuthGuard] },
-            { path: 'league/:item/:id', component: LeagueDetailComponent, canActivate: [AuthGuard] }
+            { path: 'notify', component: NotifyComponent, canActivate: [AuthGuard] },
+            { path: 'league/:item/:id', component: LeagueDetailComponent }
         ]
     }
 ];

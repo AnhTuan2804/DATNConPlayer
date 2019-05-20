@@ -1,27 +1,24 @@
+
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
-import * as _ from 'lodash';
+import { User } from 'src/app/shared/classes/user/user';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { Area } from 'src/app/shared/classes/area';
-import { LevelService } from 'src/app/shared/services/level.service';
-import { Level } from 'src/app/shared/classes/level';
-import { TeamService } from 'src/app/shared/services/team.service';
-import { Team } from 'src/app/shared/classes/team';
-import { Router } from '@angular/router';
-import { Utils } from 'src/app/shared/enums/utils';
 import { CareerService } from 'src/app/shared/services/career.service';
 import { Career } from 'src/app/shared/classes/career';
-import { InfoCommonService } from 'src/app/shared/services/info-common.service';
-import { InfoCommon } from 'src/app/shared/classes/info-common';
-import { GridironService } from 'src/app/shared/services/gridiron.service';
-import { Gridiron } from 'src/app/shared/classes/gridiron';
-import { Match } from 'src/app/shared/classes/match';
-import { MatchService } from 'src/app/shared/services/match.service';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { UserService } from 'src/app/shared/services/user.service';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
+import { Match } from 'src/app/shared/classes/match';
+import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
+import * as _ from 'lodash';
+import { LevelService } from 'src/app/shared/services/level.service';
+import { Level } from 'src/app/shared/classes/level';
+import { Utils } from 'src/app/shared/enums/utils';
+import { TeamService } from 'src/app/shared/services/team.service';
+import { Team } from 'src/app/shared/classes/team';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
+import { LeagueService } from 'src/app/shared/services/league.service';
+import { InfoCommon } from 'src/app/shared/classes/info-common';
 declare var $: any;
 @Component({
   selector: 'app-league-detail',
@@ -29,110 +26,88 @@ declare var $: any;
   styleUrls: ['./league-detail.component.scss']
 })
 export class LeagueDetailComponent implements OnInit {
-
-
-  formAdd: FormGroup;
-  addFaild: boolean = false;
-  messageError: string = "";
-  headers = ['No.', 'Date', 'Time', 'Status', 'Guest Team', 'Actions'];
-  listArea = [];
-  listLevel = [];
-  listCareer = [];
-  listTeam = [];
-  listGridiron = [];
-  listTime = [];
-  listMatch = [];
-  showEditForm = false;
+  listArea;
+  listCareer;
+  listMatchSearch;
+  areaForm: FormGroup;
+  formEdit: FormGroup;
+  searchForm: FormGroup;
+  minDate;
   objectAreaEvent;
-  objectLevelEvent;
   objectCareerEvent;
-  objectTeamEvent;
-  objectGridironEvent;
-  objectTimeEvent;
-  selectedIndex;
-  userDetail;
-  startDate;
-  constructor(private formBuilder: FormBuilder, private areaService: AreaService,
+  objectLevelEvent
+  objectTypeLeague;
+  listMatchByRound;
+  objectMatch;
+  listTeamStandings;
+  messageConfirm = '';
+  messageError = '';
+  id;
+  show1 = true;
+  show2 = false;
+  show3 = false;
+  editFaild: boolean = false;
+  listTypeOfLeague = [];
+  startDate = ''
+  dataObjectDetail;
+  listRound = [];
+  pages = [];
+  currentPage = 0;
+  currentRound = 1;
+  currentMatch
+  headers = ['No.', 'Team', 'Played', 'Won', 'Draw', 'Lost', 'For', 'Against', 'GD', 'Points']
+  constructor(public user: User,
+    private timeService: TimeService, private action: ComponentActions,
+    private formBuilder: FormBuilder, private route: ActivatedRoute,
+    private toastrService: ToastrService,
+    private leagueService: LeagueService, private infoCommon: InfoCommon,
+    private teamService: TeamService, private team: Team,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
-    private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
-    private teamService: TeamService, private team: Team,
-    private match: Match, private matchService: MatchService,
-    private gridironServiec: GridironService, private gridiron: Gridiron,
-    private toastrService: ToastrService, private action: ComponentActions,
-    private area: Area, private router: Router, private userService: UserService,
-    public db: AngularFireDatabase, private timeService: TimeService) {
-    this.initForm()
-    this.getListArea();
-    this.getListCareer();
-    this.getListLevel();
-    this.getListTeam();
-    this.getListTime();
-    this.getListGridiron();
+    private areaService: AreaService, private area: Area) {
+    this.minDate = timeService.getDateWithoutTime(new Date());
   }
 
   ngOnInit() {
-    this.action.showLoading();
-    this.userService.getProfile().subscribe((user) => {
-      this.userDetail = user;
-      this.getListHistory(user.email);
-    }, err => {
-      this.action.hideLoading();
-    })
+    this.listTypeOfLeague = this.infoCommon.getListTypeOfCompetition();
     this.startDate = this.timeService.getDateWithoutTime(new Date());
-  }
-
-  getListHistory(email) {
-    this.matchService.getAll().subscribe((result) => {
-      result = _.reverse(result)
-      console.log(result);
-      this.listMatch = this.match.setData(result, email);
-      this.action.hideLoading();
-    }, err => {
-      this.action.hideLoading();
-      console.log(err.message)
+    this.initForm();
+    this.getListArea();
+    this.getListCareer();
+    this.route.params.subscribe((params) => {
+      this.id = params.id;
+      this.getDetail(this.id);
     })
   }
 
   initForm() {
-    this.formAdd = this.formBuilder.group({
-      'date_of_match': new FormControl('', Validators.required),
-      'time': new FormControl('', Validators.required),
-      'time_id': new FormControl(''),
-      'team': new FormControl('', Validators.required),
-      'team_id': new FormControl(''),
-      'gridiron': new FormControl(''),
-      'gridiron_id': new FormControl(''),
-      'level': new FormControl('', Validators.required),
-      'level_id': new FormControl(''),
-      'career': new FormControl('', Validators.required),
+    this.areaForm = this.formBuilder.group({
+      area: new FormControl('')
+    })
+    this.formEdit = this.formBuilder.group({
+      'date_expiry_register': new FormControl('', Validators.required),
+      'number_of_teams': new FormControl('', Validators.required),
+      'name_of_league': new FormControl('', Validators.required),
+      'type_league': new FormControl('', Validators.required),
+      'type_league_id': new FormControl(''),
+      'career': new FormControl(''),
       'career_id': new FormControl(''),
       'area_id': new FormControl(''),
       'area': new FormControl('', Validators.required),
-      'invitation': new FormControl('')
+      'description': new FormControl(''),
+      'status': new FormControl('')
     });
   }
 
-  getListTime() {
-    this.infoCommonService.getListTime().subscribe((result) => {
-      this.listTime = this.infoCommon.getListTimeForDropDown(result);
-    }, (err) => {
-      console.log(err)
-    })
-  }
-
-  getListGridiron() {
-    this.gridironServiec.getListForAdmin().subscribe((result) => {
-      this.listGridiron = this.gridiron.getListForDropdown(result);
-    }, (err) => {
-      console.log(err)
-    })
-  }
-
-  getListTeam() {
-    this.teamService.getListByCaptain().subscribe((result) => {
-      this.listTeam = this.team.getListTeamForDropdown(result);
-    }, (err) => {
+  getDetail(id) {
+    this.action.showLoading();
+    this.leagueService.getDetail(id).subscribe((result) => {
+      this.action.hideLoading()
+      console.log(result)
+      this.dataObjectDetail = result;
+      this.bindData(result);
+    }, err => {
+      this.action.hideLoading();
       console.log(err);
     })
   }
@@ -140,14 +115,6 @@ export class LeagueDetailComponent implements OnInit {
   getListArea() {
     this.areaService.getList().subscribe((result) => {
       this.listArea = this.area.getListAreaForDropdown(result);
-    }, (err) => {
-      console.log(err)
-    })
-  }
-
-  getListLevel() {
-    this.levelService.getList().subscribe((result) => {
-      this.listLevel = this.level.getListForDropdown(result);
     }, (err) => {
       console.log(err)
     })
@@ -161,110 +128,179 @@ export class LeagueDetailComponent implements OnInit {
     })
   }
 
-  add() {
-    const data = {
-      area: this.objectAreaEvent,
-      level: this.objectLevelEvent,
-      time: this.objectTimeEvent,
-      team: this.objectTeamEvent,
-      gridiron: this.objectGridironEvent,
-      career: this.objectCareerEvent,
-      date_of_match: this.getValueFormAdd('date_of_match'),
-      invitation: this.getValueFormAdd('invitation'),
-      status: Utils.STATUS_NEW
+  bindData(league) {
+    for (let i = 1; i <= Math.ceil(this.dataObjectDetail.rounds.length / 10); i++) {
+      this.pages.push(i);
     }
-
-    data.time['name'] = this.objectTimeEvent.time_start + 'h - ' + this.objectTimeEvent.time_end + 'h'
-
-    this.action.showLoading();
-    this.matchService.createMatch(data).subscribe((result) => {
-      this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
-      this.addFaild = false;
-      this.formAdd.reset();
-      this.action.hideLoading();
-    }, (err) => {
-      this.addFaild = true;
-      this.messageError = err.message;
-      this.toastrService.error(this.messageError, '', { timeOut: 3500 });
+    this.paging(0);
+    const listTeam = league.list_team ? league.list_team : league.list_team_tmp;
+    this.listTeamStandings = this.setListTeamStandings(listTeam);
+    this.formEdit.patchValue({
+      'status': league.status,
+      'date_expiry_register': this.timeService.formatDateFromTimeUnix(league.date_expiry_register, 'YYYY-MM-DD'),
+      'number_of_teams': league.number_of_teams,
+      'name_of_league': league.name_of_league,
+      'type_league': league.type_league.name,
+      'type_league_id': league.type_league.id,
+      'career': league.career ? league.career.name : '',
+      'career_id': league.career ? league.career.id : '',
+      'area_id': league.area.id,
+      'area': league.area.name,
+      'description': league.description
     })
   }
 
-  handleAction(event) {
-    switch (event.action) {
-      case 'Delete':
-        this.action.showLoading();
-        this.teamService.deleteTeam({ id: event.item.teamUser.team.id }).subscribe((result) => {
-          this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
-          this.getListTeam();
-        }, (err) => {
-          this.action.hideLoading();
-          this.toastrService.success(err.message, '', { timeOut: 3500 });
-        })
-        break;
-      case 'Edit':
-        this.navToDetail(event.item.match.id);
-        break;
-    }
+  paging(i) {
+    this.currentPage = i;
+    this.listRound = _.slice(this.dataObjectDetail.rounds, i * 10, (i + 1) * 10);
   }
 
-  getValueFormAdd(name) {
-    return this.formAdd.controls[name].value;
+  showRound(index, item?) {
+    this.currentRound = (this.currentPage * 10) + index + 1;
+    this.listMatchByRound = item ? item : this.listRound[index];
+    this.setListMatch()
   }
 
-  navToDetail(id, view?) {
-    const path = `match/edit/${id}`;
-    this.router.navigate([path]);
+  setListMatch() {
+    const tmp = [];
+    _.forEach(this.listMatchByRound, (item) => {
+      if (item.team1.name == Utils.TEAM_TMP) {
+        item['team_relax'] = item.team2.name;
+      }
+      if (item.team2.name == Utils.TEAM_TMP) {
+        item['team_relax'] = item.team1.name;
+      }
+      tmp.push(item);
+    })
+    this.listMatchByRound = _.cloneDeep(tmp);
+  }
+
+  updateMatch(index) {
+    console.log(index + '-' + this.listMatchByRound[index]);...
+    this.objectMatch = _.cloneDeep(this.listMatchByRound[index]);
+    this.showUpdateMatch();
+  }
+
+  showUpdateMatch() {
+    $('#update-match').modal('show');
+  }
+
+  setListTeamStandings(listTeam) {
+    const tmp = [];
+    let stt = 1;
+    _.forEach(listTeam, (item, key) => {
+      let data = [];
+      data['content'] = [
+        { title: stt },
+        { title: item.team.name },
+        { title: item.played || 0 },
+        { title: item.won || 0 },
+        { title: item.draw || 0 },
+        { title: item.lost || 0 },
+        { title: item.for || 0 },
+        { title: item.against || 0 },
+        { title: item.goal_difference || 0 },
+        { title: item.point || 0 }
+      ];
+      stt++;
+      tmp.push(data)
+    })
+    return tmp;
   }
 
   handleDownSelect(event, tab) {
     if (tab == 'area') {
       this.objectAreaEvent = event.value.area;
-      this.formAdd.patchValue({
+      this.formEdit.patchValue({
         area: event.value.area.name,
         area_id: event.value.area.id
       });
     }
-    if (tab == 'level') {
-      this.objectLevelEvent = event.value.level;
-      this.formAdd.patchValue({
-        level: event.value.level.name,
-        level_id: event.value.level.id
-      });
-    }
     if (tab == 'career') {
       this.objectCareerEvent = event.value.career;
-      this.formAdd.patchValue({
+      this.formEdit.patchValue({
         career: event.value.career.name,
         career_id: event.value.career.id
       });
     }
-    if (tab == 'gridiron') {
-      this.objectGridironEvent = event.value.gridiron;
-      this.formAdd.patchValue({
-        gridiron: event.value.gridiron.name,
-        gridiron_id: event.value.gridiron.id
-      });
-      this.objectAreaEvent = this.objectGridironEvent.area;
-      this.formAdd.patchValue({
-        area: this.objectAreaEvent.name,
-        area_id: this.objectAreaEvent.id
-      })
-    }
-    if (tab == 'time') {
-      this.objectTimeEvent = event.value.time;
-      this.formAdd.patchValue({
-        time: event.value.time.time_start + ' : ' + event.value.time.time_end,
-        time_id: event.value.time.id
-      });
-    }
-    if (tab == 'team') {
-      this.objectTeamEvent = event.value.team;
-      this.formAdd.patchValue({
-        team: event.value.team.name,
-        team_id: event.value.team.id
+    if (tab == 'type') {
+      this.objectTypeLeague = event.value.type;
+      this.formEdit.patchValue({
+        type_league: event.value.type.name,
+        type_league_id: event.value.type.id
       });
     }
   }
+
+  edit() {
+    const data = {
+      name_of_league: this.getValueFormEdit('name_of_league'),
+      date_expiry_register: this.getValueFormEdit('date_expiry_register'),
+      career: { id: this.getValueFormEdit('career_id'), name: this.getValueFormEdit('career') },
+      area: { id: this.getValueFormEdit('area_id'), name: this.getValueFormEdit('area') },
+      type_league: { id: this.getValueFormEdit('type_league_id'), name: this.getValueFormEdit('type_league') },
+      description: this.getValueFormEdit('description'),
+      number_of_teams: this.getValueFormEdit('number_of_teams'),
+      id: this.dataObjectDetail.id
+    }
+
+    this.action.showLoading();
+    this.leagueService.updateLeague(data).subscribe((result) => {
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
+      this.editFaild = false;
+      this.action.hideLoading();
+    }, (err) => {
+      this.editFaild = true;
+      this.messageError = err.message;
+      this.toastrService.error(this.messageError, '', { timeOut: 3500 });
+    })
+  }
+
+  show(tab) {
+    switch (tab) {
+      case '1':
+        this.show1 = true;
+        this.show2 = false;
+        this.show3 = false;
+        break;
+      case '2':
+        this.show1 = false;
+        this.show2 = true;
+        this.show3 = false;
+        break;
+      case '3':
+        this.show1 = false;
+        this.show2 = false;
+        this.show3 = true;
+        this.showRound(0);
+        break;
+    }
+  }
+
+  getValueFormEdit(name) {
+    return this.formEdit.controls[name].value;
+  }
+
+  saveConfirm() {
+    $('#confirm').modal('hide');
+  }
+
+  cancelConfirm() {
+    $('#confirm').modal('hide');
+  }
+
+  emitDataMatch(event) {
+    let data = event;
+    data['id'] = this.id;
+    data['current_round'] = this.currentRound;
+    this.action.showLoading();
+    this.leagueService.updateMatch(event).subscribe((result) => {
+      this.action.hideLoading();
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3000 });
+    }, err => {
+      this.action.hideLoading();
+      this.toastrService.warning(err.message, '', { timeOut: 3000 });
+    })
+  }
+
 }
-
-

@@ -30,7 +30,7 @@ export class ModalPairMatchComponent implements OnInit {
   }
 
   ngOnChanges(changes): void {
-    console.log(this.listTeam)
+    
   }
 
   pair() {

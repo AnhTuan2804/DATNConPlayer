@@ -8,6 +8,8 @@ const teamRouter = require('./team');
 const priceOnTimeRouter = require('./price_on_time');
 const gridironRouter = require('./gridiron');
 const matchRouter = require('./match');
+const leagueRouter = require('./league');
+const notifyRouter = require('./notify');
 const sizeGridironRouter = require('./size_gridiron');
 const levelRouter = require('./level');
 const careerRouter = require('./career');
@@ -53,7 +55,10 @@ class RouterIndex {
         this.app.use(ROOT_ROUTE + '/gridiron', internalToken.verifyToken, gridironRouter);
         //match
         this.app.use(ROOT_ROUTE + '/match', internalToken.verifyToken, matchRouter);
-
+        //notify
+        this.app.use(ROOT_ROUTE + '/notify', internalToken.verifyToken, notifyRouter);
+        //league
+        this.app.use(ROOT_ROUTE + '/league', internalToken.verifyToken, leagueRouter);
         //public
         this.app.use(ROOT_ROUTE + '/public', publicRouter);
     }
