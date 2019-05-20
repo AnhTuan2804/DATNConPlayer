@@ -35,6 +35,7 @@ export class TeamComponent implements OnInit {
   objectLevelEvent;
   selectedIndex;
   objectDeleteEvent;
+  isShow = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
@@ -209,6 +210,10 @@ export class TeamComponent implements OnInit {
         career_id: event.value.career.id
       });
     }
+  }
+
+  actionForm(tab) {
+    this.isShow = tab == 'show' ? false : true;
   }
 
 }

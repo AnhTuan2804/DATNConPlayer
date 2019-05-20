@@ -55,6 +55,8 @@ import { Gridiron } from './classes/gridiron';
 import { Career } from './classes/career';
 import { InfoCommon } from './classes/info-common';
 import { Match } from './classes/match';
+import { League } from './classes/league';
+import { ModalUpdateMatchComponent } from '../user/league/manage-league/league-detail/modal-update-match/modal-update-match.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -95,7 +97,8 @@ export function createTranslateLoader(http: HttpClient) {
         SideNavComponent,
         LoginComponent,
         RegisterComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        // ModalUpdateMatchComponent
     ],
     exports: [
         ReactiveFormsModule,
@@ -112,7 +115,8 @@ export function createTranslateLoader(http: HttpClient) {
         MainLayoutComponent,
         LoginComponent,
         RegisterComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        // ModalUpdateMatchComponent
     ],
     providers: [
         User,
@@ -125,7 +129,8 @@ export function createTranslateLoader(http: HttpClient) {
         Gridiron,
         Career,
         InfoCommon,
-        Match
+        Match,
+        League
     ]
 })
 export class SharedModule { }

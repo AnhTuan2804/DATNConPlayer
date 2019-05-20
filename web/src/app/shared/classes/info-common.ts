@@ -31,12 +31,16 @@ export class InfoCommon {
     getListTypeOfCompetition() {
         const tmp = [];
         tmp.push({
-            id: 'idoftwostagesabcedxxssdd',
-            name: Utils.TYPE_LEAGUE_TWO_STAGES,
+            type: {
+                id: 'type_1',
+                name: Utils.TYPE_LEAGUE_TWO_STAGES,
+            },
             itemName: Utils.TYPE_LEAGUE_TWO_STAGES
         }, {
-                id: 'idofroundcircleabcedxxssdd',
-                name: Utils.TYPE_LEAGUE_ROUND_CIRCLE,
+                type: {
+                    id: 'type2',
+                    name: Utils.TYPE_LEAGUE_ROUND_CIRCLE,
+                },
                 itemName: Utils.TYPE_LEAGUE_ROUND_CIRCLE
             })
         return tmp;

@@ -13,5 +13,7 @@ module.exports = Object.freeze({
     LIMIT: 20,
     STATUS_NEW: "New",
     STATUS_EXPIRIED: 'Expiried',
-    STATUS_WAITTING: 'Waitting'
+    STATUS_WAITTING: 'Waitting',
+    TYPE_LEAGUE_ROUND_CIRCLE : "Round Circle",
+    TYPE_LEAGUE_TWO_STAGES : "Two Stages"
 });

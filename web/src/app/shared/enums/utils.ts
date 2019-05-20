@@ -10,7 +10,7 @@ export enum Utils {
     MESSAGE_DELETE_SUCCESS = "Deleted data successfully",
     MESSAGE_VALID_REQUIRE = "Please fill required fields",
     MESSAGE_CONFIRM_DELETE = "Are you sure you want to delete this item?",
-    MESSAGE_CONFIRM = "Are you sure you want to confirm this user?",    
+    MESSAGE_CONFIRM = "Are you sure you want to confirm this user?",
     MESSAGE_File_REQUIRE = "This file is required",
     SEARCH = "UTILS.SEARCH",
     MESSAGE_REPLY_EMAIL_SUCCESS = "UTILS.MESSAGE_REPLY_EMAIL_SUCCESS",
@@ -24,5 +24,6 @@ export enum Utils {
     STATUS_EXPIRED = "Expiried",
     STATUS_WAITTING = "Waitting",
     TYPE_LEAGUE_ROUND_CIRCLE = "Round Circle",
-    TYPE_LEAGUE_TWO_STAGES = "Two Stages"
+    TYPE_LEAGUE_TWO_STAGES = "Two Stages",
+    TEAM_TMP = 'tmp_team_ababab'
 }

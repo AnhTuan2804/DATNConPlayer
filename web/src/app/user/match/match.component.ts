@@ -53,6 +53,7 @@ export class MatchComponent implements OnInit {
   selectedIndex;
   userDetail;
   startDate;
+  isShow = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
@@ -265,5 +266,9 @@ export class MatchComponent implements OnInit {
         team_id: event.value.team.id
       });
     }
+  }
+
+  actionForm(tab) {
+    this.isShow = tab == 'show' ? false : true;
   }
 }
