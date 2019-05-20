@@ -164,14 +164,14 @@ class MatchSearchComponent extends Component {
         if (value.textSearch) {
             const tmp = [];
             _.forEach(listMatchSearch, (item) => {
-                if (_.toLower(item.team.name).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.user.fullname).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.gridiron.name).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.gridiron.address).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.area.name).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.level.name).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.career.name).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.invitation).indexOf(_.toLower(textSearch)) > -1) {
+                if (_.toLower(item.team.name).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.user.fullname).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.gridiron.name).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.gridiron.address).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.area.name).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.level.name).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.career.name).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.invitation).indexOf(_.toLower(value.textSearch)) > -1) {
                     tmp.push(item);
                 }
             });
@@ -185,13 +185,15 @@ class MatchSearchComponent extends Component {
         }
         if (value.career_id) {
             const tmp = _.filter(listMatchSearch, (item) => {
-                return _.toLower(item.career.name) == _.toLower(value.career_id);
+                return _.toLower(item.career.id) == _.toLower(value.career_id);
             })
             listMatchSearch = _.cloneDeep(tmp);
         }
-        if (value.career_id) {
+        if (value.level_id) {
             const tmp = _.filter(listMatchSearch, (item) => {
-                return _.toLower(item.level.name) == _.toLower(value.career_id);
+                console.log(item);
+
+                return _.toLower(item.level.id) == _.toLower(value.level_id);
             })
             listMatchSearch = _.cloneDeep(tmp);
         }

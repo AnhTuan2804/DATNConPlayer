@@ -273,6 +273,38 @@ function* createMatchAPI(bodyInfo) {
     return response;
 }
 
+function* createLeaugeAPI(bodyInfo) {
+    const router = 'league/create';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* updateLeaugeAPI(bodyInfo) {
+    const router = 'league/update';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
 function* updateMatchAPI(bodyInfo) {
     const router = 'match/update';
     const headersPairs = null;
@@ -632,4 +664,6 @@ export const Api = {
     createMatchAPI,
     updateMatchAPI,
     getAllGridironAPI,
+    createLeaugeAPI,
+    updateLeaugeAPI
 };

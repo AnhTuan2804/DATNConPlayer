@@ -8,6 +8,7 @@ import Utils from '../../../../theme/shared/utils/Utils';
 import { Field, initialize, reduxForm } from 'redux-form';
 import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber, renderSelect, renderFieldTextarea, confirm_min_age, confirm_max_age, number, renderDatePicker } from '../../../../theme/variable/Validate';
 import TimeService from '../../../../theme/shared/utils/TimeService';
+import firebase from 'firebase';
 import _ from 'lodash';
 
 const { height, width } = Dimensions.get('window');
@@ -16,7 +17,9 @@ class UpdateMatchComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isSelectGridirons: this.props.infoMatch.gridiron != undefined ? true : false
+            isSelectGridirons: this.props.infoMatch.gridiron != undefined ? true : false,
+            id: this.props.infoMatch.id,
+            infoMatch: this.props.infoMatch
         }
         this.props.dispatch(initialize(
             'updateMatch',
@@ -33,6 +36,22 @@ class UpdateMatchComponent extends Component {
                 id: this.props.infoMatch.id
             }
         ));
+    }
+
+    componentWillMount() {
+        this.getdetailMatch()
+    }
+
+    getdetailMatch() {
+        const seft = this
+        firebase.database().ref(`/match/${this.state.id}`).on('value', function (snapshot) {
+            if (snapshot.val()) {
+                console.log(snapshot.val());
+                seft.setState({
+                    itemLeague: snapshot.val()
+                })
+            }
+        });
     }
 
     checkArea(value) {
@@ -86,12 +105,12 @@ class UpdateMatchComponent extends Component {
                 {Loading(this.props.isLoading)}
                 {this._renderHeader("Update Match")}
                 <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
-                    {this.props.infoMatch.status != "Waitting" ?
+                    {this.state.infoMatch.status != "Waitting" ?
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                             <View style={{ width: '100%', flexDirection: 'column', }}>
                                 <Field name="date_of_match"
-                                    textIP={TimeService.formatDateFromTimeUnix(this.props.infoMatch.date_of_match, 'DD/MM/YYYY')} label={'Date'} component={renderDatePicker}
-                                    defDate={new Date(TimeService.formatDateFromTimeUnix(this.props.infoMatch.date_of_match, 'DD/MM/YYYY'))}
+                                    textIP={TimeService.formatDateFromTimeUnix(this.state.infoMatch.date_of_match, 'DD/MM/YYYY')} label={'Date'} component={renderDatePicker}
+                                    defDate={new Date(TimeService.formatDateFromTimeUnix(this.state.infoMatch.date_of_match, 'MM/DD/YYYY'))}
                                 // validate={[required, required_trim, have_point_end]}
                                 />
                                 <Field name="team" mode="dropdown" textIP="Select Team"
@@ -130,9 +149,9 @@ class UpdateMatchComponent extends Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         let body = {
-                                            date_of_match: TimeService.formatDateFromTimeUnix(this.props.infoMatch.date_of_match, 'YYYY-MM-DD'),
+                                            date_of_match: TimeService.formatDateFromTimeUnix(this.state.infoMatch.date_of_match, 'YYYY-MM-DD'),
                                             status: "Cancel",
-                                            id: this.props.infoMatch.id
+                                            id: this.state.infoMatch.id
                                         }
                                         this.props.onUpdateMatch(body)
                                     }}
@@ -165,11 +184,11 @@ class UpdateMatchComponent extends Component {
                                     }}
                                     >
                                         <Icon style={{ fontSize: 16 }} name={'user-friends'} type={'FontAwesome5'} />
-                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{this.props.infoMatch.team.name}</Text>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{this.state.infoMatch.team.name}</Text>
                                     </View>
                                     <Text style={{
                                         fontSize: 14, fontWeight: 'bold', backgroundColor: "red", padding: 5, marginBottom: 5, color: '#fff'
-                                    }}>{this.props.infoMatch.status}</Text>
+                                    }}>{this.state.infoMatch.status}</Text>
                                 </View>
                                 <View style={{
                                     marginHorizontal: 10,
@@ -180,7 +199,7 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "center"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Leader: </Text>
-                                        <Text style={{ color: 'black', flex: 1 }}>{this.props.infoMatch.user.fullname}</Text>
+                                        <Text style={{ color: 'black', flex: 1 }}>{this.state.infoMatch.user.fullname}</Text>
                                     </View>
                                     <View style={{
                                         flexDirection: 'row',
@@ -188,7 +207,7 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "center"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Time: </Text>
-                                        <Text style={{ color: 'black', flex: 1 }}>{this.props.infoMatch.time.time_start}h:{this.props.infoMatch.time.time_end}h {TimeService.formatDateFromTimeUnix(this.props.infoMatch.date_of_match, 'DD/MM/YYYY')}</Text>
+                                        <Text style={{ color: 'black', flex: 1 }}>{this.state.infoMatch.time.time_start}h:{this.state.infoMatch.time.time_end}h {TimeService.formatDateFromTimeUnix(this.state.infoMatch.date_of_match, 'DD/MM/YYYY')}</Text>
                                     </View>
                                     <View style={{
                                         flexDirection: 'row',
@@ -196,16 +215,16 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "center"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Career: </Text>
-                                        <Text style={{ color: 'black' }}> {this.props.infoMatch.career.name}</Text>
+                                        <Text style={{ color: 'black' }}> {this.state.infoMatch.career.name}</Text>
                                     </View>
-                                    {this.props.infoMatch.gridiron ?
+                                    {this.state.infoMatch.gridiron ?
                                         <View style={{
                                             flexDirection: 'row',
                                             justifyContent: 'flex-start',
                                             alignItems: "center"
                                         }}>
                                             <Text style={{ fontWeight: 'bold', color: 'black' }}>Gridiron: </Text>
-                                            <Text style={{ color: 'black', flex: 1 }}> {this.props.infoMatch.gridiron.name}</Text>
+                                            <Text style={{ color: 'black', flex: 1 }}> {this.state.infoMatch.gridiron.name}</Text>
                                         </View>
                                         : null
                                     }
@@ -215,7 +234,7 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "flex-start"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Address: </Text>
-                                        <Text style={{ color: 'black', flex: 1 }}> {this.props.infoMatch.gridiron ? this.props.infoMatch.gridiron.address : this.props.infoMatch.area.name}</Text>
+                                        <Text style={{ color: 'black', flex: 1 }}> {this.state.infoMatch.gridiron ? this.state.infoMatch.gridiron.address : this.state.infoMatch.area.name}</Text>
                                     </View>
                                 </View>
                                 <View
@@ -238,7 +257,7 @@ class UpdateMatchComponent extends Component {
                                     >
                                         <Icon style={{ fontSize: 16 }} name={'user-friends'} type={'FontAwesome5'} />
                                         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Guest Team: </Text>
-                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{this.props.infoMatch.team_guest.name}</Text>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{this.state.infoMatch.team_guest.name}</Text>
                                     </View>
                                 </View>
                                 <View style={{
@@ -251,7 +270,7 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "center"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Leader: </Text>
-                                        <Text style={{ color: 'black' }}>{this.props.infoMatch.team_guest.team_users[0].user.fullname}</Text>
+                                        <Text style={{ color: 'black' }}>{this.state.infoMatch.team_guest.team_users[0].user.fullname}</Text>
                                     </View>
                                     <View style={{
                                         flexDirection: 'row',
@@ -259,7 +278,7 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "center"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Career: </Text>
-                                        <Text style={{ color: 'black' }}> {this.props.infoMatch.team_guest.career.name}</Text>
+                                        <Text style={{ color: 'black' }}> {this.state.infoMatch.team_guest.career.name}</Text>
                                     </View>
                                     <View style={{
                                         flexDirection: 'row',
@@ -267,15 +286,15 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "center"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Level: </Text>
-                                        <Text style={{ color: 'black' }}> {this.props.infoMatch.team_guest.level.name}</Text>
+                                        <Text style={{ color: 'black' }}> {this.state.infoMatch.team_guest.level.name}</Text>
                                     </View>
                                 </View>
                                 <View style={{ flexDirection: 'row', marginTop: 40, justifyContent: "center", alignItems: "center" }}>
                                     <TouchableOpacity onPress={() => {
                                         let body = {
-                                            date_of_match: TimeService.formatDateFromTimeUnix(this.props.infoMatch.date_of_match, 'YYYY-MM-DD'),
+                                            date_of_match: TimeService.formatDateFromTimeUnix(this.state.infoMatch.date_of_match, 'YYYY-MM-DD'),
                                             status: "Pair success",
-                                            id: this.props.infoMatch.id
+                                            id: this.state.infoMatch.id
                                         }
                                         this.props.onUpdateMatch(body)
                                     }} style={{
@@ -291,10 +310,10 @@ class UpdateMatchComponent extends Component {
                                     <TouchableOpacity
                                         onPress={() => {
                                             let body = {
-                                                date_of_match: TimeService.formatDateFromTimeUnix(this.props.infoMatch.date_of_match, 'YYYY-MM-DD'),
+                                                date_of_match: TimeService.formatDateFromTimeUnix(this.state.infoMatch.date_of_match, 'YYYY-MM-DD'),
                                                 status: "New",
                                                 team_guest: "",
-                                                id: this.props.infoMatch.id
+                                                id: this.state.infoMatch.id
                                             }
                                             this.props.onUpdateMatch(body)
                                         }}

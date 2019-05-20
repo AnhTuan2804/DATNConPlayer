@@ -106,11 +106,11 @@ class GridironSearchComponent extends Component {
         if (value.textSearch) {
             const tmp = [];
             _.forEach(listSearch, (item) => {
-                if (_.toLower(item.name).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.phone).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.description).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.address).indexOf(_.toLower(textSearch)) > -1 ||
-                    _.toLower(item.area.name).indexOf(_.toLower(textSearch)) > -1) {
+                if (_.toLower(item.name).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.phone).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.description).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.address).indexOf(_.toLower(value.textSearch)) > -1 ||
+                    _.toLower(item.area.name).indexOf(_.toLower(value.textSearch)) > -1) {
                     tmp.push(item);
                 }
             });
@@ -181,6 +181,7 @@ class GridironSearchComponent extends Component {
                         <View style={{ width: '100%', flexDirection: 'column', }}>
                             <Field name="textSearch" keyboardType="default" textIP="" label={'Search'} component={renderField} />
                             <Field name="area_id" mode="dropdown" textIP="Select Area"
+                                onChange={(value) => this.search({ area_id: value })}
                                 data={this.props.listArea} label={'Area'} component={renderSelectSearch} />
                         </View>
                         <TouchableOpacity onPress={handleSubmit(submit)} style={{
