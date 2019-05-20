@@ -10,10 +10,11 @@ import {
     CHANGE_PASS_FAILED
 } from './ActionTypes';
 
-export const isGetProfile = () => {
+export const isGetProfile = (isHome) => {
     return {
         type: IS_GET_PROFILE,
         isLoading: true,
+        isHome,
     };
 }
 

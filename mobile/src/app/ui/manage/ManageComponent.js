@@ -26,15 +26,12 @@ class ManageComponent extends Component {
 
     readUserData() {
         let seft = this
-        // console.log(Constants.EMAIL_ADDRESS);
-        // 
         firebase.database().ref('/match').orderByChild("user/email").equalTo(Constants.EMAIL_ADDRESS).on('value', function (snapshot) {
             let listItem = []
             _.forEach(snapshot.val(), (value, key) => {
                 value['id'] = key
                 listItem.push(value)
             });
-            console.log(listItem);
             if (listItem.length) {
                 seft.setState({
                     listMatch: listItem
@@ -216,7 +213,7 @@ class ManageComponent extends Component {
                 break;
             case "Pair success":
                 bgColor = 'blue'
-                isdisabled = false;
+                isdisabled = true;
                 break;
             default:
                 bgColor = 'red'

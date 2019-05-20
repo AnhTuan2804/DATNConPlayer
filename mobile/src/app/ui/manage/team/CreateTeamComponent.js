@@ -46,8 +46,6 @@ class CreateTeamComponent extends Component {
 
     render() {
         submit = values => {
-            console.log(values);
-
             this.props.onCreateTeam(values);
         }
         const { handleSubmit } = this.props;

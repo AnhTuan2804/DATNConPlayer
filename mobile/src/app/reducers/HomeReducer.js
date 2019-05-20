@@ -22,10 +22,33 @@ import {
     IS_GET_LIST_TIME,
     GET_LIST_TIME_SUCCESSFULLY,
     GET_LIST_TIME_FAILED,
+
+    IS_GET_LIST_ALL_GRIDIRON,
+    GET_LIST_ALL_GRIDIRON_SUCCESSFULLY,
+    GET_LIST_ALL_GRIDIRON_FAILED
 } from '../actions/ActionTypes';
 
 const homeReducers = (state = {}, action) => {
     switch (action.type) {
+
+        case IS_GET_LIST_ALL_GRIDIRON:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case GET_LIST_ALL_GRIDIRON_SUCCESSFULLY:
+            return {
+                ...state,
+                listAllGridiron: action.listAllGridiron,
+                isLoading: false,
+            };
+        case GET_LIST_ALL_GRIDIRON_FAILED:
+            return {
+                ...state,
+                error: action.error,
+                isLoading: false,
+
+            };
         // getListArea
         case IS_GET_LIST_AREA:
             return {

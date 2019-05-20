@@ -1,14 +1,18 @@
 import { connect } from 'react-redux';
-import GridironSearchComponent from './GridironSearchComponent';
+import GridironSearchForm from './GridironSearchComponent';
 
 export default connect(
   state => {
+    let homeReducers = state.homeReducers || {}
+    let team = state.teamReducers || {};
     return {
-      isloadding :  false
+      isLoading: homeReducers.isLoading,
+      listArea: homeReducers.listArea || [],
+      listGridiron: homeReducers.listAllGridiron || [],
     }
   },
   dispatch => {
     return {
     }
   }
-)(GridironSearchComponent);
+)(GridironSearchForm);

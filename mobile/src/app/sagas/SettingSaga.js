@@ -17,6 +17,7 @@ import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
 import LoginService from '../../theme/shared/utils/LoginService';
+import { getlistTeam } from '../actions/TeamActions';
 
 function* getProfileSaga(action) {
     try {
@@ -27,6 +28,9 @@ function* getProfileSaga(action) {
         Constants.USER_ID = result.id
         Constants.PHONE = result.phone
         yield put({ type: GET_PROFILE_SUCCESSFULLY, userData: result });
+        if (action.isHome) {
+            yield put(getlistTeam())
+        }
     } catch (error) {
         yield put({ type: GET_PROFILE_FAILED, error });
     }

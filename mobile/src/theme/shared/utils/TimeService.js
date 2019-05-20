@@ -7,7 +7,7 @@ export default class TimeService {
     static DATE_TIME_IMPORT_FORMAT = 'D/M/YYYY H:m';
     static DATE_TIME_SS_FORMAT = 'YYYY/MM/DD HH:mm:ss'
     static DATE_FORMAT = 'YYYY/MM/DD';
-    static DATE_IMPORT_FORMAT = 'D/M/YYYY';
+    static DATE_IMPORT_FORMAT = 'DD/MM/YYYY';
     static DATE_IMPORT = 'YYYY/MM/DD';
     static YEAR_MONTH_DATE_FORMAT = 'YYYY-MM-DD';
     static DATE_TIME_SS_FORMAT_CONCAT = 'YYYYMMDDHHmmss'
