@@ -85,7 +85,6 @@ export class HomeComponent implements OnInit {
     this.matchService.getAll().subscribe((result) => {
       this.listMatch = this.setDataMatchPublic(_.reverse(result));
       this.listMatchSearch = this.listMatch;
-      console.log(this.listMatch)
       this.action.hideLoading();
     }, err => {
       this.action.hideLoading();

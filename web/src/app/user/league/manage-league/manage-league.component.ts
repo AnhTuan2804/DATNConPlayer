@@ -22,6 +22,8 @@ import { MatchService } from 'src/app/shared/services/match.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
+import { LeagueService } from 'src/app/shared/services/league.service';
+import { League } from 'src/app/shared/classes/league';
 declare var $: any;
 @Component({
   selector: 'app-manage-league',
@@ -30,11 +32,10 @@ declare var $: any;
 })
 export class ManageLeagueComponent implements OnInit {
 
-
   formAdd: FormGroup;
   addFaild: boolean = false;
   messageError: string = "";
-  headers = ['No.', 'Date', 'Time', 'Status', 'Guest Team', 'Actions'];
+  headers = ['No.', 'Name Of League', 'Date Expiry Register', 'Number Of Team Register', 'Status', 'Actions'];
   listArea = [];
   listLevel = [];
   listCareer = [];
@@ -42,6 +43,7 @@ export class ManageLeagueComponent implements OnInit {
   listGridiron = [];
   listTime = [];
   listMatch = [];
+  listLeague = [];
   listTypeOfLeague = [];
   showEditForm = false;
   objectAreaEvent;
@@ -50,6 +52,7 @@ export class ManageLeagueComponent implements OnInit {
   objectTeamEvent;
   objectGridironEvent;
   objectTimeEvent;
+  objectTypeLeague;
   selectedIndex;
   userDetail;
   startDate;
@@ -60,6 +63,7 @@ export class ManageLeagueComponent implements OnInit {
     private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
     private teamService: TeamService, private team: Team,
     private match: Match, private matchService: MatchService,
+    private leagueService: LeagueService, private league: League,
     private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router, private userService: UserService,
@@ -67,32 +71,28 @@ export class ManageLeagueComponent implements OnInit {
     this.initForm()
     this.getListArea();
     this.getListCareer();
-    this.getListTeam();
-    this.getListGridiron();
+    this.getListLeagueByEmail();
   }
 
   ngOnInit() {
-    // this.action.showLoading();
-    // this.userService.getProfile().subscribe((user) => {
-    //   this.userDetail = user;
-    //   this.getListHistory(user.email);
-    // }, err => {
-    //   this.action.hideLoading();
-    // })
     this.listTypeOfLeague = this.infoCommon.getListTypeOfCompetition();
     this.startDate = this.timeService.getDateWithoutTime(new Date());
   }
 
-  getListHistory(email) {
-    this.matchService.getAll().subscribe((result) => {
-      result = _.reverse(result)
-      console.log(result);
-      this.listMatch = this.match.setData(result, email);
-      this.action.hideLoading();
-    }, err => {
-      this.action.hideLoading();
-      console.log(err.message)
+  getListLeagueByEmail() {
+    this.action.showLoading();
+    this.userService.getProfile().subscribe((user) => {
+      this.leagueService.getListForUser(user.email).subscribe((result) => {
+        result = _.reverse(result)
+        console.log(result);
+        this.listLeague = this.league.setData(result);
+        this.action.hideLoading();
+      }, err => {
+        this.action.hideLoading();
+        console.log(err.message)
+      })
     })
+
   }
 
   initForm() {
@@ -100,39 +100,40 @@ export class ManageLeagueComponent implements OnInit {
       'date_expiry_register': new FormControl('', Validators.required),
       'number_of_teams': new FormControl('', Validators.required),
       'name_of_league': new FormControl('', Validators.required),
-      'type_league': new FormControl(''),
+      'type_league': new FormControl('', Validators.required),
       'type_league_id': new FormControl(''),
-      'career': new FormControl('', Validators.required),
+      'career': new FormControl(''),
       'career_id': new FormControl(''),
       'area_id': new FormControl(''),
       'area': new FormControl('', Validators.required),
-      'invitation': new FormControl('')
+      'description': new FormControl('')
     });
   }
 
-  getListTime() {
-    this.infoCommonService.getListTime().subscribe((result) => {
-      this.listTime = this.infoCommon.getListTimeForDropDown(result);
-    }, (err) => {
-      console.log(err)
-    })
-  }
 
-  getListGridiron() {
-    this.gridironServiec.getListForAdmin().subscribe((result) => {
-      this.listGridiron = this.gridiron.getListForDropdown(result);
-    }, (err) => {
-      console.log(err)
-    })
-  }
+  // getListTime() {
+  //   this.infoCommonService.getListTime().subscribe((result) => {
+  //     this.listTime = this.infoCommon.getListTimeForDropDown(result);
+  //   }, (err) => {
+  //     console.log(err)
+  //   })
+  // }
 
-  getListTeam() {
-    this.teamService.getListByCaptain().subscribe((result) => {
-      this.listTeam = this.team.getListTeamForDropdown(result);
-    }, (err) => {
-      console.log(err);
-    })
-  }
+  // getListGridiron() {
+  //   this.gridironServiec.getListForAdmin().subscribe((result) => {
+  //     this.listGridiron = this.gridiron.getListForDropdown(result);
+  //   }, (err) => {
+  //     console.log(err)
+  //   })
+  // }
+
+  // getListTeam() {
+  //   this.teamService.getListByCaptain().subscribe((result) => {
+  //     this.listTeam = this.team.getListTeamForDropdown(result);
+  //   }, (err) => {
+  //     console.log(err);
+  //   })
+  // }
 
   getListArea() {
     this.areaService.getList().subscribe((result) => {
@@ -142,13 +143,6 @@ export class ManageLeagueComponent implements OnInit {
     })
   }
 
-  getListLevel() {
-    this.levelService.getList().subscribe((result) => {
-      this.listLevel = this.level.getListForDropdown(result);
-    }, (err) => {
-      console.log(err)
-    })
-  }
 
   getListCareer() {
     this.careerService.getList().subscribe((result) => {
@@ -158,23 +152,24 @@ export class ManageLeagueComponent implements OnInit {
     })
   }
 
+  getListLeague() {
+    this.action.hideLoading();
+  }
+
   add() {
     const data = {
+      name_of_league: this.getValueFormAdd('name_of_league'),
+      date_expiry_register: this.getValueFormAdd('date_expiry_register'),
+      career: this.objectCareerEvent ? this.objectCareerEvent : undefined,
       area: this.objectAreaEvent,
-      level: this.objectLevelEvent,
-      time: this.objectTimeEvent,
-      team: this.objectTeamEvent,
-      gridiron: this.objectGridironEvent,
-      career: this.objectCareerEvent,
-      date_of_match: this.getValueFormAdd('date_of_match'),
-      invitation: this.getValueFormAdd('invitation'),
-      status: Utils.STATUS_NEW
+      type_league: this.objectTypeLeague,
+      description: this.getValueFormAdd('description'),
+      status: Utils.STATUS_NEW,
+      number_of_teams: this.getValueFormAdd('number_of_teams')
     }
 
-    data.time['name'] = this.objectTimeEvent.time_start + 'h - ' + this.objectTimeEvent.time_end + 'h'
-
     this.action.showLoading();
-    this.matchService.createMatch(data).subscribe((result) => {
+    this.leagueService.createLeague(data).subscribe((result) => {
       this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
@@ -188,18 +183,11 @@ export class ManageLeagueComponent implements OnInit {
 
   handleAction(event) {
     switch (event.action) {
-      case 'Delete':
-        this.action.showLoading();
-        this.teamService.deleteTeam({ id: event.item.teamUser.team.id }).subscribe((result) => {
-          this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
-          this.getListTeam();
-        }, (err) => {
-          this.action.hideLoading();
-          this.toastrService.success(err.message, '', { timeOut: 3500 });
-        })
-        break;
       case 'Edit':
-        this.navToDetail(event.item.match.id);
+        this.navToDetail(event.item.league.id, 'Edit');
+        break;
+      case 'View':
+        this.navToDetail(event.item.league.id, 'View');
         break;
     }
   }
@@ -208,8 +196,13 @@ export class ManageLeagueComponent implements OnInit {
     return this.formAdd.controls[name].value;
   }
 
-  navToDetail(id, view?) {
-    const path = `match/edit/${id}`;
+  navToDetail(id, tab) {
+    let path;
+    if (tab == 'Edit') {
+      path = `league/edit/${id}`;
+    } else {
+      path = `league/view/${id}`;
+    }
     this.router.navigate([path]);
   }
 
@@ -221,13 +214,6 @@ export class ManageLeagueComponent implements OnInit {
         area_id: event.value.area.id
       });
     }
-    if (tab == 'level') {
-      this.objectLevelEvent = event.value.level;
-      this.formAdd.patchValue({
-        level: event.value.level.name,
-        level_id: event.value.level.id
-      });
-    }
     if (tab == 'career') {
       this.objectCareerEvent = event.value.career;
       this.formAdd.patchValue({
@@ -235,30 +221,11 @@ export class ManageLeagueComponent implements OnInit {
         career_id: event.value.career.id
       });
     }
-    if (tab == 'gridiron') {
-      this.objectGridironEvent = event.value.gridiron;
+    if (tab == 'type') {
+      this.objectTypeLeague = event.value.type;
       this.formAdd.patchValue({
-        gridiron: event.value.gridiron.name,
-        gridiron_id: event.value.gridiron.id
-      });
-      this.objectAreaEvent = this.objectGridironEvent.area;
-      this.formAdd.patchValue({
-        area: this.objectAreaEvent.name,
-        area_id: this.objectAreaEvent.id
-      })
-    }
-    if (tab == 'time') {
-      this.objectTimeEvent = event.value.time;
-      this.formAdd.patchValue({
-        time: event.value.time.time_start + ' : ' + event.value.time.time_end,
-        time_id: event.value.time.id
-      });
-    }
-    if (tab == 'team') {
-      this.objectTeamEvent = event.value.team;
-      this.formAdd.patchValue({
-        team: event.value.team.name,
-        team_id: event.value.team.id
+        type_league: event.value.type.name,
+        type_league_id: event.value.type.id
       });
     }
   }

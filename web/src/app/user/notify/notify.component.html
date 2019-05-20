@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row content">
+    <div class="col-sm-12 main-content">
+      <div class="header-sidenav">
+        <div class="container">
+         <h4>LIST NOTIFICATION</h4>
+        </div>
+      </div>
+      <div class="content-match" *ngFor="let item of listNotifys">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-8">
+                <p>
+                    <i class="fas fa-comments"></i>.&nbsp; <span class="title">Status:</span><span style="color: red"> {{item.status}}</span>
+                </p>
+                <p><i class="fas fa-clock"></i>.&nbsp; {{item.create_at}}
+                  </p>
+                <p><i class="fas fa-comments"></i>.&nbsp; <span class="title">Message:</span> {{item.message}}
+                </p>
+              </div>
+              <div *ngIf="item.status == 'New'" class="col-sm-4">
+                <button class="btn btn-success" (click)="readNotify(item.id)"><i class="fas fa-check"></i>
+                  Mark as read</button>
+              </div>
+            </div>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

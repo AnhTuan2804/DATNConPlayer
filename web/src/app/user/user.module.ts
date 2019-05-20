@@ -19,6 +19,8 @@ import { LeagueComponent } from './league/league.component';
 import { ManageLeagueComponent } from './league/manage-league/manage-league.component';
 import { LeagueDetailComponent } from './league/manage-league/league-detail/league-detail.component';
 import { HomeGridironComponent } from './home/home-gridiron/home-gridiron.component';
+import { NotifyComponent } from './notify/notify.component';
+import { ModalUpdateMatchComponent } from './league/manage-league/league-detail/modal-update-match/modal-update-match.component';
 
 @NgModule({
     imports: [
@@ -43,7 +45,9 @@ import { HomeGridironComponent } from './home/home-gridiron/home-gridiron.compon
         LeagueComponent,
         ManageLeagueComponent,
         LeagueDetailComponent,
-        HomeGridironComponent
+        HomeGridironComponent,
+        NotifyComponent,
+        ModalUpdateMatchComponent
     ]
 })
 export class UserModule { }

@@ -270,5 +270,5 @@ export class MatchComponent implements OnInit {
 
   actionForm(tab) {
     this.isShow = tab == 'show' ? false : true;
-  
+  }
 }

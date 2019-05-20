@@ -7,6 +7,21 @@
 
   <div class="right-header collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav header-title">
+      <li *ngIf="isShow" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-bell"></i> <span *ngIf="listNotify.length > 0"> ({{listNotify.length}} New)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <!-- <div *ngFor="let item of listNotify"> -->
+          <a *ngFor="let item of listNotify" class="dropdown-item" (click)="readNotify(item.id)"><i
+              class="far fa-comments"></i>
+            &nbsp;{{item.message}}... <span style="color: red">New</span> </a>
+          <div *ngIf="listNotify.length > 0" class="dropdown-divider"></div>
+          <!-- </div> -->
+          <a class="dropdown-item" href="/notify"><i class="fas fa-bell"></i> &nbsp;See full notify</a>
+        </div>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
