@@ -6,3 +6,15 @@
 .control-label {
   margin: 0;
 }
+
+.dis-flex {
+  display: flex;
+  align-items: center;
+}
+.div-center {
+  display: flex;
+  justify-content: flex-end;
+}
+.modal-header {
+  margin: 0 !important;
+}
