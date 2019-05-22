@@ -44,6 +44,11 @@ export class LeagueService extends BaseService {
     return this.db.object(`/league/${id}`).valueChanges();
   }
 
+  public getMatch(path) {
+    return this.db.object(`/league/${path}`).valueChanges();
+  }
+
+
 
 
   public createLeague(data: Object): Observable<any> {

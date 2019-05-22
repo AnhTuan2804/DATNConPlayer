@@ -176,8 +176,12 @@ export class LeagueDetailComponent implements OnInit {
   }
 
   updateMatch(index) {
-    console.log(index + '-' + this.listMatchByRound[index]);...
-    this.objectMatch = _.cloneDeep(this.listMatchByRound[index]);
+    this.currentMatch = index;
+    this.objectMatch = {};
+    this.objectMatch['league_id'] = this.id;
+    this.objectMatch['current_round'] = this.currentRound - (this.currentPage * 10 + 1);
+    this.objectMatch['current_match'] = index;
+    this.objectMatch = _.cloneDeep(this.objectMatch);
     this.showUpdateMatch();
   }
 
@@ -290,17 +294,7 @@ export class LeagueDetailComponent implements OnInit {
   }
 
   emitDataMatch(event) {
-    let data = event;
-    data['id'] = this.id;
-    data['current_round'] = this.currentRound;
-    this.action.showLoading();
-    this.leagueService.updateMatch(event).subscribe((result) => {
-      this.action.hideLoading();
-      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3000 });
-    }, err => {
-      this.action.hideLoading();
-      this.toastrService.warning(err.message, '', { timeOut: 3000 });
-    })
+    
   }
 
 }

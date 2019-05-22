@@ -194,7 +194,7 @@
                 <span style="text-transform: uppercase;">{{item.team1.name}}</span>
               </div>
               <div *ngIf="!item.team_relax" class="col-md-2">
-                <span style="font-weight: bold">{{item.team1.score || 0}} - {{item.team2.score || 0}}</span>
+                <span style="font-weight: bold">{{item.team1_score || ''}} - {{item.team2_score || ''}}</span>
               </div>
               <div *ngIf="!item.team_relax" class="col-md-4">
                 <span style="text-transform: uppercase;">{{item.team2.name}}</span>

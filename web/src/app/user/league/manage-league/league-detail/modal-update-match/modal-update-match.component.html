@@ -2,29 +2,41 @@
   <!-- Modal HTML Markup -->
   <div class="modal-dialog  modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title">Match Information</h1>
+
+      <div class="modal-header row dis-flex">
+        <div class="col-sm-7">
+          <h1 class="modal-title">Match Information</h1>
+        </div>
+        <div class="col-sm-5 div-center"><button (click)="updateInfo()" class="btn-center btn btn-success dis-flex"><i
+              class="far fa-edit"></i>&nbsp; Update Information Match</button></div>
       </div>
+
       <div class="modal-body">
-        <form role="form" [formGroup]="updateForm" (ngSubmit)="updateInfo()">
+        <form role="form" [formGroup]="updateForm">
           <input type="hidden" name="_token" value="">
           <div class="form-group row">
             <div class="col-md-4 team-name">
-              <label style="text-transform: uppercase" class="control-label">{{match ? match.team1.name : ''}}</label>
+              <label style="text-transform: uppercase" class="control-label">{{dataMatchDetail ? dataMatchDetail.team1.name : ''}}</label>
             </div>
-            <div class="col-md-2">
+            <div [ngClass]="{'view': dataMatchDetail && dataMatchDetail.team1_score}" *ngIf="!is_update_infor" class="col-md-2">
               <input type="number" class="form-control input-lg" formControlName="team1_score" value="">
             </div>
-            <div class="col-md-2">
+            <div [ngClass]="{'view': dataMatchDetail && dataMatchDetail.team1_score}" *ngIf="!is_update_infor" class="col-md-2">
               <input type="number" class="form-control input-lg" formControlName="team2_score" value="">
             </div>
+            <div *ngIf="is_update_infor" class="col-md-4 team-name">
+              <label style="color: brown; font-style: italic" class="control-label">{{message || '-'}}</label>
+            </div>
             <div class="col-md-4 team-name">
-              <label style="text-transform: uppercase" class="control-label">{{match ? match.team2.name : ''}}</label>
+              <label style="text-transform: uppercase" class="control-label">{{dataMatchDetail ? dataMatchDetail.team2.name : ''}}</label>
+            </div>
+            <div class="col-md-12 team-name">
+              <label style="color: red; font-style: italic; display: flex; align-items: center;" class="control-label">{{messageErr}}</label>
             </div>
           </div>
-
+          <hr>
           <div class="form-group row">
-            <div class="col-md-6">
+            <div [ngClass]="{'view': !is_update_infor}" class="col-md-4">
               <label class="control-label">Time</label>
               <span class="required"> *</span>
               <div class="input-include-error">
@@ -36,8 +48,9 @@
                   required</span>
               </div>
             </div>
-            <div class="col-md-6">
+            <div [ngClass]="{'view': !is_update_infor}" class="col-md-4">
               <label class="control-label">Gridiron</label>
+              <span class="required"> *</span>
               <div class="input-include-error">
                 <app-select-dropdown [nameSelect]="updateForm.controls['gridiron'].value" [title]="'Select gridiron'"
                   [selectedIndex]="selectedIndex" [options]="listGridiron"
@@ -45,7 +58,7 @@
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div [ngClass]="{'view': !is_update_infor}" class="col-md-4">
               <label class="control-label">Date</label>
               <span class="required"> *</span>
               <div class="input-include-error">
@@ -54,19 +67,13 @@
               </div>
             </div>
 
-            <div class="col-md-12">
+            <div *ngIf="!is_update_infor" class="col-md-12">
               <label class="control-label">Summary of Match</label>
               <div class="input-include-error">
                 <textarea type="textarea" class="form-control input-lg" formControlName="description"></textarea>
               </div>
             </div>
 
-          </div>
-
-          <div class="form-group">
-            <div>
-              <button type="submit" class="btn btn-success" [disabled]="!updateForm.valid">Update Information</button>
-            </div>
           </div>
         </form>
       </div>
