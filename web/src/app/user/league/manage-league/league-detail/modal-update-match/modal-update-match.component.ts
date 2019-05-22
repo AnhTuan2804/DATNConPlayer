@@ -10,6 +10,9 @@ import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { InfoCommonService } from 'src/app/shared/services/info-common.service';
 import { InfoCommon } from 'src/app/shared/classes/info-common';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
+import { LeagueService } from 'src/app/shared/services/league.service';
+import { ToastrService } from 'ngx-toastr';
+import { Utils } from 'src/app/shared/enums/utils';
 declare var $: any;
 
 @Component({
@@ -27,11 +30,17 @@ export class ModalUpdateMatchComponent implements OnInit {
   objectTimeEvent;
   objectGridironEvent;
   startDate;
+  is_update_infor = true;
+  is_updated_sroce = 0;
+  message = null;
+  dataMatchDetail;
+  messageErr;
   constructor(private formBuilder: FormBuilder, private action: ComponentActions,
     private gridironService: GridironService, private gridiron: Gridiron,
     private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
     private user: User, private componentAction: ComponentActions,
-    private timeService: TimeService,
+    private toastrService: ToastrService,
+    private timeService: TimeService, private leagueService: LeagueService,
     private router: Router) { }
 
   ngOnInit() {
@@ -51,19 +60,43 @@ export class ModalUpdateMatchComponent implements OnInit {
   ngOnChanges(changes): void {
     this.getListTime();
     this.getListGridiron();
-    this.bindData();
+    this.message = '';
+    this.messageErr = '';
+    if (this.match) {
+      this.action.showLoading();
+      const path = `${this.match['league_id']}/rounds/${this.match['current_round']}/${this.match['current_match']}`;
+      this.leagueService.getMatch(path).subscribe((result) => {
+        console.log(result);
+        this.dataMatchDetail = result;
+        this.action.hideLoading();
+        this.bindData();
+      }, err => {
+        this.action.hideLoading();
+      })
+    }
   }
 
   bindData() {
-    if (this.match) {
-      this.updateForm.patchValue({
-        time: this.match['time'] ? this.match['time'].itemName : '',
-        description: this.match['description'] || '',
-        gridiron: this.match['gridiron'] ? this.match['gridiron']['name'] : '',
-        team1_score: this.match['team1_score'] || '',
-        team2_score: this.match['team2_score'] || '',
-        date_of_match: this.timeService.formatDateFromTimeUnix(this.match['date_of_match'], 'YYYY-MM-DD'),
-      })
+    this.updateForm.patchValue({
+      time: this.dataMatchDetail['time'] ? this.dataMatchDetail['time'].itemName : '',
+      gridiron: this.dataMatchDetail['gridiron'] ? this.dataMatchDetail['gridiron'] : '',
+      team1_score: this.dataMatchDetail['team1_score'] || '',
+      team2_score: this.dataMatchDetail['team2_score'] || '',
+      description: this.dataMatchDetail['description'] || '',
+      date_of_match: this.dataMatchDetail['date_of_match'] ? this.timeService.formatDateFromTimeUnix(this.dataMatchDetail['date_of_match'], 'YYYY-MM-DD') : '',
+    })
+    if (this.dataMatchDetail['time'] && this.dataMatchDetail['date_of_match'] && this.dataMatchDetail['gridiron']) {
+      if ((this.timeService.getTimeUnixFromTimeFormatYMD(this.timeService.getDateWithoutTime(null)) == this.dataMatchDetail['date_of_match'] &&
+        Number(this.dataMatchDetail['time'].time_end) > (new Date()).getHours()) ||
+        this.timeService.getTimeUnixFromTimeFormatYMD(this.timeService.getDateWithoutTime(null)) < this.dataMatchDetail['date_of_match']) {
+        this.message = 'Match not yet start';
+        this.is_update_infor = true;
+      } else {
+        this.is_update_infor = false;
+      }
+    } else {
+      this.is_update_infor = true;
+      this.message = 'Time, Gridiron, Date is required'
     }
   }
 
@@ -92,38 +125,88 @@ export class ModalUpdateMatchComponent implements OnInit {
       });
     }
     if (tab == 'time') {
-      this.objectTimeEvent = event.value;
+      this.objectTimeEvent = event.value.time;
+      this.objectTimeEvent['itemName'] = event.value.itemName;
       this.updateForm.patchValue({
-        time: event.value.time.time_start + ' : ' + event.value.time.time_end,
+        time: event.value.itemName,
         time_id: event.value.time.id
       });
     }
   }
 
   updateInfo() {
-    const data = {
-      team1_score: this.getValueFromForm('team1_score') || 0,
-      team2_score: this.getValueFromForm('team2_score') || 0,
-      description: this.getValueFromForm('description')
+    let data = {};
+    if (this.is_update_infor) {
+      if (this.objectGridironEvent) {
+        data['gridiron'] = this.objectGridironEvent.name
+      }
+      if (this.objectTimeEvent) {
+        data['time'] = this.objectTimeEvent
+      }
+      if (this.getValueFromForm('date_of_match')) {
+        data['date_of_match'] = this.getValueFromForm('date_of_match')
+      }
+    } else {
+      if (!this.dataMatchDetail.is_updated_sroce) {
+        data['description'] = this.getValueFromForm('description');
+        if (this.getValueFromForm('team1_score') === 0 && this.getValueFromForm('team2_score') === 0) {
+          //okoe. get data t update
+          this.messageErr = '';
+          data['team1_score'] = this.getValueFromForm('team1_score');
+          data['team2_score'] = this.getValueFromForm('team2_score');
+        } else if (this.getValueFromForm('team1_score') === 0) {
+          if (!this.getValueFromForm('team2_score')) {
+            this.messageErr = 'Both of score is required!';
+            return;
+          } else {
+            //oke. get data to update
+            this.messageErr = '';
+            data['team1_score'] = this.getValueFromForm('team1_score');
+            data['team2_score'] = this.getValueFromForm('team2_score');
+          }
+        } else if (this.getValueFromForm('team2_score') === 0) {
+          if (!this.getValueFromForm('team1_score')) {
+            this.messageErr = 'Both of score is required!';
+            return;
+          } else {
+            //oke. get data to update
+            this.messageErr = '';
+            data['team1_score'] = this.getValueFromForm('team1_score');
+            data['team2_score'] = this.getValueFromForm('team2_score');
+          }
+        } else if (!this.getValueFromForm('team1_score') || !this.getValueFromForm('team2_score')) {
+          this.messageErr = 'Both of score is required!';
+          return;
+        } else {
+          this.messageErr = '';
+          data['team1_score'] = this.getValueFromForm('team1_score');
+          data['team2_score'] = this.getValueFromForm('team2_score');
+        }
+      } else {
+        data['description'] = this.getValueFromForm('description');
+      }
     }
-    if (this.objectGridironEvent) {
-      data['gridiron'] = this.objectGridironEvent.name
-    }
-    if (this.objectTimeEvent) {
-      data['time'] = this.objectTimeEvent
-    }
-    if (this.getValueFromForm('date_of_match')) {
-      data['date_of_match'] = this.getValueFromForm('date_of_match')
-    }
-    this.emitData(data);
+    this.updateMatch(data);
   }
 
   getValueFromForm(name) {
     return this.updateForm.controls[name].value;
   }
 
-  emitData(data) {
-    this.outputData.emit(data);
+  updateMatch(match) {
+    match['id'] = this.match['league_id'];
+    match['current_round'] = this.match['current_round'];
+    match['current_match'] = this.match['current_match'];
+    match['team1'] = this.dataMatchDetail.team1;
+    match['team2'] = this.dataMatchDetail.team2;
+    this.action.showLoading();
+    this.leagueService.updateMatch(match).subscribe((result) => {
+      this.action.hideLoading();
+      this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3000 });
+    }, err => {
+      this.action.hideLoading();
+      this.toastrService.warning(err.message, '', { timeOut: 3000 });
+    })
   }
 
 }

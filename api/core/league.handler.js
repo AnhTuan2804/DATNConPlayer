@@ -87,14 +87,67 @@ class LeagueHandler {
     }
 
     async updateMatch(body) {
+        const path = `${body.id}/rounds/${body.current_round}/${body.current_match}`;
         const id = body.id;
-        if (!id) {
-            return;
+        console.log(id);
+        if (body.date_of_match) {
+            body.date_of_match = timeUtil.getTimesUnixFromTimeFormat(body.date_of_match);
         }
-        body = _.omit(body, ['id']);
-        body.date_of_match = timeUtil.getTimesUnixFromTimeFormat(body.date_of_match);
         try {
-            return firebaseDB.ref(`/league/${id}/...`).update(body);
+
+            if (body.team1_score >-1) {
+                body['is_updated_sroce'] = true;
+                let listTeam
+                await firebaseDB.ref(`/league/${id}`).once("value", function (snapshot) {
+                    listTeam = snapshot.val().list_team_tmp;
+                })
+
+                _.forEach(listTeam, (item, index) => {
+                    if (item.team.name == body.team1.name) {
+                        //change data
+                        item.for = item.for + body.team1_score;
+                        item.against = item.against + body.team2_score;
+                        item.played = item.played + 1;
+
+                        if (body.team1_score > body.team2_score) {
+                            item.won = item.won + 1;
+                            item.point = item.point + 3;
+                        } else if (body.team1_score < body.team2_score) {
+                            item.lost = item.lost + 1;
+                        } else {
+                            item.draw = item.draw + 1;
+                            item.point = item.point + 1;
+                        }
+
+                        //update
+                        firebaseDB.ref(`/league/${id}/list_team_tmp/${index}`).update(item);
+                    }
+
+                    if (item.team.name == body.team2.name) {
+
+                        item.for = item.for + body.team2_score;
+                        item.against = item.against + body.team1_score;
+                        item.played = item.played + 1;
+
+                        if (body.team1_score < body.team2_score) {
+                            item.won = item.won + 1;
+                            item.point = item.point + 3;
+                        } else if (body.team1_score > body.team2_score) {
+                            item.lost = item.lost + 1;
+                        } else {
+                            item.draw = item.draw + 1;
+                            item.point = item.point + 1;
+                        }
+
+                        //update
+                        firebaseDB.ref(`/league/${id}/list_team_tmp/${index}`).update(item);
+                    }
+                })
+            }
+
+            body = _.omit(body, ['id', 'current_round', 'current_match']);
+            return firebaseDB.ref(`/league/${path}`).update(body);
+
         }
         catch (err) {
             throw err;
