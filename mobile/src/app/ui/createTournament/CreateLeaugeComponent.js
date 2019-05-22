@@ -22,9 +22,9 @@ class CreateLeaugeComponent extends Component {
         this.props.dispatch(initialize(
             'createLeauge',
             {
-                name_of_league: "Đá vui thôi",
+                name_of_league: "",
                 date_expiry_register: new Date(),
-                number_of_teams: `10`,
+                number_of_teams: ``,
                 area_id: this.props.listArea[0].id,
                 career_id: undefined,
                 type_league_id: Constants.TYPE_LEAUGE[0].id,
@@ -80,7 +80,7 @@ class CreateLeaugeComponent extends Component {
                             <Field name="name_of_league" keyboardType="default" textIP="" label={'Name of leauge'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
-                              <Field name="number_of_teams" keyboardType="numeric" textIP="" label={'Number of teams'} component={renderField}
+                            <Field name="number_of_teams" keyboardType="numeric" textIP="" label={'Number of teams'} component={renderField}
                                 validate={[required, required_trim, have_point_end, number]}
                             />
                             <Field name="date_expiry_register" textIP="Select date" label={'Registry expiry date'} component={renderDatePicker}

@@ -5,7 +5,7 @@ import Constants from '../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
 import Loading from '../common/modal/Loading';
 import Utils from '../../../theme/shared/utils/Utils';
-import { Field, initialize, reduxForm } from 'redux-form';
+import { Field, initialize, reduxForm, change } from 'redux-form';
 import { required, renderField, maxLength40, renderFieldForPass, required_trim, have_point_end, isValidEmailOrNumber, renderSelect, renderFieldTextarea, confirm_min_age, confirm_max_age, number, renderDatePicker } from '../../../theme/variable/Validate';
 import TimeService from '../../../theme/shared/utils/TimeService';
 import firebase from 'firebase';
@@ -34,10 +34,13 @@ class DetailLeaugeComponent extends Component {
 
         this.state = {
             visibleModal: false,
+            modalUpdateMatch: false,
             itemLeague: this.props.itemLeague,
             id: this.props.itemLeague.id,
             showStandings: false,
-            activeRound: 0
+            activeRound: 0,
+            showRounds: false,
+            currenMatch: null
         }
         this.props.dispatch(initialize(
             'updateLeauge',
@@ -49,6 +52,7 @@ class DetailLeaugeComponent extends Component {
                 description: this.props.itemLeague.description,
             }
         ));
+        this.props.dispatch(initialize('updateItemMatch'));
     }
 
     componentWillMount() {
@@ -184,6 +188,112 @@ class DetailLeaugeComponent extends Component {
         )
     }
 
+    setModalMatchVisible(visible, item) {
+        this.setState({ modalUpdateMatch: visible, currenMatch: item });
+    }
+
+    renderModalUpdateMatch(item) {
+        console.log("ssssssssssssssssss", item);
+        // this.props.change("area_id", gridiron.area_id),
+        // this.props.dispatch(change(
+        //     'updateItemMatch',
+        //     "name_of_league", this.props.itemLeague.name_of_league
+        //     date_expiry_register: TimeService.formatDateFromTimeUnix(this.props.itemLeague.date_expiry_register, 'YYYY-MM-DD'),
+        //     area_id: this.props.itemLeague.area.id,
+        //     career_id: this.props.itemLeague.career ? this.props.itemLeague.career.id : undefined,
+        //     description: this.props.itemLeague.description,
+        // }
+        // ));
+
+        // submit = values => {
+        // let body = {
+        //     name_of_league: values.name_of_league,
+        //     area: _.find(this.props.listArea, function (o) { return o.id == values.area_id }),
+        //     career: _.find(this.props.listCareer, function (o) { return o.id == values.career_id }),
+        //     date_expiry_register: TimeService.getTimeFormatFromTime(values.date_expiry_register, `YYYY-MM-DD`),
+        //     description: values.description,
+        //     id: this.props.itemLeague.id,
+        // }
+        // this.setModalMatchVisible(false)
+        // }
+        const { handleSubmit } = this.props;
+        return (
+            <Modal
+                transparent={true}
+                visible={this.state.modalUpdateMatch}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                }}>
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.2)" }}>
+                    <View style={{ backgroundColor: "#fff", width: "90%", height: "80%", borderRadius: 5 }}>
+                        <View style={{
+                            margin: 10,
+                            justifyContent: 'space-between',
+                            flexDirection: 'column',
+                        }}>
+                            <View style={{
+                                padding: 10,
+                                justifyContent: 'flex-start', alignItems: 'flex-start',
+                                borderBottomWidth: 1,
+                                borderBottomColor: "#28a745"
+                            }}>
+                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Update Information of match</Text>
+                            </View>
+                            <View style={{ paddingTop: 10, justifyContent: "space-around", alignItems: "center", flexDirection: "row" }}>
+                                <Text style={{ flex: 1, textAlign: "center" }}>{item.team1.name}</Text>
+                                <Image style={{ width: 30, height: 30 }} resizeMode="contain" source={require('../../../assets/images/icon-match.png')} />
+                                <Text style={{ flex: 1, textAlign: "center" }}>{item.team2.name}</Text>
+                            </View>
+                        </View>
+                        <ScrollView contentContainerStyle={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingTop: 10, }}>
+                            <View style={{ width: '100%', flexDirection: 'column', }}>
+                                <Field name="date_of_match"
+                                    textIP={TimeService.formatDateFromTimeUnix(this.props.itemLeague.date_expiry_register, 'DD/MM/YYYY')}
+                                    label={'Date of match'} component={renderDatePicker}
+                                    defDate={new Date(TimeService.formatDateFromTimeUnix(this.props.itemLeague.date_expiry_register, 'MM/DD/YYYY'))}
+                                />
+                                {/*<Field name="time" mode="dropdown" textIP="Select Time"
+                                    data={this.props.listArea} label={'Area'} component={renderSelect}
+                                />
+                                <Field name="gridiron" mode="dropdown" textIP="Select Gridiron"
+                                    data={this.props.listCareer} label={'Career'} component={renderSelect}
+                                />
+                                <Field name="description" keyboardType="default" textIP="Summary about league" label={'Summary about league'} component={renderFieldTextarea}
+                                    validate={[required_trim, have_point_end]}
+                                /> */}
+                            </View>
+                        </ScrollView>
+                        <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "center", marginVertical: 20, }}>
+                            {/* <TouchableOpacity onPress={handleSubmit(submit)} style={{
+                                backgroundColor: '#00a0e9',
+                                borderRadius: 3, alignItems: 'center',
+                            }}>
+                                <Text style={{
+                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10,
+                                }}>Update</Text>
+                            </TouchableOpacity> */}
+                            <TouchableOpacity
+                                style={{
+                                    borderRadius: 3, alignItems: 'center',
+                                    backgroundColor: "blue",
+                                }}
+                                onPress={() => {
+                                    this.setModalMatchVisible(false);
+                                }}>
+                                <Text style={{
+                                    color: "#fff", fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10,
+                                }}>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+        )
+    }
+
+
     _renderLeagueInfo() {
         return (
             <View style={{ margin: 10 }}>
@@ -244,7 +354,7 @@ class DetailLeaugeComponent extends Component {
                             data={this.state.itemLeague.list_team_tmp || this.state.itemLeague.list_team}
                             extraData={this.state}
                             showsVerticalScrollIndicator={false}
-                            keyExtractor={(item, index) => { return `${item.id}` }}
+                            keyExtractor={(item, index) => { return `item_team${index}` }}
                             ListHeaderComponent={() => {
                                 return (
                                     <View style={{ flexDirection: "row", paddingVertical: 5, borderBottomWidth: 1 }}>
@@ -263,7 +373,7 @@ class DetailLeaugeComponent extends Component {
                             renderItem={({ item, index }) => {
                                 return (
                                     <View style={{ flexDirection: "row", paddingVertical: 10, borderBottomWidth: 1 }}>
-                                        <Text style={{ color: "#30429d", flex: 1 }}>{index}.</Text>
+                                        <Text style={{ color: "#30429d", flex: 1 }}>{index + 1}.</Text>
                                         <Text style={{ color: "#30429d", flex: 5 }}>{item.team.name}</Text>
                                         <Text style={{ color: "#30429d", flex: 1.5, textAlign: "center" }}>{item.played}</Text>
                                         <Text style={{ color: "#30429d", flex: 1, textAlign: "center" }}>{item.won}</Text>
@@ -284,9 +394,10 @@ class DetailLeaugeComponent extends Component {
     _renderLeagueRound() {
         return (
             <View>
+                {this.state.currenMatch ? this.renderModalUpdateMatch(this.state.currenMatch) : null}
                 <TouchableOpacity
                     activeOpacity={0.9}
-                    // onPress={() => this.setState({ showStandings: !this.state.showStandings })}
+                    onPress={() => this.setState({ showRounds: !this.state.showRounds })}
                     style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
@@ -304,66 +415,96 @@ class DetailLeaugeComponent extends Component {
                             source={require("../../../assets/images/icon-round-league.png")} />
                         <Text style={{ fontSize: 18, fontWeight: 'bold', borderBottomWidth: 1 }}>League Round</Text>
                     </View>
-                    <Text style={{ paddingRight: 10 }}>{this.state.showStandings ? "Hiden" : "Show"}</Text>
+                    <Text style={{ paddingRight: 10 }}>{this.state.showRounds ? "Hiden" : "Show"}</Text>
                 </TouchableOpacity>
-                <View style={{ marginHorizontal: 10, marginBottom: 20 }}>
-                    <FlatList
-                        data={this.state.itemLeague.rounds}
-                        extraData={this.state}
-                        horizontal={true}
-                        showsVerticalScrollIndicator={false}
-                        keyExtractor={(item, index) => { return `${index}dsfhcxnmrfhudik` }}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.setState({
-                                            activeRound: index
-                                        })
+                {
+                    this.state.showRounds ?
+                        (<View>
+                            <View style={{ marginHorizontal: 10, marginBottom: 20 }}>
+                                <FlatList
+                                    data={this.state.itemLeague.rounds}
+                                    extraData={this.state}
+                                    horizontal={true}
+                                    showsHorizontalScrollIndicator={false}
+                                    keyExtractor={(item, index) => { return `${index}dsfhcxnmrfhudik` }}
+                                    renderItem={({ item, index }) => {
+                                        return (
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    this.setState({
+                                                        activeRound: index
+                                                    })
+                                                }}
+                                                activeOpacity={0.9}
+                                                style={{
+                                                    padding: 10, backgroundColor: this.state.activeRound == index ? "#666" : "#f1f1f1",
+                                                    marginHorizontal: 5, marginVertical: 10,
+                                                    borderRadius: 5
+                                                }}>
+                                                <Text style={{ fontSize: 16, color: this.state.activeRound == index ? "#fff" : "#000", fontWeight: "bold" }}>Round {index + 1}</Text>
+                                            </TouchableOpacity>
+                                        )
                                     }}
-                                    activeOpacity={0.9}
-                                    style={{
-                                        padding: 10, backgroundColor: this.state.activeRound == index ? "#666" : "#f1f1f1",
-                                        marginHorizontal: 5, marginVertical: 10,
-                                        borderRadius: 5
-                                    }}>
-                                    <Text style={{ fontSize: 16, color: this.state.activeRound == index ? "#fff" : "#000", fontWeight: "bold" }}>Round {index}</Text>
-                                </TouchableOpacity>
-                            )
-                        }}
-                    />
-                </View>
-                <View style={{ marginHorizontal: 10, marginBottom: 20 }}>
-                    <FlatList
-                        data={this.state.itemLeague.rounds[this.state.activeRound]}
-                        extraData={this.state}
-                        ListHeaderComponent={() => {
-                            return (
-                                <Text>Round {this.state.activeRound}</Text>
-                                )
-                        }}
-                        showsVerticalScrollIndicator={false}
-                        keyExtractor={(item, index) => { return `${index}hfdcxzasoiuzxkgr` }}
-                        renderItem={({ item, index }) => {
-                            console.log(item);
-                            return (
-                                <TouchableOpacity activeOpacity={0.9}
-                                    style={{
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        padding: 10,
-                                        backgroundColor: "grey",
-                                        marginHorizontal: 10,
-                                        marginVertical: 5
-                                    }}>
-                                    <Text style={{ color: "#fff" }}>Match {index}</Text>
-                                    <Text style={{ color: "#fff" }}>Match {index}</Text>
-                                </TouchableOpacity>
-                            )
-                        }}
-                    />
-                </View>
+                                />
+                            </View>
+                            <View style={{ marginHorizontal: 10, marginBottom: 20 }}>
+                                <FlatList
+                                    data={this.state.itemLeague.rounds[this.state.activeRound]}
+                                    extraData={this.state}
+                                    showsHorizontalScrollIndicator={false}
+                                    keyExtractor={(item, index) => { return `${index}hfdcxzasoiuzxkgr` }}
+                                    renderItem={({ item, index }) => {
+                                        if (item.team2.name != "tmp_team_ababab") {
+                                            return (
+                                                <View>
+                                                    <TouchableOpacity
+                                                        onPress={() => this.setModalMatchVisible(true, item)}
+                                                        activeOpacity={0.9}
+                                                        style={{
+                                                            flexDirection: "row",
+                                                            justifyContent: "space-between",
+                                                            alignItems: "center",
+                                                            padding: 10,
+                                                            borderColor: "grey",
+                                                            borderWidth: 1,
+                                                            borderRadius: 5,
+                                                            marginHorizontal: 10,
+                                                            marginVertical: 5
+                                                        }}>
+                                                        <Text style={{ flex: 1, color: "#000", fontSize: 14, fontWeight: "bold" }}>{item.team1.name}</Text>
+                                                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                                                            <Text style={{ color: "green", fontSize: 18, fontWeight: "bold" }}>{item.team1.score || 0}</Text>
+                                                            <Text style={{ color: "#000", fontSize: 20, fontWeight: "bold", paddingHorizontal: 10 }}>-</Text>
+                                                            <Text style={{ color: "red", fontSize: 18, fontWeight: "bold" }}>{item.team1.score || 0}</Text>
+                                                        </View>
+                                                        <Text style={{ flex: 1, textAlign: "right", color: "#000", fontSize: 14, fontWeight: "bold" }}>{item.team2.name}</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            )
+                                        } else {
+                                            return (
+                                                <View
+                                                    style={{
+                                                        flexDirection: "row",
+                                                        justifyContent: "center",
+                                                        alignItems: "center",
+                                                        padding: 10,
+                                                        borderColor: "grey",
+                                                        borderWidth: 1,
+                                                        borderRadius: 5,
+                                                        marginHorizontal: 10,
+                                                        marginVertical: 5
+                                                    }}>
+                                                    <Text style={{ color: "#000", fontSize: 14, fontWeight: "bold" }}>{item.team1.name}: Relax</Text>
+                                                </View>
+                                            )
+                                        }
+                                    }}
+                                />
+                            </View>
+                        </View>)
+                        : null
+                }
             </View>
         )
     }
@@ -394,6 +535,7 @@ class DetailLeaugeComponent extends Component {
 
 const DetailLeaugeForm = reduxForm({
     form: 'updateLeauge',
+    form: 'updateItemMatch'
 })(DetailLeaugeComponent);
 
 export default DetailLeaugeForm;
