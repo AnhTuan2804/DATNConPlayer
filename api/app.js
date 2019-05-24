@@ -20,6 +20,7 @@ admin.initializeApp({
 
 const listener = require('./listener/tracking-time');
 listener.trackingTimeExpiry();
+listener.trackingTimeRegister();
 
 // configure routers
 const routerIndex = require('./routes')(app);

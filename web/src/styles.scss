@@ -4,29 +4,45 @@ body {
   background-image: url("./assets/images/backGround.jpg");
 }
 
-.mg-header, .container, .container-fluid {
-  margin-top: 3rem
+.mg-header,
+.container,
+.container-fluid {
+  margin-top: 3rem;
+}
+
+.dropdown-menu {
+  border-radius: 12px;
+}
+
+.sidenav {
+  border-radius: 15px;
+}
+
+.modal-content {
+  border-radius: 15px;
 }
 
 .dis-flex {
   display: flex;
   align-items: center;
 }
+
 .div-center {
   display: flex;
   justify-content: flex-end;
 }
 
-
 .view {
   pointer-events: none;
 }
+
 .error-message {
   color: red;
   text-transform: capitalize;
   padding: 6px 4px;
   font-size: 15px;
 }
+
 .btn-center {
   justify-content: center;
   display: flex;
@@ -42,6 +58,10 @@ body {
 }
 .required {
   color: red;
+}
+
+.main-content {
+  border-radius: 15px;
 }
 
 // .row:not(:last-child) {

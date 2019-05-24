@@ -1,7 +1,7 @@
 <div class="modal fade" id="update-match" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <!-- Modal HTML Markup -->
   <div class="modal-dialog  modal-lg" role="document">
-    <div class="modal-content">
+    <div [ngClass]="{'view': isRegistering}" class="modal-content">
 
       <div class="modal-header row dis-flex">
         <div class="col-sm-7">
@@ -62,7 +62,7 @@
               <label class="control-label">Date</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <input type="date" min="{{startDate}}" class="form-control input-lg" name=""
+                <input type="date" min="{{startDate}}"class="form-control input-lg" name=""
                   formControlName="date_of_match">
               </div>
             </div>
@@ -77,6 +77,13 @@
           </div>
         </form>
       </div>
+
+      <div *ngIf="isRegistering" class="modal-header">
+          <div class="col-sm-12">
+            <h4 style="text-align: center; color: red">Can not update, Time for Registering not yet expiry</h4>
+          </div>
+        </div>
+
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div>

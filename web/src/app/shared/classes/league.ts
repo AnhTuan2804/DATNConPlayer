@@ -22,7 +22,7 @@ export class League {
                 { title: item.status },
             ];
             stt++;
-            data['actions'] = item.status == Utils.STATUS_NEW ? ['Edit'] : ['View'];
+            data['actions'] = item.status == Utils.STATUS_NEW || Utils.STATUS_INPROGRESS ? ['Edit'] : ['View'];
             this.allLeague.push(data);
         }))
         return this.allLeague;

@@ -48,9 +48,6 @@ export class LeagueService extends BaseService {
     return this.db.object(`/league/${path}`).valueChanges();
   }
 
-
-
-
   public createLeague(data: Object): Observable<any> {
     data = _.omitBy(data, (value, key) => { return _.isUndefined(value) });
     return this
@@ -66,6 +63,28 @@ export class LeagueService extends BaseService {
     data = _.omitBy(data, (value, key) => { return _.isUndefined(value) });
     return this
       .postData(`league/update`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public register(data: Object): Observable<any> {
+    data = _.omitBy(data, (value, key) => { return _.isUndefined(value) });
+    return this
+      .postData(`league/register`, data).map(res => {
+        return res;
+      })
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
+  public cancelTeam(data: Object): Observable<any> {
+    data = _.omitBy(data, (value, key) => { return _.isUndefined(value) });
+    return this
+      .postData(`league/remove-team`, data).map(res => {
         return res;
       })
       .catch((err) => {

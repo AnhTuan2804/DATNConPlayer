@@ -15,5 +15,6 @@ module.exports = Object.freeze({
     STATUS_EXPIRIED: 'Expiried',
     STATUS_WAITTING: 'Waitting',
     TYPE_LEAGUE_ROUND_CIRCLE : "Round Circle",
-    TYPE_LEAGUE_TWO_STAGES : "Two Stages"
+    TYPE_LEAGUE_TWO_STAGES : "Two Stages",
+    STATUS_INPROGRESS: "Inprogress",
 });

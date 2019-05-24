@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div *ngIf="!show3" class="col-sm-9">
+    <div [ngClass]="{'view': view}" *ngIf="!show3" class="col-sm-9">
       <div *ngIf="show1" class="col-sm-12 main-content">
         <div class="header-sidenav">
           <div class="container">
@@ -145,7 +145,7 @@
                 </div>
               </div>
 
-              <div class="col-md-4 btn-center">
+              <div [ngClass]="{'view': view}" class="col-md-4 btn-center">
                 <div class="form-group">
                   <button type="submit" class="btn btn-success" [disabled]="!formEdit.valid" (click)="edit()">
                     <i class="fas fa-plus-circle"></i> &nbsp;Update
@@ -163,6 +163,24 @@
         </div>
       </div>
 
+      <div *ngIf="show1 &&  isShowListTeam" class="col-sm-12 main-content">
+        <div class="header-sidenav">
+          <div class="container">
+            <h4>LIST TEAM REGISTERED
+              {{dataObjectDetail ? '(' +dataObjectDetail.list_team.length + '/' +  dataObjectDetail.number_of_teams + ')': ''}}
+            </h4>
+          </div>
+        </div>
+        <div class="content-match">
+          <div class="col-md-12 ">
+            <app-data-table [showSearch]=false [pageSize]="20" [headers]="headersTeamRegister"
+              [items]="listTeamRegister" [listSearch]=[0,1] (outputAction)="handleAction($event)">
+            </app-data-table>
+          </div>
+          <hr>
+        </div>
+      </div>
+
       <div *ngIf="show2" class="col-sm-12 main-content">
         <div class="header-sidenav">
           <div class="container">
@@ -171,7 +189,7 @@
         </div>
         <div class="content-match">
           <div class="col-md-12 ">
-            <app-data-table [showSearch]=false [headers]="headers" [items]="listTeamStandings"
+            <app-data-table [showSearch]=false [pageSize]="20" [headers]="headers" [items]="listTeamStandings"
               [listSearch]=[0,1,2,3,4,5,6,7]>
             </app-data-table>
           </div>
@@ -180,7 +198,7 @@
       </div>
     </div>
 
-    <div *ngIf="show3" class="col-sm-6">
+    <div [ngClass]="{'view': view}" *ngIf="show3" class="col-sm-6">
       <div class="col-sm-12 main-content">
         <div class="header-sidenav">
           <div class="container">
@@ -238,4 +256,7 @@
 </div>
 <app-alert-confirm [id]="'confirm'" [message]="messageConfirm" (saveConfirm)="saveConfirm()"
   (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
-<app-modal-update-match [id]="'update-match'" [match]="objectMatch" (outputData)="emitDataMatch($event)"></app-modal-update-match>
+<app-alert-confirm [id]="'confirm-del'" [message]="messageConfirm" (saveConfirm)="saveConfirm()"
+  (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
+<app-modal-update-match [isRegistering]="isRegistering" [id]="'update-match'" [match]="objectMatch"
+  (outputData)="emitDataMatch($event)"></app-modal-update-match>

@@ -7,14 +7,9 @@ import { CareerService } from 'src/app/shared/services/career.service';
 import { Career } from 'src/app/shared/classes/career';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
-import { Match } from 'src/app/shared/classes/match';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
 import * as _ from 'lodash';
-import { LevelService } from 'src/app/shared/services/level.service';
-import { Level } from 'src/app/shared/classes/level';
 import { Utils } from 'src/app/shared/enums/utils';
-import { TeamService } from 'src/app/shared/services/team.service';
-import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { LeagueService } from 'src/app/shared/services/league.service';
@@ -38,8 +33,10 @@ export class LeagueDetailComponent implements OnInit {
   objectLevelEvent
   objectTypeLeague;
   listMatchByRound;
+  objectTeamRegisterEvent;
   objectMatch;
   listTeamStandings;
+  listTeamRegister = [];
   messageConfirm = '';
   messageError = '';
   id;
@@ -54,15 +51,17 @@ export class LeagueDetailComponent implements OnInit {
   pages = [];
   currentPage = 0;
   currentRound = 1;
-  currentMatch
-  headers = ['No.', 'Team', 'Played', 'Won', 'Draw', 'Lost', 'For', 'Against', 'GD', 'Points']
+  currentMatch;
+  view;
+  isShowListTeam = true;
+  isRegistering = false;
+  headers = ['No.', 'Team', 'Played', 'Won', 'Draw', 'Lost', 'For', 'Against', 'GD', 'Points'];
+  headersTeamRegister = ['No', 'Name of team', 'Action'];
   constructor(public user: User,
     private timeService: TimeService, private action: ComponentActions,
     private formBuilder: FormBuilder, private route: ActivatedRoute,
     private toastrService: ToastrService,
     private leagueService: LeagueService, private infoCommon: InfoCommon,
-    private teamService: TeamService, private team: Team,
-    private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
     private areaService: AreaService, private area: Area) {
     this.minDate = timeService.getDateWithoutTime(new Date());
@@ -75,6 +74,10 @@ export class LeagueDetailComponent implements OnInit {
     this.getListArea();
     this.getListCareer();
     this.route.params.subscribe((params) => {
+      const item = params.item;
+      if (item == 'view') {
+        this.view = true;
+      }
       this.id = params.id;
       this.getDetail(this.id);
     })
@@ -105,6 +108,7 @@ export class LeagueDetailComponent implements OnInit {
       this.action.hideLoading()
       console.log(result)
       this.dataObjectDetail = result;
+      this.dataObjectDetail['list_team'] = this.dataObjectDetail.list_team || [];
       this.bindData(result);
     }, err => {
       this.action.hideLoading();
@@ -129,12 +133,14 @@ export class LeagueDetailComponent implements OnInit {
   }
 
   bindData(league) {
+    this.pages = []
     for (let i = 1; i <= Math.ceil(this.dataObjectDetail.rounds.length / 10); i++) {
       this.pages.push(i);
     }
+    this.isShowListTeam = this.timeService.getTimeUnixFromTimeFormatYMD(this.timeService.getDateWithoutTime(null)) <= this.dataObjectDetail.date_expiry_register ? true : false;
     this.paging(0);
-    const listTeam = league.list_team ? league.list_team : league.list_team_tmp;
-    this.listTeamStandings = this.setListTeamStandings(listTeam);
+    this.listTeamStandings = this.setListTeamStandings(league.list_team_tmp);
+    this.listTeamRegister = this.setListTeamRegister(league.list_team || [])
     this.formEdit.patchValue({
       'status': league.status,
       'date_expiry_register': this.timeService.formatDateFromTimeUnix(league.date_expiry_register, 'YYYY-MM-DD'),
@@ -153,11 +159,12 @@ export class LeagueDetailComponent implements OnInit {
   paging(i) {
     this.currentPage = i;
     this.listRound = _.slice(this.dataObjectDetail.rounds, i * 10, (i + 1) * 10);
+    this.showRound(this.currentRound - (this.currentPage * 10 + 1));
   }
 
   showRound(index, item?) {
     this.currentRound = (this.currentPage * 10) + index + 1;
-    this.listMatchByRound = item ? item : this.listRound[index];
+    this.listMatchByRound = item ? item : this.dataObjectDetail.rounds[this.currentRound - 1];
     this.setListMatch()
   }
 
@@ -182,6 +189,7 @@ export class LeagueDetailComponent implements OnInit {
     this.objectMatch['current_round'] = this.currentRound - (this.currentPage * 10 + 1);
     this.objectMatch['current_match'] = index;
     this.objectMatch = _.cloneDeep(this.objectMatch);
+    this.isRegistering = this.timeService.getTimeUnixFromTimeFormatYMD(this.timeService.getDateWithoutTime(null)) <= this.dataObjectDetail.date_expiry_register ? true : false;
     this.showUpdateMatch();
   }
 
@@ -189,7 +197,25 @@ export class LeagueDetailComponent implements OnInit {
     $('#update-match').modal('show');
   }
 
+  setListTeamRegister(listTeam) {
+    const tmp = [];
+    let stt = 1;
+    _.forEach(listTeam, (item, key) => {
+      let data = [];
+      data['team'] = item;
+      data['content'] = [
+        { title: stt },
+        { title: item.team.name }
+      ];
+      stt++;
+      data['actions'] = ['Delete'];
+      tmp.push(data)
+    })
+    return tmp;
+  }
+
   setListTeamStandings(listTeam) {
+    listTeam = _.reverse(_.sortBy(listTeam, ['point', 'goal_diffrence', 'for']));
     const tmp = [];
     let stt = 1;
     _.forEach(listTeam, (item, key) => {
@@ -203,7 +229,7 @@ export class LeagueDetailComponent implements OnInit {
         { title: item.lost || 0 },
         { title: item.for || 0 },
         { title: item.against || 0 },
-        { title: item.goal_difference || 0 },
+        { title: item.goal_diffrence || 0 },
         { title: item.point || 0 }
       ];
       stt++;
@@ -245,7 +271,7 @@ export class LeagueDetailComponent implements OnInit {
       type_league: { id: this.getValueFormEdit('type_league_id'), name: this.getValueFormEdit('type_league') },
       description: this.getValueFormEdit('description'),
       number_of_teams: this.getValueFormEdit('number_of_teams'),
-      id: this.dataObjectDetail.id
+      id: this.id
     }
 
     this.action.showLoading();
@@ -258,6 +284,16 @@ export class LeagueDetailComponent implements OnInit {
       this.messageError = err.message;
       this.toastrService.error(this.messageError, '', { timeOut: 3500 });
     })
+  }
+
+  handleAction(event) {
+    switch (event.action) {
+      case 'Delete':
+        this.messageConfirm = 'Are you sure delete this team?'
+        $('#confirm-del').modal('show');
+        this.objectTeamRegisterEvent = event;
+        break;
+    }
   }
 
   show(tab) {
@@ -286,15 +322,25 @@ export class LeagueDetailComponent implements OnInit {
   }
 
   saveConfirm() {
-    $('#confirm').modal('hide');
+    const data = this.objectTeamRegisterEvent.item.team;
+    data['id'] = this.id;
+    this.action.showLoading();
+    this.leagueService.cancelTeam(data).subscribe((result) => {
+      this.action.hideLoading();
+      this.toastrService.success('REMOVE TEAM SUCCESSFULLY', '', { timeOut: 3000 });
+    }, err => {
+      this.action.hideLoading();
+      this.toastrService.warning('REMOVE TEAM SUCCESSFULLY', '', { timeOut: 3000 });
+    })
+    $('#confirm-del').modal('hide');
   }
 
   cancelConfirm() {
-    $('#confirm').modal('hide');
+    $('#confirm-del').modal('hide');
   }
 
   emitDataMatch(event) {
-    
+
   }
 
 }

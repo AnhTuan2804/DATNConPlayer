@@ -15,6 +15,8 @@ export class ModalPairMatchComponent implements OnInit {
 
   @Input() id = '';
   @Input() listTeam = [];
+  @Input() title = '';
+  @Input() isRegister = false;
   @Output() outputE = new EventEmitter();
   modalPairForm: FormGroup;
   loginFail: boolean = false;

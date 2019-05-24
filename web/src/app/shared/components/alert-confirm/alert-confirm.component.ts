@@ -13,6 +13,7 @@ export class AlertConfirmComponent implements OnInit {
   @Input() message: string;
   @Input() messageError: string;
   @Input() mode: CrudType;
+  @Input() isAlert = false;
   @Output() saveConfirm = new EventEmitter();
   @Output() cancelConfirm = new EventEmitter();
   confirmForm: FormGroup;
@@ -28,7 +29,7 @@ export class AlertConfirmComponent implements OnInit {
   error() {
   }
 
-  cancelForm(){
+  cancelForm() {
     this.cancelConfirm.emit();
   }
 }

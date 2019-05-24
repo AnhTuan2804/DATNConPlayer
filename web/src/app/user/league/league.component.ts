@@ -16,6 +16,8 @@ import { Utils } from 'src/app/shared/enums/utils';
 import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
+import { LeagueService } from 'src/app/shared/services/league.service';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-league',
@@ -25,9 +27,9 @@ declare var $: any;
 export class LeagueComponent implements OnInit {
   listArea;
   listCareer;
-  listMatch;
+  listLeague;
   listLevel;
-  listMatchSearch;
+  listLeagueSearch;
   areaForm: FormGroup;
   careerForm: FormGroup;
   levelForm: FormGroup;
@@ -36,13 +38,14 @@ export class LeagueComponent implements OnInit {
   objectAreaEvent;
   objectCareerEvent;
   objectLevelEvent
-  objectMatchEvent;
+  objectLeagueEvent;
   listTeam;
-  idMatch;
   messageConfirm = '';
   constructor(public user: User,
     private timeService: TimeService, private action: ComponentActions,
     private formBuilder: FormBuilder,
+    private route: Router,
+    private leagueService: LeagueService,
     private toastrService: ToastrService,
     private teamService: TeamService, private team: Team,
     private levelService: LevelService, private level: Level,
@@ -54,10 +57,9 @@ export class LeagueComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.getListMatch();
+    this.getListLeague();
     this.getListArea();
     this.getListCareer();
-    this.getListLevel();
   }
 
   initForm() {
@@ -69,22 +71,17 @@ export class LeagueComponent implements OnInit {
       career: new FormControl('')
     })
 
-    this.levelForm = this.formBuilder.group({
-      level: new FormControl('')
-    })
-
     this.searchForm = this.formBuilder.group({
-      dateOfMatch: new FormControl(''),
       textSearch: new FormControl('')
     })
   }
 
-  getListMatch() {
+  getListLeague() {
     this.action.showLoading();
-    this.matchService.getAll().subscribe((result) => {
-      this.listMatch = this.setDataMatchPublic(_.reverse(result));
-      this.listMatchSearch = this.listMatch;
-      console.log(this.listMatch)
+    this.leagueService.getAll().subscribe((result) => {
+      this.listLeague = this.setDataMatchPublic(_.reverse(result));
+      this.listLeagueSearch = this.listLeague;
+      console.log(this.listLeague)
       this.action.hideLoading();
     }, err => {
       this.action.hideLoading();
@@ -92,33 +89,29 @@ export class LeagueComponent implements OnInit {
     })
   }
 
-  setDataMatchPublic(matchs) {
+  setDataMatchPublic(leagues) {
     const tmp = [];
-    _.forEach(matchs, (item, key) => {
-      if (item.status == Utils.STATUS_WAITTING || item.status == Utils.STATUS_NEW) {
-        if (!item.gridiron) {
-          item['gridiron'] = {};
-          item.gridiron['name'] = '';
-          item.gridiron['address'] = '';
-
+    _.forEach(leagues, (item, key) => {
+      if (item.status == Utils.STATUS_NEW || item.status == Utils.STATUS_INPROGRESS) {
+        if (!item.career) {
+          item['career'] = {};
+          item.career['name'] = '';
         }
-        item.date_of_match = this.timeService.formatDateFromTimeUnix(item.date_of_match, 'YYYY-MM-DD');
+        item.date_expiry_register = this.timeService.formatDateFromTimeUnix(item.date_expiry_register, 'YYYY-MM-DD');
         tmp.push(item)
       }
     })
 
-    const checkNewItem = _.findIndex(matchs, (o) => { return o.status == Utils.STATUS_NEW || o.status == Utils.STATUS_WAITTING })
+    const checkNewItem = _.findIndex(leagues, (o) => { return o.status == Utils.STATUS_NEW || o.status == Utils.STATUS_INPROGRESS })
     if (checkNewItem < 0) {
-      _.forEach(matchs, (item, key) => {
+      _.forEach(leagues, (item, key) => {
         if (tmp.length > 2) { return; }
-        if (item.status == Utils.STATUS_EXPIRED) {
-          if (!item.gridiron) {
-            item['gridiron'] = {};
-            item.gridiron['name'] = '';
-            item.gridiron['address'] = '';
-
+        if (item.status == Utils.STATUS_COMPLETE) {
+          if (!item.career) {
+            item['career'] = {};
+            item.career['name'] = '';
           }
-          item.date_of_match = this.timeService.formatDateFromTimeUnix(item.date_of_match, 'YYYY-MM-DD');
+          item.date_expiry_register = this.timeService.formatDateFromTimeUnix(item.date_expiry_register, 'YYYY-MM-DD');
           tmp.push(item)
         }
       })
@@ -142,14 +135,6 @@ export class LeagueComponent implements OnInit {
     })
   }
 
-  getListLevel() {
-    this.levelService.getList().subscribe((result) => {
-      this.listLevel = this.level.getListForDropdown(result);
-    }, (err) => {
-      console.log(err)
-    })
-  }
-
   changeSelectRadio(event, tab) {
     if (tab == 'area') {
       this.objectAreaEvent = event.area;
@@ -157,70 +142,60 @@ export class LeagueComponent implements OnInit {
     if (tab == 'career') {
       this.objectCareerEvent = event.career;
     }
-    if (tab == 'level') {
-      this.objectLevelEvent = event.level;
-    }
     this.search();
   }
 
   search() {
-    const date = this.searchForm.controls['dateOfMatch'].value;
     const textSearch = this.searchForm.controls['textSearch'].value;
-    this.listMatchSearch = this.listMatch;
-    if (date) {
-      const tmp = _.filter(this.listMatchSearch, (item) => {
-        return item.date_of_match == date;
-      })
-      this.listMatchSearch = _.cloneDeep(tmp);
-    }
+    this.listLeagueSearch = this.listLeague;
+
     if (textSearch) {
       const tmp = [];
-      _.forEach(this.listMatchSearch, (item) => {
-        if (_.toLower(item.team.name).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.user.fullname).indexOf(_.toLower(textSearch)) > -1 ||
-          _.toLower(item.gridiron.name).indexOf(_.toLower(textSearch)) > -1) {
+      _.forEach(this.listLeagueSearch, (item) => {
+        if (_.toLower(item.name_of_league).indexOf(_.toLower(textSearch)) > -1 ||
+          _.toLower(item.area.name).indexOf(_.toLower(textSearch)) > -1 ||
+          _.toLower(item.career.name).indexOf(_.toLower(textSearch)) > -1 ||
+          _.toLower(item.description).indexOf(_.toLower(textSearch)) > -1 ||
+          _.toLower(item.status).indexOf(_.toLower(textSearch)) > -1 ||
+          _.toLower(item.type_league.name).indexOf(_.toLower(textSearch)) > -1) {
           tmp.push(item);
         }
       });
-      this.listMatchSearch = _.cloneDeep(tmp);
+      this.listLeagueSearch = _.cloneDeep(tmp);
     }
     if (this.objectAreaEvent) {
-      const tmp = _.filter(this.listMatchSearch, (item) => {
+      const tmp = _.filter(this.listLeagueSearch, (item) => {
         return _.toLower(item.area.name) == _.toLower(this.objectAreaEvent.name);
       })
-      this.listMatchSearch = _.cloneDeep(tmp);
+      this.listLeagueSearch = _.cloneDeep(tmp);
     }
     if (this.objectCareerEvent) {
-      const tmp = _.filter(this.listMatchSearch, (item) => {
+      const tmp = _.filter(this.listLeagueSearch, (item) => {
         return _.toLower(item.career.name) == _.toLower(this.objectCareerEvent.name);
       })
-      this.listMatchSearch = _.cloneDeep(tmp);
+      this.listLeagueSearch = _.cloneDeep(tmp);
     }
-    if (this.objectLevelEvent) {
-      const tmp = _.filter(this.listMatchSearch, (item) => {
-        return _.toLower(item.level.name) == _.toLower(this.objectLevelEvent.name);
-      })
-      this.listMatchSearch = _.cloneDeep(tmp);
-    }
+  }
+
+  navigate(event) {
+    this.route.navigate([`league/view/${event}`])
   }
 
   resetFilter() {
     this.objectAreaEvent = null;
     this.objectCareerEvent = null;
-    this.objectLevelEvent = null;
     this.search();
   }
 
-  pairMatch(event) {
+  register(event) {
     if (!localStorage.getItem('token')) {
       $('#modalLoginForm').modal('show');
     }
-    this.objectMatchEvent = event;
+    this.objectLeagueEvent = event;
     this.action.showLoading();
     this.teamService.getListByCaptain().subscribe((result) => {
       this.listTeam = this.team.getListTeamForDropdown(result);
       this.action.hideLoading();
-      this.idMatch = event.id;
       $('#modalPairForm').modal('show');
     }, err => {
       this.action.hideLoading();
@@ -230,27 +205,31 @@ export class LeagueComponent implements OnInit {
 
   outputEmit(event) {
     $('#modalPairForm').modal('hide');
-    if (event.team.name == this.objectMatchEvent.team.name) {
-      this.messageConfirm = 'You can not pair match with your team!';
-      $('#confirm').modal('show');
-      return;
-    } else {
-      const data = {
-        team_guest: event.team,
-        id: this.objectMatchEvent.id,
-        status: Utils.STATUS_WAITTING,
-        date_of_match: this.objectMatchEvent.date_of_match
+    //check neu team da ton tai thi thong bao.
+    if (this.objectLeagueEvent.list_team) {
+      if ((_.findIndex(this.objectLeagueEvent.list_team, (o) => { return o.team.name == event.team.name }) > -1)) {
+        this.messageConfirm = `This team was join league  <<${this.objectLeagueEvent.name_of_league}>>`;
+        $('#confirm').modal('show');
+        return;
       }
-      this.action.showLoading();
-      this.matchService.updateMatch(data).subscribe((result) => {
-        this.action.hideLoading();
-        this.toastrService.success('PAIR MATCH SUCCESFULLY', '', { timeOut: 3000 });
-      }, err => {
-        console.log(err);
-        this.action.hideLoading();
-        this.toastrService.warning(err.message, '', { timeOut: 3000 });
-      })
     }
+
+    const data = {
+      id: this.objectLeagueEvent.id,
+      team: {
+        name: event.team.name,
+        id: event.team.id
+      }
+    }
+    this.action.showLoading();
+    this.leagueService.register(data).subscribe((result) => {
+      this.action.hideLoading();
+      this.toastrService.success('REGISTER SUCCESFULLY', '', { timeOut: 3000 });
+    }, err => {
+      console.log(err);
+      this.action.hideLoading();
+      this.toastrService.warning(err.message, '', { timeOut: 3000 });
+    })
   }
 
   saveConfirm() {
