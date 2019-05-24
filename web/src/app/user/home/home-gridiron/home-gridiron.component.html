@@ -31,11 +31,11 @@
           <div class="container">
             <form role="form" [formGroup]="searchForm">
               <div class="row input-group">
-                <div class="col-sm-7">
+                <div class="col-sm-9">
                   <input type="text" class="form-control" formControlName="textSearch"
                     placeholder="Search anything..">
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                   <button style="width: 100%" (click)="search()" class="btn btn-success"><i
                       class="fas fa-search"></i>&nbsp;
                     Search..</button>
@@ -47,11 +47,11 @@
 
         <div class="content-match" *ngFor="let item of listSearch">
           <div class="row">
-            <div class="col-sm-4 text-center">
+            <div class="col-sm-5 text-center">
               <img src="../../../../assets/images/gridiron.jpg" class="img-thumbnail" height="80%" width="90%"
                 alt="Avatar">
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-7">
               <h4><i class="fab fa-shirtsinbulk"></i>.&nbsp; Name: {{item.name}} </h4>
               <p><i class="fab fa-shirtsinbulk"></i>.
                 {{item.area ? 'Area: ' + item.area.name : ''}}</p>

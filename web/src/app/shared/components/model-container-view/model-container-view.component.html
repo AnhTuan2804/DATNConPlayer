@@ -8,7 +8,7 @@
                     <ng-content></ng-content>
                 </div> 
                 <div class="modal-footer">
-                    <button *ngIf="true" (click)="cancelForm()" type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                    <button *ngIf="!isAlert" (click)="cancelForm()" type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
                     <button *ngIf="true" (click)="saveData()" class="btn btn-success">OK</button>
                 </div>
             </div>

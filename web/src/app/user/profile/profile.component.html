@@ -104,10 +104,17 @@
 
 
   <div *ngIf="isAdmin" class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title">Manage User</h1>
-    </div>
-    <div class="modal-body">
+    <div class="modal-header  row dis-flex" style="margin: 0">
+        <div class="col-sm-8">
+          <h1 class="modal-title">Manage User</h1>
+        </div>
+        <div *ngIf="isShow" class="col-sm-4 div-center"><button (click)="actionForm('show')"
+            class="btn-center btn btn-success dis-flex"><i class="fas fa-plus-circle"></i>&nbsp; Create New Account</button>
+        </div>
+      </div>
+
+
+    <div *ngIf="!isShow" class="modal-body">
       <form role="form" [formGroup]="formAdd" (ngSubmit)="addAccount()">
         <div class="col-md-12 row">
           <div class="col-md-6">
@@ -175,13 +182,20 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-3 btn-center">
             <div class="form-group">
               <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid">
                 <i class="fas fa-plus-circle"></i> &nbsp;Create new account
               </button>
             </div>
           </div>
+          <div class="col-md-3 btn-center">
+              <div class="form-group">
+                <button type="submit" class="btn btn-secondary" (click)="actionForm('hide')">
+                  <i class="far fa-times-circle"></i> &nbsp;Cancel
+                </button>
+              </div>
+            </div>
         </div>
       </form>
     </div>

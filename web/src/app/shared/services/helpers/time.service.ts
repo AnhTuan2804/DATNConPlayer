@@ -133,7 +133,7 @@ export class TimeService {
     if (val === null || val === '' || _.isUndefined(val)) {
       return null
     } else {
-      return moment(val, this.YEAR_MONTH_DATE_FORMAT).unix();
+      return moment(val, 'YYYY-MM-DD').unix();
     }
   }
   getTimeUnixFromTimeFormatYMDHMS(val) {

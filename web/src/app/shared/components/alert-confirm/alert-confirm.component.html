@@ -1,4 +1,4 @@
-<app-model-container-view [id]="id" [mode]="mode" [formGroup]="confirmForm" [title]="title" (save)="save()" (error)="error()" (cancel)="cancelForm()">
+<app-model-container-view [isAlert]="isAlert" [id]="id" [mode]="mode" [formGroup]="confirmForm" [title]="title" (save)="save()" (error)="error()" (cancel)="cancelForm()">
     <div *ngIf="messageError"></div>
     <div class="row">
         <h4>{{message}}</h4>

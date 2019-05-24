@@ -15,6 +15,7 @@ export class ModelContainerViewComponent implements OnInit {
   @Input() title: string;
   @Input() formGroup: FormGroup;
   @Input() mode: CrudType;
+  @Input() isAlert = false;
   @Output() cancel = new EventEmitter<any>();
 
   @Output() save = new EventEmitter<any>();
