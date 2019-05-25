@@ -18,6 +18,7 @@ import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
 import { Gridiron } from 'src/app/shared/classes/gridiron';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -45,9 +46,9 @@ export class HomeGridironComponent implements OnInit {
   messageConfirm = '';
   constructor(public user: User,
     private timeService: TimeService, private action: ComponentActions,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder, private titleService: Title,
     private toastrService: ToastrService,
-    private gridironService: GridironService, private gridiron: Gridiron,
+    private gridironService: GridironService,
     private teamService: TeamService, private team: Team,
     private matchService: MatchService,
     private areaService: AreaService, private area: Area) {
@@ -55,6 +56,7 @@ export class HomeGridironComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Search Gridiron');
     this.initForm();
     this.getListArea();
     this.getListGridiron();

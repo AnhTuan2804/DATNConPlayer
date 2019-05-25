@@ -5,6 +5,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-register',
@@ -16,14 +17,18 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   registerFail: boolean = false;
   messageError: string = "";
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService,
-    private toastrService: ToastrService, private action: ComponentActions) { }
+  constructor(private formBuilder: FormBuilder,
+    private loginService: LoginService,
+    private toastrService: ToastrService,
+    private titleService: Title,
+    private action: ComponentActions) { }
 
   ngOnInit() {
-    
+
   }
 
   ngOnChanges(changes): void {
+    this.titleService.setTitle('Register');
     this.initForm()
   }
 

@@ -15,6 +15,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
 import { LeagueService } from 'src/app/shared/services/league.service';
 import { League } from 'src/app/shared/classes/league';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-manage-league',
@@ -51,6 +52,7 @@ export class ManageLeagueComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private careerService: CareerService, private career: Career,
     private infoCommon: InfoCommon,
+    private titleService: Title,
     private leagueService: LeagueService, private league: League,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router, private userService: UserService,
@@ -62,6 +64,7 @@ export class ManageLeagueComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Manage league page');
     this.listTypeOfLeague = this.infoCommon.getListTypeOfCompetition();
     this.startDate = this.timeService.getDateWithoutTime(new Date());
   }

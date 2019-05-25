@@ -18,6 +18,7 @@ import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 import { LeagueService } from 'src/app/shared/services/league.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-league',
@@ -45,17 +46,17 @@ export class LeagueComponent implements OnInit {
     private timeService: TimeService, private action: ComponentActions,
     private formBuilder: FormBuilder,
     private route: Router,
+    private titleService: Title,
     private leagueService: LeagueService,
     private toastrService: ToastrService,
     private teamService: TeamService, private team: Team,
-    private levelService: LevelService, private level: Level,
-    private matchService: MatchService, private match: Match,
     private careerService: CareerService, private career: Career,
     private areaService: AreaService, private area: Area) {
     this.minDate = timeService.getDateWithoutTime(new Date());
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Search League page');
     this.initForm();
     this.getListLeague();
     this.getListArea();

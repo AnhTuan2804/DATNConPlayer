@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { Area } from 'src/app/shared/classes/area';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -27,6 +28,7 @@ export class AreaComponent implements OnInit {
   objectAreaEvent;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private toastrService: ToastrService, private action: ComponentActions,
+    private titleService: Title,
     public user: User, private area: Area) {
     this.initForm()
     this.getListArea();
@@ -36,6 +38,7 @@ export class AreaComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.titleService.setTitle('Manage Area');
   }
 
   initForm() {
