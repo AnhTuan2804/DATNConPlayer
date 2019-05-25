@@ -48,7 +48,7 @@ function* updateInfoSaga(action) {
         });
         const updateInfoAPI = yield Api.updateInfoAPI(body);
         yield put({ type: UPDATE_INFO_SUCCESSFULLY, userData: updateInfoAPI });
-        ToastUtil.showToast("Cập nhật thành công", 'success')
+        ToastUtil.showToast(Constants.UPDATE_INFO_SUCCESSFULLY, 'success')
     } catch (error) {
         yield put({ type: UPDATE_INFO_FAILED, error });
     }
@@ -66,7 +66,7 @@ function* changePassSaga(action) {
         });
         const changePassAPI = yield Api.changePassAPI(body);
         yield put({ type: CHANGE_PASS_SUCCESSFULLY });
-        ToastUtil.showToast("Cập nhật thành công", 'success')
+        ToastUtil.showToast(Constants.UPDATE_INFO_SUCCESSFULLY, 'success')
     } catch (error) {
         yield put({ type: CHANGE_PASS_FAILED, error });
     }

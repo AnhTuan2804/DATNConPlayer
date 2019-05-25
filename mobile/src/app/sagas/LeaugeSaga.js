@@ -11,6 +11,10 @@ import {
     DEL_LEAUGE_SUCCESSFULLY,
     DEL_LEAUGE_FAILED,
 
+    IS_UPDATE_MATCH_OF_LEAUGE,
+    UPDATE_MATCH_OF_LEAUGE_SUCCESSFULLY,
+    UPDATE_MATCH_OF_LEAUGE_FAILED,
+
 } from '../actions/ActionTypes';
 
 //Saga effects
@@ -51,6 +55,22 @@ function* updateLeaugeSaga(action) {
 
 export function* watchUpdateLeaugeSaga() {
     yield takeLatest(IS_UPDATE_LEAUGE, updateLeaugeSaga);
+}
+
+function* updateMatchLeaugeSaga(action) {
+    try {
+        let body = JSON.stringify(action.value);
+        console.log("bodySaga", body);
+        const result = yield Api.updateMatchOfLeaugeAPI(body);
+        yield put({ type: UPDATE_MATCH_OF_LEAUGE_SUCCESSFULLY });
+        ToastUtil.showToast(Constants.MESSAGE_UPDATE_SUCCESS, 'success')
+    } catch (error) {
+        yield put({ type: UPDATE_MATCH_OF_LEAUGE_FAILED, error });
+    }
+}
+
+export function* watchUpdateMatchOfLeaugeSaga() {
+    yield takeLatest(IS_UPDATE_MATCH_OF_LEAUGE, updateMatchLeaugeSaga);
 }
 
 // // delete team

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, ScrollView, BackHandler, Alert, TouchableOpacity, Platform, Picker, Modal, FlatList } from 'react-native';
-import { Container, Content } from 'native-base';
+import { Container, Content, Icon } from 'native-base';
 import Constants from '../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
 import Loading from '../common/modal/Loading';
@@ -10,6 +10,7 @@ import { required, renderField, maxLength40, renderFieldForPass, required_trim, 
 import TimeService from '../../../theme/shared/utils/TimeService';
 import firebase from 'firebase';
 import _ from 'lodash';
+import { FormUpdateItemMatch } from './FormUpdateItemMatch';
 
 const { height, width } = Dimensions.get('window');
 const rateScreen = height / 680;
@@ -28,20 +29,11 @@ function FieldInfo(props) {
     )
 }
 
+
+
 class DetailLeaugeComponent extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            visibleModal: false,
-            modalUpdateMatch: false,
-            itemLeague: this.props.itemLeague,
-            id: this.props.itemLeague.id,
-            showStandings: false,
-            activeRound: 0,
-            showRounds: false,
-            currenMatch: null
-        }
         this.props.dispatch(initialize(
             'updateLeauge',
             {
@@ -52,7 +44,18 @@ class DetailLeaugeComponent extends Component {
                 description: this.props.itemLeague.description,
             }
         ));
-        this.props.dispatch(initialize('updateItemMatch'));
+        this.state = {
+            visibleModal: false,
+            modalUpdateMatch: false,
+            itemLeague: this.props.itemLeague,
+            id: this.props.itemLeague.id,
+            showStandings: false,
+            activeRound: 0,
+            showRounds: false,
+            currenMatch: null,
+            indexMatch: -1,
+        }
+
     }
 
     componentWillMount() {
@@ -188,35 +191,11 @@ class DetailLeaugeComponent extends Component {
         )
     }
 
-    setModalMatchVisible(visible, item) {
-        this.setState({ modalUpdateMatch: visible, currenMatch: item });
+    setModalMatchVisible(visible, item, index) {
+        this.setState({ modalUpdateMatch: visible, currenMatch: item, indexMatch: index });
     }
 
     renderModalUpdateMatch(item) {
-        console.log("ssssssssssssssssss", item);
-        // this.props.change("area_id", gridiron.area_id),
-        // this.props.dispatch(change(
-        //     'updateItemMatch',
-        //     "name_of_league", this.props.itemLeague.name_of_league
-        //     date_expiry_register: TimeService.formatDateFromTimeUnix(this.props.itemLeague.date_expiry_register, 'YYYY-MM-DD'),
-        //     area_id: this.props.itemLeague.area.id,
-        //     career_id: this.props.itemLeague.career ? this.props.itemLeague.career.id : undefined,
-        //     description: this.props.itemLeague.description,
-        // }
-        // ));
-
-        // submit = values => {
-        // let body = {
-        //     name_of_league: values.name_of_league,
-        //     area: _.find(this.props.listArea, function (o) { return o.id == values.area_id }),
-        //     career: _.find(this.props.listCareer, function (o) { return o.id == values.career_id }),
-        //     date_expiry_register: TimeService.getTimeFormatFromTime(values.date_expiry_register, `YYYY-MM-DD`),
-        //     description: values.description,
-        //     id: this.props.itemLeague.id,
-        // }
-        // this.setModalMatchVisible(false)
-        // }
-        const { handleSubmit } = this.props;
         return (
             <Modal
                 transparent={true}
@@ -225,69 +204,30 @@ class DetailLeaugeComponent extends Component {
                     Alert.alert('Modal has been closed.');
                 }}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.2)" }}>
-                    <View style={{ backgroundColor: "#fff", width: "90%", height: "80%", borderRadius: 5 }}>
-                        <View style={{
-                            margin: 10,
-                            justifyContent: 'space-between',
-                            flexDirection: 'column',
+                    <TouchableOpacity
+                        style={{
+                            position: "absolute",
+                            top: "6%",
+                            right: "6%",
+                            borderRadius: 3, alignItems: 'center',
+                        }}
+                        onPress={() => {
+                            this.setModalMatchVisible(false);
                         }}>
-                            <View style={{
-                                padding: 10,
-                                justifyContent: 'flex-start', alignItems: 'flex-start',
-                                borderBottomWidth: 1,
-                                borderBottomColor: "#28a745"
-                            }}>
-                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Update Information of match</Text>
-                            </View>
-                            <View style={{ paddingTop: 10, justifyContent: "space-around", alignItems: "center", flexDirection: "row" }}>
-                                <Text style={{ flex: 1, textAlign: "center" }}>{item.team1.name}</Text>
-                                <Image style={{ width: 30, height: 30 }} resizeMode="contain" source={require('../../../assets/images/icon-match.png')} />
-                                <Text style={{ flex: 1, textAlign: "center" }}>{item.team2.name}</Text>
-                            </View>
-                        </View>
-                        <ScrollView contentContainerStyle={{ width: '100%', justifyContent: 'center', alignItems: 'center', paddingTop: 10, }}>
-                            <View style={{ width: '100%', flexDirection: 'column', }}>
-                                <Field name="date_of_match"
-                                    textIP={TimeService.formatDateFromTimeUnix(this.props.itemLeague.date_expiry_register, 'DD/MM/YYYY')}
-                                    label={'Date of match'} component={renderDatePicker}
-                                    defDate={new Date(TimeService.formatDateFromTimeUnix(this.props.itemLeague.date_expiry_register, 'MM/DD/YYYY'))}
-                                />
-                                {/*<Field name="time" mode="dropdown" textIP="Select Time"
-                                    data={this.props.listArea} label={'Area'} component={renderSelect}
-                                />
-                                <Field name="gridiron" mode="dropdown" textIP="Select Gridiron"
-                                    data={this.props.listCareer} label={'Career'} component={renderSelect}
-                                />
-                                <Field name="description" keyboardType="default" textIP="Summary about league" label={'Summary about league'} component={renderFieldTextarea}
-                                    validate={[required_trim, have_point_end]}
-                                /> */}
-                            </View>
-                        </ScrollView>
-                        <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "center", marginVertical: 20, }}>
-                            {/* <TouchableOpacity onPress={handleSubmit(submit)} style={{
-                                backgroundColor: '#00a0e9',
-                                borderRadius: 3, alignItems: 'center',
-                            }}>
-                                <Text style={{
-                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
-                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10,
-                                }}>Update</Text>
-                            </TouchableOpacity> */}
-                            <TouchableOpacity
-                                style={{
-                                    borderRadius: 3, alignItems: 'center',
-                                    backgroundColor: "blue",
-                                }}
-                                onPress={() => {
-                                    this.setModalMatchVisible(false);
-                                }}>
-                                <Text style={{
-                                    color: "#fff", fontSize: 42.63 / Constants.RATE_SIZE,
-                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10,
-                                }}>Close</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                        <Icon type="FontAwesome" name={"close"} style={{ color: "#fff", fontSize: 20, fontWeight: 'bold' }} />
+                    </TouchableOpacity>
+                    <FormUpdateItemMatch item={item}
+                        submitForm={(values) => {
+                            let body = values
+                            body["id"] = this.props.itemLeague.id
+                            body["current_round"] = this.state.activeRound
+                            body['current_match'] = this.state.indexMatch
+                            body["team1"] = item.team1
+                            body["team2"] = item.team2
+
+                            this.props.onUpdateMatchOfLeague(body)
+                            this.setModalMatchVisible(false);
+                        }} />
                 </View>
             </Modal>
         )
@@ -458,7 +398,8 @@ class DetailLeaugeComponent extends Component {
                                             return (
                                                 <View>
                                                     <TouchableOpacity
-                                                        onPress={() => this.setModalMatchVisible(true, item)}
+                                                        disabled={this.props.itemLeague.date_expiry_register >= TimeService.getTimeUnixFromTimeFormatYMD(TimeService.getDateWithoutTime(null)) || item.is_updated_sroce}
+                                                        onPress={() => this.setModalMatchVisible(true, item, index)}
                                                         activeOpacity={0.9}
                                                         style={{
                                                             flexDirection: "row",
@@ -473,9 +414,9 @@ class DetailLeaugeComponent extends Component {
                                                         }}>
                                                         <Text style={{ flex: 1, color: "#000", fontSize: 14, fontWeight: "bold" }}>{item.team1.name}</Text>
                                                         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                                                            <Text style={{ color: "green", fontSize: 18, fontWeight: "bold" }}>{item.team1.score || 0}</Text>
+                                                            <Text style={{ color: "green", fontSize: 18, fontWeight: "bold" }}>{item.team1_score || 0}</Text>
                                                             <Text style={{ color: "#000", fontSize: 20, fontWeight: "bold", paddingHorizontal: 10 }}>-</Text>
-                                                            <Text style={{ color: "red", fontSize: 18, fontWeight: "bold" }}>{item.team1.score || 0}</Text>
+                                                            <Text style={{ color: "red", fontSize: 18, fontWeight: "bold" }}>{item.team2_score || 0}</Text>
                                                         </View>
                                                         <Text style={{ flex: 1, textAlign: "right", color: "#000", fontSize: 14, fontWeight: "bold" }}>{item.team2.name}</Text>
                                                     </TouchableOpacity>
@@ -535,7 +476,6 @@ class DetailLeaugeComponent extends Component {
 
 const DetailLeaugeForm = reduxForm({
     form: 'updateLeauge',
-    form: 'updateItemMatch'
 })(DetailLeaugeComponent);
 
 export default DetailLeaugeForm;

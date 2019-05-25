@@ -305,6 +305,22 @@ function* updateLeaugeAPI(bodyInfo) {
     return response;
 }
 
+function* updateMatchOfLeaugeAPI(bodyInfo) {
+    const router = 'league/update-match';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
 function* updateMatchAPI(bodyInfo) {
     const router = 'match/update';
     const headersPairs = null;
@@ -665,5 +681,6 @@ export const Api = {
     updateMatchAPI,
     getAllGridironAPI,
     createLeaugeAPI,
-    updateLeaugeAPI
+    updateLeaugeAPI,
+    updateMatchOfLeaugeAPI
 };

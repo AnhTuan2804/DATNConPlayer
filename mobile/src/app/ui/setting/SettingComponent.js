@@ -16,8 +16,8 @@ class SettingComponent extends Component {
     state = {
         index: 0,
         routes: [
-            { key: 'info', title: "Cập nhật thông tin" },
-            { key: 'password', title: "Đổi mật khẩu" },
+            { key: 'info', title: "Update user information" },
+            { key: 'password', title: "Change Password" },
         ],
     };
 

@@ -17,6 +17,7 @@ class HomeComponent extends Component {
         super(props);
         this.state = {
             listMatch: [],
+            listLeague: [],
             visibleModal: false,
             teamSelect: "",
             matchSelect: null
@@ -112,7 +113,7 @@ class HomeComponent extends Component {
         );
     }
 
-    readUserData() {
+    readMatchData() {
         let seft = this
         firebase.database().ref('/match').on('value', function (snapshot) {
             let listItem = []
@@ -130,8 +131,25 @@ class HomeComponent extends Component {
         });
     }
 
+    readLeagueData() {
+        let seft = this
+        firebase.database().ref('/league').on('value', function (snapshot) {
+            let listItem = []
+            _.forEach(snapshot.val(), (value, key) => {
+                value['id'] = key
+                listItem.push(value)
+            });
+            if (listItem.length) {
+                seft.setState({
+                    listLeague: listItem
+                })
+            }
+        });
+    }
+
     componentDidMount() {
-        this.readUserData()
+        this.readLeagueData()
+        this.readMatchData()
         this.props.onGetProfile()
         this.props.onGetAllGridiron()
     }
@@ -186,7 +204,7 @@ class HomeComponent extends Component {
                     }}
                     >
                         <Icon style={{ fontSize: 16 }} name={'user-friends'} type={'FontAwesome5'} />
-                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.team.name}</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{item.team.name}</Text>
                     </View>
                     <Text style={{
                         fontSize: 14, fontWeight: 'bold',
@@ -268,12 +286,16 @@ class HomeComponent extends Component {
                 flex: 1,
                 width: width * 7 / 10,
                 borderRadius: 5,
-                backgroundColor: 'rgb(34,139,34)',
+                borderColor: 'rgb(34,139,34)',
+                borderWidth: 1,
+                // backgroundColor: 'rgb(34,139,34)',
                 marginHorizontal: 10,
             }}>
                 <View
                     style={{
-                        margin: 10,
+                        backgroundColor: 'rgb(34,139,34)',
+                        padding: 10,
+                        marginBottom: 5,
                         flexDirection: 'row',
                         borderBottomWidth: 1,
                         borderBottomColor: "#28a745",
@@ -285,7 +307,7 @@ class HomeComponent extends Component {
                         justifyContent: 'flex-start',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Gridiron {item.name}</Text>
+                        <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>Gridiron {item.name}</Text>
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 10, }}>
@@ -340,12 +362,15 @@ class HomeComponent extends Component {
                 flex: 1,
                 width: width * 7 / 10,
                 borderRadius: 5,
-                backgroundColor: 'blue',
+                borderColor: 'blue',
+                borderWidth: 1,
                 marginHorizontal: 10,
             }}>
                 <View
                     style={{
-                        margin: 10,
+                        backgroundColor: 'blue',
+                        padding: 10,
+                        marginBottom: 5,
                         flexDirection: 'row',
                         borderBottomWidth: 1,
                         borderBottomColor: "#28a745",
@@ -357,7 +382,68 @@ class HomeComponent extends Component {
                         justifyContent: 'flex-start',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ color: 'white' }}>League{item}</Text>
+                        <Text style={{ color: 'white', fontSize: 18, fontWeight: "bold" }}>League {item.name_of_league}</Text>
+                    </View>
+                </View>
+                <View style={{
+                    flex: 1,
+                    marginHorizontal: 10,
+                }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: "center"
+                    }}>
+                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Managers: </Text>
+                        <Text style={{ color: 'black', flex: 1 }}>{item.user.fullname}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: "center"
+                    }}>
+                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Status: </Text>
+                        <Text style={{ fontWeight: 'bold', color: "red", }}>{item.status}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: "center"
+                    }}>
+                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Registry expiry date: </Text>
+                        <Text style={{ color: 'black', flex: 1 }}>{TimeService.formatDateFromTimeUnix(item.date_expiry_register, 'DD/MM/YYYY')}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: "center"
+                    }}>
+                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Number of teams registered: </Text>
+                        <Text style={{ color: 'black' }}>  {item.list_team ? `${item.list_team.length}` : "0"}/{`${item.number_of_teams}`}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: "flex-start"
+                    }}>
+                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Type of competition: </Text>
+                        <Text style={{ color: 'black', flex: 1 }}> {item.type_league.name}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: "flex-start"
+                    }}>
+                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Area: </Text>
+                        <Text style={{ color: 'black', flex: 1 }}> {item.area.name}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: "flex-start"
+                    }}>
+                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Summary about league: </Text>
+                        <Text style={{ color: 'black', flex: 1 }}> {item.description}</Text>
                     </View>
                 </View>
             </View>
@@ -377,7 +463,7 @@ class HomeComponent extends Component {
                     </View>
                     <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <Text style={{ fontSize: 12, paddingRight: 5 }} onPress={() => Actions.jump(clickMorePage)}>
-                            xem thêm
+                            see more
                         </Text>
                         <Icon style={{ fontSize: 15 }} name="angle-right" type="FontAwesome" />
                     </TouchableOpacity>
@@ -456,7 +542,7 @@ class HomeComponent extends Component {
                     {/* list san bong */}
 
                     {/* list giai dau */}
-                    {/* {this._renderListView('Giải đấu', logoLeague, listLeague, 'League', this._renderItemLeague.bind(this))} */}
+                    {this._renderListView('League', logoLeague, this.state.listLeague, 'League', this._renderItemLeague.bind(this))}
 
                     {/* list giai dau */}
 

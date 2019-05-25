@@ -1,6 +1,7 @@
 import {
     IS_CREATE_LEAUGE,
     IS_UPDATE_LEAUGE,
+    IS_UPDATE_MATCH_OF_LEAUGE,
 } from './ActionTypes';
 
 // createLeauge
@@ -20,3 +21,10 @@ export const updateLeauge = (value) => {
     };
 }
 
+export const updateMatchOfLeauge = (value) => {
+    return {
+        type: IS_UPDATE_MATCH_OF_LEAUGE,
+        isLoading: true,
+        value,
+    };
+}

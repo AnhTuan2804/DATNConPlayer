@@ -5,8 +5,6 @@ import { Field, initialize, reduxForm } from 'redux-form';
 import Constants from '../../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
 import Loading from '../../common/modal/Loading';
-import Utils from '../../../../theme/shared/utils/Utils';
-import { SearchBar } from 'react-native-elements';
 import { renderSelectSearch, renderField } from '../../../../theme/variable/Validate';
 import firebase from 'firebase';
 import _ from 'lodash';
@@ -408,9 +406,6 @@ class MatchSearchComponent extends Component {
                             this._renderListView('Match', logoMatch, this.state.listMatchSearch, 'Match', this._renderItemMatch.bind(this))
                             : this._renderListView('Match', logoMatch, this.state.listMatch, 'Match', this._renderItemMatch.bind(this))
                     }
-
-
-
                 </Content >
             </Container >
         );
