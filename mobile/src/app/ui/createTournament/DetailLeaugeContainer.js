@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import {  updateLeauge } from '../../actions/LeaugeActions';
+import { updateLeauge, updateMatchOfLeauge } from '../../actions/LeaugeActions';
 import DetailLeaugeForm from './DetailLeaugeComponent';
 
 export default connect(
@@ -17,6 +17,9 @@ export default connect(
     return {
       onUpdateLeauge: (body) => {
         dispatch(updateLeauge(body))
+      },
+      onUpdateMatchOfLeague: (body) => {
+        dispatch(updateMatchOfLeauge(body))
       }
     }
   }

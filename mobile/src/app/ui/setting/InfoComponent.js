@@ -43,7 +43,7 @@ class InfoComponent extends Component {
                             <Text style={{
                                 color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
                                 textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                            }}>Cập nhật</Text>
+                            }}>Update</Text>
                         </TouchableOpacity>
                     </View>
                 </Content >

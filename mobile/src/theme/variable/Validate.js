@@ -118,6 +118,33 @@ export const renderSelect = ({ input, label, data, children, textIP, ...custom }
     </View>
 );
 
+export const renderFieldWithoutLable = ({ keyboardType, textIP, meta: { touched, error, warning }, input: { onChange, ...restInput } }) => {
+    return (
+        <View style={{ flexDirection: 'column', height: 60 }}>
+            <View style={{ flexDirection: 'column', height: 40 }}>
+                <Input style={{
+                    fontSize: 26.04 / Constants.RATE_SIZE,
+                    borderWidth: 0.6,
+                    backgroundColor: '#a4e5ff',
+                    height: 20,
+                    marginLeft: 25,
+                    marginRight: 25,
+                    padding: 5,
+                    borderRadius: 6,
+                    borderColor: '#a4e5ff'
+
+                }}
+                    keyboardType={keyboardType} onChangeText={onChange} {...restInput}
+                    placeholderTextColor='#67c5fd'
+                    placeholder={textIP}
+                >
+                </Input>
+            </View>
+            {touched && ((error && <Text style={{ color: 'red', marginLeft: 25, marginTop: 2, fontSize: 21.58 / Constants.RATE_SIZE }}>{error}</Text>) ||
+                (warning && <Text style={{ color: 'orange', marginLeft: 25 }}>{warning}</Text>))}
+        </View>);
+};
+
 export const renderField = ({ label, keyboardType, textIP, meta: { touched, error, warning }, input: { onChange, ...restInput } }) => {
     return (
         <View style={{ flexDirection: 'column', height: 80 }}>

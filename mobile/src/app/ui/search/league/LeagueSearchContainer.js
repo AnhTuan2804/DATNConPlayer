@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import LeagueSearchComponent from './LeagueSearchComponent';
+import LeagueSearchForm from './LeagueSearchComponent';
 
 export default connect(
   state => {
@@ -18,4 +18,4 @@ export default connect(
     return {
     }
   }
-)(LeagueSearchComponent);
+)(LeagueSearchForm);
