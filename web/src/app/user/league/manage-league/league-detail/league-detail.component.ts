@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { LeagueService } from 'src/app/shared/services/league.service';
 import { InfoCommon } from 'src/app/shared/classes/info-common';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-league-detail',
@@ -61,6 +62,7 @@ export class LeagueDetailComponent implements OnInit {
     private timeService: TimeService, private action: ComponentActions,
     private formBuilder: FormBuilder, private route: ActivatedRoute,
     private toastrService: ToastrService,
+    private titleService: Title,
     private leagueService: LeagueService, private infoCommon: InfoCommon,
     private careerService: CareerService, private career: Career,
     private areaService: AreaService, private area: Area) {
@@ -68,6 +70,7 @@ export class LeagueDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('League Detail page');
     this.listTypeOfLeague = this.infoCommon.getListTypeOfCompetition();
     this.startDate = this.timeService.getDateWithoutTime(new Date());
     this.initForm();

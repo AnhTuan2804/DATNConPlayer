@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { Utils } from 'src/app/shared/enums/utils';
 import { CareerService } from 'src/app/shared/services/career.service';
 import { Career } from 'src/app/shared/classes/career';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -40,6 +41,7 @@ export class TeamComponent implements OnInit {
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
     private teamService: TeamService, private team: Team,
+    private titleService: Title,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router) {
     this.initForm()
@@ -53,6 +55,7 @@ export class TeamComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.titleService.setTitle('Manage Team page');
   }
 
   initForm() {

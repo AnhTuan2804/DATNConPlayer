@@ -145,7 +145,7 @@
                 </div>
               </div>
 
-              <div [ngClass]="{'view': view}" class="col-md-4 btn-center">
+              <div *ngIf="!view" class="col-md-4 btn-center">
                 <div class="form-group">
                   <button type="submit" class="btn btn-success" [disabled]="!formEdit.valid" (click)="edit()">
                     <i class="fas fa-plus-circle"></i> &nbsp;Update

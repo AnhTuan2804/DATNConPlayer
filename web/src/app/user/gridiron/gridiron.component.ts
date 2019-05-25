@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
 import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -33,7 +34,7 @@ export class GridironComponent implements OnInit {
   objectDeleteEvent;
   isShow = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
-    private levelService: LevelService, private level: Level,
+    private titleService: Title,
     private gridironService: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router) {
@@ -46,6 +47,7 @@ export class GridironComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.titleService.setTitle('Manage Gridiron page');
   }
 
   initForm() {
