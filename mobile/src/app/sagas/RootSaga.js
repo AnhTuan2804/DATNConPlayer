@@ -7,8 +7,8 @@ import { watchUpdateInfo, watchchangePass, watchGetProfile } from './SettingSaga
 import { watchGetListLevelSaga, watchGetListArea, watchGetListTimeSaga, watchGetListSizeSaga, watchGetListCareerSaga, watchGetAllGridironSaga } from './HomeSaga';
 import { watchGetListTeamSaga, watchCreateTeamSaga, watchUpdateTeamSaga, watchDeleteTeamSaga, watchGetTeamDetailSaga, watchAddMemberSaga, watchDeleteMemberSaga } from './TeamSaga';
 import { watchGetListGridironSaga, watchGetGridironDetailSaga, watchCreateGridironSaga, watchUpdateGridironSaga, watchAddSubGridironSaga, watchDeleteSubGridironSaga, watchAddPriceOnTimeSaga, watchDeletePriceOnTimeSaga, watchDeleteGridironSaga } from './GridironSaga';
-import { watchCreateMatchSaga,  watchUpdateMatchSaga } from './MatchSaga';
-import { watchUpdateLeaugeSaga, watchCreateLeaugeSaga, watchUpdateMatchOfLeaugeSaga } from './LeaugeSaga';
+import { watchCreateMatchSaga, watchUpdateMatchSaga } from './MatchSaga';
+import { watchUpdateLeaugeSaga, watchCreateLeaugeSaga, watchUpdateMatchOfLeaugeSaga, watchregisterLeagueSaga, watchRemoveTeamLeagueSaga } from './LeaugeSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -46,5 +46,7 @@ export default function* rootSaga() {
         fork(watchCreateLeaugeSaga),
         fork(watchUpdateLeaugeSaga),
         fork(watchUpdateMatchOfLeaugeSaga),
+        fork(watchregisterLeagueSaga),
+        fork(watchRemoveTeamLeagueSaga),
     ]);
 }
