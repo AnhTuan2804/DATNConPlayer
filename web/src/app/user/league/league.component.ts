@@ -28,9 +28,7 @@ declare var $: any;
 export class LeagueComponent implements OnInit {
   listArea;
   listCareer;
-  listLeague;
   listLevel;
-  listLeagueSearch;
   areaForm: FormGroup;
   careerForm: FormGroup;
   levelForm: FormGroup;
@@ -41,7 +39,12 @@ export class LeagueComponent implements OnInit {
   objectLevelEvent
   objectLeagueEvent;
   listTeam;
+  listLeague;
+  listLeagueSearch;
+  listShow = [];
   messageConfirm = '';
+  pages = [];
+  currentPage = 0;
   constructor(public user: User,
     private timeService: TimeService, private action: ComponentActions,
     private formBuilder: FormBuilder,
@@ -82,12 +85,21 @@ export class LeagueComponent implements OnInit {
     this.leagueService.getAll().subscribe((result) => {
       this.listLeague = this.setDataMatchPublic(_.reverse(result));
       this.listLeagueSearch = this.listLeague;
-      console.log(this.listLeague)
+      this.paging(0);
       this.action.hideLoading();
     }, err => {
       this.action.hideLoading();
       console.log(err)
     })
+  }
+
+  paging(i) {
+    this.pages = []
+    for (let i = 1; i <= Math.ceil(this.listLeagueSearch.length / 3); i++) {
+      this.pages.push(i);
+    }
+    this.currentPage = i;
+    this.listShow = _.slice(this.listLeagueSearch, i * 3, (i + 1) * 3);
   }
 
   setDataMatchPublic(leagues) {
@@ -176,6 +188,7 @@ export class LeagueComponent implements OnInit {
       })
       this.listLeagueSearch = _.cloneDeep(tmp);
     }
+    this.paging(0);
   }
 
   navigate(event) {
@@ -241,5 +254,8 @@ export class LeagueComponent implements OnInit {
     $('#confirm').modal('hide');
   }
 
+  jumpTo() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  }
 
 }

@@ -32,6 +32,9 @@ export class HomeGridironComponent implements OnInit {
   listMatch;
   listLevel;
   listSearch;
+  listShow = [];
+  currentPage = 0;
+  pages = [];
   areaForm: FormGroup;
   careerForm: FormGroup;
   levelForm: FormGroup;
@@ -85,12 +88,21 @@ export class HomeGridironComponent implements OnInit {
     this.action.showLoading();
     this.gridironService.getListPublic().subscribe((result) => {
       this.listGridiron = result;
-      this.listSearch = result;
-      console.log(this.listGridiron)
+      this.listSearch = this.listGridiron;
+      this.paging(0);
       this.action.hideLoading();
     }, (err) => {
       console.log(err)
     })
+  }
+
+  paging(i) {
+    this.pages = []
+    for (let i = 1; i <= Math.ceil(this.listSearch.length / 3); i++) {
+      this.pages.push(i);
+    }
+    this.currentPage = i;
+    this.listShow = _.slice(this.listSearch, i * 3, (i + 1) * 3);
   }
 
   changeSelectRadio(event, tab) {
@@ -122,6 +134,7 @@ export class HomeGridironComponent implements OnInit {
       })
       this.listSearch = _.cloneDeep(tmp);
     }
+    this.paging(0);
   }
 
   resetFilter() {
@@ -179,5 +192,8 @@ export class HomeGridironComponent implements OnInit {
     $('#confirm').modal('hide');
   }
 
+  jumpTo() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  }
 }
 
