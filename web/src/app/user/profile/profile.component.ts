@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   listRole = [];
   headers = ['No.', 'Email', 'Fullname', 'Phone', 'Actions'];
   objectDeleteEvent;
+  isShow = true;
   constructor(private formBuilder: FormBuilder, private infoCommonService: InfoCommonService,
     private userService: UserService, private toastrService: ToastrService,
     private action: ComponentActions, public user: User) {
@@ -229,5 +230,9 @@ export class ProfileComponent implements OnInit {
       this.action.hideLoading();
       this.toastrService.error(err.message, '', { timeOut: 3000 });
     })
+  }
+
+  actionForm(tab) {
+    this.isShow = tab == 'show' ? false : true;
   }
 }

@@ -5,20 +5,11 @@ import { ComponentActions } from 'src/app/shared/classes/utils/component-actions
 import * as _ from 'lodash';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { Area } from 'src/app/shared/classes/area';
-import { LevelService } from 'src/app/shared/services/level.service';
-import { Level } from 'src/app/shared/classes/level';
-import { TeamService } from 'src/app/shared/services/team.service';
-import { Team } from 'src/app/shared/classes/team';
 import { Router } from '@angular/router';
 import { Utils } from 'src/app/shared/enums/utils';
 import { CareerService } from 'src/app/shared/services/career.service';
 import { Career } from 'src/app/shared/classes/career';
-import { InfoCommonService } from 'src/app/shared/services/info-common.service';
 import { InfoCommon } from 'src/app/shared/classes/info-common';
-import { GridironService } from 'src/app/shared/services/gridiron.service';
-import { Gridiron } from 'src/app/shared/classes/gridiron';
-import { Match } from 'src/app/shared/classes/match';
-import { MatchService } from 'src/app/shared/services/match.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
@@ -58,13 +49,9 @@ export class ManageLeagueComponent implements OnInit {
   startDate;
   isShow = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
-    private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
-    private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
-    private teamService: TeamService, private team: Team,
-    private match: Match, private matchService: MatchService,
+    private infoCommon: InfoCommon,
     private leagueService: LeagueService, private league: League,
-    private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router, private userService: UserService,
     public db: AngularFireDatabase, private timeService: TimeService) {
@@ -110,31 +97,6 @@ export class ManageLeagueComponent implements OnInit {
     });
   }
 
-
-  // getListTime() {
-  //   this.infoCommonService.getListTime().subscribe((result) => {
-  //     this.listTime = this.infoCommon.getListTimeForDropDown(result);
-  //   }, (err) => {
-  //     console.log(err)
-  //   })
-  // }
-
-  // getListGridiron() {
-  //   this.gridironServiec.getListForAdmin().subscribe((result) => {
-  //     this.listGridiron = this.gridiron.getListForDropdown(result);
-  //   }, (err) => {
-  //     console.log(err)
-  //   })
-  // }
-
-  // getListTeam() {
-  //   this.teamService.getListByCaptain().subscribe((result) => {
-  //     this.listTeam = this.team.getListTeamForDropdown(result);
-  //   }, (err) => {
-  //     console.log(err);
-  //   })
-  // }
-
   getListArea() {
     this.areaService.getList().subscribe((result) => {
       this.listArea = this.area.getListAreaForDropdown(result);
@@ -142,7 +104,6 @@ export class ManageLeagueComponent implements OnInit {
       console.log(err)
     })
   }
-
 
   getListCareer() {
     this.careerService.getList().subscribe((result) => {
@@ -173,6 +134,7 @@ export class ManageLeagueComponent implements OnInit {
       this.toastrService.success(Utils.MESSAGE_CREATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
       this.formAdd.reset();
+      this.actionForm('hide');
       this.action.hideLoading();
     }, (err) => {
       this.addFaild = true;

@@ -22,6 +22,7 @@ declare var $: any;
 })
 export class ModalUpdateMatchComponent implements OnInit {
   @Input() id = '';
+  @Input() isRegistering = false;
   @Input() match = {};
   @Output() outputData = new EventEmitter();
   updateForm: FormGroup;

@@ -4,12 +4,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title">Form pair match</h1>
+        <h1 class="modal-title">Form select team</h1>
       </div>
       <div class="modal-body">
         <form role="form" [formGroup]="modalPairForm" (ngSubmit)="pair()">
           <div class="form-group">
-            <label class="control-label">Select Team to pair match</label>
+            <label class="control-label">Select Team to {{ isRegister ? 'register' : 'pair match'}}</label>
             <div class="input-include-error">
                 <app-select-dropdown [nameSelect]="modalPairForm.controls['team'].value" [title]="'Select team'"
                 [selectedIndex]="selectedIndex" [options]="listTeam"
@@ -18,7 +18,7 @@
           </div>
           <div class="form-group">
             <div>
-              <button type="submit" class="btn btn-success" [disabled]="!modalPairForm.valid">Pair Match</button>
+              <button type="submit" class="btn btn-success" [disabled]="!modalPairForm.valid">{{isRegister ? 'Register' : 'Pair Match'}}</button>
             </div>
           </div>
         </form>
