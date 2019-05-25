@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   listMatch;
   listLevel;
   listMatchSearch;
+  listShow = [];
   areaForm: FormGroup;
   careerForm: FormGroup;
   levelForm: FormGroup;
@@ -42,6 +43,8 @@ export class HomeComponent implements OnInit {
   listTeam;
   idMatch;
   messageConfirm = '';
+  currentPage = 0;
+  pages = [];
   constructor(public user: User,
     private titleService: Title,
     private timeService: TimeService, private action: ComponentActions,
@@ -88,6 +91,7 @@ export class HomeComponent implements OnInit {
     this.matchService.getAll().subscribe((result) => {
       this.listMatch = this.setDataMatchPublic(_.reverse(result));
       this.listMatchSearch = this.listMatch;
+      this.paging(0);
       this.action.hideLoading();
     }, err => {
       this.action.hideLoading();
@@ -134,6 +138,15 @@ export class HomeComponent implements OnInit {
       })
     }
     return tmp;
+  }
+
+  paging(i) {
+    this.pages = []
+    for (let i = 1; i <= Math.ceil(this.listMatchSearch.length / 3); i++) {
+      this.pages.push(i);
+    }
+    this.currentPage = i;
+    this.listShow = _.slice(this.listMatchSearch, i * 3, (i + 1) * 3);
   }
 
   getListArea() {
@@ -217,6 +230,7 @@ export class HomeComponent implements OnInit {
       })
       this.listMatchSearch = _.cloneDeep(tmp);
     }
+    this.paging(0);
   }
 
   resetFilter() {
@@ -274,6 +288,10 @@ export class HomeComponent implements OnInit {
 
   cancelConfirm() {
     $('#confirm').modal('hide');
+  }
+
+  jumpTo() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   }
 
 }
