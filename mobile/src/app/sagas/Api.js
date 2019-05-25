@@ -1,8 +1,5 @@
 import Constants from '../../theme/variable/Constants';
-import { Toast } from 'native-base';
 import _ from 'lodash';
-import { Actions } from 'react-native-router-flux';
-import Utils from '../../theme/shared/utils/Utils';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import EncryptionService from '../../theme/shared/utils/EncryptionService'
 import { Alert } from 'react-native'
@@ -307,6 +304,38 @@ function* updateLeaugeAPI(bodyInfo) {
 
 function* updateMatchOfLeaugeAPI(bodyInfo) {
     const router = 'league/update-match';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* removeTeamLeagueAPI(bodyInfo) {
+    const router = 'league/remove-team';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* registerLeagueAPI(bodyInfo) {
+    const router = 'league/register';
     const headersPairs = null;
     const body = bodyInfo
     const response = yield fetch(`${Constants.HOST}/${router}`, {
@@ -682,5 +711,7 @@ export const Api = {
     getAllGridironAPI,
     createLeaugeAPI,
     updateLeaugeAPI,
-    updateMatchOfLeaugeAPI
+    updateMatchOfLeaugeAPI,
+    removeTeamLeagueAPI,
+    registerLeagueAPI
 };

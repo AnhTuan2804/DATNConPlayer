@@ -5,6 +5,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { User } from 'src/app/shared/classes/user/user';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -18,10 +19,15 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginFail: boolean = false;
   messageError: string = "";
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService,
-    private user: User, private componentAction: ComponentActions, private router: Router) { }
+  constructor(private formBuilder: FormBuilder,
+    private loginService: LoginService,
+    private user: User,
+    private titleService: Title,
+    private componentAction: ComponentActions,
+    private router: Router) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Login');
     this.loginForm = this.formBuilder.group({
       'email': new FormControl('', Validators.required),
       'password': new FormControl('', Validators.required)

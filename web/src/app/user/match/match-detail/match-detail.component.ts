@@ -21,6 +21,7 @@ import { Match } from 'src/app/shared/classes/match';
 import { MatchService } from 'src/app/shared/services/match.service';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
 import { NotifyService } from 'src/app/shared/services/notify.service';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-match-detail',
@@ -60,7 +61,8 @@ export class MatchDetailComponent implements OnInit {
     private matchService: MatchService, private timeService: TimeService,
     private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
-    private area: Area, private router: Router, private route: ActivatedRoute) {
+    private area: Area, private router: Router, private route: ActivatedRoute,
+    private titleService: Title) {
     this.startDate = this.timeService.getDateWithoutTime(new Date());
     this.initForm();
     this.getListArea();
@@ -72,6 +74,7 @@ export class MatchDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Match Detail page');
     this.route.params.subscribe((params) => {
       this.id = params.id;
       this.getDetail(this.id);

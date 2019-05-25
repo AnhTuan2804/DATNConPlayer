@@ -18,6 +18,7 @@ import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
 import { Gridiron } from 'src/app/shared/classes/gridiron';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -31,6 +32,9 @@ export class HomeGridironComponent implements OnInit {
   listMatch;
   listLevel;
   listSearch;
+  listShow = [];
+  currentPage = 0;
+  pages = [];
   areaForm: FormGroup;
   careerForm: FormGroup;
   levelForm: FormGroup;
@@ -45,9 +49,9 @@ export class HomeGridironComponent implements OnInit {
   messageConfirm = '';
   constructor(public user: User,
     private timeService: TimeService, private action: ComponentActions,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder, private titleService: Title,
     private toastrService: ToastrService,
-    private gridironService: GridironService, private gridiron: Gridiron,
+    private gridironService: GridironService,
     private teamService: TeamService, private team: Team,
     private matchService: MatchService,
     private areaService: AreaService, private area: Area) {
@@ -55,6 +59,7 @@ export class HomeGridironComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Search Gridiron');
     this.initForm();
     this.getListArea();
     this.getListGridiron();
@@ -83,12 +88,21 @@ export class HomeGridironComponent implements OnInit {
     this.action.showLoading();
     this.gridironService.getListPublic().subscribe((result) => {
       this.listGridiron = result;
-      this.listSearch = result;
-      console.log(this.listGridiron)
+      this.listSearch = this.listGridiron;
+      this.paging(0);
       this.action.hideLoading();
     }, (err) => {
       console.log(err)
     })
+  }
+
+  paging(i) {
+    this.pages = []
+    for (let i = 1; i <= Math.ceil(this.listSearch.length / 3); i++) {
+      this.pages.push(i);
+    }
+    this.currentPage = i;
+    this.listShow = _.slice(this.listSearch, i * 3, (i + 1) * 3);
   }
 
   changeSelectRadio(event, tab) {
@@ -120,6 +134,7 @@ export class HomeGridironComponent implements OnInit {
       })
       this.listSearch = _.cloneDeep(tmp);
     }
+    this.paging(0);
   }
 
   resetFilter() {
@@ -177,5 +192,8 @@ export class HomeGridironComponent implements OnInit {
     $('#confirm').modal('hide');
   }
 
+  jumpTo() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  }
 }
 

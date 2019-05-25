@@ -15,6 +15,7 @@ import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { InfoCommonService } from 'src/app/shared/services/info-common.service';
 import { Utils } from 'src/app/shared/enums/utils';
 import { InfoCommon } from 'src/app/shared/classes/info-common';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-gridiron-detail',
@@ -51,10 +52,10 @@ export class GridironDetailComponent implements OnInit {
   countName = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
-    private levelService: LevelService, private level: Level,
-    private gridironService: GridironService, private gridiron: Gridiron,
+    private titleService: Title,
+    private gridironService: GridironService,
     private toastrService: ToastrService, private action: ComponentActions,
-    private area: Area, private router: Router, private route: ActivatedRoute) {
+    private area: Area, private route: ActivatedRoute) {
     this.initForm()
     this.getListArea();
     this.getListSize();
@@ -65,6 +66,7 @@ export class GridironDetailComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.titleService.setTitle('Gridiron detail page');
     this.route.params.subscribe((params) => {
       const id = params.id;
       this.getDetail(id);
@@ -324,7 +326,7 @@ export class GridironDetailComponent implements OnInit {
     $('#sub').modal('show');
   }
 
-  delSub(){
+  delSub() {
     this.action.showLoading();
     this.gridironService.deleteSubGridiron({ id: this.objectDelSubEvent.item.sub_gridiron.id }).subscribe((result) => {
       this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
@@ -340,7 +342,7 @@ export class GridironDetailComponent implements OnInit {
     $('#price').modal('show');
   }
 
-  delPrice(){
+  delPrice() {
     this.action.showLoading();
     this.gridironService.deletePriceOnTime({ id: this.objectDelPriceEvent.item.price_on_time.id }).subscribe((result) => {
       this.toastrService.success(Utils.MESSAGE_DELETE_SUCCESS, '', { timeOut: 3500 });
@@ -353,10 +355,10 @@ export class GridironDetailComponent implements OnInit {
 
   saveConfirm(tab) {
     $(`#${tab}`).modal('hide');
-    if(tab == 'sub'){
+    if (tab == 'sub') {
       this.delSub();
     }
-    if(tab == 'price'){
+    if (tab == 'price') {
       this.delPrice();
     }
   }

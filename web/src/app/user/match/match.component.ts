@@ -23,6 +23,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-match',
@@ -63,7 +64,8 @@ export class MatchComponent implements OnInit {
     private gridironServiec: GridironService, private gridiron: Gridiron,
     private toastrService: ToastrService, private action: ComponentActions,
     private area: Area, private router: Router, private userService: UserService,
-    public db: AngularFireDatabase, private timeService: TimeService) {
+    public db: AngularFireDatabase, private timeService: TimeService,
+    private titleService: Title) {
     this.initForm()
     this.getListArea();
     this.getListCareer();
@@ -74,6 +76,7 @@ export class MatchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Manage Match page');
     this.action.showLoading();
     this.userService.getProfile().subscribe((user) => {
       this.userDetail = user;

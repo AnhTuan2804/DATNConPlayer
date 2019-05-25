@@ -13,6 +13,7 @@ import { TimeService } from 'src/app/shared/services/helpers/time.service';
 import { LeagueService } from 'src/app/shared/services/league.service';
 import { ToastrService } from 'ngx-toastr';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -39,12 +40,13 @@ export class ModalUpdateMatchComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private action: ComponentActions,
     private gridironService: GridironService, private gridiron: Gridiron,
     private infoCommonService: InfoCommonService, private infoCommon: InfoCommon,
-    private user: User, private componentAction: ComponentActions,
+    private titleService: Title,
     private toastrService: ToastrService,
-    private timeService: TimeService, private leagueService: LeagueService,
-    private router: Router) { }
+    private timeService: TimeService,
+    private leagueService: LeagueService) { }
 
   ngOnInit() {
+    // this.titleService.setTitle('Update Match');
     this.startDate = this.timeService.getDateWithoutTime(new Date());
     this.updateForm = this.formBuilder.group({
       'team1_score': new FormControl(''),

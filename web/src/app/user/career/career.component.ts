@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { CareerService } from 'src/app/shared/services/career.service';
 import { Career } from 'src/app/shared/classes/career';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-career',
@@ -26,6 +27,7 @@ export class CareerComponent implements OnInit {
   objectLevelEvent;
   constructor(private formBuilder: FormBuilder, private careerService: CareerService,
     private toastrService: ToastrService, private action: ComponentActions,
+    private titleService: Title,
     public user: User, private career: Career) {
     this.initForm()
     this.getList();
@@ -35,6 +37,7 @@ export class CareerComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.titleService.setTitle('Manage Career page');
   }
 
   initForm() {
