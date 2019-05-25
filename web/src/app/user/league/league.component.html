@@ -56,7 +56,7 @@
           </div>
         </div>
 
-        <div class="content-match" *ngFor="let item of listLeagueSearch">
+        <div class="content-match" *ngFor="let item of listShow">
           <div class="row">
             <div class="col-sm-5 text-center">
               <a (click)="navigate(item.id)">
@@ -103,6 +103,20 @@
           </div>
           <hr>
         </div>
+
+        <div *ngIf="listLeagueSearch && listLeagueSearch.length > 0" class="content-match">
+            <div class="row">
+              <div style="display: flex; justify-content: center;" class="col-sm-11">
+                <ul class="pagination">
+                  <li *ngFor="let item of pages, index as i" [ngClass]="{'active': currentPage == i}" class="page-item"><a
+                      class="page-link" (click)="paging(i)">{{i+1}}</a></li>
+                </ul>
+              </div>
+              <div class="col-sm-1">
+                  <i (click)="jumpTo()" class="far fa-arrow-alt-circle-up fa-2x"></i>
+                </div>
+            </div>
+          </div>
 
       </div>
     </div>

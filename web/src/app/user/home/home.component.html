@@ -70,7 +70,7 @@
           </div>
         </div>
 
-        <div class="content-match" *ngFor="let item of listMatchSearch">
+        <div class="content-match" *ngFor="let item of listShow">
           <div class="row">
             <div class="col-sm-4 text-center">
               <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="80%" width="90%"
@@ -109,6 +109,29 @@
             </div>
           </div>
           <hr>
+        </div>
+
+        <div *ngIf="listMatchSearch && listMatchSearch.length == 0" class="content-match">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <h3 style="font-weight: bold; font-style: italic">No Data Available</h3>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <div *ngIf="listMatchSearch && listMatchSearch.length > 0" class="content-match">
+          <div class="row">
+            <div style="display: flex; justify-content: center;" class="col-sm-11">
+              <ul class="pagination">
+                <li *ngFor="let item of pages, index as i" [ngClass]="{'active': currentPage == i}" class="page-item"><a
+                    class="page-link" (click)="paging(i)">{{i+1}}</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-1">
+              <i (click)="jumpTo()" class="far fa-arrow-alt-circle-up fa-2x"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
