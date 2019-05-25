@@ -16,6 +16,7 @@ import { Utils } from 'src/app/shared/enums/utils';
 import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
   idMatch;
   messageConfirm = '';
   constructor(public user: User,
+    private titleService: Title,
     private timeService: TimeService, private action: ComponentActions,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
@@ -54,6 +56,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Home page');
     this.initForm();
     this.getListMatch();
     this.getListArea();
