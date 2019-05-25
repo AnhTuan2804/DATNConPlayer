@@ -1,0 +1,211 @@
+<div class="container">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Update information</h1>
+    </div>
+    <div class="modal-body">
+      <div class="row col-md-12">
+        <!-- form Infor -->
+        <form class="col-md-6" role="form" [formGroup]="profileForm" (ngSubmit)="changeInfor()">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">E-mail</label>
+              <div>
+                <input type="email" class="form-control input-lg" name="email" formControlName="email" value=""
+                  disabled>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Fullname</label>
+              <div>
+                <input type="text" class="form-control input-lg" name="fullname" formControlName="fullname" value="">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Phone</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="tel" class="form-control input-lg" name="phone" formControlName="phone" value="">
+                <span
+                  *ngIf="profileForm.controls['phone'].hasError('required') && (profileForm.controls['phone'].touched || errorForm ) "
+                  for="phone">Field required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="input-include-error">
+                <button type="submit" class="btn btn-success" [disabled]="!profileForm.valid">
+                  Update
+                </button>
+                <span *ngIf="editFaild">{{messageError}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- Change pass form -->
+        <form class="col-md-6" role="form" [formGroup]="changePassForm" (ngSubmit)="changePass()">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Current password</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="currentPassword"
+                  formControlName="currentPassword">
+                <span
+                  *ngIf="changePassForm.controls['currentPassword'].hasError('required') && (changePassForm.controls['currentPassword'].touched || errorForm ) "
+                  for="currentPassword">Field required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">New password</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="newPassword" formControlName="newPassword">
+                <span
+                  *ngIf="changePassForm.controls['newPassword'].hasError('required') && (changePassForm.controls['newPassword'].touched || errorForm ) "
+                  for="newPassword">Field required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Confim Password</label>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="confirmNewPassword"
+                  formControlName="confirmNewPassword">
+                <span
+                  *ngIf="(changePassForm.hasError('passwordMatchValidator') || changePassForm.controls['confirmNewPassword'].hasError('required')) &&(changePassForm.controls['confirmNewPassword'].touched || errorForm )"
+                  for="confirmNewPassword">Confirm password not match with new password</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="input-include-error">
+                <button type="submit" class="btn btn-success" [disabled]="!changePassForm.valid">
+                  Update password
+                </button>
+                <span *ngIf="changePassFaild">{{messageError}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="isAdmin" class="modal-content">
+    <div class="modal-header  row dis-flex" style="margin: 0">
+        <div class="col-sm-8">
+          <h1 class="modal-title">Manage User</h1>
+        </div>
+        <div *ngIf="isShow" class="col-sm-4 div-center"><button (click)="actionForm('show')"
+            class="btn-center btn btn-success dis-flex"><i class="fas fa-plus-circle"></i>&nbsp; Create New Account</button>
+        </div>
+      </div>
+
+
+    <div *ngIf="!isShow" class="modal-body">
+      <form role="form" [formGroup]="formAdd" (ngSubmit)="addAccount()">
+        <div class="col-md-12 row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Email</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="email" class="form-control input-lg" name="" formControlName="email">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Fullname</label>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="" formControlName="fullname">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Phone</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="number" class="form-control input-lg" name="" formControlName="phone">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Role</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="formAdd.controls['role'].value" [title]="'Select role'"
+                  [selectedIndex]="selectedIndex" [options]="listRole"
+                  (selectedOption)="handleDownSelect($event, 'role')"></app-select-dropdown>
+                <span
+                  *ngIf="formAdd.controls.role.hasError('required')&&(formAdd.controls['role'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Password</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="password" formControlName="password">
+                <span
+                  *ngIf="formAdd.controls['password'].hasError('required') && (formAdd.controls['password'].touched || errorForm ) "
+                  for="newPassword">Field required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Confim Password</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="password" class="form-control input-lg" name="confirmPassword"
+                  formControlName="confirmPassword">
+                <span
+                  *ngIf="(formAdd.hasError('passwordMatchValidatorCreate') || formAdd.controls['confirmPassword'].hasError('required')) &&(formAdd.controls['confirmPassword'].touched || errorForm )"
+                  for="confirmPassword">Confirm password not match with new password</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid">
+                <i class="fas fa-plus-circle"></i> &nbsp;Create new account
+              </button>
+            </div>
+          </div>
+          <div class="col-md-3 btn-center">
+              <div class="form-group">
+                <button type="submit" class="btn btn-secondary" (click)="actionForm('hide')">
+                  <i class="far fa-times-circle"></i> &nbsp;Cancel
+                </button>
+              </div>
+            </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <app-data-table [headers]="headers" [items]="listUser" [listSearch]=[0,1,2,3]
+          (outputContentStatus)="outputContentStatus($event)" (outputAction)="handleAction($event)"></app-data-table>
+      </div>
+    </div>
+  </div>
+</div>
+<app-alert-confirm [id]="'delete-account'" [message]="'Are you sure delete this account?'" (saveConfirm)="saveConfirm()" (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
+<app-loading></app-loading>

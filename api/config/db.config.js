@@ -1,27 +1,37 @@
 const config = {
     whiteList: ["http://localhost:4200"],
     recreateDB: false,
-    dbLocal: {
-        dbname: "sql10284795",
-        username: "sql10284795",
-        password: "j4ALCJYcFG",
-        options: {
-            host: "sql10.freemysqlhosting.net",
-            port: 3306,
-            dialect: "mysql"
-        }
-    },
     dbDev: {
-        dbname: "sql10284795",
-        username: "sql10284795",
-        password: "j4ALCJYcFG",
+        dbname: "yeJvB6zA4A",
+        username: "yeJvB6zA4A",
+        password: "7JKLb8XVaI",
         options: {
-            host: "sql10.freemysqlhosting.net",
+            host: "remotemysql.com",
             port: 3306,
             dialect: "mysql"
         }
     },
-    
+    dbLocalWeb: {
+        dbname: "DATNCSPLAYER",
+        username: "root",
+        password: "abc@1234",
+        options: {
+            host: "127.0.0.1",
+            port: 3306,
+            dialect: "mysql"
+        }
+    },
+    dbLocalMobile: {
+        dbname: "DATNCSPLAYER",
+        username: "root",
+        password: "Abc@1234",
+        options: {
+            host: "127.0.0.1",
+            port: 3306,
+            dialect: "mysql"
+        }
+    },
+
     googleCloud: {
         keyfile: {
             type: "service_account",

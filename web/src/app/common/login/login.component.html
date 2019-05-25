@@ -1,3 +1,39 @@
-<p>
-  login works!
-</p>
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <!-- Modal HTML Markup -->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Sign In</h1>
+      </div>
+      <div class="modal-body">
+        <form role="form" [formGroup]="loginForm" (ngSubmit)="doLogin()">
+          <input type="hidden" name="_token" value="">
+          <div class="form-group">
+            <label class="control-label">E-Mail</label>
+            <div>
+              <input type="email" class="form-control input-lg" name="email" formControlName="email" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Password</label>
+            <div>
+              <input type="password" class="form-control input-lg" name="password" formControlName="password">
+            </div>
+          </div>
+          <div *ngIf="loginFail" class="error-message">
+            <i>{{messageError}}</i>
+          </div>
+          <div class="form-group">
+            <div>
+              <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Sign In</button>
+              <a class="btn btn-link" href="#" (click)="showForgotPass()">Forgot password?</a>
+              <a class="btn btn-link" href="#" (click)="showRegister()">Don't have account?</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<app-loading></app-loading>

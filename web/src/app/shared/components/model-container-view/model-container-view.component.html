@@ -4,17 +4,12 @@
         <div class="modal-dialog ">
             <!-- Modal content-->
             <div class="modal-content ">
-                <div class="modal-header">
-                    <button type="button" (click)="resetForm()" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">{{ title | translate}} </h4>
-                </div>
                 <div class="modal-body scrollable-menu">
                     <ng-content></ng-content>
                 </div> 
                 <div class="modal-footer">
-                    <button *ngIf="mode != crudType.CONFIRM_OK" (click)="cancelForm()" type="button" class="btn btnClose g-body-1" data-dismiss="modal"> {{'UTILS.CLOSE' | translate}}</button>
-                    <button *ngIf="(mode == crudType.CONFIRM || mode == crudType.DELETE || mode == crudType.CONFIRM_OK ) " (click)="saveData()" class="btn save-btn  g-body-1 "> {{'UTILS.OK' | translate}}</button>
-                    <button *ngIf="(mode != crudType.READ&&!(mode == crudType.CONFIRM || mode == crudType.DELETE || mode == crudType.CONFIRM_OK ) )" (click)="saveData()" class="btn save-btn  g-body-1 ">{{(mode== crudType.DOWNLOAD) ? "'UTILS.DOWNLOAD' | translate" : "'UTILS.SAVE' | translate"}}</button>
+                    <button *ngIf="!isAlert" (click)="cancelForm()" type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                    <button *ngIf="true" (click)="saveData()" class="btn btn-success">OK</button>
                 </div>
             </div>
         </div>

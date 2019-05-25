@@ -1,5 +1,5 @@
 <div>
-    <app-model-search *ngIf="showSearch" [enableFilter]="checkSearchFilter" (textSearch)="textSearch($event.text,1)" (filter)="filter()" [holder]="holder | translate"></app-model-search>
+    <app-model-search *ngIf="showSearch" (textSearch)="textSearch($event.text,1)" [holder]="'Search ...'"></app-model-search>
     <div class="portlet light bordered">
 
         <div class="portlet-body" style="overflow-x:auto;">
@@ -76,12 +76,6 @@
             <li [ngClass]="{disabled:pager['currentPage'] === pager['totalPages']}">
                 <a (click)="choosepage(pager['totalPages'])"><i class="fa fa-angle-double-right"></i></a>
             </li>
-        </ul>
-        <ul *ngIf="showBtn" class="pagination">
-            <a>                
-                <span>着金詳細を確認する</span>
-                <i class="fa fa-angle-double-right"></i>
-            </a>
         </ul>
     </div>
 </div>

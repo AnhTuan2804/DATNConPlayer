@@ -10,8 +10,8 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean> | boolean {
         let subject = new Subject<boolean>();
-        if (!localStorage.getItem('token')) {
-            this.router.navigate(['/login']);
+        if (localStorage.getItem('token') === "undefined" || !localStorage.getItem('token')) {
+            this.router.navigate(['']);
             subject.next(false);
         }
         return true;

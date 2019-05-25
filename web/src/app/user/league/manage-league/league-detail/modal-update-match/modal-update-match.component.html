@@ -1,0 +1,90 @@
+<div class="modal fade" id="update-match" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!-- Modal HTML Markup -->
+  <div class="modal-dialog  modal-lg" role="document">
+    <div [ngClass]="{'view': isRegistering}" class="modal-content">
+
+      <div class="modal-header row dis-flex">
+        <div class="col-sm-7">
+          <h1 class="modal-title">Match Information</h1>
+        </div>
+        <div class="col-sm-5 div-center"><button (click)="updateInfo()" class="btn-center btn btn-success dis-flex"><i
+              class="far fa-edit"></i>&nbsp; Update Information Match</button></div>
+      </div>
+
+      <div class="modal-body">
+        <form role="form" [formGroup]="updateForm">
+          <input type="hidden" name="_token" value="">
+          <div class="form-group row">
+            <div class="col-md-4 team-name">
+              <label style="text-transform: uppercase" class="control-label">{{dataMatchDetail ? dataMatchDetail.team1.name : ''}}</label>
+            </div>
+            <div [ngClass]="{'view': dataMatchDetail && dataMatchDetail.team1_score}" *ngIf="!is_update_infor" class="col-md-2">
+              <input type="number" class="form-control input-lg" formControlName="team1_score" value="">
+            </div>
+            <div [ngClass]="{'view': dataMatchDetail && dataMatchDetail.team1_score}" *ngIf="!is_update_infor" class="col-md-2">
+              <input type="number" class="form-control input-lg" formControlName="team2_score" value="">
+            </div>
+            <div *ngIf="is_update_infor" class="col-md-4 team-name">
+              <label style="color: brown; font-style: italic" class="control-label">{{message || '-'}}</label>
+            </div>
+            <div class="col-md-4 team-name">
+              <label style="text-transform: uppercase" class="control-label">{{dataMatchDetail ? dataMatchDetail.team2.name : ''}}</label>
+            </div>
+            <div class="col-md-12 team-name">
+              <label style="color: red; font-style: italic; display: flex; align-items: center;" class="control-label">{{messageErr}}</label>
+            </div>
+          </div>
+          <hr>
+          <div class="form-group row">
+            <div [ngClass]="{'view': !is_update_infor}" class="col-md-4">
+              <label class="control-label">Time</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="updateForm.controls['time'].value" [title]="'Select Time'"
+                  [selectedIndex]="selectedIndex" [options]="listTime"
+                  (selectedOption)="handleDownSelect($event, 'time')"></app-select-dropdown>
+                <span
+                  *ngIf="updateForm.controls.time.hasError('required')&&(updateForm.controls['time'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+            <div [ngClass]="{'view': !is_update_infor}" class="col-md-4">
+              <label class="control-label">Gridiron</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="updateForm.controls['gridiron'].value" [title]="'Select gridiron'"
+                  [selectedIndex]="selectedIndex" [options]="listGridiron"
+                  (selectedOption)="handleDownSelect($event, 'gridiron')"></app-select-dropdown>
+              </div>
+            </div>
+
+            <div [ngClass]="{'view': !is_update_infor}" class="col-md-4">
+              <label class="control-label">Date</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="date" min="{{startDate}}"class="form-control input-lg" name=""
+                  formControlName="date_of_match">
+              </div>
+            </div>
+
+            <div *ngIf="!is_update_infor" class="col-md-12">
+              <label class="control-label">Summary of Match</label>
+              <div class="input-include-error">
+                <textarea type="textarea" class="form-control input-lg" formControlName="description"></textarea>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="isRegistering" class="modal-header">
+          <div class="col-sm-12">
+            <h4 style="text-align: center; color: red">Can not update, Time for Registering not yet expiry</h4>
+          </div>
+        </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<app-loading></app-loading>

@@ -1,108 +1,201 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, PixelRatio } from 'react-native';
 import { Root } from 'native-base';
 import { Router, Scene, Stack, Actions } from 'react-native-router-flux';
 import { TabIcon } from './../ui/common/components/TabIcon'
-import LoginProvider from '../ui/login/LoginProvider';
-import RegisterProvider from '../ui/register/RegisterProvider';
-import HomeProvider from '../ui/home/HomeProvider';
-import CreateTournamentProvider from '../ui/createTournament/CreateTournamentProvider';
-import SearchProvider from '../ui/search/SearchProvider';
-import ManageProvider from '../ui/manage/ManageProvider';
-import SettingProvider from '../ui/setting/SettingProvider';
+import { Provider } from 'react-redux';
+import store from '../store/store';
+import Constants from '../../theme/variable/Constants';
+import { AsyncStorage } from 'react-native';
+import LoginContainer from '../ui/login/LoginContainer';
+import RegisterContainer from '../ui/register/RegisterContainer';
+import ForgotPassContainer from '../ui/forgotPass/ForgotPassContainer';
+import HomeContainer from '../ui/home/HomeContainer';
+import MatchSearchContainer from '../ui/search/match/MatchSearchContainer';
+import GridironSearchContainer from '../ui/search/gridiron/GridironSearchContainer';
+import LeagueSearchContainer from '../ui/search/league/LeagueSearchContainer';
+import ManageContainer from '../ui/manage/ManageContainer';
+import LeaugeContainer from '../ui/createTournament/LeaugeContainer';
+import CreateTeamContainer from '../ui/manage/team/CreateTeamContainer';
+import SettingComponent from '../ui/setting/SettingComponent';
+import LoginService from '../../theme/shared/utils/LoginService';
+import CreateGridironContainer from '../ui/manage/gridiron/CreateGridironContainer';
+import DetailTeamContainer from '../ui/manage/team/DetailTeamContainer';
+import DetailGridironComponent from '../ui/manage/gridiron/detailGridiron/DetailGridironComponent';
+import { firebaseApp } from '../firebaseApi/config';
+import CreateMatchContainer from '../ui/manage/match/CreateMatchContainer';
+import UpdateMatchContainer from '../ui/manage/match/UpdateMatchContainer';
+import CreateLeaugeContainer from '../ui/createTournament/CreateLeaugeContainer';
+import DetailLeaugeContainer from '../ui/createTournament/DetailLeaugeContainer';
 
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-// type Props = {};
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    firebaseApp
+  }
+
   render() {
     return (
-      <Root>
-        <View style={mainStyles.container}>
-          <Router>
-            <Stack key='root'>
-              <Scene key='loginScreen'
-                hideNavBar={true}
-                component={LoginProvider}
-                initial
-              />
-              <Scene key='registerScreen'
-                hideNavBar={true}
-                component={RegisterProvider}
-              />
-              {/* Tabbar */}
-              <Scene key='tabbar'
-                showLabel={false}
-                tabBarStyle={{ backgroundColor: '#fff' }}
-                tabs={true}
-                tabBarPosition={'bottom'}
-                gestureEnabled={true}
-                animationEnabled={false}
-                swipeEnabled={false}
-                panHandlers={null}
-                disabledBackGesture={true}
-                hideNavBar={true}
-              >
-
+      <Provider store={store}>
+        <Root>
+          <View style={mainStyles.container}>
+            <Router>
+              <Stack key='root'>
+                {/* Tabbar */}
+                <Scene key='tabbar'
+                  showLabel={false}
+                  tabBarStyle={{ backgroundColor: '#fff' }}
+                  tabs={true}
+                  tabBarPosition={'bottom'}
+                  gestureEnabled={true}
+                  animationEnabled={false}
+                  swipeEnabled={false}
+                  panHandlers={null}
+                  disabledBackGesture={true}
+                  hideNavBar={true}
+                  initial
+                >
                   {/* Home page and search */}
-                  <Stack>
+                  <Stack key='home' >
                     <Scene
                       key='TOP'
                       tabBarLabel={`TOP`}
                       icon={TabIcon}
                       title={'TOP'}
                       swipeEnabled={false}
-                      component={HomeProvider}
+                      component={HomeContainer}
+                      hideNavBar={true}
+                      initial
+                    />
+                    {/* list ppage search */}
+                    <Scene
+                      key='Match'
+                      tabBarLabel={`Match`}
+                      icon={TabIcon}
+                      title={'Match'}
+                      swipeEnabled={false}
+                      component={MatchSearchContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='Gridiron'
+                      tabBarLabel={`Gridiron`}
+                      icon={TabIcon}
+                      title={'Gridiron'}
+                      swipeEnabled={false}
+                      component={GridironSearchContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='League'
+                      tabBarLabel={`League`}
+                      icon={TabIcon}
+                      title={'League'}
+                      swipeEnabled={false}
+                      component={LeagueSearchContainer}
+                      hideNavBar={true}
+                    />
+                    {/* list ppage search */}
+                  </Stack>
+
+                  {/* Manage Page -- team, gridiron */}
+                  <Stack key='management'>
+                    <Scene
+                      key='Manage'
+                      tabBarLabel={`Manage`}
+                      icon={TabIcon}
+                      title={'Manage'}
+                      swipeEnabled={false}
+                      component={ManageContainer}
                       hideNavBar={true}
                       initial
                     />
                     <Scene
-                      key='Search'
-                      tabBarLabel={`Search`}
+                      key='createTeam'
+                      tabBarLabel={`createTeam`}
                       icon={TabIcon}
-                      title={'Search'}
+                      title={'createTeam'}
                       swipeEnabled={false}
-                      component={SearchProvider}
+                      component={CreateTeamContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='updateTeam'
+                      tabBarLabel={`createTeam`}
+                      icon={TabIcon}
+                      title={'updateTeam'}
+                      swipeEnabled={false}
+                      component={DetailTeamContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='createGridiron'
+                      tabBarLabel={`createGridiron`}
+                      icon={TabIcon}
+                      title={'createGridiron'}
+                      swipeEnabled={false}
+                      component={CreateGridironContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='detailGridiron'
+                      tabBarLabel={`detailGridiron`}
+                      icon={TabIcon}
+                      title={'detailGridiron'}
+                      swipeEnabled={false}
+                      component={DetailGridironComponent}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='createMatch'
+                      tabBarLabel={`createMatch`}
+                      icon={TabIcon}
+                      title={'createMatch'}
+                      swipeEnabled={false}
+                      component={CreateMatchContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='updateMatch'
+                      tabBarLabel={`updateMatch`}
+                      icon={TabIcon}
+                      title={'updateMatch'}
+                      swipeEnabled={false}
+                      component={UpdateMatchContainer}
                       hideNavBar={true}
                     />
                   </Stack>
-
                   {/* Manage Page -- team, gridiron */}
-                  <Scene
-                    key='Manage'
-                    tabBarLabel={`Manage`}
-                    icon={TabIcon}
-                    title={'Manage'}
-                    swipeEnabled={false}
-                    component={ManageProvider}
-                    hideNavBar={true}
-                  />
-
                   {/* league: create, update info */}
-                  <Scene
-                    key='Tournament'
-                    tabBarLabel={`Tournament`}
-                    icon={TabIcon}
-                    title={'Tournament'}
-                    swipeEnabled={false}
-                    component={CreateTournamentProvider}
-                    hideNavBar={true}
-                  />
+                  <Stack key='leauge'>
+                    <Scene
+                      key='Tournament'
+                      tabBarLabel={`Tournament`}
+                      icon={TabIcon}
+                      title={'Tournament'}
+                      swipeEnabled={false}
+                      component={LeaugeContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='creactLeauge'
+                      tabBarLabel={`creactLeauge`}
+                      icon={TabIcon}
+                      title={'creactLeauge'}
+                      swipeEnabled={false}
+                      component={CreateLeaugeContainer}
+                      hideNavBar={true}
+                    />
+                      <Scene
+                      key='detailLeauge'
+                      tabBarLabel={`detailLeauge`}
+                      icon={TabIcon}
+                      title={'detailLeauge'}
+                      swipeEnabled={false}
+                      component={DetailLeaugeContainer}
+                      hideNavBar={true}
+                    />
+                  </Stack>
 
                   {/* Setting for user: change pass, name */}
                   <Scene
@@ -111,14 +204,29 @@ export default class App extends Component {
                     icon={TabIcon}
                     title={'Setting'}
                     swipeEnabled={false}
-                    component={SettingProvider}
+                    component={SettingComponent}
                     hideNavBar={true}
                   />
-              </Scene>
-            </Stack>
-          </Router>
-        </View>
-      </Root>
+                </Scene>
+                {/* tabBar */}
+                <Scene key='loginScreen'
+                  hideNavBar={true}
+                  component={LoginContainer}
+                // initial
+                />
+                <Scene key='registerScreen'
+                  hideNavBar={true}
+                  component={RegisterContainer}
+                />
+                <Scene key='forgotPass'
+                  hideNavBar={true}
+                  component={ForgotPassContainer}
+                />
+              </Stack>
+            </Router>
+          </View>
+        </Root>
+      </Provider>
     );
   }
 }
@@ -133,7 +241,4 @@ const mainStyles = StyleSheet.create({
     backgroundColor: 'ghostwhite',
     opacity: 0.98
   },
-  labelStyle: {
-
-  }
 });

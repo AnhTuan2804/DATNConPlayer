@@ -1,0 +1,73 @@
+<div class="container-fluid mg-header">
+  <div class="row content">
+    <div class="col-sm-3 sidenav ">
+      <div class="header-sidenav">
+        <div class="row">
+          <div class="col-sm-7">
+            <h4><i class="fas fa-filter"></i>&nbsp; Filter data</h4>
+          </div>
+          <div class="col-sm-5">
+            <button class="btn btn-success" (click)="resetFilter()"><i class="fas fa-window-close"></i>&nbsp;
+              Reset</button>
+          </div>
+        </div>
+        <hr>
+      </div>
+
+      <div class="header-sidenav">
+        <h4><i class="fas fa-map-marked"></i>&nbsp; Area</h4>
+        <hr>
+        <form role="form" [formGroup]="areaForm">
+          <div class="radio" *ngFor="let item of listArea">
+            <label><input type="radio" name="area" (change)="changeSelectRadio(item, 'area')"> {{item.itemName}}</label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="col-sm-12 main-content">
+        <div class="header-sidenav">
+          <div class="container">
+            <form role="form" [formGroup]="searchForm">
+              <div class="row input-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" formControlName="textSearch"
+                    placeholder="Search anything..">
+                </div>
+                <div class="col-sm-3">
+                  <button style="width: 100%" (click)="search()" class="btn btn-success"><i
+                      class="fas fa-search"></i>&nbsp;
+                    Search..</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="content-match" *ngFor="let item of listSearch">
+          <div class="row">
+            <div class="col-sm-5 text-center">
+              <img src="../../../../assets/images/gridiron.jpg" class="img-thumbnail" height="80%" width="90%"
+                alt="Avatar">
+            </div>
+            <div class="col-sm-7">
+              <h4><i class="fab fa-shirtsinbulk"></i>.&nbsp; Name: {{item.name}} </h4>
+              <p><i class="fab fa-shirtsinbulk"></i>.
+                {{item.area ? 'Area: ' + item.area.name : ''}}</p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Phone: {{item.phone}}</p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Address: {{item.address}} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Some Description: {{item.description}} </p>
+              <br>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-alert-confirm [id]="'confirm'" [message]="messageConfirm" (saveConfirm)="saveConfirm()"
+  (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
+<!-- <app-modal-pair-match [listTeam]="listTeam" [id]="'modalPairForm'" (outputE)="outputEmit($event)">
+  </app-modal-pair-match> -->

@@ -1,5 +1,5 @@
-import  moment from 'moment';
-import  _ from 'lodash';
+import moment from 'moment';
+import _ from 'lodash';
 
 export default class TimeService {
 
@@ -7,7 +7,7 @@ export default class TimeService {
     static DATE_TIME_IMPORT_FORMAT = 'D/M/YYYY H:m';
     static DATE_TIME_SS_FORMAT = 'YYYY/MM/DD HH:mm:ss'
     static DATE_FORMAT = 'YYYY/MM/DD';
-    static DATE_IMPORT_FORMAT = 'D/M/YYYY';
+    static DATE_IMPORT_FORMAT = 'DD/MM/YYYY';
     static DATE_IMPORT = 'YYYY/MM/DD';
     static YEAR_MONTH_DATE_FORMAT = 'YYYY-MM-DD';
     static DATE_TIME_SS_FORMAT_CONCAT = 'YYYYMMDDHHmmss'
@@ -29,7 +29,7 @@ export default class TimeService {
     static getTimeStampFromDate(date) {
         return moment(date).unix();
     }
-    
+
     static getTimeStampFromDateFormat(date) {
         return this.getTimeFromTimeFormat(date, this.DATE_TIME_FORMAT).unix();
     }
@@ -93,6 +93,14 @@ export default class TimeService {
         return 0;
     }
 
+    static getTimeUnixFromTimeFormatYMD(val) {
+        if (val === null || val === '' || _.isUndefined(val)) {
+            return null
+        } else {
+            return moment(val, 'YYYY-MM-DD').unix();
+        }
+    }
+
     static getTimeUnixFromTimeFormat(val) {
         if (val === null || val === '' || _.isUndefined(val)) {
             return null
@@ -123,5 +131,14 @@ export default class TimeService {
         } else {
             return null;
         }
+    }
+
+    static getDateWithoutTime(date) {
+        date = date || new Date();
+        const year = date.getFullYear();
+        //january is 0!
+        const mm = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+        const dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        return year + '-' + mm + '-' + dd;
     }
 }

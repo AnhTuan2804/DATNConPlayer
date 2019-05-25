@@ -1,50 +1,33 @@
 export default class Constants {
     // static token, locale, currency
-    // static HOST = 'http://coinpay.global-ibk.com:8099'; // Server Test
-    static HOST = 'https://coins-payment.com:8080'; // Server deployed
+    // static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server Test
+    static HOST = 'http://192.168.0.104:8088/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
     static TYPE_ACCOUNT = '';
+    static PHONE = '';
     static AUTHENTICATION = null;
     static USER_IMAGE = null;
+    static MESSAGE_CREATE_SUCCESS = 'Create data successfully';
+    static MESSAGE_UPDATE_SUCCESS = 'Update data successfully';
+    static MESSAGE_DELETE_SUCCESS = 'Delete data successfully';
 
     // VALIDATE
-    static REQUIRE = '必須';
-    static DONT_SPACE = '最初と最後を空白にしないでください';
-    static DONT_DOT = '文末に点がない';
-    static PASS_MAXLENGTH = 'パスワードの長さは40文字を超えることはできません。';
-    static PASS_MINLENGTH = 'パスワードは6文字以上でなければなりません。';
-    static PASS_CONF_NOTMATCH = 'パスワードが一致しません。';
-    static EMAIL_VALID = '電子メールは有効な電子メールでなければなりません';
-    static EMAIL_NUMBER_VALID = 'あなたのメールアドレスまたはユーザーIDは無効です。';
-
-    //Common
-    static MESSAGE_ERROR = 'HTTP Error 400 - Bad Request';
-    static MODAL_OK = 'OK';
-    static MAX_AMOUNT_WITHDRAW_BTC = null;
-    static MIN_AMOUNT_WITHDRAW_BTC = null;
-    static MAX_AMOUNT_WITHDRAW_JPY = null;
-    static MIN_AMOUNT_WITHDRAW_JPY = null;
-
-    //Link app
-    static LINK_TO_REGISTER = 'https://coins-payment.com/register/personal';
-    static LINK_TO_CONFIRM_ACCOUNT_TYPE_1 = 'https://coins-payment.com/profile-personal';
-    static LINK_TO_CONFIRM_ACCOUNT_TYPE_2 = 'https://coins-payment.com/profile';
-    static LINK_TO_AUTHENTICATION_APP_IOS = 'https://itunes.apple.com/vn/app/google-authenticator/id388497605?mt=8';
-    static LINK_TO_AUTHENTICATION_APP_ANDROID = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en';
-    static LINK_TO_AUTHENTICATION_SETTING = 'https://coins-payment.com/setting/two-factor';
-    static LINK_TO_SETTING = 'https://coins-payment.com/setting';
-    static LINK_TO_CONTACT = 'https://coins-payment.com/contact';
-    static LINK_TO_NOTIFICATION = 'https://coins-payment.com/setting/notification';
-    static LINK_TO_CREATE_ADDRESS_BTC = 'https://coins-payment.com/setting/add-address';
-    static LINK_TO_CREATE_ADDRESS_JPY = 'https://coins-payment.com/setting/add-bank';
+    static REQUIRE = 'Required';
+    static DONT_SPACE = 'Don\'t leave spaces at the beginning or end of the string';
+    static DONT_DOT = 'No point at the end of the sentence';
+    static PASS_MAXLENGTH = 'Password length can not exceed 40 characters. ';
+    static PASS_MINLENGTH = 'Password must be at least 6 characters. ';
+    static PASS_CONF_NOTMATCH = 'Password does not match. ';
+    static EMAIL_VALID = 'Email must be valid email';
+    static EMAIL_NUMBER_VALID = 'Your email address or user ID is invalid. ';
 
     // EXIT_APP
     static TITLE_EXIT_APP = '終了アプリ';
     static TITLE_FONFIRM_EXIT = '退室しますか？';
-    static TITLE_NO = 'いいえ';
-    static TITLE_YES = 'はい';
+    static TITLE_NO = 'No';
+    static TITLE_YES = 'Yes';
 
     // Chuyen doi don vi (px--->>>dp)
     static RATE_SIZE = 2;
@@ -66,4 +49,15 @@ export default class Constants {
     static green = '#7fb439';
     static whiteSilver = '#f5f5f5';
     static turquoise = '#36b092';
+
+
+    static TYPE_LEAUGE = [
+        {
+            id: 'type_1',
+            name: "Round Circle",
+        }, {
+            id: 'type2',
+            name: 'Two Stages',
+        }
+    ]
 }

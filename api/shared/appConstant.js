@@ -10,5 +10,11 @@ module.exports = Object.freeze({
     USER_STATUS_DELETE: 1,
     TIME_EXPIRED_PASS: 60 * 24 * 60 * 60 * 1000,
     TIME_LOCKED: 15,
-    LIMIT: 20
+    LIMIT: 20,
+    STATUS_NEW: "New",
+    STATUS_EXPIRIED: 'Expiried',
+    STATUS_WAITTING: 'Waitting',
+    TYPE_LEAGUE_ROUND_CIRCLE : "Round Circle",
+    TYPE_LEAGUE_TWO_STAGES : "Two Stages",
+    STATUS_INPROGRESS: "Inprogress",
 });

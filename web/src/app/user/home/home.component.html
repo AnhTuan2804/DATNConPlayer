@@ -1,0 +1,120 @@
+<div class="container-fluid mg-header">
+  <div class="row content">
+    <div class="col-sm-3 sidenav ">
+      <div class="header-sidenav">
+        <div class="row">
+          <div class="col-sm-7">
+            <h4><i class="fas fa-filter"></i>&nbsp; Filter data</h4>
+          </div>
+          <div class="col-sm-5">
+            <button class="btn btn-success" (click)="resetFilter()"><i class="fas fa-window-close"></i>&nbsp;
+              Reset</button>
+          </div>
+        </div>
+        <hr>
+      </div>
+
+      <div class="header-sidenav">
+        <h4><i class="fas fa-map-marked"></i>&nbsp; Area</h4>
+        <hr>
+        <form role="form" [formGroup]="areaForm">
+          <div class="radio" *ngFor="let item of listArea">
+            <label><input type="radio" name="area" (change)="changeSelectRadio(item, 'area')"> {{item.itemName}}</label>
+          </div>
+        </form>
+      </div>
+
+      <div class="header-sidenav">
+        <h4><i class="far fa-futbol"></i>&nbsp; Career</h4>
+        <hr>
+        <form role="form" [formGroup]="careerForm">
+          <div class="radio" *ngFor="let item of listCareer">
+            <label><input type="radio" name="career" (change)="changeSelectRadio(item, 'career')">
+              {{item.itemName}}</label>
+          </div>
+        </form>
+      </div>
+
+      <div class="header-sidenav">
+        <h4><i class="far fa-futbol"></i>&nbsp; Level</h4>
+        <hr>
+        <form role="form" [formGroup]="levelForm">
+          <div class="radio" *ngFor="let item of listLevel">
+            <label><input type="radio" name="level" (change)="changeSelectRadio(item, 'level')">
+              {{item.itemName}}</label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="col-sm-12 main-content">
+        <div class="header-sidenav">
+          <div class="container">
+            <form role="form" [formGroup]="searchForm">
+              <div class="row input-group">
+                <div class="col-sm-3">
+                  <input type="date" class="form-control" formControlName="dateOfMatch" min="{{minDate}}">
+                </div>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" formControlName="textSearch"
+                    placeholder="Search team, team leader, gridiron">
+                </div>
+                <div class="col-sm-2">
+                  <button style="width: 100%" (click)="search()" class="btn btn-success"><i
+                      class="fas fa-search"></i>&nbsp;
+                    Search..</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="content-match" *ngFor="let item of listMatchSearch">
+          <div class="row">
+            <div class="col-sm-4 text-center">
+              <img src="../../../assets/images/backGround.jpg" class="img-thumbnail" height="80%" width="90%"
+                alt="Avatar">
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-8">
+                  <h4><i class="fas fa-users"></i>.&nbsp; {{item.team.name}} <small>-- <span class="title">Status:
+                      </span> <span style="color: red">{{item.status}}</span></small> </h4>
+                  <p><i *ngIf="item.team_guest" class="fas fa-users"></i>.
+                    {{item.team_guest ? 'Guest team: ' + item.team_guest.name : ''}}</p>
+                  <p><i class="fas fa-clock"></i>.&nbsp; {{item.date_of_match}}
+                    {{item.time.name ? '(' +item.time.name+ ')' : ''}}</p>
+                  <p><i class="fas fa-user"></i>.&nbsp; <span class="title">Team leader:</span> {{item.user.fullname}}
+                  </p>
+                </div>
+                <div *ngIf="item.status == 'New'" class="col-sm-4">
+                  <button class="btn btn-success" (click)="pairMatch(item)"><i class="fas fa-hands-helping"></i>
+                    Pair</button>
+                </div>
+              </div>
+              <hr>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title"> Gridiron:</span>
+                {{item.gridiron.name }} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Address:</span>
+                {{item.gridiron.address }} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Level Expected:</span>
+                {{item.level.name }}</p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Area:</span> {{item.area.name }} </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Career:</span> {{item.career.name }}
+              </p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; <span class="title">Introduce:</span> {{item.invitation }}
+              </p>
+              <br>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-alert-confirm [isAlert]=true [id]="'confirm'" [message]="messageConfirm" (saveConfirm)="saveConfirm()"
+  (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
+<app-modal-pair-match [listTeam]="listTeam" [id]="'modalPairForm'" (outputE)="outputEmit($event)">
+</app-modal-pair-match>

@@ -1,4 +1,4 @@
-@import '../../../../styles';
+@import "~bootstrap/dist/css/bootstrap.css";
 .portlet-body {
     padding-bottom: 0px!important;
     width: 100%;
@@ -17,7 +17,7 @@ th {
 
 .table {
     border: 0;
-    min-width: 991px;
+    // min-width: 991px;
     overflow-x: auto;
     thead {
         border-bottom: 2px solid #59cdfb;

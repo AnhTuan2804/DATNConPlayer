@@ -21,8 +21,8 @@ export const environment = {
     lengthBaseContent: 52
   },
   routerLoginAdmin: "abc",
-  // host: "http://127.0.0.1:8017",
-  host: "http://gcc.global-ibk.com:8017",
+  host: "http://127.0.0.1:8088/api",
+  // host: "https://datncsplayer.herokuapp.com/api",
 };
 
 

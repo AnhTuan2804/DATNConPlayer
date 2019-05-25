@@ -1,0 +1,129 @@
+<div class="container">
+  <div *ngIf="!isShow" class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Create New Gridiron</h1>
+    </div>
+    <div class="modal-body">
+      <form role="form" [formGroup]="formAdd" (ngSubmit)="add()">
+        <div class="col-md-12 row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Name of gridiron</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="name" formControlName="name">
+                <span
+                  *ngIf="formAdd.controls.name.hasError('required')&&(formAdd.controls['name'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Area</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <app-select-dropdown [nameSelect]="formAdd.controls['area'].value" [title]="'Area'"
+                  [selectedIndex]="selectedIndex" [options]="listArea"
+                  (selectedOption)="handleDownSelect($event, 'area')"></app-select-dropdown>
+                <span
+                  *ngIf="formAdd.controls.area.hasError('required')&&(formAdd.controls['area'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Link Facebook</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="link_face" formControlName="link_face">
+                <span
+                  *ngIf="formAdd.controls.link_face.hasError('required')&&(formAdd.controls['link_face'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Choose picture</label>
+              <div class="input-include-error">
+                <input type="file" class="form-control input-lg" name="picture" formControlName="picture"
+                  placeholder="">
+              </div>
+            </div>
+          </div> -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Phone</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="number" class="form-control input-lg" name="phone" formControlName="phone">
+                <span
+                  *ngIf="formAdd.controls.phone.hasError('required')&&(formAdd.controls['phone'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Address</label>
+              <span class="required"> *</span>
+              <div class="input-include-error">
+                <input type="text" class="form-control input-lg" name="address" formControlName="address">
+                <span
+                  *ngIf="formAdd.controls.address.hasError('required')&&(formAdd.controls['address'].touched || errorForm)">Field
+                  required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Introduce summary</label>
+              <div class="input-include-error">
+                <textarea type="textarea" class="form-control input-lg" formControlName="description"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!formAdd.valid">
+                <i class="fas fa-plus-circle"></i> &nbsp;Create
+              </button>
+            </div>
+          </div>
+          <div class="col-md-2 btn-center">
+            <div class="form-group">
+              <button type="submit" class="btn btn-secondary" (click)="actionForm('hide')">
+                <i class="far fa-times-circle"></i> &nbsp;Cancel
+              </button>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="input-include-error btn-center">
+              <span *ngIf="addFaild">{{messageError}}</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-content">
+    <div class="modal-header  row dis-flex">
+      <div class="col-sm-8">
+        <h1 class="modal-title">List Gridiron</h1>
+      </div>
+      <div *ngIf="isShow" class="col-sm-4 div-center"><button (click)="actionForm('show')"
+          class="btn-center btn btn-success dis-flex"><i class="fas fa-plus-circle"></i>&nbsp; Create New Gridiron</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <app-data-table [showSearch]=false [headers]="headers" [items]="listGridiron" [listSearch]=[0,1]
+        (outputAction)="handleAction($event)"></app-data-table>
+    </div>
+  </div>
+</div>
+<app-alert-confirm [id]="'confirm'" [message]="'Are you sure delete this Gridiron?'" (saveConfirm)="saveConfirm()"
+  (cancelConfirm)="cancelConfirm()"></app-alert-confirm>
+<app-loading></app-loading>

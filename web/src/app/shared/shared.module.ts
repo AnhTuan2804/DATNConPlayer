@@ -43,6 +43,20 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { FooterComponent } from './components/core/footer/footer.component';
 import { HeaderComponent } from './components/core/header/header.component';
 import { SideNavComponent } from './components/core/side-nav/side-nav.component';
+import { LoginComponent } from '../common/login/login.component';
+import { RegisterComponent } from '../common/register/register.component';
+import { ResetPasswordComponent } from '../common/reset-password/reset-password.component';
+import { User } from './classes/user/user';
+import { Area } from './classes/area';
+import { AuthGuardAdmin } from './guards/auth-admin.guard';
+import { Level } from './classes/level';
+import { Team } from './classes/team';
+import { Gridiron } from './classes/gridiron';
+import { Career } from './classes/career';
+import { InfoCommon } from './classes/info-common';
+import { Match } from './classes/match';
+import { League } from './classes/league';
+import { ModalUpdateMatchComponent } from '../user/league/manage-league/league-detail/modal-update-match/modal-update-match.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -81,6 +95,10 @@ export function createTranslateLoader(http: HttpClient) {
         FooterComponent,
         HeaderComponent,
         SideNavComponent,
+        LoginComponent,
+        RegisterComponent,
+        ResetPasswordComponent,
+        // ModalUpdateMatchComponent
     ],
     exports: [
         ReactiveFormsModule,
@@ -95,8 +113,24 @@ export function createTranslateLoader(http: HttpClient) {
         LoadingComponent,
         PrimaryLayoutComponent,
         MainLayoutComponent,
+        LoginComponent,
+        RegisterComponent,
+        ResetPasswordComponent,
+        // ModalUpdateMatchComponent
     ],
     providers: [
+        User,
+        ComponentActions,
+        AuthGuard,
+        AuthGuardAdmin,
+        Area,
+        Level,
+        Team,
+        Gridiron,
+        Career,
+        InfoCommon,
+        Match,
+        League
     ]
 })
 export class SharedModule { }

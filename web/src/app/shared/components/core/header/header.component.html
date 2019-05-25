@@ -1,3 +1,82 @@
-<p>
-  header works!
-</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light header-position">
+  <a class="navbar-brand" href="#"><img src="../../../../../assets/images/logoo.png" alt=""> </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="right-header collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav header-title">
+      <li *ngIf="isShow" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-bell"></i> <span *ngIf="listNotify.length > 0"> ({{listNotify.length}} New)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <!-- <div *ngFor="let item of listNotify"> -->
+          <a *ngFor="let item of listNotify" class="dropdown-item" (click)="readNotify(item.id)"><i
+              class="far fa-comments"></i>
+            &nbsp;{{item.message}}... <span style="color: red">New</span> </a>
+          <div *ngIf="listNotify.length > 0" class="dropdown-divider"></div>
+          <!-- </div> -->
+          <a class="dropdown-item" href="/notify"><i class="fas fa-bell"></i> &nbsp;See full notify</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-futbol"></i>&nbsp;SEARCH..
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="home"><i class="fas fa-futbol"></i> &nbsp;SEARCH MATCH..</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="home-gridiron"><i class="fas fa-futbol"></i> &nbsp;SEARCH GRIDIRON..</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="home-league"><i class="fas fa-futbol"></i> &nbsp;SEARCH LEAGUES..</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isShow">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-futbol"></i>&nbsp;MANAGE
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="team"><i class="fas fa-futbol"></i> &nbsp;MANAGE TEAMS</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="gridiron"><i class="fas fa-futbol"></i> &nbsp;MANAGE GRIDIRONS</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="match"><i class="fas fa-futbol"></i> &nbsp;MANAGE MATCHES</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="manage-league"><i class="fas fa-futbol"></i> &nbsp;MANAGE LEAGUE</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isAdmin">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-futbol"></i>&nbsp;ADMIN MANAGE
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="area"><i class="fas fa-futbol"></i> &nbsp;AREAS</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="level"><i class="fas fa-futbol"></i> &nbsp;LEVELS</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="career"><i class="fas fa-futbol"></i> &nbsp;CAREER</a>
+        </div>
+      </li>
+      <li *ngIf="!isShow" class="nav-item cursor-li">
+        <a class="nav-link" (click)="login()"><i class="fas fa-user"></i>&nbsp;SIGN IN</a>
+      </li>
+      <li *ngIf="isShow" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i>&nbsp;ACCOUNT
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="profile"><i class="fas fa-user"></i> &nbsp;ACCOUNT</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item cursor-li" (click)="logout()"><i class="fas fa-user"></i> &nbsp;SIGN OUT</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

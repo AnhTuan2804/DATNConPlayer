@@ -2,14 +2,14 @@ export const environment = {
   production: true,
   firebase: {
     appConfig: {
-      apiKey: "AIzaSyAhhWEMTjaaUEabWENiUQffjgdnu7hF-hg",
-      authDomain: "ibk-wallet-4e8cd.firebaseapp.com",
-      databaseURL: "https://ibk-wallet-4e8cd.firebaseio.com",
-      projectId: "ibk-wallet-4e8cd",
-      storageBucket: "ibk-wallet-4e8cd.appspot.com",
-      messagingSenderId: "331803583698"
+      apiKey: "AIzaSyC5UHVDYOkH5aAMyHi2W2q8qL2ZCbgm5gM",
+      authDomain: "datncsplayer.firebaseapp.com",
+      databaseURL: "https://datncsplayer.firebaseio.com",
+      projectId: "datncsplayer",
+      storageBucket: "datncsplayer.appspot.com",
+      messagingSenderId: "24905739904"
     }
   },
   routerLoginAdmin: "abc",
-  host: "http://54.193.113.38:8081"
+  host: ""
 };

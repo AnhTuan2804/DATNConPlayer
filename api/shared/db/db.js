@@ -7,9 +7,9 @@ let sequelize = null;
 class Db {
     constructor() {
         if (!sequelize) {
-            let anc = config.dbLocal.options;
+            let anc = config.dbLocalWeb.options;
             anc['isolationLevel'] = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-            sequelize = new Sequelize(config.dbLocal.dbname, config.dbLocal.username, config.dbLocal.password, config.dbLocal.options);
+            sequelize = new Sequelize(config.dbLocalWeb.dbname, config.dbLocalWeb.username, config.dbLocalWeb.password, config.dbLocalWeb.options);
         }
     }
 
@@ -60,6 +60,56 @@ class Db {
         this.user = sequelize.import('./models/user/user');
         this.role = sequelize.import('./models/user/role');
         this.user.belongsTo(this.role, { unique: false, onDelete: 'cascade' });
+
+        //area
+        this.area = sequelize.import('./models/area');
+
+        //level
+        this.level = sequelize.import('./models/level');
+
+        //date Of The Week
+        this.date_of_the_week = sequelize.import('./models/date_of_the_week');
+
+        //price On Time
+        this.price_on_time = sequelize.import('./models/price_on_time');
+
+        //size gridiron
+        this.size_gridiron = sequelize.import('./models/size_gridiron');
+
+        //team
+        this.team = sequelize.import('./models/team');
+        this.team.belongsTo(this.level, { unique: false, onDelete: 'cascade' });
+        this.team.belongsTo(this.area, { unique: false, onDelete: 'cascade' });
+        this.area.hasMany(this.team, { onDelete: 'cascade' });
+        this.level.hasMany(this.team, { onDelete: 'cascade' });
+
+        //team User
+        this.teamUser = sequelize.import('./models/team_user');
+        this.teamUser.belongsTo(this.user, { unique: false, onDelete: 'cascade' });
+        this.teamUser.belongsTo(this.team, { unique: false, onDelete: 'cascade' });
+        this.team.hasMany(this.teamUser, { onDelete: 'cascade' });
+        this.user.hasMany(this.teamUser, { onDelete: 'cascade' });
+
+        //gridiron
+        this.gridiron = sequelize.import('./models/gridiron');
+        this.gridiron.belongsTo(this.area, { unique: false, onDelete: 'cascade' });
+
+        //gridiron
+        this.sub_gridiron = sequelize.import('./models/sub_gridiron');
+        this.sub_gridiron.belongsTo(this.gridiron, { unique: false, onDelete: 'cascade' });
+        this.sub_gridiron.belongsTo(this.size_gridiron, { unique: false, onDelete: 'cascade' });
+        this.gridiron.hasMany(this.sub_gridiron, { onDelete: 'cascade' });
+        this.gridiron.hasMany(this.price_on_time, { onDelete: 'cascade' });
+
+        //time
+        this.time = sequelize.import('./models/time');
+        this.price_on_time.belongsTo(this.gridiron, { unique: false, onDelete: 'cascade' });
+        this.price_on_time.belongsTo(this.time, { unique: false, onDelete: 'cascade' });
+        this.price_on_time.belongsTo(this.size_gridiron, { unique: false, onDelete: 'cascade' });
+
+        //career
+        this.career = sequelize.import('./models/career');
+        this.team.belongsTo(this.career, { unique: false, onDelete: 'cascade' })
     }
 
     rawQuery(sql, whereClause) {
