@@ -12,7 +12,7 @@ export default connect(
     let settingReducers = state.settingReducers ? state.settingReducers : {}
     let team = state.teamReducers || {};
     let listTeam = []
-    listTeam = _.filter(listTeam, (item) => {
+    listTeam = _.filter(team.listTeam, (item) => {
       return item.team_users[0].is_captain == true;
     })
     return {

@@ -25,7 +25,7 @@ class CreateMatchComponent extends Component {
             {
                 date_of_match: new Date(),
                 time_id: this.props.listTime[0].id,
-                team: this.props.listTeam[0].id,
+                team: undefined,
                 gridiron: undefined,
                 area_id: this.props.listArea[0].id,
                 level_id: this.props.listLevel[0].id,
@@ -64,6 +64,7 @@ class CreateMatchComponent extends Component {
 
     render() {
         submit = values => {
+            // if (values.team != undefined) {
             let body = {
                 area: _.find(this.props.listArea, function (o) { return o.id == values.area_id }),
                 level: _.find(this.props.listLevel, function (o) { return o.id == values.level_id }),
@@ -76,6 +77,9 @@ class CreateMatchComponent extends Component {
                 status: "New"
             }
             this.props.onCreateMatch(body)
+            // }else {
+            //     Alert.alert("")
+            // }
         }
         const { handleSubmit } = this.props;
 
@@ -91,6 +95,7 @@ class CreateMatchComponent extends Component {
                             />
                             <Field name="team" mode="dropdown" textIP="Select Team"
                                 data={this.props.listTeam} label={'Team'} component={renderSelect}
+                                validate={[required]}
                             />
                             <Field name="time_id" mode="dropdown" textIP="Select Time"
                                 data={this.props.listTime} label={'Time'} component={renderSelect}

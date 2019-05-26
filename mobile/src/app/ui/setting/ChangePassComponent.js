@@ -29,15 +29,15 @@ class ChangepassComponent extends Component {
                         <View style={{ width: '100%', flexDirection: 'column', }}>
                             <Field name="oldPass" keyboardType="default" component={renderFieldForPass}
                                 validate={[required, required_trim, have_point_end]}
-                                label={'Mật khẩu cũ'}
+                                label={'Old Password'}
                             />
                             <Field name="password" keyboardType="default" component={renderFieldForPass}
                                 validate={[required, required_trim, have_point_end, maxLength40, minLength6]}
-                                label={'Mật khẩu mới'}
+                                label={'New Password'}
                             />
                             <Field name="confirmNewPass" keyboardType="default" component={renderFieldForPass}
                                 validate={[required, confirmPassword, required_trim, have_point_end, maxLength40, minLength6]}
-                                label={'Xác nhận mật khẩu'}
+                                label={'Confirm Password'}
                             />
                         </View>
                         <TouchableOpacity onPress={handleSubmit(submit)} style={{

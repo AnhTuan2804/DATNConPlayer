@@ -15,6 +15,12 @@ export const TabIcon = ({ title, focused }) => {
             labelColor = focused ? `#4aa047` : `#000000`;
             imageColor = focused ? `#4aa047` : `#000000`;
             break;
+        case 'viewLeague':
+            image = require('../../../../assets/images/ball.png');
+            label = 'TOP';
+            labelColor = focused ? `#4aa047` : `#000000`;
+            imageColor = focused ? `#4aa047` : `#000000`;
+            break;
         case 'Match':
             image = require('../../../../assets/images/ball.png');
             label = 'Match';
@@ -107,9 +113,9 @@ export const TabIcon = ({ title, focused }) => {
         <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
             <Image
                 source={image}
-                style={{ width: 40, height: 30, alignSelf: 'center', tintColor: imageColor, marginTop: 5 }} resizeMode='contain'
+                style={{ width: 35, height: 30, alignSelf: 'center', tintColor: imageColor, marginTop: 8 }} resizeMode='contain'
             />
-            <Text style={{ textAlign: 'center', fontSize: 10, color: labelColor, marginTop: 3 }}>{label}</Text>
+            <Text style={{ textAlign: 'center', fontSize: 10, color: labelColor, marginTop: 2, marginBottom: 5 }}>{label}</Text>
         </View>
     );
 }  

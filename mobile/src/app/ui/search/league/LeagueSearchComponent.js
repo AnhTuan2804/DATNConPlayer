@@ -37,93 +37,7 @@ class LeagueSearchComponent extends Component {
         this.setState({ visibleModal: visible });
     }
 
-    // modalForPair() {
-    //     return (
-    //         <Modal
-    //             transparent={true}
-    //             visible={this.state.visibleModal}
-    //             onRequestClose={() => {
-    //                 Alert.alert('Modal has been closed.');
-    //             }}>
-    //             <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.2)" }}>
-    //                 <View style={{ width: "90%", padding: 30, backgroundColor: "#fff", borderRadius: 5 }}>
-    //                     <View style={{ flexDirection: "row", marginVertical: 10 }}>
-    //                         <Text style={{ color: "green", fontSize: 17 }}>Select your's Team</Text>
-    //                     </View>
-    //                     {this.props.listTeam.length != 0 ?
-    //                         (
-    //                             <View style={{ borderColor: "black", borderWidth: 1, borderRadius: 5 }}>
-    //                                 <Picker
-    //                                     mode="dropdown"
-    //                                     style={{ height: 40, }}
-    //                                     selectedValue={this.state.teamSelect}
-    //                                     onValueChange={(value, index) => {
-    //                                         this.setState({ teamSelect: value })
-    //                                     }}
-    //                                 >
-    //                                     {this.props.listTeam.length != 0 ?
-    //                                         this.props.listTeam.map((item, index) => { return <Picker.Item value={item.id} label={item.name} key={index} /> })
-    //                                         : <Picker.Item value={'0'} label={"Select your's Team"} key={'00000'} />
-    //                                     }
-    //                                 </Picker>
-    //                             </View>)
-    //                         :
-    //                         <TouchableOpacity
-    //                             style={{ justifyContent: "center", alignItems: "center" }}
-    //                             onPress={() => {
-    //                                 this.setModalVisible(false);
-    //                                 Actions.createTeam();
-    //                             }}><Text>Creat your's Team to pair this match</Text></TouchableOpacity>
-    //                     }
-    //                     <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 20, }}>
-    //                         <TouchableOpacity
-    //                             style={{
-    //                                 flexDirection: "row",
-    //                                 marginVertical: 10, justifyContent: "center", alignItems: "center",
-    //                                 backgroundColor: "#fff", borderRadius: 4, paddingVertical: 5, paddingHorizontal: 10,
-    //                                 borderWidth: 1, marginRight: 20
-    //                             }}
-    //                             onPress={() => {
-    //                                 console.log(this.state.matchSelect);
-
-    //                                 let body = {
-    //                                     date_of_match: TimeService.formatDateFromTimeUnix(this.state.matchSelect.date_of_match, 'YYYY-MM-DD'),
-    //                                     status: "Waitting",
-    //                                     id: this.state.matchSelect.id,
-    //                                 }
-    //                                 if (this.state.teamSelect == "") {
-    //                                     body['team_guest'] = this.props.listTeam[0]
-    //                                 } else {
-    //                                     let id = this.state.teamSelect
-    //                                     body['team_guest'] = _.find(this.props.listTeam, function (o) { return o.id == id; });
-    //                                 }
-    //                                 console.log(body);
-
-    //                                 this.setModalVisible(false);
-    //                                 this.props.onUpdateMatch(body)
-    //                             }}>
-    //                             <Image style={{ width: 25, height: 25, marginRight: 15 }} resizeMode="contain" source={require("../../../../assets/images/icon-match.png")} />
-    //                             <Text style={{ color: "#000", fontSize: 17, fontWeight: "bold" }}>Pair</Text>
-    //                         </TouchableOpacity>
-    //                         <TouchableOpacity
-    //                             style={{
-    //                                 marginVertical: 10, justifyContent: "center", alignItems: "center",
-    //                                 backgroundColor: "blue", borderRadius: 4, paddingVertical: 5, paddingHorizontal: 10
-    //                             }}
-    //                             onPress={() => {
-    //                                 this.setModalVisible(false);
-    //                             }}>
-    //                             <Text style={{ color: "#fff", fontSize: 17, fontWeight: "bold" }}>Close</Text>
-    //                         </TouchableOpacity>
-    //                     </View>
-    //                 </View>
-    //             </View>
-    //         </Modal>
-    //     );
-    // }
-
-
-    readUserData() {
+    getLeagueData() {
         let seft = this
         firebase.database().ref('/league').on('value', function (snapshot) {
             let listItem = []
@@ -140,7 +54,7 @@ class LeagueSearchComponent extends Component {
     }
 
     componentWillMount() {
-        this.readUserData()
+        this.getLeagueData()
     }
 
     updateSearch = search => {
@@ -149,44 +63,36 @@ class LeagueSearchComponent extends Component {
 
 
     search(value) {
-        let listMatchSearch = this.state.listMatch;
-        if (value.date) {
-            const tmp = _.filter(listMatchSearch, (item) => {
-                return item.date_of_match == date;
-            })
-            listMatchSearch = _.cloneDeep(tmp);
-        }
+        let listLeagueSearch = this.state.listLeague;
         if (value.textSearch) {
             const tmp = [];
-            _.forEach(listMatchSearch, (item) => {
-                if (_.toLower(item.team.name).indexOf(_.toLower(value.textSearch)) > -1 ||
-                    _.toLower(item.user.fullname).indexOf(_.toLower(value.textSearch)) > -1 ||
-                    _.toLower(item.gridiron.name).indexOf(_.toLower(value.textSearch)) > -1 ||
-                    _.toLower(item.gridiron.address).indexOf(_.toLower(value.textSearch)) > -1 ||
-                    _.toLower(item.area.name).indexOf(_.toLower(value.textSearch)) > -1 ||
-                    _.toLower(item.level.name).indexOf(_.toLower(value.textSearch)) > -1 ||
-                    _.toLower(item.career.name).indexOf(_.toLower(value.textSearch)) > -1 ||
-                    _.toLower(item.invitation).indexOf(_.toLower(value.textSearch)) > -1) {
+            _.forEach(listLeagueSearch, (item) => {
+                if (_.toLower(item.name_of_league).indexOf(_.toLower(textSearch)) > -1 ||
+                    _.toLower(item.area.name).indexOf(_.toLower(textSearch)) > -1 ||
+                    _.toLower(item.career.name).indexOf(_.toLower(textSearch)) > -1 ||
+                    _.toLower(item.description).indexOf(_.toLower(textSearch)) > -1 ||
+                    _.toLower(item.status).indexOf(_.toLower(textSearch)) > -1 ||
+                    _.toLower(item.type_league.name).indexOf(_.toLower(textSearch)) > -1) {
                     tmp.push(item);
                 }
             });
-            listMatchSearch = _.cloneDeep(tmp);
+            listLeagueSearch = _.cloneDeep(tmp);
         }
         if (value.area_id) {
-            const tmp = _.filter(listMatchSearch, (item) => {
+            const tmp = _.filter(listLeagueSearch, (item) => {
                 return _.toLower(item.area.id) == _.toLower(value.area_id);
             })
-            listMatchSearch = _.cloneDeep(tmp);
+            listLeagueSearch = _.cloneDeep(tmp);
         }
         if (value.career_id) {
-            const tmp = _.filter(listMatchSearch, (item) => {
+            const tmp = _.filter(listLeagueSearch, (item) => {
                 return _.toLower(item.career.id) == _.toLower(value.career_id);
             })
-            listMatchSearch = _.cloneDeep(tmp);
+            listLeagueSearch = _.cloneDeep(tmp);
         }
-        console.log(listMatchSearch);
+        console.log(listLeagueSearch);
         this.setState({
-            listLeagueSearch: listMatchSearch
+            listLeagueSearch: listLeagueSearch
         })
     }
 
@@ -232,13 +138,14 @@ class LeagueSearchComponent extends Component {
                 style={{ margin: 10, borderRadius: 5, borderWidth: 1 }}
             >
                 <TouchableOpacity
-                    onPress={() => Actions.detailLeauge({ itemLeague: item })}
+                    onPress={() => Actions.detailLeauge({ itemLeague: item, is_view: true })}
                     style={{
-                        margin: 10,
+                        padding: 10,
                         flexDirection: 'row',
                         borderBottomWidth: 1,
                         borderBottomColor: "#28a745",
                         justifyContent: 'space-between', alignItems: 'center',
+                        backgroundColor: '#63cbf3'
                     }}>
                     <View style={{
                         flex: 1,
@@ -248,8 +155,8 @@ class LeagueSearchComponent extends Component {
                         paddingBottom: 5
                     }}
                     >
-                        <Image style={{ width: 32, height: 32, marginRight: 10, }} resizeMode={"contain"} source={require("../../../../assets/images/icon-league.png")} />
-                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.name_of_league}</Text>
+                        <Image style={{ width: 32, height: 32, marginRight: 10, tintColor: "#fff" }} resizeMode={"contain"} source={require("../../../../assets/images/icon-league.png")} />
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: "#fff" }}>{item.name_of_league}</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={{
@@ -341,20 +248,31 @@ class LeagueSearchComponent extends Component {
                                 </View>
                             </View>
                         </View>
-                        <TouchableOpacity onPress={handleSubmit(submit)} style={{
-                            backgroundColor: '#00a0e9',
-                            borderRadius: 3, alignItems: 'center', marginBottom: 40,
-                        }}>
-                            <Text style={{
-                                color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
-                                textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                            }}>Search</Text>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', }}>
+                            <TouchableOpacity onPress={handleSubmit(submit)} style={{
+                                backgroundColor: '#00a0e9',
+                                borderRadius: 3, alignItems: 'center', marginRight: 10
+                            }}>
+                                <Text style={{
+                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
+                                }}>Search</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.setState({ listLeagueSearch: null })} style={{
+                                backgroundColor: '#00a0e9',
+                                borderRadius: 3, alignItems: 'center', marginLeft: 10
+                            }}>
+                                <Text style={{
+                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
+                                }}>Reset</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     {
                         this.state.listLeagueSearch ?
-                            this._renderListView('League', logoMatch, this.state.listLeagueSearch, 'Match', this._renderItemLeague.bind(this))
-                            : this._renderListView('League', logoMatch, this.state.listLeague, 'Match', this._renderItemLeague.bind(this))
+                            this._renderListView('League', logoMatch, this.state.listLeagueSearch, 'League', this._renderItemLeague.bind(this))
+                            : this._renderListView('League', logoMatch, this.state.listLeague, 'League', this._renderItemLeague.bind(this))
                     }
                 </Content >
             </Container >

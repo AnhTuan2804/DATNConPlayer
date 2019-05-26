@@ -184,15 +184,26 @@ class GridironSearchComponent extends Component {
                                 onChange={(value) => this.search({ area_id: value })}
                                 data={this.props.listArea} label={'Area'} component={renderSelectSearch} />
                         </View>
-                        <TouchableOpacity onPress={handleSubmit(submit)} style={{
-                            backgroundColor: '#00a0e9',
-                            borderRadius: 3, alignItems: 'center', marginBottom: 40,
-                        }}>
-                            <Text style={{
-                                color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
-                                textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                            }}>Search</Text>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', }}>
+                            <TouchableOpacity onPress={handleSubmit(submit)} style={{
+                                backgroundColor: '#00a0e9',
+                                borderRadius: 3, alignItems: 'center', marginRight: 10
+                            }}>
+                                <Text style={{
+                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
+                                }}>Search</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.setState({ listSearch: null })} style={{
+                                backgroundColor: '#00a0e9',
+                                borderRadius: 3, alignItems: 'center', marginLeft: 10
+                            }}>
+                                <Text style={{
+                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
+                                }}>Reset</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     {
                         this.state.listSearch ?

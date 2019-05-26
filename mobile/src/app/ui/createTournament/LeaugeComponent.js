@@ -29,8 +29,6 @@ class LeaugeComponent extends Component {
                 value['id'] = key
                 listItem.push(value)
             });
-            console.log(listItem);
-
             if (listItem.length) {
                 seft.setState({
                     listLeague: listItem
