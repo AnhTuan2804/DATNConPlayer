@@ -7,6 +7,8 @@ import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import EncryptionService from '../../theme/shared/utils/EncryptionService'
 import { Alert } from 'react-native'
 
+import firebase from 'firebase';
+
 // =================LOGIN - START==================
 function* loginAPI(authlogin) {
     const router = 'login';
@@ -206,6 +208,22 @@ function* getTimeAPI() {
     return response;
 }
 
+
+function* getAllGridironAPI() {
+    const router = 'public/get-list-gridiron';
+    const headersPairs = null;
+    const body = null
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'get',
+        headers: getHeaders(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
 // =================TEAM - START==================
 function* getListTeamAPI() {
     const router = 'team/get-list-for-user';
@@ -241,6 +259,70 @@ function* createTeamAPI(bodyInfo) {
 
 function* createMatchAPI(bodyInfo) {
     const router = 'match/create';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* createLeaugeAPI(bodyInfo) {
+    const router = 'league/create';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* updateLeaugeAPI(bodyInfo) {
+    const router = 'league/update';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* updateMatchOfLeaugeAPI(bodyInfo) {
+    const router = 'league/update-match';
+    const headersPairs = null;
+    const body = bodyInfo
+    const response = yield fetch(`${Constants.HOST}/${router}`, {
+        method: 'POST',
+        headers: getHeadersByToken(headersPairs),
+        body: body,
+    }).then((response) => {
+        return getResponse(response);
+    }).catch((error) => {
+        showError(error);
+    });
+    return response;
+}
+
+function* updateMatchAPI(bodyInfo) {
+    const router = 'match/update';
     const headersPairs = null;
     const body = bodyInfo
     const response = yield fetch(`${Constants.HOST}/${router}`, {
@@ -595,5 +677,10 @@ export const Api = {
     addPriceOnTimeAPI,
     delPriceOnTimeAPI,
     getGridironDetailAPI,
-    createMatchAPI
+    createMatchAPI,
+    updateMatchAPI,
+    getAllGridironAPI,
+    createLeaugeAPI,
+    updateLeaugeAPI,
+    updateMatchOfLeaugeAPI
 };

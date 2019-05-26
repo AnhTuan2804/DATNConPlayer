@@ -8,17 +8,19 @@ import homeReducers from './HomeReducer';
 import gridironReducers from './GridironReducer';
 import teamReducers from './TeamReducer';
 import matchReducers from './MatchReducer';
+import leaugeReducers from './LeaugeReducer';
 
 const combineReducer = combineReducers({
     form: formReducer,
     loginReducer: loginReducers,
     registerReducers: registerReducers,
-    forgotPassReducers : forgotPassReducers,
+    forgotPassReducers: forgotPassReducers,
     settingReducers: settingReducers,
     homeReducers: homeReducers,
     gridironReducers: gridironReducers,
     teamReducers: teamReducers,
     matchReducers: matchReducers,
+    leaugeReducers: leaugeReducers,
 });
 
 export default combineReducer;

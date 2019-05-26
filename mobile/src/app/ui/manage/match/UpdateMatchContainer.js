@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { createMatch } from '../../../actions/MatchActions';
+import { createMatch, updateMatch } from '../../../actions/MatchActions';
 import UpdateMatchForm from './UpdateMatchComponent';
 
 export default connect(
@@ -29,8 +29,8 @@ export default connect(
   },
   dispatch => {
     return {
-      onCreateMatch: (body) => {
-        dispatch(createMatch(body))
+      onUpdateMatch: (body) => {
+        dispatch(updateMatch(body, true))
       }
     }
   }

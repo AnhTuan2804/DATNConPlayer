@@ -22,6 +22,11 @@ import {
     IS_GET_LIST_TIME,
     GET_LIST_TIME_SUCCESSFULLY,
     GET_LIST_TIME_FAILED,
+
+    // get all san
+    IS_GET_LIST_ALL_GRIDIRON,
+    GET_LIST_ALL_GRIDIRON_SUCCESSFULLY,
+    GET_LIST_ALL_GRIDIRON_FAILED
 } from '../actions/ActionTypes';
 
 import { Actions } from 'react-native-router-flux';
@@ -31,12 +36,39 @@ import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
 import { Toast } from 'native-base';
+import LoginService from '../../theme/shared/utils/LoginService';
+
+
+function* getListAllGridironSaga(action) {
+    try {
+        yield LoginService.getToken();
+        const list = yield Api.getAllGridironAPI();
+        yield put({ type: GET_LIST_ALL_GRIDIRON_SUCCESSFULLY, listAllGridiron: list });
+        const listArea = yield Api.getAreaAPI();
+        yield put({ type: GET_LIST_AREA_SUCCESSFULLY, listArea: listArea });
+        const listLevel = yield Api.getLevelAPI();
+        yield put({ type: GET_LIST_LEVEL_SUCCESSFULLY, listLevel: listLevel });
+        const listTime = yield Api.getTimeAPI();
+        yield put({ type: GET_LIST_TIME_SUCCESSFULLY, listTime: listTime });
+        const listCareer = yield Api.getCareerAPI();
+        yield put({ type: GET_LIST_CAREER_SUCCESSFULLY, listCareer: listCareer });
+        const listSize = yield Api.getSizeAPI();
+        yield put({ type: GET_LIST_SIZE_SUCCESSFULLY, listSize: listSize });
+    } catch (error) {
+        yield put({ type: GET_LIST_ALL_GRIDIRON_FAILED, error });
+    }
+}
+
+export function* watchGetAllGridironSaga() {
+    yield takeLatest(IS_GET_LIST_ALL_GRIDIRON, getListAllGridironSaga);
+}
 
 // getListArea
 function* getListAreaSaga(action) {
     try {
         const list = yield Api.getAreaAPI();
         yield put({ type: GET_LIST_AREA_SUCCESSFULLY, listArea: list });
+
         // ToastUtil.showToast(forgotPassAPI.message, 'success')
         // Actions.loginScreen()
     } catch (error) {

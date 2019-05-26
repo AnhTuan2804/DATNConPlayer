@@ -17,6 +17,7 @@ import { Api } from './Api';
 import ToastUtil from '../../theme/shared/utils/ToastUtil';
 import Constants from '../../theme/variable/Constants';
 import LoginService from '../../theme/shared/utils/LoginService';
+import { getlistTeam } from '../actions/TeamActions';
 
 function* getProfileSaga(action) {
     try {
@@ -27,6 +28,9 @@ function* getProfileSaga(action) {
         Constants.USER_ID = result.id
         Constants.PHONE = result.phone
         yield put({ type: GET_PROFILE_SUCCESSFULLY, userData: result });
+        if (action.isHome) {
+            yield put(getlistTeam())
+        }
     } catch (error) {
         yield put({ type: GET_PROFILE_FAILED, error });
     }
@@ -44,7 +48,7 @@ function* updateInfoSaga(action) {
         });
         const updateInfoAPI = yield Api.updateInfoAPI(body);
         yield put({ type: UPDATE_INFO_SUCCESSFULLY, userData: updateInfoAPI });
-        ToastUtil.showToast("Cập nhật thành công", 'success')
+        ToastUtil.showToast(Constants.UPDATE_INFO_SUCCESSFULLY, 'success')
     } catch (error) {
         yield put({ type: UPDATE_INFO_FAILED, error });
     }
@@ -62,7 +66,7 @@ function* changePassSaga(action) {
         });
         const changePassAPI = yield Api.changePassAPI(body);
         yield put({ type: CHANGE_PASS_SUCCESSFULLY });
-        ToastUtil.showToast("Cập nhật thành công", 'success')
+        ToastUtil.showToast(Constants.UPDATE_INFO_SUCCESSFULLY, 'success')
     } catch (error) {
         yield put({ type: CHANGE_PASS_FAILED, error });
     }

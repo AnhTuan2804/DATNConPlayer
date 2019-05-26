@@ -15,7 +15,7 @@ import MatchSearchContainer from '../ui/search/match/MatchSearchContainer';
 import GridironSearchContainer from '../ui/search/gridiron/GridironSearchContainer';
 import LeagueSearchContainer from '../ui/search/league/LeagueSearchContainer';
 import ManageContainer from '../ui/manage/ManageContainer';
-import CreateTournamentContainer from '../ui/createTournament/CreateTournamentContainer';
+import LeaugeContainer from '../ui/createTournament/LeaugeContainer';
 import CreateTeamContainer from '../ui/manage/team/CreateTeamContainer';
 import SettingComponent from '../ui/setting/SettingComponent';
 import LoginService from '../../theme/shared/utils/LoginService';
@@ -25,12 +25,13 @@ import DetailGridironComponent from '../ui/manage/gridiron/detailGridiron/Detail
 import { firebaseApp } from '../firebaseApi/config';
 import CreateMatchContainer from '../ui/manage/match/CreateMatchContainer';
 import UpdateMatchContainer from '../ui/manage/match/UpdateMatchContainer';
+import CreateLeaugeContainer from '../ui/createTournament/CreateLeaugeContainer';
+import DetailLeaugeContainer from '../ui/createTournament/DetailLeaugeContainer';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     firebaseApp
-   
   }
 
   render() {
@@ -166,15 +167,35 @@ export default class App extends Component {
                   </Stack>
                   {/* Manage Page -- team, gridiron */}
                   {/* league: create, update info */}
-                  <Scene
-                    key='Tournament'
-                    tabBarLabel={`Tournament`}
-                    icon={TabIcon}
-                    title={'Tournament'}
-                    swipeEnabled={false}
-                    component={CreateTournamentContainer}
-                    hideNavBar={true}
-                  />
+                  <Stack key='leauge'>
+                    <Scene
+                      key='Tournament'
+                      tabBarLabel={`Tournament`}
+                      icon={TabIcon}
+                      title={'Tournament'}
+                      swipeEnabled={false}
+                      component={LeaugeContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='creactLeauge'
+                      tabBarLabel={`creactLeauge`}
+                      icon={TabIcon}
+                      title={'creactLeauge'}
+                      swipeEnabled={false}
+                      component={CreateLeaugeContainer}
+                      hideNavBar={true}
+                    />
+                      <Scene
+                      key='detailLeauge'
+                      tabBarLabel={`detailLeauge`}
+                      icon={TabIcon}
+                      title={'detailLeauge'}
+                      swipeEnabled={false}
+                      component={DetailLeaugeContainer}
+                      hideNavBar={true}
+                    />
+                  </Stack>
 
                   {/* Setting for user: change pass, name */}
                   <Scene

@@ -90,8 +90,6 @@ class PriceGridironComponent extends Component {
         submit = values => {
             let body = values;
             body['gridiron_id'] = this.props.gridiron_id
-            console.log(body);
-
             this.props.onCreatePriceOnTime(body);
         }
         const { handleSubmit } = this.props;

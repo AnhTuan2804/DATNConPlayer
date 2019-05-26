@@ -1,7 +1,7 @@
 export default class Constants {
     // static token, locale, currency
     // static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server Test
-    static HOST = 'http://192.168.1.40:8088/api'; // Server deployed
+    static HOST = 'http://192.168.0.104:8088/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
@@ -26,8 +26,8 @@ export default class Constants {
     // EXIT_APP
     static TITLE_EXIT_APP = '終了アプリ';
     static TITLE_FONFIRM_EXIT = '退室しますか？';
-    static TITLE_NO = 'いいえ';
-    static TITLE_YES = 'はい';
+    static TITLE_NO = 'No';
+    static TITLE_YES = 'Yes';
 
     // Chuyen doi don vi (px--->>>dp)
     static RATE_SIZE = 2;
@@ -49,4 +49,15 @@ export default class Constants {
     static green = '#7fb439';
     static whiteSilver = '#f5f5f5';
     static turquoise = '#36b092';
+
+
+    static TYPE_LEAUGE = [
+        {
+            id: 'type_1',
+            name: "Round Circle",
+        }, {
+            id: 'type2',
+            name: 'Two Stages',
+        }
+    ]
 }
