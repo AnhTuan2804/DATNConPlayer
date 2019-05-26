@@ -62,7 +62,8 @@ class DetailLeaugeViewComponent extends Component {
         const seft = this
         firebase.database().ref(`/league/${this.state.id}`).on('value', function (snapshot) {
             if (snapshot.val()) {
-                if (this.isUpdateState) {
+                console.log(seft.isUpdateState);
+                if (seft.isUpdateState) {
                     seft.setState({
                         itemLeague: snapshot.val()
                     })
