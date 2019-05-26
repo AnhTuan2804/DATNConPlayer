@@ -5,6 +5,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { User } from 'src/app/shared/classes/user/user';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-modal-pair-match',
@@ -22,17 +23,18 @@ export class ModalPairMatchComponent implements OnInit {
   loginFail: boolean = false;
   messageError: string = "";
   objectTeamEvent;
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService,
-    private user: User, private componentAction: ComponentActions, private router: Router) { }
+  constructor(private formBuilder: FormBuilder,
+    private titleService: Title) { }
 
   ngOnInit() {
     this.modalPairForm = this.formBuilder.group({
       'team': new FormControl('', Validators.required),
     });
+    // this.titleService.setTitle('Pair match');
   }
 
   ngOnChanges(changes): void {
-    
+
   }
 
   pair() {

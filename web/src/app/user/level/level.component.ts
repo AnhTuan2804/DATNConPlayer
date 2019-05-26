@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { LevelService } from 'src/app/shared/services/level.service';
 import { Level } from 'src/app/shared/classes/level';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-level',
@@ -26,6 +27,7 @@ export class LevelComponent implements OnInit {
   objectLevelEvent;
   constructor(private formBuilder: FormBuilder, private levelService: LevelService,
     private toastrService: ToastrService, private action: ComponentActions,
+    private titleService: Title,
     public user: User, private level: Level) {
     this.initForm()
     this.getList();
@@ -35,6 +37,7 @@ export class LevelComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.titleService.setTitle('Manage Level page');
   }
 
   initForm() {

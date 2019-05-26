@@ -27,13 +27,12 @@
 
     <div class="col-sm-9">
       <div class="col-sm-12 main-content">
-        <div class="header-sidenav">
+        <div id="search" class="header-sidenav">
           <div class="container">
             <form role="form" [formGroup]="searchForm">
               <div class="row input-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" formControlName="textSearch"
-                    placeholder="Search anything..">
+                  <input type="text" class="form-control" formControlName="textSearch" placeholder="Search anything..">
                 </div>
                 <div class="col-sm-3">
                   <button style="width: 100%" (click)="search()" class="btn btn-success"><i
@@ -45,17 +44,19 @@
           </div>
         </div>
 
-        <div class="content-match" *ngFor="let item of listSearch">
+        <div class="content-match" *ngFor="let item of listShow">
           <div class="row">
             <div class="col-sm-5 text-center">
-              <img src="../../../../assets/images/gridiron.jpg" class="img-thumbnail" height="80%" width="90%"
-                alt="Avatar">
+              <a (click)="navigate(item.id)">
+                <img src="../../../../assets/images/gridiron.jpg" class="img-thumbnail" height="80%" width="90%"
+                  alt="Avatar">
+              </a>
             </div>
             <div class="col-sm-7">
-              <h4><i class="fab fa-shirtsinbulk"></i>.&nbsp; Name: {{item.name}} </h4>
+              <h4 (click)="navigate(item.id)"><i class="fab fa-shirtsinbulk"></i>.&nbsp; {{item.name}} </h4>
               <p><i class="fab fa-shirtsinbulk"></i>.
                 {{item.area ? 'Area: ' + item.area.name : ''}}</p>
-              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Phone: {{item.phone}}</p>
+              <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Phone: {{'0'+item.phone}}</p>
               <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Address: {{item.address}} </p>
               <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Some Description: {{item.description}} </p>
               <br>
@@ -63,6 +64,30 @@
           </div>
           <hr>
         </div>
+
+        <div *ngIf="listSearch && listSearch.length == 0" class="content-match">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <h3 style="font-weight: bold; font-style: italic">No Data Available</h3>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <div *ngIf="listSearch && listSearch.length > 0" class="content-match">
+          <div class="row">
+            <div style="display: flex; justify-content: center;" class="col-sm-11">
+              <ul class="pagination">
+                <li *ngFor="let item of pages, index as i" [ngClass]="{'active': currentPage == i}" class="page-item"><a
+                    class="page-link" (click)="paging(i)">{{i+1}}</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-1">
+              <i (click)="jumpTo()" class="far fa-arrow-alt-circle-up fa-2x"></i>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

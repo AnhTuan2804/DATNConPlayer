@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { UserService } from 'src/app/shared/services/user.service';
 import { InfoCommonService } from 'src/app/shared/services/info-common.service';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 @Component({
   selector: 'app-profile',
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
   isShow = true;
   constructor(private formBuilder: FormBuilder, private infoCommonService: InfoCommonService,
     private userService: UserService, private toastrService: ToastrService,
+    private titleService: Title,
     private action: ComponentActions, public user: User) {
     this.getProfile();
     this.getListRole();
@@ -41,6 +43,7 @@ export class ProfileComponent implements OnInit {
     if (localStorage.getItem('role') && localStorage.getItem('role') == 'Admin') {
       this.getUserForAdmin();
     }
+    this.titleService.setTitle('Profile page');
   }
 
   initForm() {

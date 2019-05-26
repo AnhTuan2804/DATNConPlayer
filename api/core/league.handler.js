@@ -174,7 +174,6 @@ class LeagueHandler {
             _.remove(list_team, (o) => {
                 return o.team.name == body.team.name;
             })
-            console.log(list_team)
             await firebaseDB.ref(`/league/${id}/list_team`).remove();
             return firebaseDB.ref(`/league/${id}/list_team`).update(list_team);
         })

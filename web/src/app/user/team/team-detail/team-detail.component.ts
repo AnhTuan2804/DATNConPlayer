@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Career } from 'src/app/shared/classes/career';
 import { CareerService } from 'src/app/shared/services/career.service';
 import { Utils } from 'src/app/shared/enums/utils';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -45,6 +46,7 @@ export class TeamDetailComponent implements OnInit {
     private teamService: TeamService, private team: Team,
     private careerService: CareerService, private career: Career,
     private toastrService: ToastrService, private action: ComponentActions,
+    private titleService: Title,
     private area: Area, private router: Router, private route: ActivatedRoute) {
     this.initForm()
     this.getListArea();
@@ -56,6 +58,7 @@ export class TeamDetailComponent implements OnInit {
     if (!localStorage.getItem('token')) {
       this.navToHomeLoginForm();
     }
+    this.titleService.setTitle('Team detail page');
     this.route.params.subscribe((params) => {
       const id = params.id;
       const item = params.item;
@@ -204,8 +207,8 @@ export class TeamDetailComponent implements OnInit {
   handleAction(event) {
     switch (event.action) {
       case 'Delete':
-      $('#delete-member').modal('show');
-      this.objectDeleteEvent = event;
+        $('#delete-member').modal('show');
+        this.objectDeleteEvent = event;
         break;
     }
   }

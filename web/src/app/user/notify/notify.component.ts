@@ -6,6 +6,7 @@ import { LevelService } from 'src/app/shared/services/level.service';
 import { Level } from 'src/app/shared/classes/level';
 import { NotifyService } from 'src/app/shared/services/notify.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -16,10 +17,12 @@ declare var $: any;
 export class NotifyComponent implements OnInit {
   listNotifys;
   constructor(public user: User, private userService: UserService,
+    private titleService: Title,
     private timeService: TimeService, private notifyService: NotifyService) {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Notification page');
     this.getListNotify();
   }
 

@@ -2,22 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/classes/user/user';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { Area } from 'src/app/shared/classes/area';
-import { CareerService } from 'src/app/shared/services/career.service';
-import { Career } from 'src/app/shared/classes/career';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
 import { MatchService } from 'src/app/shared/services/match.service';
-import { Match } from 'src/app/shared/classes/match';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
 import * as _ from 'lodash';
-import { LevelService } from 'src/app/shared/services/level.service';
-import { Level } from 'src/app/shared/classes/level';
 import { Utils } from 'src/app/shared/enums/utils';
 import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
-import { Gridiron } from 'src/app/shared/classes/gridiron';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -31,6 +27,9 @@ export class HomeGridironComponent implements OnInit {
   listMatch;
   listLevel;
   listSearch;
+  listShow = [];
+  currentPage = 0;
+  pages = [];
   areaForm: FormGroup;
   careerForm: FormGroup;
   levelForm: FormGroup;
@@ -45,9 +44,10 @@ export class HomeGridironComponent implements OnInit {
   messageConfirm = '';
   constructor(public user: User,
     private timeService: TimeService, private action: ComponentActions,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder, private titleService: Title,
     private toastrService: ToastrService,
-    private gridironService: GridironService, private gridiron: Gridiron,
+    private router: Router,
+    private gridironService: GridironService,
     private teamService: TeamService, private team: Team,
     private matchService: MatchService,
     private areaService: AreaService, private area: Area) {
@@ -55,6 +55,7 @@ export class HomeGridironComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Search Gridiron');
     this.initForm();
     this.getListArea();
     this.getListGridiron();
@@ -83,12 +84,21 @@ export class HomeGridironComponent implements OnInit {
     this.action.showLoading();
     this.gridironService.getListPublic().subscribe((result) => {
       this.listGridiron = result;
-      this.listSearch = result;
-      console.log(this.listGridiron)
+      this.listSearch = this.listGridiron;
+      this.paging(0);
       this.action.hideLoading();
     }, (err) => {
       console.log(err)
     })
+  }
+
+  paging(i) {
+    this.pages = []
+    for (let i = 1; i <= Math.ceil(this.listSearch.length / 3); i++) {
+      this.pages.push(i);
+    }
+    this.currentPage = i;
+    this.listShow = _.slice(this.listSearch, i * 3, (i + 1) * 3);
   }
 
   changeSelectRadio(event, tab) {
@@ -120,6 +130,7 @@ export class HomeGridironComponent implements OnInit {
       })
       this.listSearch = _.cloneDeep(tmp);
     }
+    this.paging(0);
   }
 
   resetFilter() {
@@ -175,6 +186,14 @@ export class HomeGridironComponent implements OnInit {
 
   cancelConfirm() {
     $('#confirm').modal('hide');
+  }
+
+  jumpTo() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  }
+
+  navigate(event) {
+    this.router.navigate([`gridiron/view/${event}`])
   }
 
 }
