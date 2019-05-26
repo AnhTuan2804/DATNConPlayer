@@ -58,9 +58,6 @@ export class GridironDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!localStorage.getItem('token')) {
-      this.navToHomeLoginForm();
-    }
     this.titleService.setTitle('Gridiron detail page');
     this.route.params.subscribe((params) => {
       const id = params.id;
@@ -101,14 +98,26 @@ export class GridironDetailComponent implements OnInit {
 
   getDetail(id) {
     this.action.showLoading();
-    this.gridironService.getDetail(id).subscribe((result) => {
-      this.dataDetail = result;
-      this.bindData(result);
-      this.action.hideLoading();
-    }, (err) => {
-      console.log(err);
-      this.action.hideLoading();
-    })
+    if (!localStorage.getItem('token')) {
+      this.gridironService.getPublicDetail(id).subscribe((result) => {
+        this.view = true
+        this.dataDetail = result;
+        this.bindData(result);
+        this.action.hideLoading();
+      }, (err) => {
+        console.log(err);
+        this.action.hideLoading();
+      })
+    } else {
+      this.gridironService.getDetail(id).subscribe((result) => {
+        this.dataDetail = result;
+        this.bindData(result);
+        this.action.hideLoading();
+      }, (err) => {
+        console.log(err);
+        this.action.hideLoading();
+      })
+    }
   }
 
   getListArea() {
@@ -162,11 +171,11 @@ export class GridironDetailComponent implements OnInit {
         { title: item.name },
         { title: item.size_gridiron.name }
       ];
-      stt++;
       if (!this.view) {
         data['actions'] = ['Delete'];
-        this.headers.push('Actions')
+        if (stt == 1) { this.headers.push('Actions') }
       }
+      stt++;
       tmp.push(data);
     })
     this.listSubGridiron = tmp;
@@ -185,11 +194,11 @@ export class GridironDetailComponent implements OnInit {
         { title: item.size_gridiron.name },
         { title: item.price }
       ];
-      stt++;
       if (!this.view) {
         data['actions'] = ['Delete'];
-        this.headersPriceOnTime.push('Actions')
+        if (stt == 1) { this.headersPriceOnTime.push('Actions') }
       }
+      stt++;
       tmp.push(data);
     })
     this.listPriceOnTime = tmp;

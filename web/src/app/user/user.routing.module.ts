@@ -36,7 +36,7 @@ export const routes: Routes = [
             { path: 'match/:item/:id', component: MatchDetailComponent, canActivate: [AuthGuard] },
             { path: 'level', component: LevelComponent, canActivate: [AuthGuardAdmin] },
             { path: 'gridiron', component: GridironComponent, canActivate: [AuthGuard] },
-            { path: 'gridiron/:item/:id', component: GridironDetailComponent, canActivate: [AuthGuard] },
+            { path: 'gridiron/:item/:id', component: GridironDetailComponent },
             { path: 'home-league', component: LeagueComponent },
             { path: 'home-gridiron', component: HomeGridironComponent },
             { path: 'manage-league', component: ManageLeagueComponent, canActivate: [AuthGuard] },
