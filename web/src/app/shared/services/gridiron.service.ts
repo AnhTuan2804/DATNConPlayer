@@ -57,6 +57,14 @@ export class GridironService extends BaseService {
       })
   }
 
+  public getPublicDetail(id): Observable<any> {
+    return this
+      .getData(`public/gridiron-detail?id=${id}`)
+      .catch((err) => {
+        return Observable.throw(err);
+      })
+  }
+
   public getListForAdmin(): Observable<any> {
     return this
       .getData(`gridiron/get-list-for-admin`)

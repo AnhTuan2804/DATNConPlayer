@@ -32,7 +32,7 @@ class MatchRouter {
         router.route('/update')
             .post((req, res, next) => {
                 return matchHandler.update(req.body, null).then((result) => {
-                    res.status(200).send({ err: 'Update Successfully' });
+                    res.status(200).send({ code: 200, message: 'Update Successfully' });
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });

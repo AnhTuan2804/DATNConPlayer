@@ -17,7 +17,7 @@ class LeagueRouter {
         router.route('/update')
             .post((req, res, next) => {
                 return leagueHandler.update(req.body, null).then((result) => {
-                    res.status(200).send({ err: 'Update Successfully' });
+                    res.status(200).send({ code: 200, message: 'Update Successfully' });
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });
@@ -25,7 +25,7 @@ class LeagueRouter {
         router.route('/update-match')
             .post((req, res, next) => {
                 return leagueHandler.updateMatch(req.body, null).then((result) => {
-                    res.status(200).send({ err: 'Update Successfully' });
+                    res.status(200).send({ code: 200, message: 'Update Successfully' });
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });
@@ -33,7 +33,7 @@ class LeagueRouter {
         router.route('/register')
             .post((req, res, next) => {
                 return leagueHandler.register(req.body, null).then((result) => {
-                    res.status(200).send({ err: 'Update Successfully' });
+                    res.status(200).send({ code: 200, message: 'Update Successfully' });
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });
@@ -41,7 +41,7 @@ class LeagueRouter {
         router.route('/remove-team')
             .post((req, res, next) => {
                 return leagueHandler.removeTeam(req.body, null).then((result) => {
-                    res.status(200).send({ err: 'Update Successfully' });
+                    res.status(200).send({ code: 200, message: 'Update Successfully' });
                 }).catch((error) => {
                     res.status(400).send({ code: 400, message: error.message });
                 });

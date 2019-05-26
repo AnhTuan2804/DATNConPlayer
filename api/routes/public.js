@@ -14,6 +14,16 @@ class AreaRouter {
                     res.status(400).send({ code: 400, message: error.message });
                 });
             });
+
+        router.route('/gridiron-detail')
+            .get((req, res, next) => {
+                return gridironHandler.getDetail(req.query.id, null).then((result) => {
+                    res.status(200).send(result)
+                }).catch((error) => {
+                    res.status(400).send({ code: 400, message: error.message });
+                });
+            });
+
         return router;
     }
 }
