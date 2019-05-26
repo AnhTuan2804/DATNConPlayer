@@ -4,7 +4,7 @@
     <div class="modal-header">
       <h1 class="modal-title">Gridiron Information</h1>
     </div>
-    <div class="modal-body">
+    <div [ngClass]="{'view' : view}" class="modal-body">
       <form role="form" [formGroup]="formDetail" (ngSubmit)="edit()">
         <div class="col-md-12 row">
           <div class="col-md-6">
@@ -14,7 +14,8 @@
               <div class="input-include-error">
                 <input type="text" class="form-control input-lg" name="name" formControlName="name">
                 <span
-                  *ngIf="formDetail.controls.name.hasError('required')&&(formDetail.controls['name'].touched || errorForm)">Field required</span>
+                  *ngIf="formDetail.controls.name.hasError('required')&&(formDetail.controls['name'].touched || errorForm)">Field
+                  required</span>
               </div>
             </div>
           </div>
@@ -85,7 +86,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3">
+          <div *ngIf="!view" class="col-md-3">
             <div class="form-group">
               <button type="submit" class="btn btn-success" [disabled]="!formDetail.valid">
                 <i class="fas fa-plus-circle"></i> &nbsp;Update
@@ -101,12 +102,13 @@
       </form>
     </div>
   </div>
+
   <!-- Quan li san con -->
   <div class="modal-content">
     <div class="modal-header">
       <h1 class="modal-title">Manage sub gridiron</h1>
     </div>
-    <div [ngClass]="{'view': view}" class="modal-body">
+    <div *ngIf="!view" [ngClass]="{'view': view}" class="modal-body">
       <form role="form" [formGroup]="formAddSubGri" (ngSubmit)="addSubGri()">
         <div [ngClass]="{'view': view}" class="col-md-12 row">
           <div class="col-md-6">
@@ -114,8 +116,8 @@
               <label class="control-label">Type of gridiron</label>
               <span class="required"> *</span>
               <div class="input-include-error">
-                <app-select-dropdown [nameSelect]="formAddSubGri.controls['size_gridiron'].value" [title]="'Type of gridiron'"
-                  [selectedIndex]="selectedIndex" [options]="listSize"
+                <app-select-dropdown [nameSelect]="formAddSubGri.controls['size_gridiron'].value"
+                  [title]="'Type of gridiron'" [selectedIndex]="selectedIndex" [options]="listSize"
                   (selectedOption)="handleDownSelect($event, 'size_gridiron')"></app-select-dropdown>
                 <span
                   *ngIf="formAddSubGri.controls.size_gridiron.hasError('required')&&(formAddSubGri.controls['size_gridiron'].touched || errorForm)">Field
@@ -144,7 +146,8 @@
                 <span
                   *ngIf="formAddSubGri.controls['name_gridiron'].hasError('required')&&(formAddSubGri.controls['name_gridiron'].touched || errorForm)">Field
                   required</span><br />
-                <span *ngIf="!countName">Name of gridiron is divided by ',' and it must equals with number of sub gridiron</span>
+                <span *ngIf="!countName">Name of gridiron is divided by ',' and it must equals with number of sub
+                  gridiron</span>
               </div>
             </div>
           </div>
@@ -163,17 +166,18 @@
         </div>
       </form>
     </div>
-    <div [ngClass]="{'view': view}" class="modal-body container">
+    <div class="modal-body container">
       <app-data-table [showSearch]=true [headers]="headers" [items]="listSubGridiron" [listSearch]=[0,1,2]
         (outputAction)="handleAction($event)"></app-data-table>
     </div>
   </div>
+
   <!-- quan li gia thue san -->
   <div class="modal-content">
     <div class="modal-header">
       <h1 class="modal-title">Manage price</h1>
     </div>
-    <div [ngClass]="{'view': view}" class="modal-body">
+    <div *ngIf="!view" [ngClass]="{'view': view}" class="modal-body">
       <form role="form" [formGroup]="formPriceOnime" (ngSubmit)="addPriceOnTime()">
         <div [ngClass]="{'view': view}" class="col-md-12">
           <div class="row">
@@ -236,12 +240,14 @@
         </div>
       </form>
     </div>
-    <div [ngClass]="{'view': view}" class="modal-body container">
+    <div class="modal-body container">
       <app-data-table [showSearch]=true [headers]="headersPriceOnTime" [items]="listPriceOnTime" [listSearch]=[0,1,2,3]
         (outputAction)="handleActionPricOnTime($event)"></app-data-table>
     </div>
   </div>
 </div>
-<app-alert-confirm [id]="'sub'" [message]="'Are you sure delete this Sub Gridiron?'" (saveConfirm)="saveConfirm('sub')" (cancelConfirm)="cancelConfirm('sub')"></app-alert-confirm>
-<app-alert-confirm [id]="'price'" [message]="'Are you sure delete this Price on Time?'" (saveConfirm)="saveConfirm('price')" (cancelConfirm)="cancelConfirm('price')"></app-alert-confirm>
+<app-alert-confirm [id]="'sub'" [message]="'Are you sure delete this Sub Gridiron?'" (saveConfirm)="saveConfirm('sub')"
+  (cancelConfirm)="cancelConfirm('sub')"></app-alert-confirm>
+<app-alert-confirm [id]="'price'" [message]="'Are you sure delete this Price on Time?'"
+  (saveConfirm)="saveConfirm('price')" (cancelConfirm)="cancelConfirm('price')"></app-alert-confirm>
 <app-loading></app-loading>

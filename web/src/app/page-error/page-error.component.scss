@@ -1,8 +1,15 @@
 .err-page {
   height: 100vh;
   width: 100vw;
-  background-image: url(../../assets/images/404page.jpg);
+  background-image: url(../../assets/images/err-page.jpg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
 }
 .err-page a {
   font-size: 30px;
+}
+a :hover {
+  color: green !important;
 }

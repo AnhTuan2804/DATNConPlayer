@@ -5,13 +5,8 @@ import { ComponentActions } from 'src/app/shared/classes/utils/component-actions
 import * as _ from 'lodash';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { Area } from 'src/app/shared/classes/area';
-import { LevelService } from 'src/app/shared/services/level.service';
-import { Level } from 'src/app/shared/classes/level';
-import { TeamService } from 'src/app/shared/services/team.service';
-import { Team } from 'src/app/shared/classes/team';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
-import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { InfoCommonService } from 'src/app/shared/services/info-common.service';
 import { Utils } from 'src/app/shared/enums/utils';
 import { InfoCommon } from 'src/app/shared/classes/info-common';
@@ -33,8 +28,8 @@ export class GridironDetailComponent implements OnInit {
   messageError: string = "";
   messageErrAddSubGri: string = "";
   messageErrPriceOntime: "";
-  headers = ['No.', 'Name', 'Type of Gridiron', 'Actions'];
-  headersPriceOnTime = ['No.', 'Time', 'Type of gridiron', 'Price', 'Actions'];
+  headers = ['No.', 'Name', 'Type of Gridiron'];
+  headersPriceOnTime = ['No.', 'Time', 'Type of gridiron', 'Price'];
   listArea = [];
   listUser = [];
   listSize = [];
@@ -47,7 +42,7 @@ export class GridironDetailComponent implements OnInit {
   objectDelSubEvent;
   objectDelPriceEvent;
   selectedIndex;
-  view: boolean = false;
+  view = false;
   dataDetail;
   countName = true;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
@@ -69,6 +64,9 @@ export class GridironDetailComponent implements OnInit {
     this.titleService.setTitle('Gridiron detail page');
     this.route.params.subscribe((params) => {
       const id = params.id;
+      if (params.item == 'view') {
+        this.view = true;
+      }
       this.getDetail(id);
     })
   }
@@ -165,7 +163,10 @@ export class GridironDetailComponent implements OnInit {
         { title: item.size_gridiron.name }
       ];
       stt++;
-      data['actions'] = ['Delete'];
+      if (!this.view) {
+        data['actions'] = ['Delete'];
+        this.headers.push('Actions')
+      }
       tmp.push(data);
     })
     this.listSubGridiron = tmp;
@@ -185,7 +186,10 @@ export class GridironDetailComponent implements OnInit {
         { title: item.price }
       ];
       stt++;
-      data['actions'] = ['Delete'];
+      if (!this.view) {
+        data['actions'] = ['Delete'];
+        this.headersPriceOnTime.push('Actions')
+      }
       tmp.push(data);
     })
     this.listPriceOnTime = tmp;

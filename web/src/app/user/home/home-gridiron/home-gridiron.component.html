@@ -47,11 +47,13 @@
         <div class="content-match" *ngFor="let item of listShow">
           <div class="row">
             <div class="col-sm-5 text-center">
-              <img src="../../../../assets/images/gridiron.jpg" class="img-thumbnail" height="80%" width="90%"
-                alt="Avatar">
+              <a (click)="navigate(item.id)">
+                <img src="../../../../assets/images/gridiron.jpg" class="img-thumbnail" height="80%" width="90%"
+                  alt="Avatar">
+              </a>
             </div>
             <div class="col-sm-7">
-              <h4><i class="fab fa-shirtsinbulk"></i>.&nbsp; {{item.name}} </h4>
+              <h4 (click)="navigate(item.id)"><i class="fab fa-shirtsinbulk"></i>.&nbsp; {{item.name}} </h4>
               <p><i class="fab fa-shirtsinbulk"></i>.
                 {{item.area ? 'Area: ' + item.area.name : ''}}</p>
               <p><i class="fab fa-shirtsinbulk"></i>.&nbsp; Phone: {{'0'+item.phone}}</p>

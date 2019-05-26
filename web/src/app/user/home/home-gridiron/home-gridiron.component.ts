@@ -2,23 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/classes/user/user';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { Area } from 'src/app/shared/classes/area';
-import { CareerService } from 'src/app/shared/services/career.service';
-import { Career } from 'src/app/shared/classes/career';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { TimeService } from 'src/app/shared/services/helpers/time.service';
 import { MatchService } from 'src/app/shared/services/match.service';
-import { Match } from 'src/app/shared/classes/match';
 import { ComponentActions } from 'src/app/shared/classes/utils/component-actions';
 import * as _ from 'lodash';
-import { LevelService } from 'src/app/shared/services/level.service';
-import { Level } from 'src/app/shared/classes/level';
 import { Utils } from 'src/app/shared/enums/utils';
 import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 import { GridironService } from 'src/app/shared/services/gridiron.service';
-import { Gridiron } from 'src/app/shared/classes/gridiron';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -51,6 +46,7 @@ export class HomeGridironComponent implements OnInit {
     private timeService: TimeService, private action: ComponentActions,
     private formBuilder: FormBuilder, private titleService: Title,
     private toastrService: ToastrService,
+    private router: Router,
     private gridironService: GridironService,
     private teamService: TeamService, private team: Team,
     private matchService: MatchService,
@@ -195,5 +191,10 @@ export class HomeGridironComponent implements OnInit {
   jumpTo() {
     $("html, body").animate({ scrollTop: 0 }, "slow");
   }
+
+  navigate(event) {
+    this.router.navigate([`gridiron/view/${event}`])
+  }
+
 }
 
