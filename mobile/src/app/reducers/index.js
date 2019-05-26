@@ -20,7 +20,7 @@ const combineReducer = combineReducers({
     gridironReducers: gridironReducers,
     teamReducers: teamReducers,
     matchReducers: matchReducers,
-    leaugeReducers: leaugeReducers,
+    leagueReducers: leaugeReducers,
 });
 
 export default combineReducer;

@@ -27,6 +27,7 @@ import CreateMatchContainer from '../ui/manage/match/CreateMatchContainer';
 import UpdateMatchContainer from '../ui/manage/match/UpdateMatchContainer';
 import CreateLeaugeContainer from '../ui/createTournament/CreateLeaugeContainer';
 import DetailLeaugeContainer from '../ui/createTournament/DetailLeaugeContainer';
+import DetailLeaugeViewContainer from '../ui/search/league/DetailLeaugeViewContainer';
 
 export default class App extends Component {
   constructor(props) {
@@ -93,6 +94,15 @@ export default class App extends Component {
                       title={'League'}
                       swipeEnabled={false}
                       component={LeagueSearchContainer}
+                      hideNavBar={true}
+                    />
+                    <Scene
+                      key='viewLeague'
+                      tabBarLabel={`viewLeague`}
+                      icon={TabIcon}
+                      title={'viewLeague'}
+                      swipeEnabled={false}
+                      component={DetailLeaugeViewContainer}
                       hideNavBar={true}
                     />
                     {/* list ppage search */}

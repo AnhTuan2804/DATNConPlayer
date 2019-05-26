@@ -74,7 +74,7 @@ class MatchSearchComponent extends Component {
                                 onPress={() => {
                                     this.setModalVisible(false);
                                     Actions.createTeam();
-                                }}><Text>Creat your's Team to pair this match</Text></TouchableOpacity>
+                                }}><Text>Creat your team to pair this match</Text></TouchableOpacity>
                         }
                         <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 20, }}>
                             <TouchableOpacity
@@ -391,15 +391,26 @@ class MatchSearchComponent extends Component {
                                 </View>
                             </View>
                         </View>
-                        <TouchableOpacity onPress={handleSubmit(submit)} style={{
-                            backgroundColor: '#00a0e9',
-                            borderRadius: 3, alignItems: 'center', marginBottom: 40,
-                        }}>
-                            <Text style={{
-                                color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
-                                textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                            }}>Search</Text>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', }}>
+                            <TouchableOpacity onPress={handleSubmit(submit)} style={{
+                                backgroundColor: '#00a0e9',
+                                borderRadius: 3, alignItems: 'center', marginRight: 10
+                            }}>
+                                <Text style={{
+                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
+                                }}>Search</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.setState({ listMatchSearch: null })} style={{
+                                backgroundColor: '#00a0e9',
+                                borderRadius: 3, alignItems: 'center', marginLeft: 10
+                            }}>
+                                <Text style={{
+                                    color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
+                                    textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
+                                }}>Reset</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     {
                         this.state.listMatchSearch ?

@@ -110,7 +110,7 @@ export const renderSelect = ({ input, label, data, children, textIP, ...custom }
                     {data.length != 0 ? <Picker.Item value={undefined} label={textIP} key={'00000'} enabled={false} /> : null}
                     {data.length != 0 ?
                         data.map((item, index) => { return <Picker.Item value={item.id} label={item.name} key={index} /> })
-                        : <Picker.Item value={'0'} label={textIP} key={'00000'} />
+                        : <Picker.Item value={undefined} label={textIP} key={'00000'} />
                     }
                 </Picker>
             </View>

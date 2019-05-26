@@ -13,7 +13,7 @@ export const createMatch = (value) => {
     };
 }
 // updateMatch
-export const updateMatch = (value) => {
+export const updateMatch = (value, isManage) => {
     return {
         type: IS_UPDATE_MATCH,
         isLoading: true,

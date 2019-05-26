@@ -38,7 +38,7 @@ class LoginComponent extends Component {
             <Container style={{}}>
                 {Loading(this.props.isLoading)}
                 <ImageBackground source={require('../../../assets/images/bagroundBong.jpg')} style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}>
-                    <Content contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Content keyboardShouldPersistTaps='handled' contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ width: '90%', backgroundColor: 'rgba(135,135,135, 0.8)', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{
                                 fontSize: 50 / Constants.RATE_SIZE,

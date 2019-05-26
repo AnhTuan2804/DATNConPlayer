@@ -29,10 +29,10 @@ class InfoComponent extends Component {
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>
                             <Field name="email" input={{ value: this.props.email, editable: false, }} textIP="Email" label={'Email'} component={renderField} />
-                            <Field name="fullname" keyboardType="default" textIP="Tên" label={'Họ tên'} component={renderField}
+                            <Field name="fullname" keyboardType="default" textIP="Tên" label={'Fullname'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
-                            <Field name="phone" keyboardType="default" textIP="Số điện thoại" label={'Số điện thoại'} component={renderField}
+                            <Field name="phone" keyboardType="default" textIP="Số điện thoại" label={'Phone number'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
                         </View>

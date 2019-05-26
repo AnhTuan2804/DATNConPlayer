@@ -70,6 +70,7 @@ function* registerLeagueSaga(action) {
     try {
         let body = JSON.stringify(action.value);
         const result = yield Api.registerLeagueAPI(body);
+        console.log("result", result);
         yield put({ type: REGISTER_LEAGUE_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_UPDATE_SUCCESS, 'success')
     } catch (error) {
@@ -100,7 +101,6 @@ export function* watchRemoveTeamLeagueSaga() {
 function* updateMatchLeaugeSaga(action) {
     try {
         let body = JSON.stringify(action.value);
-        console.log("bodySaga", body);
         const result = yield Api.updateMatchOfLeaugeAPI(body);
         yield put({ type: UPDATE_MATCH_OF_LEAUGE_SUCCESSFULLY });
         ToastUtil.showToast(Constants.MESSAGE_UPDATE_SUCCESS, 'success')
@@ -112,22 +112,3 @@ function* updateMatchLeaugeSaga(action) {
 export function* watchUpdateMatchOfLeaugeSaga() {
     yield takeLatest(IS_UPDATE_MATCH_OF_LEAUGE, updateMatchLeaugeSaga);
 }
-
-// // delete team
-// function* deleteTeamSaga(action) {
-//     try {
-//         let body = JSON.stringify({
-//             "id": action.id
-//         });
-//         const result = yield Api.delTeamAPI(body);
-//         yield put({ type: DEL_LEAUGE_SUCCESSFULLY });
-//         ToastUtil.showToast(Constants.MESSAGE_DELETE_SUCCESS, 'success')
-//         yield put(getlistTeam())
-//     } catch (error) {
-//         yield put({ type: DEL_LEAUGE_FAILED, error });
-//     }
-// }
-
-// export function* watchDeleteTeamSaga() {
-//     yield takeLatest(IS_DEL_LEAUGE, deleteTeamSaga);
-// }

@@ -64,7 +64,7 @@ class HomeComponent extends Component {
                                 onPress={() => {
                                     this.setModalVisible(false);
                                     Actions.createTeam();
-                                }}><Text>Creat your's Team to pair this match</Text></TouchableOpacity>
+                                }}><Text>Creat your Team to pair this match</Text></TouchableOpacity>
                         }
                         <View style={{ flexDirection: "row", justifyContent: "flex-end", marginTop: 20, }}>
                             <TouchableOpacity
@@ -286,14 +286,13 @@ class HomeComponent extends Component {
                 flex: 1,
                 width: width * 7 / 10,
                 borderRadius: 5,
-                borderColor: 'rgb(34,139,34)',
+                borderColor: '#78b43d',
                 borderWidth: 1,
-                // backgroundColor: 'rgb(34,139,34)',
                 marginHorizontal: 10,
             }}>
                 <View
                     style={{
-                        backgroundColor: 'rgb(34,139,34)',
+                        backgroundColor: '#78b43d',
                         padding: 10,
                         marginBottom: 5,
                         flexDirection: 'row',
@@ -366,7 +365,8 @@ class HomeComponent extends Component {
                 borderWidth: 1,
                 marginHorizontal: 10,
             }}>
-                <View
+                <TouchableOpacity
+                    onPress={() => Actions.viewLeague({ itemLeague: item })}
                     style={{
                         backgroundColor: 'blue',
                         padding: 10,
@@ -384,7 +384,7 @@ class HomeComponent extends Component {
                     }}>
                         <Text style={{ color: 'white', fontSize: 18, fontWeight: "bold" }}>League {item.name_of_league}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <View style={{
                     flex: 1,
                     marginHorizontal: 10,
@@ -438,12 +438,11 @@ class HomeComponent extends Component {
                         <Text style={{ color: 'black', flex: 1 }}> {item.area.name}</Text>
                     </View>
                     <View style={{
-                        flexDirection: 'row',
                         justifyContent: 'flex-start',
                         alignItems: "flex-start"
                     }}>
                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Summary about league: </Text>
-                        <Text style={{ color: 'black', flex: 1 }}> {item.description}</Text>
+                        <Text style={{ color: 'black', paddingLeft: 10 }}>{item.description}</Text>
                     </View>
                 </View>
             </View>
@@ -531,7 +530,7 @@ class HomeComponent extends Component {
                 {/* header Search */}
                 {this._renderHeaderSearch()}
                 {/* header Search */}
-                <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
+                <Content keyboardShouldPersistTaps='handled' contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                     {/* list tran dau */}
                     {this._renderListView('Match', logoMatch, this.state.listMatch, 'Match', this._renderItemMatch.bind(this))}
                     {/* list tran dau */}
