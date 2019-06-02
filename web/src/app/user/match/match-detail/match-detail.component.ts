@@ -53,6 +53,7 @@ export class MatchDetailComponent implements OnInit {
   status;
   id;
   startDate;
+  isRejectCancel = false;
   constructor(private formBuilder: FormBuilder, private areaService: AreaService,
     private levelService: LevelService, private level: Level,
     private careerService: CareerService, private career: Career,
@@ -184,15 +185,18 @@ export class MatchDetailComponent implements OnInit {
 
   cancel() {
     this.status = Utils.STATUS_CANCEL;
+    this.isRejectCancel = true;
     this.edit();
   }
 
   confirm() {
+    this.isRejectCancel = true;
     this.status = Utils.STATUS_CLOSE;
     this.edit();
   }
 
   reject() {
+    this.isRejectCancel = true;
     this.status = Utils.STATUS_NEW;
     this.edit();
   }
@@ -210,28 +214,28 @@ export class MatchDetailComponent implements OnInit {
     data['area'] = this.objectAreaEvent ? this.objectAreaEvent : undefined;
     data['gridiron'] = this.objectGridironEvent ? this.objectGridironEvent : undefined;
     data['career'] = this.objectCareerEvent ? this.objectCareerEvent : undefined;
-    if (this.status && this.status == Utils.STATUS_NEW) {
+    if (this.status && this.status == Utils.STATUS_NEW && this.isRejectCancel) {
       data['team_guest'] = '';
-      data['date_of_match'] = this.dataObjectDetail.date_of_match;
       data['invitation'] = this.dataObjectDetail.invitation;
+      data['date_of_match'] = undefined;
     }
-    if (this.status && this.status == Utils.STATUS_CANCEL) {
-      data['date_of_match'] = this.dataObjectDetail.date_of_match;
+    if (this.status && (this.status == Utils.STATUS_CANCEL || this.status == Utils.STATUS_CLOSE) && this.isRejectCancel) {
+      data['date_of_match'] = undefined;
       data['invitation'] = this.dataObjectDetail.invitation;
     }
 
     this.action.showLoading();
+    const messageStatus = this.status == Utils.STATUS_CLOSE ? 'Accepted' : 'Rejected';
+    const dataNotify = {
+      user_id: this.dataObjectDetail.team_guest.team_users[0].user.id,
+      status: 'New',
+      create_at: this.timeService.getDateWithoutTime(null),
+      message: `Team "${this.dataObjectDetail.team.name}" was ${messageStatus} match at ${this.timeService.formatDateFromTimeUnix(this.dataObjectDetail.date_of_match, this.timeService.DATE_FORMAT)} (${this.dataObjectDetail.time.time_start}h:${this.dataObjectDetail.time.time_end}h)`
+    }
     this.matchService.updateMatch(data).subscribe((result) => {
       this.toastrService.success(Utils.MESSAGE_UPDATE_SUCCESS, '', { timeOut: 3500 });
       this.addFaild = false;
-      if (this.status && (this.status == Utils.STATUS_CLOSE || this.status == Utils.STATUS_CLOSE)) {
-        const messageStatus = this.status == Utils.STATUS_CLOSE ? 'Accepted' : 'Rejected';
-        const dataNotify = {
-          user_id: this.dataObjectDetail.team_guest.team_users[0].id,
-          status: 'New',
-          create_at: this.timeService.getDateWithoutTime(null),
-          message: `Team "${this.dataObjectDetail.team_guest.name}" was ${messageStatus} match at ${this.timeService.formatDateFromTimeUnix(this.dataObjectDetail.date_of_match, this.timeService.DATE_FORMAT)} (${this.dataObjectDetail.time.time_start}h:${this.dataObjectDetail.time.time_end}h)`
-        }
+      if (this.status && (this.status == Utils.STATUS_CLOSE || this.status == Utils.STATUS_NEW) && this.isRejectCancel) {
         this.notifyService.createNotify(dataNotify).subscribe((result) => { });
       }
       if (this.status) {

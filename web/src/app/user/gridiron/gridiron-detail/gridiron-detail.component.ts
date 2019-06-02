@@ -173,7 +173,7 @@ export class GridironDetailComponent implements OnInit {
       ];
       if (!this.view) {
         data['actions'] = ['Delete'];
-        if (stt == 1) { this.headers.push('Actions') }
+        if (this.headers[this.headers.length - 1] != 'Actions') { this.headers.push('Actions') }
       }
       stt++;
       tmp.push(data);
@@ -196,7 +196,7 @@ export class GridironDetailComponent implements OnInit {
       ];
       if (!this.view) {
         data['actions'] = ['Delete'];
-        if (stt == 1) { this.headersPriceOnTime.push('Actions') }
+        if (this.headersPriceOnTime[this.headersPriceOnTime.length - 1] != 'Actions') { this.headersPriceOnTime.push('Actions') }
       }
       stt++;
       tmp.push(data);

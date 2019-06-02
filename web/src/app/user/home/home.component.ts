@@ -17,6 +17,7 @@ import { TeamService } from 'src/app/shared/services/team.service';
 import { Team } from 'src/app/shared/classes/team';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
+import { NotifyService } from 'src/app/shared/services/notify.service';
 declare var $: any;
 
 @Component({
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit {
     private teamService: TeamService, private team: Team,
     private levelService: LevelService, private level: Level,
     private matchService: MatchService, private match: Match,
+    private notifyService: NotifyService,
     private careerService: CareerService, private career: Career,
     private areaService: AreaService, private area: Area) {
     this.minDate = timeService.getDateWithoutTime(new Date());
@@ -270,10 +272,19 @@ export class HomeComponent implements OnInit {
         status: Utils.STATUS_WAITTING,
         date_of_match: this.objectMatchEvent.date_of_match
       }
+      const dataNotify = {
+        user_id: this.objectMatchEvent.user.id,
+        status: 'New',
+        create_at: this.timeService.getDateWithoutTime(null),
+        message: `The team "${data.team_guest.name}" requested pair match with your match. 
+                  Please answers in the match detail management!`
+      }
       this.action.showLoading();
       this.matchService.updateMatch(data).subscribe((result) => {
         this.action.hideLoading();
         this.toastrService.success('PAIR MATCH SUCCESFULLY', '', { timeOut: 3000 });
+
+        this.notifyService.createNotify(dataNotify).subscribe((result) => { });
       }, err => {
         console.log(err);
         this.action.hideLoading();

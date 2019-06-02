@@ -70,7 +70,9 @@ class MatchHandler {
             return;
         }
         body = _.omit(body, ['id']);
-        body.date_of_match = date_of_match ? date_of_match : timeUtil.getTimesUnixFromTimeFormat(body.date_of_match);
+        if(date_of_match || body.date_of_match){
+            body.date_of_match = date_of_match ? date_of_match : timeUtil.getTimesUnixFromTimeFormat(body.date_of_match);
+        }
         try {
             return firebaseDB.ref('/match/' + id).update(body);
         }
