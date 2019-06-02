@@ -63,8 +63,10 @@ const config = {
         port: 465,
         host: "smtp.gmail.com",
         emailName: "The System Connecting Football Team",
-        emailAddress: "manjacky.it14@gmail.com",
-        password: "Anhtuan@2804"
+        // emailAddress: "manjacky.it14@gmail.com",
+        // password: "Anhtuan@2804"
+        emailAddress: "connnectingfootballteams@gmail.com",
+        password: "TheSystem123"        
     }
 }
 module.exports = config;
