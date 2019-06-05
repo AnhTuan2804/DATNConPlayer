@@ -278,7 +278,7 @@ class UpdateMatchComponent extends Component {
                                         alignItems: "center"
                                     }}>
                                         <Text style={{ fontWeight: 'bold', color: 'black' }}>Career: </Text>
-                                        <Text style={{ color: 'black' }}> {this.state.infoMatch.team_guest.career.name}</Text>
+                                        <Text style={{ color: 'black' }}> {this.state.infoMatch.team_guest.career ? this.state.infoMatch.team_guest.career.name : ""}</Text>
                                     </View>
                                     <View style={{
                                         flexDirection: 'row',

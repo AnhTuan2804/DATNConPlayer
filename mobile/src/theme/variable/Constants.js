@@ -1,7 +1,7 @@
 export default class Constants {
     // static token, locale, currency
     // static HOST = 'https://datncsplayer.herokuapp.com/api'; // Server Test
-    static HOST = 'http://192.168.1.40:8088/api'; // Server deployed
+    static HOST = 'http://192.168.0.134:8088/api'; // Server deployed
     static TOKEN = '';
     static EMAIL_ADDRESS = '';
     static USER_ID = '';
@@ -24,8 +24,8 @@ export default class Constants {
     static EMAIL_NUMBER_VALID = 'Your email address or user ID is invalid. ';
 
     // EXIT_APP
-    static TITLE_EXIT_APP = '終了アプリ';
-    static TITLE_FONFIRM_EXIT = '退室しますか？';
+    static TITLE_EXIT_APP = 'Exit app';
+    static TITLE_FONFIRM_EXIT = 'Do you want to leave? ';
     static TITLE_NO = 'No';
     static TITLE_YES = 'Yes';
 

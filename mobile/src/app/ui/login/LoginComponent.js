@@ -47,7 +47,7 @@ class LoginComponent extends Component {
                                 color: '#fff',
                                 marginTop: 20
                             }}
-                            >Đăng nhập</Text>
+                            >LOGIN</Text>
                             <View style={{ width: '90%', flexDirection: 'column', }}>
                                 <Field name="email" keyboardType="default" textIP="Email" component={renderField}
                                     validate={[required, required_trim, have_point_end]}
@@ -63,14 +63,14 @@ class LoginComponent extends Component {
                                 <Text style={{
                                     color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
                                     textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                                }}>Đăng nhập</Text>
+                                }}>Login</Text>
                             </TouchableOpacity>
                             <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                                 {/* <Text onPress={() => Linking.openURL(Constants.LINK_TO_REGISTER)} style={{ fontSize: 28 / Constants.RATE_SIZE, color: '#46b5fa', textAlign: 'center', margin: 10 }}>TẠO TÀI KHOẢN MỚI</Text> */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 10, marginBottom: 20 }}>
-                                    <Text onPress={() => Actions.registerScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Đăng ký
+                                    <Text onPress={() => Actions.registerScreen()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Register
                                     <Text style={{ fontSize: 36 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}> | </Text>
-                                        <Text onPress={() => Actions.forgotPass()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Quên mật khẩu</Text>
+                                        <Text onPress={() => Actions.forgotPass()} style={{ fontSize: 24 / Constants.RATE_SIZE, color: '#fff', textAlign: 'center' }}>Forgot password</Text>
                                     </Text>
                                 </View>
                             </View>

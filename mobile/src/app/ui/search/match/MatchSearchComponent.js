@@ -377,7 +377,7 @@ class MatchSearchComponent extends Component {
                 <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>
-                            <Field name="textSearch" keyboardType="default" textIP="" label={'Search'} component={renderField} />
+                            <Field name="textSearch" keyboardType="default" textIP="" label={'Search match'} component={renderField} />
                             <Field name="area_id" mode="dropdown" textIP="Select Area"
                                 data={this.props.listArea} label={'Area'} component={renderSelectSearch} />
                             <View style={{ width: '100%', flexDirection: 'row', }}>

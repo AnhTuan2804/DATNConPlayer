@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import ManageComponent from './ManageComponent';
 import { getlistTeam, delTeam } from '../../actions/TeamActions';
 import { getListGridiron, delGridiron } from '../../actions/GridironActions';
+import _ from 'lodash';
 
 export default connect(
   state => {
@@ -18,6 +19,7 @@ export default connect(
       isLoading: isLoading,
       isLogin: setting.isLogin,
       listTeam: team.listTeam || [],
+      listTeamForMatch: _.filter(team.listTeam, function (o) { return o.team_users[0].is_captain; }) || [],
       listGridiron: gridiron.listGridiron || []
     }
   },

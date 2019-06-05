@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Dimensions, BackHandler, Alert, TouchableOpacity, Platform, FlatList, TextInput, Modal, Picker } from 'react-native';
-import { Container, Content, Header, Item, Icon, Input, Button } from 'native-base';
+import { Container, Content, Header, Item, Icon, Badge } from 'native-base';
 import Constants from '../../../theme/variable/Constants';
 import { Actions } from 'react-native-router-flux';
 import Loading from '../../ui/common/modal/Loading';
@@ -20,7 +20,9 @@ class HomeComponent extends Component {
             listLeague: [],
             visibleModal: false,
             teamSelect: "",
-            matchSelect: null
+            matchSelect: null,
+            listNotify: [],
+            numNotify: 0
         };
     }
 
@@ -147,11 +149,29 @@ class HomeComponent extends Component {
         });
     }
 
-    componentDidMount() {
+    readNotifyData() {
+        let seft = this
+        firebase.database().ref('/notify').orderByChild("user_id").equalTo(Constants.USER_ID).on('value', function (snapshot) {
+            let listItem = []
+            _.forEach(snapshot.val(), (value, key) => {
+                value['id'] = key
+                listItem.push(value)
+            });
+            if (listItem.length) {
+                seft.setState({
+                    listNotify: listItem,
+                    numNotify: listItem.length
+                })
+            }
+        });
+    }
+
+    async componentDidMount() {
         this.readLeagueData()
         this.readMatchData()
-        this.props.onGetProfile()
         this.props.onGetAllGridiron()
+        await this.props.onGetProfile()
+        await this.readNotifyData()
     }
 
     _renderItemMatch = ({ item, index }) => {
@@ -507,11 +527,18 @@ class HomeComponent extends Component {
                     alignItems: 'center',
                     borderRadius: 5
                 }}>
-                    <Icon style={{ fontSize: 16, color: '#333' }} name="search" type="FontAwesome" />
+                    <Icon style={{ fontSize: 20, color: '#333' }} name="search" type="FontAwesome" />
                     <TextInput style={{ flex: 1, paddingVertical: 5 }} placeholder="Tìm kiếm..." ></TextInput>
                     {/* <Icon name="ios-people" /> */}
                 </View>
                 <Icon style={{ marginRight: 10, color: "rgba(240,109,88,1)" }} name="notifications" type="MaterialIcons" />
+                <View style={{
+                    position: "absolute", top: 6, right: 6,
+                    width: 18, height: 18, borderRadius: 9, backgroundColor: 'rgba(240,109,88,1)',
+                    justifyContent: "center", alignItems: "center"
+                }}>
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>{this.state.numNotify}</Text>
+                </View>
             </View>
         );
     }
@@ -519,7 +546,7 @@ class HomeComponent extends Component {
 
 
     render() {
-        const { listMatch, listGridiron, listLeague } = this.props
+        const { listGridiron } = this.props
         let logoMatch = require('../../../assets/images/icon-match.png');
         let logoGridiron = require('../../../assets/images/icon-pitch.png');
         let logoLeague = require('../../../assets/images/icon-olympic.png');

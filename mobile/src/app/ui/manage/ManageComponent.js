@@ -48,7 +48,7 @@ class ManageComponent extends Component {
         }
     }
 
-    _renderHeaderManage = (title, titleBtnAdd, onPressAction) => {
+    _renderHeaderManage = (title, titleBtnAdd, onPressAction, disabled) => {
         return (
             <View style={{
                 marginHorizontal: 10,
@@ -63,15 +63,17 @@ class ManageComponent extends Component {
                 }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{title}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{
-                    flex: 1,
-                    margin: 20,
-                    paddingVertical: 10,
-                    justifyContent: 'center', alignItems: 'center',
-                    flexDirection: 'row',
-                    borderRadius: 10,
-                    backgroundColor: "#28a745"
-                }}
+                <TouchableOpacity
+                    disabled={disabled}
+                    style={{
+                        flex: 1,
+                        margin: 20,
+                        paddingVertical: 10,
+                        justifyContent: 'center', alignItems: 'center',
+                        flexDirection: 'row',
+                        borderRadius: 10,
+                        backgroundColor: "#28a745"
+                    }}
                     onPress={onPressAction}
                 >
                     <Icon style={{ fontSize: 16, color: '#fff' }} name="plus-circle" type="FontAwesome" />
@@ -310,16 +312,21 @@ class ManageComponent extends Component {
                             borderBottomWidth: 2,
                             borderBottomColor: "#28a745"
                         }}>
-                            {this._renderHeaderManage('Manage Team', 'Create Team', () => Actions.createTeam())}
+                            {this._renderHeaderManage('Manage Team', 'Create Team', () => Actions.createTeam(), false)}
                             <View style={{ flex: 1 }}>
-                                <FlatList
-                                    data={this.props.listTeam}
-                                    extraData={this.props}
-                                    showsHorizontalScrollIndicator={false}
-                                    horizontal={true}
-                                    keyExtractor={(item, index) => { return `${item.id}` }}
-                                    renderItem={this._renderItemTeam}
-                                />
+                                {this.props.listTeam.length != 0 ?
+                                    <FlatList
+                                        data={this.props.listTeam}
+                                        extraData={this.props}
+                                        showsHorizontalScrollIndicator={false}
+                                        horizontal={true}
+                                        keyExtractor={(item, index) => { return `${item.id}` }}
+                                        renderItem={this._renderItemTeam}
+                                    /> :
+                                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                        <Text>You don't have any Team</Text>
+                                    </View>
+                                }
                             </View>
                         </View>
                         <View style={{
@@ -327,16 +334,22 @@ class ManageComponent extends Component {
                             borderTopWidth: 2,
                             borderTopColor: "#28a745",
                         }}>
-                            {this._renderHeaderManage('Manage Gridiron', 'Create Gridiron', () => Actions.createGridiron())}
+                            {this._renderHeaderManage('Manage Gridiron', 'Create Gridiron', () => Actions.createGridiron(), false)}
                             <View style={{ flex: 1 }}>
-                                <FlatList
-                                    data={this.props.listGridiron}
-                                    extraData={this.props}
-                                    showsHorizontalScrollIndicator={false}
-                                    horizontal={true}
-                                    keyExtractor={(item, index) => { return `${item.id}` }}
-                                    renderItem={this._renderItemGridiron}
-                                />
+                                {
+                                    this.props.listGridiron.length != 0 ?
+                                        <FlatList
+                                            data={this.props.listGridiron}
+                                            extraData={this.props}
+                                            showsHorizontalScrollIndicator={false}
+                                            horizontal={true}
+                                            keyExtractor={(item, index) => { return `${item.id}` }}
+                                            renderItem={this._renderItemGridiron}
+                                        /> :
+                                        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                            <Text>You don't have any gridiron</Text>
+                                        </View>
+                                }
                             </View>
                         </View>
                         <View style={{
@@ -344,16 +357,21 @@ class ManageComponent extends Component {
                             borderTopWidth: 2,
                             borderTopColor: "#28a745",
                         }}>
-                            {this._renderHeaderManage('Manage Match', 'Create Match', () => Actions.createMatch())}
+                            {this._renderHeaderManage('Manage Match', 'Create Match', () => Actions.createMatch(), this.props.listTeamForMatch.length == 0)}
                             <View style={{ flex: 1 }}>
-                                <FlatList
-                                    data={this.state.listMatch}
-                                    extraData={this.state}
-                                    showsHorizontalScrollIndicator={false}
-                                    horizontal={true}
-                                    keyExtractor={(item, index) => { return `${item.id}` }}
-                                    renderItem={this._renderItemMatch}
-                                />
+                                {this.state.listMatch.length != 0 ?
+                                    <FlatList
+                                        data={this.state.listMatch}
+                                        extraData={this.state}
+                                        showsHorizontalScrollIndicator={false}
+                                        horizontal={true}
+                                        keyExtractor={(item, index) => { return `${item.id}` }}
+                                        renderItem={this._renderItemMatch}
+                                    /> :
+                                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                        <Text>You don't have any Match</Text>
+                                    </View>
+                                }
                             </View>
                         </View>
                     </Content >

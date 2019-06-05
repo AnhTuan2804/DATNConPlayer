@@ -68,9 +68,9 @@ class CreateGridironComponent extends Component {
                             <Field name="link_face" keyboardType="default" textIP="Facebook link" label={'Facebook link'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
-                            <Field name="picture" keyboardType="default" textIP="Tên" label={'Picture'} component={renderField}
+                            {/* <Field name="picture" keyboardType="default" textIP="Tên" label={'Picture'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
-                            />
+                            /> */}
                             <Field name="phone" keyboardType="default"
                                 style={{ width: '100%', flexDirection: 'column' }} textIP="0967856756"
                                 label={'Phone number'} component={renderField}

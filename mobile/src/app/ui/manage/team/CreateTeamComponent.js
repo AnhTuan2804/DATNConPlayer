@@ -54,31 +54,31 @@ class CreateTeamComponent extends Component {
             <Container style={{ backgroundColor: 'white' }}>
                 {Loading(this.props.isLoading)}
                 {this._renderHeader("Create Team")}
-                <Content contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
+                <Content keyboardShouldPersistTaps='handled' contentContainerStyle={{ flexGrow: 1, marginTop: Platform.OS === "ios" ? 19 : 0 }}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                         <View style={{ width: '100%', flexDirection: 'column', }}>
-                            <Field name="name" keyboardType="default" textIP="Email" label={'Tên đội'} component={renderField}
+                            <Field name="name" keyboardType="default" textIP="Email" label={'Team\'s name'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
                             />
                             <Field name="area_id" mode="dropdown" textIP="Select Area" data={this.props.listArea} label={'Area'} component={renderSelect} />
                             <Field name="level_id" mode="dropdown" textIP="Select Level" data={this.props.listLevel} label={'Level'} component={renderSelect} />
                             <Field name="career_id" mode="dropdown" textIP="Select Career" data={this.props.listCareer} label={'Career'} component={renderSelect} />
-                            <Field name="picture" keyboardType="default" textIP="Tên" label={'Picture'} component={renderField}
+                            {/* <Field name="picture" keyboardType="default" textIP="Tên" label={'Picture'} component={renderField}
                                 validate={[required, required_trim, have_point_end]}
-                            />
+                            /> */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                                 <View style={{ width: '50%', flexDirection: 'column', }}>
-                                    <Field name="age_min" keyboardType="default" style={{ width: '100%', flexDirection: 'column' }} textIP="10" label={'Tuổi nhỏ nhất'} component={renderField}
+                                    <Field name="age_min" keyboardType="default" style={{ width: '100%', flexDirection: 'column' }} textIP="10" label={'Min age'} component={renderField}
                                         validate={[required, number, required_trim, have_point_end, confirm_min_age]}
                                     />
                                 </View>
                                 <View style={{ width: '50%', flexDirection: 'column', }}>
-                                    <Field name="age_max" keyboardType="default" textIP="20" label={'Tuổi lớn nhất'} component={renderField}
+                                    <Field name="age_max" keyboardType="default" textIP="20" label={'Max age'} component={renderField}
                                         validate={[required, number, required_trim, have_point_end, confirm_max_age]}
                                     />
                                 </View>
                             </View>
-                            <Field name="description" keyboardType="default" textIP="Giới thiệu" label={'Giới thiệu'} component={renderFieldTextarea}
+                            <Field name="description" keyboardType="default" textIP="Giới thiệu" label={'Decription'} component={renderFieldTextarea}
                                 validate={[required, required_trim, have_point_end]}
                             />
                         </View>
@@ -89,7 +89,7 @@ class CreateTeamComponent extends Component {
                             <Text style={{
                                 color: 'white', fontSize: 42.63 / Constants.RATE_SIZE,
                                 textAlign: 'center', paddingHorizontal: 30, paddingVertical: 10, color: '#fafcfc',
-                            }}>Update</Text>
+                            }}>Create</Text>
                         </TouchableOpacity>
                     </View>
                 </Content >

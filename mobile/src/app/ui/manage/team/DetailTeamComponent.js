@@ -115,9 +115,9 @@ class DetailTeamComponent extends Component {
                     <Field name="area_id" mode="dropdown" textIP="Select Area" data={this.props.listArea} label={'Area'} component={renderSelect} />
                     <Field name="level_id" mode="dropdown" textIP="Select Level" data={this.props.listLevel} label={'Level'} component={renderSelect} />
                     <Field name="career_id" mode="dropdown" textIP="Select Career" data={this.props.listCareer} label={'Career'} component={renderSelect} />
-                    <Field name="picture" keyboardType="default" textIP="Tên" label={'Picture'} component={renderField}
+                    {/* <Field name="picture" keyboardType="default" textIP="Tên" label={'Picture'} component={renderField}
                         validate={[required, required_trim, have_point_end]}
-                    />
+                    /> */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <View style={{ width: '50%', flexDirection: 'column', }}>
                             <Field name="age_min" keyboardType="default" style={{ width: '100%', flexDirection: 'column' }} textIP="10" label={'Age min'} component={renderField}
