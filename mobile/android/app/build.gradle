@@ -114,9 +114,9 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("./my-release-key.keystore")
+            storeFile file("../keystores/runiKey.jks")
             storePassword "21022015"
-            keyAlias "my-key-alias"
+            keyAlias "Senil"
             keyPassword "21022015"
         }
         // debug {
