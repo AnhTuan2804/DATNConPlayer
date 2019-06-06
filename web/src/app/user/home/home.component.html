@@ -81,7 +81,7 @@
                 <div class="col-sm-8">
                   <h4><i class="fas fa-users"></i>.&nbsp; {{item.team.name}} <small>-- <span class="title">Status:
                       </span> <span style="color: red">{{item.status}}</span></small> </h4>
-                  <p><i *ngIf="item.team_guest" class="fas fa-users"></i>.
+                  <p *ngIf="item.team_guest"><i class="fas fa-users"></i>.
                     {{item.team_guest ? 'Guest team: ' + item.team_guest.name : ''}}</p>
                   <p><i class="fas fa-clock"></i>.&nbsp; {{item.date_of_match}}
                     {{item.time.name ? '(' +item.time.name+ ')' : ''}}</p>

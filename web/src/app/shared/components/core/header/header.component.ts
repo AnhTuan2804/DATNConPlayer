@@ -33,6 +33,10 @@ export class HeaderComponent implements OnInit {
     })
   }
 
+  navi(path) {
+    this.router.navigate([path])
+  }
+
   setListNotify(notifys) {
     const tmp = [];
     _.forEach(notifys, (item) => {
@@ -50,7 +54,7 @@ export class HeaderComponent implements OnInit {
       id: id,
       create_at: this.timeService.getDateWithoutTime(null)
     }
-    this.notifyService.updateNotify(data).subscribe((result)=>{});
+    this.notifyService.updateNotify(data).subscribe((result) => { });
   }
 
   login() {

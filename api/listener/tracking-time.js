@@ -50,8 +50,8 @@ async function trackingTimeRegister() {
                 leagueHandle.updateTeam(dataUpdateTeam);
             }
         })
-    }, 1000 * 60 * 60)
-    //run every 1 hours
+    }, 1000 * 30)
+    //run every 30 second
 }
 
 module.exports = {

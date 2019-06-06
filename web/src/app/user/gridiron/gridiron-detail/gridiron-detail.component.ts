@@ -190,7 +190,7 @@ export class GridironDetailComponent implements OnInit {
       data['price_on_time'] = item;
       data['content'] = [
         { title: stt },
-        { title: item.time.time_start + ' : ' + item.time.time_end },
+        { title: `${item.time.time_start}h : ${item.time.time_end}h` },
         { title: item.size_gridiron.name },
         { title: item.price }
       ];
