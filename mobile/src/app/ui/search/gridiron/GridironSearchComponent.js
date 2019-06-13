@@ -122,7 +122,6 @@ class GridironSearchComponent extends Component {
             })
             listSearch = _.cloneDeep(tmp);
         }
-        console.log(listSearch);
         this.setState({
             listSearch: listSearch
         })
@@ -170,7 +169,6 @@ class GridironSearchComponent extends Component {
         let logoGridiron = require('../../../../assets/images/icon-pitch.png');
         const { search } = this.state;
         submit = values => {
-            console.log(values);
             this.search(values)
         }
         const { handleSubmit } = this.props;

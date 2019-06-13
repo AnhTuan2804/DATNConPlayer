@@ -46,7 +46,6 @@ class UpdateMatchComponent extends Component {
         const seft = this
         firebase.database().ref(`/match/${this.state.id}`).on('value', function (snapshot) {
             if (snapshot.val()) {
-                console.log(snapshot.val());
                 seft.setState({
                     itemLeague: snapshot.val()
                 })
@@ -57,8 +56,8 @@ class UpdateMatchComponent extends Component {
     checkArea(value) {
         if (value != undefined) {
             let gridiron = _.find(this.props.listGridiron, function (o) { return o.id == value })
-            this.props.change("area_id", gridiron.area_id),
-                this.setState({ isSelectGridirons: true })
+            this.props.change("area_id", gridiron.area_id)
+            this.setState({ isSelectGridirons: true })
         }
     }
 

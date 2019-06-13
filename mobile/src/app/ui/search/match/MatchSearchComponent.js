@@ -85,8 +85,6 @@ class MatchSearchComponent extends Component {
                                     borderWidth: 1, marginRight: 20
                                 }}
                                 onPress={() => {
-                                    console.log(this.state.matchSelect);
-
                                     let body = {
                                         date_of_match: TimeService.formatDateFromTimeUnix(this.state.matchSelect.date_of_match, 'YYYY-MM-DD'),
                                         status: "Waitting",
@@ -98,8 +96,6 @@ class MatchSearchComponent extends Component {
                                         let id = this.state.teamSelect
                                         body['team_guest'] = _.find(this.props.listTeam, function (o) { return o.id == id; });
                                     }
-                                    console.log(body);
-
                                     this.setModalVisible(false);
                                     this.props.onUpdateMatch(body)
                                 }}>
@@ -189,13 +185,11 @@ class MatchSearchComponent extends Component {
         }
         if (value.level_id) {
             const tmp = _.filter(listMatchSearch, (item) => {
-                console.log(item);
 
                 return _.toLower(item.level.id) == _.toLower(value.level_id);
             })
             listMatchSearch = _.cloneDeep(tmp);
         }
-        console.log(listMatchSearch);
         this.setState({
             listMatchSearch: listMatchSearch
         })
@@ -272,7 +266,7 @@ class MatchSearchComponent extends Component {
                             matchSelect: item
                         })
                     }}
-                    disabled={!this.props.isLogin || item.status == "Waitting" || item.user.email == Constants.EMAIL_ADDRESS}
+                    disabled={!this.props.isLogin || item.status == "Waitting" || !item.user.email == Constants.EMAIL_ADDRESS}
                     style={{
                         margin: 10,
                         flexDirection: 'row',
@@ -368,7 +362,6 @@ class MatchSearchComponent extends Component {
         let logoMatch = require('../../../../assets/images/icon-match.png');
         const { search } = this.state;
         submit = values => {
-            console.log(values);
             this.search(values)
         }
         const { handleSubmit } = this.props;

@@ -77,8 +77,6 @@ class HomeComponent extends Component {
                                     borderWidth: 1, marginRight: 20
                                 }}
                                 onPress={() => {
-                                    console.log(this.state.matchSelect);
-
                                     let body = {
                                         date_of_match: TimeService.formatDateFromTimeUnix(this.state.matchSelect.date_of_match, 'YYYY-MM-DD'),
                                         status: "Waitting",
@@ -90,8 +88,6 @@ class HomeComponent extends Component {
                                         let id = this.state.teamSelect
                                         body['team_guest'] = _.find(this.props.listTeam, function (o) { return o.id == id; });
                                     }
-                                    console.log(body);
-
                                     this.setModalVisible(false);
                                     this.props.onUpdateMatch(body)
                                 }}>
