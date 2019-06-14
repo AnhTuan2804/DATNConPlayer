@@ -280,11 +280,11 @@ export class HomeComponent implements OnInit {
                   Please answers in the match detail management!`
       }
       this.action.showLoading();
-      this.matchService.updateMatch(data).subscribe((result) => {
+      this.matchService.updateMatch({data: data, dataNotify: dataNotify}).subscribe((result) => {
         this.action.hideLoading();
         this.toastrService.success('PAIR MATCH SUCCESFULLY', '', { timeOut: 3000 });
 
-        this.notifyService.createNotify(dataNotify).subscribe((result) => { });
+        // this.notifyService.createNotify(dataNotify).subscribe((result) => { });
       }, err => {
         console.log(err);
         this.action.hideLoading();
