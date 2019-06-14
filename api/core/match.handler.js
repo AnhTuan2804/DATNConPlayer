@@ -2,6 +2,7 @@
 const db = require('../shared/db/db');
 const admin = require('firebase-admin');
 const firebaseDB = admin.database();
+const notifyHandle = require('./notify.handler');
 const _ = require('lodash');
 const timeUtil = require('../shared/timeUntil')
 class MatchHandler {
@@ -65,16 +66,21 @@ class MatchHandler {
     }
 
     async update(body, date_of_match) {
-        const id = body.id;
+        const id = body.data.id;
         if (!id) {
             return;
         }
-        body = _.omit(body, ['id']);
-        if(date_of_match || body.date_of_match){
-            body.date_of_match = date_of_match ? date_of_match : timeUtil.getTimesUnixFromTimeFormat(body.date_of_match);
+        body.data = _.omit(body.data, ['id']);
+        if (date_of_match || body.data.date_of_match) {
+            body.data.date_of_match = date_of_match ? date_of_match : timeUtil.getTimesUnixFromTimeFormat(body.data.date_of_match);
         }
         try {
-            return firebaseDB.ref('/match/' + id).update(body);
+            if(body.dataNotify){
+                await firebaseDB.ref('/match/' + id).update(body.data);
+                return notifyHandle.create(null, body.dataNotify)
+            } else {
+                return firebaseDB.ref('/match/' + id).update(body.data);
+            }
         }
         catch (err) {
             throw err;
