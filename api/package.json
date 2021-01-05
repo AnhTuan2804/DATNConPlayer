@@ -13,7 +13,7 @@
     "author": "blockchain",
     "license": "ISC",
     "dependencies": {
-        "axios": "^0.18.0",
+        "axios": "^0.21.1",
         "base-64": "^0.1.0",
         "bcrypt": "^3.0.5",
         "bcrypt-nodejs": "0.0.3",
