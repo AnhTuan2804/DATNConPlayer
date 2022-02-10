@@ -43,7 +43,7 @@
     "ng2-trim-directive": "^2.1.0",
     "ngx-file-drop": "^5.0.0",
     "ngx-toastr": "^10.0.2",
-    "node-sass": "^4.9.0",
+    "node-sass": "^7.0.0",
     "popper.js": "^1.14.3",
     "rxjs": "6.0.0",
     "rxjs-compat": "6.1.0",
