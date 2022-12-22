@@ -30,7 +30,7 @@
         "imap": "^0.8.19",
         "jp-zipcode-lookup": "^0.2.0",
         "js-md5": "^0.7.2",
-        "jsonwebtoken": "^8.3.0",
+        "jsonwebtoken": "^9.0.0",
         "lodash": "^4.17.11",
         "moment": "^2.15.1",
         "moment-timezone": "^0.5.13",
